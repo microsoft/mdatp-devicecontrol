@@ -1,0 +1,14 @@
+<PolicyRule Id="{b58ab853-9a6f-405c-a194-740e69422b48}">
+    <Name>Audit Write and Execute access to others</Name>
+    <IncludedIdList>
+        <GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+    </IncludedIdList>
+    <ExcludedIdList>
+        <GroupId>{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}</GroupId>
+    </ExcludedIdList>
+    <Entry Id="{979701d8-584a-4f27-8b68-2ecca59ccabd}">
+        <Type>AuditAllowed</Type>
+        <Options>2</Options>
+        <AccessMask>6</AccessMask>
+    </Entry>
+</PolicyRule>
