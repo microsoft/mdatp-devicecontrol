@@ -19,14 +19,14 @@
         </Entry>
     </PolicyRule>
     <PolicyRule Id="{36ae1037-a639-4cff-946b-b36c53089a4c}">
-        <Name> Audit Write and Execute access to allowed USBs</Name>
+        <Name>Audit Write and Execute access to allowed USBs</Name>
         <IncludedIdList>
             <GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
         </IncludedIdList>
         <ExcludedIdList> </ExcludedIdList>
         <Entry Id="{4a17df0b-d89d-430b-9cbe-8e0721192281}">
             <Type>AuditAllowed</Type>
-            <Options>3</Options>
+            <Options>2</Options>
             <AccessMask>6</AccessMask>
         </Entry>
     </PolicyRule>

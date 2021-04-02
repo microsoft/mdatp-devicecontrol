@@ -1,0 +1,34 @@
+<PolicyRules>
+    <PolicyRule Id="{23b8e437-66ac-4b32-b3d7-24044637fc98}">
+        <Name>Audit Write and Execute access to all but block specific unapproved USBs</Name>
+        <IncludedIdList>
+            <GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
+        </IncludedIdList>
+        <ExcludedIdList>
+        </ExcludedIdList>
+        <Entry Id="{5fbf7a77-0e50-456a-bb25-1b60e1b9b288}">
+            <Type>Deny</Type>
+            <Options>0</Options>
+            <AccessMask>6</AccessMask>
+        </Entry>
+        <Entry Id="{e1caaa4e-7bd1-4812-bec0-5a5973cb88f4}">
+            <Type>AuditDenied</Type>
+            <Options>3</Options>
+            <AccessMask>6</AccessMask>
+        </Entry>
+    </PolicyRule>
+    <PolicyRule Id="{b58ab853-9a6f-405c-a194-740e69422b48}">
+        <Name>Audit Write and Execute access to allowed USBs</Name>
+        <IncludedIdList>
+            <GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+        </IncludedIdList>
+        <ExcludedIdList>
+            <GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
+		</ExcludedIdList>
+        <Entry Id="{979701d8-584a-4f27-8b68-2ecca59ccabd}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <AccessMask>6</AccessMask>
+        </Entry>
+    </PolicyRule>
+</PolicyRules>
