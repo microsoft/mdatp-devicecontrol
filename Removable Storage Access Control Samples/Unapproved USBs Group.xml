@@ -1,0 +1,7 @@
+<Group Id="{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}">
+    <MatchType>MatchAny</MatchType>
+    <DescriptorIdList>
+        <FriendlyNameId>Generic Flash Disk USB Device</FriendlyNameId>
+        <VID_PID>0781_</VID_PID>
+    </DescriptorIdList>
+</Group>
