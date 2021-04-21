@@ -14,11 +14,6 @@
         <AccessMask>6</AccessMask>
         <Sid>xxxxxxxx</Sid>
     </Entry>
-    <Entry Id="{b2827dd5-db81-48d8-8cde-fb2c84a8367f}">
-        <Type>AuditDenied</Type>
-        <Options>3</Options>
-        <AccessMask>6</AccessMask>
-    </Entry>
 </PolicyRule>
 
 
