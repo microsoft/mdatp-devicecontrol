@@ -1,0 +1,3 @@
+For people who are using GPO to push the policy, we have seen some issues people use the samples and files. Here are the notes if you are using GPO:
+1. Please make sure put group(groups) and policy(policies) into ‘<Groups></Groups>’ and ‘<PolicyRules></PolicyRules>’; otherwise, it will not work.
+2. If you want to download the ADML and ADMX files from here and replace the files in PolicyDefinitions and PolicyDefinitions/en-US, you may see an error dialog. To solve this, after you download the files, please copy content fo the file and paste to notepad and then do save-as with right file extension (.admx or adml).
