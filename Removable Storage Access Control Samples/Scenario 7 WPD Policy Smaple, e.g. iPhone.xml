@@ -1,0 +1,19 @@
+<PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"> <!-- 4.18.2107 or later is required -->
+   <Name>Deny Wpd Write</Name>
+   <IncludedIdList>
+      <PrimaryId>WpdDevices</PrimaryId> <!-- WPD primary id, e.g. iPhone,Android, tablet, you can also use removable storage Group -->
+   </IncludedIdList>
+   <ExcludedIdList>
+      <DeviceId>USB\VID_04E8&amp;PID_6860&amp;MS_COMP_MTP&amp;SAMSUNG_ANDROID</DeviceId> <!-- you can also use removable storage Group -->
+   </ExcludedIdList>
+   <Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
+      <Type>Deny</Type>
+      <Options>0</Options>
+      <AccessMask>2</AccessMask>
+   </Entry>
+   <Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
+      <Type>AuditDenied</Type>
+      <Options>3</Options>
+      <AccessMask>2</AccessMask>
+   </Entry>
+</PolicyRule>
