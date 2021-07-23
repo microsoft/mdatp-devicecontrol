@@ -1,0 +1,19 @@
+<PolicyRule Id="{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543}"> <!-- Block Any Write activity -->
+<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b1ac9b9f0-8cae-4c37-bd55-0ac6537d8543%7d/RuleData -->
+   <Name>Block Write Activity</Name>
+   <IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{358cb3ab-f3bb-4538-bf68-2d6ab720ca4f}">
+      <Type>Deny</Type>
+      <Options>0</Options>
+      <AccessMask>2</AccessMask>
+   </Entry>
+   <Entry Id="{ce19b61b-8081-4f4a-914a-940b1643272e}">
+      <Type>AuditDenied</Type>
+      <Options>3</Options>
+      <AccessMask>2</AccessMask>
+   </Entry>
+</PolicyRule>

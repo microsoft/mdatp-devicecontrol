@@ -1,0 +1,19 @@
+<PolicyRule Id="{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c}"> <!-- audit Any Read activity -->
+<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c%7d/RuleData -->
+   <Name>Audit Read Activity</Name>
+   <IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+      <Type>Allow</Type>
+      <Options>0</Options>
+      <AccessMask>1</AccessMask>
+   </Entry>
+   <Entry Id="{684abbdd-000d-4565-b44c-550bc3d71034}">
+      <Type>AuditAllowed</Type>
+      <Options>2</Options>
+      <AccessMask>1</AccessMask>
+   </Entry>
+</PolicyRule>
