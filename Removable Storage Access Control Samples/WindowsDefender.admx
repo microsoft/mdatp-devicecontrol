@@ -161,6 +161,13 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
+        <policy name="SchedulerRandomizationTime" class="Machine" displayName="$(string.SchedulerRandomizationTime)" explainText="$(string.SchedulerRandomizationTime_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="SchedulerRandomizationTime" presentation="$(presentation.SchedulerRandomizationTime)">
+            <parentCategory ref="AntiSpywareDefender" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
+            <elements>
+                <decimal id="SchedulerRandomizationTime" valueName="SchedulerRandomizationTime" minValue="1" maxValue="23" />
+            </elements>
+        </policy>
         <policy name="ServiceKeepAlive" class="Machine" displayName="$(string.ServiceKeepAlive)" explainText="$(string.ServiceKeepAlive_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="ServiceKeepAlive">
             <parentCategory ref="AntiSpywareDefender" />
             <supportedOn ref="windows:SUPPORTED_Windows8" />
@@ -637,16 +644,6 @@
             </disabledValue>
         </policy>
         <policy name="Scan_DisableHeuristics" class="Machine" displayName="$(string.Scan_DisableHeuristics)" explainText="$(string.Scan_DisableHeuristics_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableHeuristics">
-            <parentCategory ref="Scan" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <enabledValue>
-                <decimal value="0" />
-            </enabledValue>
-            <disabledValue>
-                <decimal value="1" />
-            </disabledValue>
-        </policy>
-        <policy name="Scan_DisablePackedExeScanning" class="Machine" displayName="$(string.Scan_DisablePackedExeScanning)" explainText="$(string.Scan_DisablePackedExeScanning_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisablePackedExeScanning">
             <parentCategory ref="Scan" />
             <supportedOn ref="windows:SUPPORTED_Windows8" />
             <enabledValue>

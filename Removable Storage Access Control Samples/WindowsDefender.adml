@@ -132,11 +132,15 @@
       If you disable or do not configure this setting, the proxy will skip over this fallback step according to the order specified above.
     </string>
     <string id="RandomizeScheduleTaskTimes">Randomize scheduled task times</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">This policy setting allows you to enable or disable randomization of the scheduled scan start time and the scheduled security intelligence update start time. This setting is used to distribute the resource impact of scanning. For example, it could be used in guest virtual machines sharing a host, to prevent multiple guest virtual machines from undertaking a disk-intensive operation at the same time.
+    <string id="RandomizeScheduleTaskTimes_Explain">This policy setting allows you to configure the scheduled scan, and the scheduled security intelligence update, start time window in hours.
 
-    If you enable or do not configure this setting, scheduled tasks will begin at a random time within an interval of 4 hours after the specified start time.
+    If you disable or do not configure this setting, scheduled tasks will begin at a random time within 4 hours after the time specified in Task Scheduler.
+    If you enable this setting, you can widen, or narrow, this randomization period. Specify a randomization window of between 1 and 23 hours.</string>
+    <string id="SchedulerRandomizationTime">Configure scheduled task times randomization window</string>
+    <string id="SchedulerRandomizationTime_Explain">This policy setting allows you to configure scheduled scan start time and the scheduled security intelligence update start time window in hours.
 
-    If you disable this setting, scheduled tasks will begin at the specified start time.</string>
+    If you disable or do not configure this setting, scheduled tasks will begin at a random time within an interval of 4 hours after the specified start time.
+    If you enable this setting, you must pick a randomization window in hours. The possible randomization window interval is between 1 and 23 hours.</string>
     <string id="ServiceKeepAlive">Allow antimalware service to remain running always</string>
     <string id="ServiceKeepAlive_Explain">This policy setting allows you to configure whether or not the antimalware service remains running when antivirus and antispyware security intelligence is disabled. It is recommended that this setting remain disabled.
 
@@ -439,12 +443,6 @@
     If you enable or do not configure this setting, heuristics will be enabled.
 
     If you disable this setting, heuristics will be disabled.</string>
-    <string id="Scan_DisablePackedExeScanning">Scan packed executables</string>
-    <string id="Scan_DisablePackedExeScanning_Explain">This policy setting allows you to configure scanning for packed executables. It is recommended that this type of scanning remain enabled.
-
-    If you enable or do not configure this setting, packed executables will  be scanned.
-
-    If you disable this setting, packed executables will not be scanned.</string>
     <string id="Scan_DisableRemovableDriveScanning">Scan removable drives</string>
     <string id="Scan_DisableRemovableDriveScanning_Explain">This policy setting allows you to manage whether or not to scan for malicious software and unwanted software in the contents of removable drives, such as USB flash drives, when running a full scan.
 
@@ -516,7 +514,7 @@
 
     If you enable this setting, a quick scan will run at the interval specified.
 
-    If you disable or do not configure this setting, a quick scan will run at a default time.</string>
+    If you disable or do not configure this setting, quick scan controlled by this config will not be run.</string>
     <string id="Scan_ScanOnlyIfIdle">Start the scheduled scan only when computer is on but not in use</string>
     <string id="Scan_ScanOnlyIfIdle_Explain">This policy setting allows you to configure scheduled scans to start only when your computer is on but not in use.
 
@@ -560,11 +558,11 @@
     <string id="Scan_ScheduleDay_7">Friday</string>
     <string id="Scan_ScheduleDay_8">Saturday</string>
     <string id="Scan_ScheduleQuickScantime">Specify the time for a daily quick scan</string>
-    <string id="Scan_ScheduleQuickScantime_Explain">This policy setting allows you to specify the time of day at which to perform a daily quick scan. The time value is represented as the number of minutes past midnight (00:00).  For example, 120 (0x78) is equivalent to 02:00 AM. By default, this setting is set to  a time value of 2:00 AM. The schedule is based on local time on the computer where the scan is executing.
+    <string id="Scan_ScheduleQuickScantime_Explain">This policy setting allows you to specify the time of day at which to perform a daily quick scan. The time value is represented as the number of minutes past midnight (00:00).  For example, 120 (0x78) is equivalent to 02:00 AM. By default, this setting is set to disabled. The schedule is based on local time on the computer where the scan is executing.
 
     If you enable this setting, a daily quick scan will run at the time of day specified.
 
-    If you disable or do not configure this setting, a daily quick scan will run at a default time.</string>
+    If you disable or do not configure this setting, daily quick scan controlled by this config will not be run.</string>
     <string id="Scan_ScheduleTime">Specify the time of day to run a scheduled scan</string>
     <string id="Scan_ScheduleTime_Explain">This policy setting allows you to specify the time of day at which to perform a scheduled scan. The time value is represented as the number of minutes past midnight (00:00).  For example, 120 (0x78) is equivalent to 02:00 AM. By default, this setting is set to  a time value of 2:00 AM. The schedule is based on local time on the computer where the scan is executing.
 
@@ -1221,6 +1219,9 @@
     <textBox refId="DeviceControl_PolicyRules">
         <label>Define the policy rules here</label>
     </textBox>
+    </presentation>
+    <presentation id="SchedulerRandomizationTime">
+        <decimalTextBox refId="SchedulerRandomizationTime" defaultValue="4">Specify scheduler randomization window in hours.</decimalTextBox>
     </presentation>
    </presentationTable>
 </resources>
