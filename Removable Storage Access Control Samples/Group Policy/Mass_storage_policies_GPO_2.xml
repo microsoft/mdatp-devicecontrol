@@ -1,0 +1,254 @@
+<PolicyRules>
+    <PolicyRule Id="{466faba8-dddf-4ae5-9871-dabbb600d4f3}">
+    <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b466faba8-dddf-4ae5-9871-dabbb600d4f3%7d/RuleData -->
+        <Name>Gestion des périphériques externes</Name>
+        <IncludedIdList>
+            <GroupId>{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}</GroupId>
+        </IncludedIdList>
+        <ExcludedIdList>
+            <GroupId>{7f191817-c305-451d-812a-1c4b03ebcec8}</GroupId>
+            <GroupId>{1653593b-5b92-47e6-975a-c43ffa9cd28d}</GroupId>
+            <GroupId>{d2887bd4-a916-4011-a385-83c6b15df529}</GroupId>
+        </ExcludedIdList>
+
+        <!-- 
+            MVT RO
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{f577a950-ce74-4153-90fd-c79d3bf0eb3d}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{428e439f-d8ee-4314-9a8a-92685c4d961c}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            Caisse RO
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{a3886e5f-093f-4e9c-812f-d7334d5ee052}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{4565ab13-0d58-4a7c-8399-5b65f470ecae}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            AVDL RO
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{f7cd79af-e330-4fea-9345-467d9bb51131}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{e8e9077f-5111-4a7d-ade6-723c08fd7797}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            DGDOM RO
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{a3421c37-ac07-4085-9bbd-ec9b4ebbd60e}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{e2f263f2-c597-406d-a5f7-9d91909a32c6}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- Deny audit -->
+        <Entry Id="{170070b1-b68d-4175-9cd4-753a76197496}">
+            <Type>Deny</Type>
+            <Options>0</Options>
+            <AccessMask>7</AccessMask>
+        </Entry>
+        <!-- Deny action -->
+        <Entry Id="{ca86bec9-ba43-4849-a632-e59e5e5c207b}">
+            <Type>AuditDenied</Type>
+            <Options>3</Options>
+            <AccessMask>7</AccessMask>
+        </Entry>
+    </PolicyRule>
+
+    <PolicyRule Id="{540efb7f-1836-4956-8888-5d41d981d6ba}">
+    <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b540efb7f-1836-4956-8888-5d41d981d6ba%7d/RuleData -->
+        <Name>Gestion des dictaphones</Name>
+        <IncludedIdList>
+            <GroupId>{7f191817-c305-451d-812a-1c4b03ebcec8}</GroupId>
+        </IncludedIdList>
+        <ExcludedIdList>
+        </ExcludedIdList>
+        
+        <!-- 
+            Caisse exclusion GPO seul
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{bdd26ee1-4d28-487a-9931-6322ae9e3f91}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{92237bd0-84bf-4d1a-81c0-2507d6274532}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            MVT exclusion GPO seul
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{cd7fb4ed-fe8d-4122-949e-3c8306152978}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{84a53752-fbdc-4e39-b15c-8787130bc6d6}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            DGDOM exclusion GPO seul
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{873026a4-0c93-4061-b784-b1f7bb43b891}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{77073a70-eacd-4008-b031-9bdce7cb65be}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- Deny audit -->
+        <Entry Id="{d3255814-cacb-4a78-8cf7-5195db00b049}">
+            <Type>Deny</Type>
+            <Options>0</Options>
+            <AccessMask>7</AccessMask>
+        </Entry>
+        <!-- Deny action -->
+        <Entry Id="{5bdd9755-6e5a-4692-ba71-d597b709d2dd}">
+            <Type>AuditDenied</Type>
+            <Options>3</Options>
+            <AccessMask>7</AccessMask>
+        </Entry>
+    </PolicyRule>
+
+    <PolicyRule Id="{505e2563-1de8-40aa-b8f9-472a37b2f6ee}">
+    <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b505e2563-1de8-40aa-b8f9-472a37b2f6ee%7d/RuleData -->
+        <Name>Gestion des appareils immobiliers</Name>
+        <IncludedIdList>
+            <GroupId>{d2887bd4-a916-4011-a385-83c6b15df529}</GroupId>
+        </IncludedIdList>
+        <ExcludedIdList>
+        </ExcludedIdList>
+        
+        <!-- 
+            MVT exclusion immo config
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{9ca73bfa-4ee9-4b2d-acfd-5a2106a83d05}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{927520b9-d12e-4d68-b7e0-d3c0e639a341}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            DGDOM exclusion immo config
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{125f91ef-0253-4846-8532-cc83fe9c3187}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{6597a4ba-f8e7-4cf2-a184-4e17cc7c3a62}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+
+        <!-- 
+            AVDL exclusion immo config
+        -->
+        <!-- Allow read only access -->
+        <Entry Id="{79fca045-f064-4d07-8b25-213687f3ee75}">
+            <Type>Allow</Type>
+            <Options>0</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+        <!-- Audit read only event and toast -->
+        <Entry Id="{8db057be-a510-4efe-b8b4-d64e9c5848c3}">
+            <Type>AuditAllowed</Type>
+            <Options>2</Options>
+            <Sid>XXXXXX</Sid>
+            <AccessMask>1</AccessMask>
+        </Entry>
+		
+
+        <!-- Deny audit -->
+        <Entry Id="{92d71792-5349-4c64-8a72-b9f35fbd4cab}">
+            <Type>Deny</Type>
+            <Options>0</Options>
+            <AccessMask>7</AccessMask>
+        </Entry>
+        <!-- Deny action -->
+        <Entry Id="{d110deed-4386-4e50-816c-4584e2902de2}">
+            <Type>AuditDenied</Type>
+            <Options>3</Options>
+            <AccessMask>7</AccessMask>
+        </Entry>
+    </PolicyRule>
+</PolicyRules>

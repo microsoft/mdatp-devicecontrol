@@ -1,0 +1,43 @@
+<PolicyRules>
+
+	<PolicyRule Id="{83c390b6-b01e-4d83-8834-c8015a2316f2}">
+		<Name>Block Write and Execute but allow specific user access approved USB</Name>
+		<IncludedIdList>
+			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{5d660ff3-a19f-47ae-8779-ca6a989d9780}">
+			<Type>Allow</Type>
+			<Options>0</Options>
+			<AccessMask>6</AccessMask>
+			<Sid>xxxxxxxx</Sid>
+		</Entry>
+	</PolicyRule>
+
+
+	<PolicyRule Id="{d2193a7f-ceec-4729-a72a-fe949639db55}">
+		<Name>Block removable storage and CdRom</Name>
+		<IncludedIdList>
+			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList></ExcludedIdList>
+		<Entry Id="{c1adfc3e-0347-4096-88c3-6e0777b2a15b}">
+			<Type>Deny</Type>
+			<Options>0</Options>
+			<AccessMask>7</AccessMask>
+		</Entry>
+		<Entry Id="{fee5f127-951b-4ece-9196-fa1c9ff21678}">
+			<Type>AuditDenied</Type>
+			<Options>3</Options>
+			<AccessMask>6</AccessMask>
+		</Entry>
+		<Entry Id="{ad04437c-e279-41a3-8a1a-b76b7e35bce5}">
+			<Type>AuditDenied</Type>
+			<Options>1</Options>
+			<AccessMask>1</AccessMask>
+		</Entry>
+	</PolicyRule>
+
+</PolicyRules>

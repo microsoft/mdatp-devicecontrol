@@ -1,0 +1,21 @@
+<Groups>
+
+	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}">
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
+
+
+	<Group Id="{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}">
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<FriendlyNameId>Generic Flash Disk USB Device</FriendlyNameId>
+			<VID_PID>0781_</VID_PID>
+		</DescriptorIdList>
+	</Group>
+
+
+</Groups>
