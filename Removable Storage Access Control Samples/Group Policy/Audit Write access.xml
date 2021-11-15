@@ -1,0 +1,15 @@
+<PolicyRules>	
+	<PolicyRule Id="{f745aeec-3233-4ca5-961c-2e8b55510784}">
+		<Name>Audit Write to all removable storage</Name>
+		<IncludedIdList>
+			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{ad2f69df-e6c5-4cd7-a2bf-bf7ef8c6c2b5}">
+			<Type>AuditAllowed</Type>
+			<Options>2</Options>
+			<AccessMask>2</AccessMask>
+		</Entry>
+	</PolicyRule>
+</PolicyRules>
