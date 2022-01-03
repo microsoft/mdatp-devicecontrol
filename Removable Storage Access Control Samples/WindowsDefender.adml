@@ -6,6 +6,7 @@
     <string id="AntiSpywareDefender">Microsoft Defender Antivirus</string>
     <string id="AntiSpyware">Endpoint Protection</string>
     <string id="Exclusions">Exclusions</string>
+    <string id="Features">Features</string>
     <string id="DeviceControl">Device Control</string>
     <string id="ExploitGuard">Microsoft Defender Exploit Guard</string>
     <string id="ExploitGuard_ASR">Attack Surface Reduction</string>
@@ -37,6 +38,15 @@
 
     Enabled: 
     Allow managed devices to update through metered connections. Data charges may apply.</string>
+    <string id="HideExclusionsFromLocalAdmins">Control whether or not exclusions are visible to Local Admins.</string>
+    <string id="HideExclusionsFromLocalAdmins_Explain">
+    This policy setting controls whether or not exclusions are visible to Local Admins.  For end users (that are not Local Admins) exclusions are not visible, whether or not this setting is enabled.
+    Disabled(Default):
+        If you disable or do not configure this setting, Local Admins will be able to see exclusions in the Windows Security App or via PowerShell.
+
+    Enabled: 
+        If you enable this setting, Local Admins will no longer be able to see the exclusion list in Windows Security App or via PowerShell.
+        Note: Applying this setting will not remove exclusions, it will only prevent them from being visible to Local Admins. This is reflected in Get-MpPreference.</string>
     <string id="AllowNetworkProtectionOnWinServer">This settings controls whether Network Protection is allowed to be configured into block or audit mode on Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Disabled (Default): 
@@ -235,13 +245,13 @@
 
     If you disable this setting, raw write notifications be disabled.</string>
     <string id="DisableRealtimeMonitoring">Turn off real-time protection</string>
-    <string id="DisableRealtimeMonitoringDefender_Explain">This policy setting turns off real-time protection prompts for known malware detection.
+    <string id="DisableRealtimeMonitoringDefender_Explain">This policy turns off real-time protection in Microsoft Defender Antivirus.
 
-    Microsoft Defender Antivirus alerts you when malware or potentially unwanted software attempts to install itself or to run on your computer.
+    Real-time protection consists of always-on scanning with file and process behavior monitoring and heuristics. When real-time protection is on, Microsoft Defender Antivirus detects malware and potentially unwanted software that attempts to install itself or run on your device, and prompts you to take action on malware detections.
 
-    If you enable this policy setting, Microsoft Defender Antivirus will not prompt users to take actions on malware detections.
+    If you enable this policy setting, real-time protection is turned off. 
 
-    If you disable or do not configure this policy setting, Microsoft Defender Antivirus will prompt users to take actions on malware detections.</string>
+    If you either disable or do not configure this policy setting, real-time protection is turned on.</string>
     <string id="DisableRealtimeMonitoring_Explain">
     This policy setting turns off real-time protection prompts for known malware detection.
 
@@ -408,7 +418,7 @@
     <string id="CheckForSignaturesBeforeRunningScan">Check for the latest virus and spyware security intelligence before running a scheduled scan</string>
     <string id="CheckForSignaturesBeforeRunningScan_Explain">This policy setting allows you to manage whether a check for new virus and spyware security intelligence will occur before running a scan. 
 
-    This setting applies to scheduled scans as well as the command line "mpcmdrun -SigUpdate", but it has no effect on scans initiated manually from the user interface.
+    This setting applies to scheduled scans, but it has no effect on scans initiated manually from the user interface or to the ones started from the command line using "mpcmdrun -Scan".
 
     If you enable this setting, a check for new security intelligence will occur before running a scan.
 
@@ -418,13 +428,21 @@
 
     If you enable or do not configure this setting, archive files will be scanned.
 
-    If you disable this setting, archive files will not be scanned.</string>
+    If you disable this setting, archive files will not be scanned. However, archives are always scanned during directed scans.</string>
     <string id="Scan_DisableCatchupFullScan">Turn on catch-up full scan</string>
     <string id="Scan_DisableCatchupFullScan_Explain">This policy setting allows you to configure catch-up scans for scheduled full scans. A catch-up scan is a scan that is initiated because a regularly scheduled scan was missed.  Usually these scheduled scans are missed because the computer was turned off at the scheduled time. 
 
     If you enable this setting, catch-up scans for scheduled full scans will be turned on.  If a computer is offline for two consecutive scheduled scans, a catch-up scan is started the next time someone logs on to the computer.  If there is no scheduled scan configured, there will be no catch-up scan run. 
 
     If you disable or do not configure this setting, catch-up scans for scheduled full scans will be turned off.</string>
+    <string id="Scan_ThrottleForScheduledScanOnly">CPU throttling type</string>
+    <string id="Scan_ThrottleForScheduledScanOnly_Explain">This policy setting determines whether the maximum percentage CPU utilization permitted during a scan applies only to scheduled scans, or to both scheduled and custom scans (but not real-time protection). The maximum CPU utilization limit is also referred to as CPU throttling, or a CPU usage limit.
+
+    The default value for this policy setting is True, which means CPU throttling is applied only to scheduled scans.
+
+    If you either enable or do not configure this setting, CPU throttling will apply only to scheduled scans.
+
+    If you disable this setting, CPU throttling will apply to scheduled and custom scans.</string>
     <string id="Scan_DisableCatchupQuickScan">Turn on catch-up quick scan</string>
     <string id="Scan_DisableCatchupQuickScan_Explain">This policy setting allows you to configure catch-up scans for scheduled quick scans. A catch-up scan is a scan that is initiated because a regularly scheduled scan was missed.  Usually these scheduled scans are missed because the computer was turned off at the scheduled time. 
 
@@ -432,8 +450,8 @@
 
     If you disable or do not configure this setting, catch-up scans for scheduled quick scans will be turned off.</string>
     <string id="Scan_DisableEmailScanning">Turn on e-mail scanning</string>
-    <string id="Scan_DisableEmailScanning_Explain">This policy setting allows you to configure e-mail scanning. When e-mail scanning is enabled, the engine will parse the mailbox and mail files, according to their specific format, in order to analyze the mail bodies and attachments. Several e-mail formats are currently supported, for example: pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac).
-
+    <string id="Scan_DisableEmailScanning_Explain">This policy setting allows you to configure e-mail scanning. When e-mail scanning is enabled, the engine will parse the mailbox and mail files, according to their specific format, in order to analyze the mail bodies and attachments. Several e-mail formats are currently supported, for example: pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). Email scanning is not supported on modern email clients.
+    
     If you enable this setting, e-mail scanning will be enabled.
 
     If you disable or do not configure this setting, e-mail scanning will be disabled.</string>
@@ -713,10 +731,10 @@
     Disabled – The Block at First Sight setting is turned off.
     
     This feature requires these Group Policy settings to be set as follows:
-    MAPS -&gt; The “Join Microsoft MAPS” must be enabled or the “Block at First Sight” feature will not function.
-    MAPS -&gt; The “Send file samples when further analysis is required” should be set to 1 (Send safe samples) or 3 (Send all samples). Setting to 0 (Always Prompt) will lower the protection state of the device.  Setting to 2 (Never send) means the “Block at First Sight” feature will not function.
-    Real-time Protection -&gt; The “Scan all downloaded files and attachments” policy must be enabled or the “Block at First Sight” feature will not function.
-    Real-time Protection -&gt; Do not enable the “Turn off real-time protection” policy or the “Block at First Sight” feature will not function.</string>
+    MAPS -> The “Join Microsoft MAPS” must be enabled or the “Block at First Sight” feature will not function.
+    MAPS -> The “Send file samples when further analysis is required” should be set to 1 (Send safe samples) or 3 (Send all samples). Setting to 0 (Always Prompt) will lower the protection state of the device.  Setting to 2 (Never send) means the “Block at First Sight” feature will not function.
+    Real-time Protection -> The “Scan all downloaded files and attachments” policy must be enabled or the “Block at First Sight” feature will not function.
+    Real-time Protection -> Do not enable the “Turn off real-time protection” policy or the “Block at First Sight” feature will not function.</string>
     <string id="Spynet_LocalSettingOverrideSpynetReporting">Configure local setting override for reporting to Microsoft MAPS</string>
     <string id="Spynet_LocalSettingOverrideSpynetReporting_Explain">This policy setting configures a local override for the configuration to join Microsoft MAPS. This setting can only be set by Group Policy.
 
@@ -937,7 +955,7 @@
         The following will be blocked:
         - Attempts by untrusted apps to modify or delete files in protected folders
         - Attempts by untrusted apps to write to disk sectors
-        The Windows event log will record these blocks under Applications and Services Logs &gt; Microsoft &gt; Windows &gt; Windows Defender &gt; Operational &gt; ID 1123.
+        The Windows event log will record these blocks under Applications and Services Logs > Microsoft > Windows > Windows Defender > Operational > ID 1123.
 
 
         Disabled:
@@ -951,13 +969,13 @@
         The following will not be blocked and will be allowed to run:
         - Attempts by untrusted apps to modify or delete files in protected folders
         - Attempts by untrusted apps to write to disk sectors
-        The Windows event log will record these attempts under Applications and Services Logs &gt; Microsoft &gt; Windows &gt; Windows Defender &gt; Operational &gt; ID 1124.
+        The Windows event log will record these attempts under Applications and Services Logs > Microsoft > Windows > Windows Defender > Operational > ID 1124.
 
 
         Block disk modification only:
         The following will be blocked:
         - Attempts by untrusted apps to write to disk sectors
-        The Windows event log will record these attempts under Applications and Services Logs &gt; Microsoft &gt; Windows &gt; Windows Defender &gt; Operational &gt; ID 1123.
+        The Windows event log will record these attempts under Applications and Services Logs > Microsoft > Windows > Windows Defender > Operational > ID 1123.
 
         The following will not be blocked and will be allowed to run:
         - Attempts by untrusted apps to modify or delete files in protected folders
@@ -968,7 +986,7 @@
         The following will not be blocked and will be allowed to run:
         - Attempts by untrusted apps to write to disk sectors
         - Attempts by untrusted apps to modify or delete files in protected folders
-        Only attempts to write to protected disk sectors will be recorded in the Windows event log (under Applications and Services Logs &gt; Microsoft &gt; Windows &gt; Windows Defender &gt; Operational &gt; ID 1124).
+        Only attempts to write to protected disk sectors will be recorded in the Windows event log (under Applications and Services Logs > Microsoft > Windows > Windows Defender > Operational > ID 1124).
         Attempts to modify or delete files in protected folders will not be recorded.
 
         Not configured:
@@ -1024,11 +1042,75 @@
     </string>
     <string id="DeviceControl_PolicyGroups">Define device control policy groups</string>
     <string id="DeviceControl_PolicyGroups_Explain">
-        Please follow the device control policy groups xml schema to fill out the policy groups data.
+        Please follow the device control policy groups xml schema to fill out the policy groups data. 
+        Alternatively you could use a file path containing the XML groups data.
     </string>
     <string id="DeviceControl_PolicyRules">Define device control policy rules</string>
     <string id="DeviceControl_PolicyRules_Explain">
         Please follow the device control policy rules xml schema to fill out the policy rules data.
+        Alternatively you could use a file path containing the XML rules data.
+    </string>
+    <string id="Root_PlatformUpdateChannel">Select the channel for Microsoft Defender monthly platform updates</string>
+    <string id="Root_PlatformUpdateChannel_Explain">Enable this policy to specify when devices receive Microsoft Defender platform updates during the monthly gradual rollout.​
+
+        Beta Channel: Devices set to this channel will be the first to receive new updates. Select Beta Channel to participate in identifying and reporting issues to Microsoft. Devices in the Windows Insider Program are subscribed to this channel by default. For use in (manual) test environments only and a limited number of devices.
+        Current Channel (Preview): Devices set to this channel will be offered updates earliest during the monthly gradual release cycle. Suggested for pre-production/validation environments.
+        Current Channel (Staged): Devices will be offered updates after the monthly gradual release cycle. Suggested to apply to a small, representative part of your production population (~10%).
+        Current Channel (Broad): Devices will be offered updates only after the gradual release cycle completes. Suggested to apply to a broad set of devices in your production population (~10-100%).
+        Critical - Time delay: Devices will be offered updates with a 48-hour delay. Suggested for critical environments only.
+
+        If you disable or do not configure this policy, the device will stay up to date automatically during the gradual release cycle. Suitable for most devices.
+    </string>
+    <string id="Root_EngineUpdateChannel">Select the channel for Microsoft Defender monthly engine updates</string>
+    <string id="Root_EngineUpdateChannel_Explain">Enable this policy to specify when devices receive Microsoft Defender engine updates during the monthly gradual rollout.​
+
+        Beta Channel: Devices set to this channel will be the first to receive new updates. Select Beta Channel to participate in identifying and reporting issues to Microsoft. Devices in the Windows Insider Program are subscribed to this channel by default. For use in (manual) test environments only and a limited number of devices.
+        Current Channel (Preview): Devices set to this channel will be offered updates earliest during the monthly gradual release cycle. Suggested for pre-production/validation environments.
+        Current Channel (Staged): Devices will be offered updates after the monthly gradual release cycle. Suggested to apply to a small, representative part of your production population (~10%).
+        Current Channel (Broad): Devices will be offered updates only after the gradual release cycle completes. Suggested to apply to a broad set of devices in your production population (~10-100%).
+        Critical - Time delay: Devices will be offered updates with a 48-hour delay. Suggested for critical environments only.
+
+        If you disable or do not configure this policy, the device will stay up to date automatically during the gradual release cycle. Suitable for most devices.
+    </string>
+    <string id="Root_SecurityIntelligenceUpdateChannel">Select the channel for Microsoft Defender daily security intelligence updates</string>
+    <string id="Root_SecurityIntelligenceUpdateChannel_Explain">Enable this policy to specify when devices receive Microsoft Defender security intelligence updates during the daily gradual rollout.
+
+        Current Channel (Staged): Devices will be offered updates after the release cycle. Suggested to apply to a small, representative part of production population (~10%).
+        Current Channel (Broad): Devices will be offered updates only after the gradual release cycle completes. Suggested to apply to a broad set of devices in your production population (~10-100%).
+        Critical - Time delay: Devices will be offered updates with a 48-hour delay. Suggested for critical environments only.
+
+        If you disable or do not configure this policy, the device will stay up to date automatically during the daily release cycle. Suitable for most devices.
+    </string>
+    <string id="Root_UpdateChannel_Dropdown_Beta">Beta Channel</string>
+    <string id="Root_UpdateChannel_Dropdown_Preview">Current Channel (Preview)</string>
+    <string id="Root_UpdateChannel_Dropdown_Staged">Current Channel (Staged)</string>
+    <string id="Root_UpdateChannel_Dropdown_Broad">Current Channel (Broad)</string>
+    <string id="Root_UpdateChannel_Dropdown_Delayed">Critical - Time delay</string>
+    <string id="MpEngine_DisableGradualRelease">Disable gradual rollout of Microsoft Defender updates.</string>
+    <string id="MpEngine_DisableGradualRelease_Explain">Enable this policy to disable gradual rollout of Defender updates.
+
+        Current Channel (Broad): Devices set to this channel will be offered updates last during the gradual release cycle. Best for datacenter machines that only receive limited updates.
+
+        Note: This setting applies to both monthly as well as daily Defender updates and will override any previously configured channel selections for platform and engine updates.
+
+        If you disable or do not configure this policy, the device will remain in Current Channel (Default) unless specified otherwise in specific channels for platform and engine updates. Stay up to date automatically during the gradual release cycle. Suitable for most devices.</string>
+    <string id="DeviceControl_DefaultEnforcement">Select Device Control Default Enforcement Policy</string>
+    <string id="DeviceControl_DefaultEnforcement_Explain">
+        Default Allow: Choosing this default enforcement, will Allow any operations to occur on the attached devices if no policy rules are found to match.
+        Default Deny: Choosing this default enforcement, will Deny any operations to occur on the attached devices if no policy rules are found to match.
+
+        Default Enforcement will establish what decision should be made during the Device Control access checks when none of the policy rules match.
+    </string>
+    <string id="DeviceControl_DefaultEnforcement_DefaultAllow">Default Allow</string>
+    <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Default Deny</string>
+    <string id="DeviceControl_DataDuplicationRemoteLocation">Define Device Control evidence data remote location</string>
+    <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
+        Define evidence file remote location, where Device Control service will move evidence data captured.
+    </string>
+    <string id="Features_DeviceControlEnabled">Device Control</string>
+    <string id="DeviceControl_DeviceControlEnabled_Explain">
+        Enable or Disable Defender Device Control on this machine.
+        Note: You must be enrolled as E3 or E5 in order for Device Control to be enabled.
     </string>
     </stringTable>
     <presentationTable>
@@ -1222,6 +1304,23 @@
     </presentation>
     <presentation id="SchedulerRandomizationTime">
         <decimalTextBox refId="SchedulerRandomizationTime" defaultValue="4">Specify scheduler randomization window in hours.</decimalTextBox>
+    </presentation>
+    <presentation id="PlatformUpdateChannelsDropDown">
+    <dropdownList refId="UpdateChannelsDropDown" noSort="true" defaultItem="0">Select the channel for Microsoft Defender monthly platform updates:</dropdownList>
+    </presentation>
+    <presentation id="EngineUpdateChannelsDropDown">
+    <dropdownList refId="UpdateChannelsDropDown" noSort="true" defaultItem="0">Select the channel for Microsoft Defender monthly engine updates:</dropdownList>
+    </presentation>
+    <presentation id="SecurityIntelligenceUpdateChannelsDropDown">
+    <dropdownList refId="UpdateChannelsDropDown" noSort="true" defaultItem="0">Select the channel for Microsoft Defender daily security intelligence updates:</dropdownList>
+    </presentation>
+    <presentation id="DeviceControlDefaultEnforcementDropDown">
+    <dropdownList refId="DeviceControlDefaultEnforcementDropDown" noSort="true" defaultItem="0">Select Device Control Default Enforcement Policy</dropdownList>
+    </presentation>
+    <presentation id="DeviceControl_DataDuplicationRemoteLocation">
+    <textBox refId="DeviceControl_DataDuplicationRemoteLocation">
+        <label>Define the Device Control data duplication remote location.</label>
+    </textBox>
     </presentation>
    </presentationTable>
 </resources>
