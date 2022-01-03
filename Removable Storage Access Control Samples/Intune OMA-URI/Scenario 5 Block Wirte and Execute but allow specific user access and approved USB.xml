@@ -12,7 +12,7 @@
         <AccessMask>6</AccessMask>
         <Sid>xxxxxxxx</Sid>
     </Entry>
-    <Entry Id="{5d660ff3-a19f-47ae-8779-ca6a989d9780}"> 
+    <Entry Id="{f9f6d219-1332-4c64-b6cb-2e14c65cd243}"> 
         <Type>AuditAllowed</Type>
         <Options>2</Options>
         <AccessMask>6</AccessMask>
