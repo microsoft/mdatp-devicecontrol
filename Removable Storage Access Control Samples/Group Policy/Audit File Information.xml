@@ -7,11 +7,6 @@
 						</IncludedIdList>
 						<ExcludedIdList>
 						</ExcludedIdList>
-						<Entry Id="{b5645f63-855e-4a12-8339-4f2d61661a95}">
-							<Type>Allow</Type>
-							<Options>0</Options>
-							<AccessMask>8</AccessMask>
-						</Entry>
 						<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
 							<Type>Allow</Type>
 							<Options>8</Options>
