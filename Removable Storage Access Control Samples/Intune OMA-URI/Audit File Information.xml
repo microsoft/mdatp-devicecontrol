@@ -1,6 +1,6 @@
 <PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}">
 <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7d/RuleData -->
-	<Name>Data Duplication Filesystem Demo</Name>
+			<Name>Audit File Information</Name>
 					<IncludedIdList>
 						<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
 					</IncludedIdList>
@@ -8,7 +8,7 @@
 					</ExcludedIdList>
 					<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
 						<Type>Allow</Type>
-						<Options>8</Options>
+						<Options>16</Options>
 						<AccessMask>16</AccessMask>
 					</Entry>
 </PolicyRule>
