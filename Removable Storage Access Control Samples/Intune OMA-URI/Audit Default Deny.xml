@@ -1,0 +1,12 @@
+<PolicyRule Id="{f3520ea7-fd1b-4237-8ebc-96911db44f8e}">
+   <!-- Audit default deny -->
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bf3520ea7-fd1b-4237-8ebc-96911db44f8e%7d/RuleData -->
+   <Name>Default Deny</Name>
+   <IncludedIdList />
+   <ExcludedIdList />
+   <Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
+      <Type>AuditDenied</Type>
+      <Options>3</Options>
+      <AccessMask>3</AccessMask>
+   </Entry>
+</PolicyRule>

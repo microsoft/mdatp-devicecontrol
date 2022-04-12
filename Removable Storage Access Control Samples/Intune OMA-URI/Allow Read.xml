@@ -1,0 +1,15 @@
+<PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"> 
+<!-- Allow Any Read activity -->
+<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7d/RuleData -->
+   <Name>Allow Read Activity</Name>
+   <IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+      <Type>Allow</Type>
+      <Options>0</Options>
+      <AccessMask>9</AccessMask>
+   </Entry>
+</PolicyRule>
