@@ -7,6 +7,6 @@
    <Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
       <Type>AuditDenied</Type>
       <Options>3</Options>
-      <AccessMask>3</AccessMask>
+      <AccessMask>7</AccessMask>
    </Entry>
 </PolicyRule>
