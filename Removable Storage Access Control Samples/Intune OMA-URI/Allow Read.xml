@@ -12,4 +12,9 @@
       <Options>0</Options>
       <AccessMask>9</AccessMask>
    </Entry>
+    <Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
+      <Type>AuditAllowed</Type>
+      <Options>2</Options>
+      <AccessMask>9</AccessMask>
+   </Entry>
 </PolicyRule>
