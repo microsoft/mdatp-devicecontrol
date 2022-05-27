@@ -1,0 +1,63 @@
+<PolicyRules>	
+
+<PolicyRule Id="{b2061588-029e-427d-8404-6dfec096a571}"> 
+ <!-- Allow access and Audit file information -->
+   <Name>Allow access and Audit file information</Name>
+   <IncludedIdList>
+		<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{3d5a4360-e9b5-4da5-9214-d22f5ea0b893}">
+      <Type>Allow</Type>
+      <Options>0</Options>
+      <AccessMask>47</AccessMask>
+   </Entry>
+   <Entry Id="{0cee54be-b320-4194-9c28-c780d168e158}">
+      <Type>AuditAllowed</Type>
+      <Options>2</Options>
+      <AccessMask>47</AccessMask>
+   </Entry>
+   <Entry Id="{5b7657c7-a2f2-4264-9676-198d7bd35e56}">
+		<Type>Allow</Type>
+		<Options>16</Options>
+		<AccessMask>16</AccessMask>
+	</Entry>
+</PolicyRule>
+
+
+<PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"> 
+<!-- Allow Any Read activity -->
+   <Name>Allow Read Activity</Name>
+   <IncludedIdList>
+	<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+      <Type>Allow</Type>
+      <Options>0</Options>
+      <AccessMask>9</AccessMask>
+   </Entry>
+ <Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
+      <Type>AuditAllowed</Type>
+      <Options>2</Options>
+      <AccessMask>9</AccessMask>
+   </Entry>
+</PolicyRule>
+
+
+<PolicyRule Id="{f3520ea7-fd1b-4237-8ebc-96911db44f8e}">
+   <!-- Audit default deny -->
+   <Name>Default Deny</Name>
+   <IncludedIdList />
+   <ExcludedIdList />
+   <Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
+      <Type>AuditDenied</Type>
+      <Options>3</Options>
+      <AccessMask>7</AccessMask>
+   </Entry>
+</PolicyRule>
+
+
+</PolicyRules>
