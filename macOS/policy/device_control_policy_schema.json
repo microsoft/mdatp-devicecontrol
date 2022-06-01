@@ -9,10 +9,11 @@
         "rules",
         "settings"
     ],
+    "additionalProperties": false,
     "properties": {
         "groups": {
             "type": "array",
-            "default": [],
+            "minItems": 1,
             "title": "The machine groups to be used within rules",
             "items": {
                 "type": "object",
@@ -58,6 +59,7 @@
         },
         "rules": {
             "type": "array",
+            "minItems": 1,
             "title": "The rules which define the behavior of device control for a group of devices",
             "items": {
                 "type": "object",
@@ -88,6 +90,7 @@
                     },
                     "includeGroups": {
                         "type": "array",
+                        "minItems": 1,
                         "title": "List of all the groups that a device must be a member of (logical AND) for this rule to be applicable.",
                         "items": {
                             "type": "string",
@@ -102,6 +105,7 @@
                     },
                     "excludeGroups": {
                         "type": "array",
+                        "minItems": 1,
                         "title": "List of groups which override the applicability logic of includeGroups.  Membership in any of these groups (logical OR) will disable the rule for a device.",
                         "items": {
                             "type": "string",
@@ -114,6 +118,7 @@
                     },
                     "entries": {
                         "type": "array",
+                        "minItems": 1,
                         "title": "The enforcement behavior for this rule.  Entries are traversed in order, and the first match dictates the action taken.",
                         "items": {
                             "type": "object",
@@ -131,16 +136,19 @@
             "type": "object",
             "default": {},
             "title": "Settings to control Device Control",
+            "additionalProperties": false,
             "properties": {
                 "features": {
                     "type": "object",
                     "default": {},
                     "title": "Feature specific settings",
+                    "additionalProperties": false,
                     "properties": {
                         "appleDevice": {
                             "type": "object",
                             "default": {},
                             "title": "Settings for Apple Devices",
+                            "additionalProperties": false,
                             "properties": {
                                 "disable": {
                                     "type": "boolean",
@@ -163,6 +171,7 @@
                     "type": "object",
                     "default": {},
                     "title": "Global Settings",
+                    "additionalProperties": false,
                     "properties": {
                         "defaultEnforcement": {
                             "enum": [ "allow", "deny" ],
@@ -178,6 +187,7 @@
                     "type": "object",
                     "default": {},
                     "title": "UX settings",
+                    "additionalProperties": false,
                     "properties": {
                         "navigationTarget": {
                             "type": "string",
@@ -291,9 +301,19 @@
             "type": "object",
             "title": "A query which describes the devices to include in this group",
             "required": [
-                "$type",
-                "clauses",
-                "subqueries"
+                "$type"
+            ],
+            "anyOf": [
+                {
+                    "required": [
+                        "clauses"
+                    ]
+                },
+                {
+                    "required": [
+                        "subqueries"
+                    ]
+                }
             ],
             "properties": {
                 "$type": {
@@ -306,7 +326,7 @@
                 },
                 "clauses": {
                     "type": "array",
-                    "default": [],
+                    "minItems": 1,
                     "title": "Clauses to evaluate",
                     "items": {
                         "type": "object",
@@ -321,7 +341,7 @@
                 },
                 "subqueries": {
                     "type": "array",
-                    "default": [],
+                    "minItems": 1,
                     "title": "Subqueries to evaluate",
                     "items": { "$ref": "#/$defs/query" }
                 }
@@ -478,10 +498,10 @@
         },
         "enforcement": {
             "oneOf": [
-                "#/$defs/denyEnforcement",
-                "#/$defs/allowEnforcement",
-                "#/$defs/auditDenyEnforcement",
-                "#/$defs/auditAllowEnforcement"
+                { "$ref": "#/$defs/denyEnforcement" },
+                { "$ref": "#/$defs/allowEnforcement" },
+                { "$ref": "#/$defs/auditDenyEnforcement" },
+                { "$ref": "#/$defs/auditAllowEnforcement" }
             ]
         },
         "appleDeviceEntry": {
