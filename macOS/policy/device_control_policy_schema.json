@@ -41,13 +41,7 @@
                             "Dev Devices"
                         ]
                     },
-                    "query": {
-                        "type": "object",
-                        "title": "A query which describes the devices to include in this group",
-                        "oneOf": [
-                            { "$ref": "#/$defs/query" }
-                        ]
-                    }
+                    "query": { "$ref": "#/$defs/query" }
                 },
                 "examples": [{
                     "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
