@@ -53,172 +53,26 @@
                             "value": "apple_devices"
                         }]
                     }
-                },
-                {
-                    "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                    "query": {
-                        "$type": "any",
-                        "clauses": [{
-                            "$type": "vendorId",
-                            "value": "1234"
-                        },
-                        {
-                            "$type": "productId",
-                            "value": "4321"
-                        },
-                        {
-                            "$type": "serialNumber",
-                            "value": "ABCDEFGHIJKLMNOP"
-                        }],
-                        "subqueries": [{
-                            "$type": "all",
-                            "clauses": [{
-                                "$type": "vendorId",
-                                "value": "4321"
-                            },
-                            {
-                                "$type": "productId",
-                                "value": "1234"
-                            }]
-                        },
-                        {
-                            "$type": "any",
-                            "clauses": [{
-                                "$type": "vendorId",
-                                "value": "2222"
-                            },
-                            {
-                                "$type": "productId",
-                                "value": "3333"
-                            }],
-                            "subqueries": [{
-                                "$type": "all",
-                                "clauses": [{
-                                    "$type": "vendorId",
-                                    "value": "4444"
-                                }]
-                            }]
-                        }]
-                    }
-                },
-                {
-                    "id": "03f025f6-ee9d-49b2-b192-fc7a00df6856",
-                    "name": "Dev Machines",
-                    "query": {
-                        "$type": "any",
-                        "clauses": [{
-                            "$type": "vendorId",
-                            "value": "12345"
-                        },
-                        {
-                            "$type": "productId",
-                            "value": "AZ"
-                        },
-                        {
-                            "$type": "serialNumber",
-                            "value": "ABCDEFGHIJKLMNOP"
-                        }]
-                    }
                 }]
-            },
-            "examples": [
-                [{
-                    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                    "name": "All Apple Devices",
-                    "query": {
-                        "$type": "all",
-                        "clauses": [{
-                            "$type": "primaryId",
-                            "value": "apple_devices"
-                        }]
-                    }
-                },
-                {
-                    "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                    "query": {
-                        "$type": "any",
-                        "clauses": [{
-                            "$type": "vendorId",
-                            "value": "1234"
-                        },
-                        {
-                            "$type": "productId",
-                            "value": "4321"
-                        },
-                        {
-                            "$type": "serialNumber",
-                            "value": "ABCDEFGHIJKLMNOP"
-                        }],
-                        "subqueries": [{
-                            "$type": "all",
-                            "clauses": [{
-                                "$type": "vendorId",
-                                "value": "4321"
-                            },
-                            {
-                                "$type": "productId",
-                                "value": "1234"
-                            }]
-                        },
-                        {
-                            "$type": "any",
-                            "clauses": [{
-                                "$type": "vendorId",
-                                "value": "2222"
-                            },
-                            {
-                                "$type": "productId",
-                                "value": "3333"
-                            }],
-                            "subqueries": [{
-                                "$type": "all",
-                                "clauses": [{
-                                    "$type": "vendorId",
-                                    "value": "4444"
-                                }]
-                            }]
-                        }]
-                    }
-                },
-                {
-                    "id": "03f025f6-ee9d-49b2-b192-fc7a00df6856",
-                    "name": "Dev Machines",
-                    "query": {
-                        "$type": "any",
-                        "clauses": [{
-                            "$type": "vendorId",
-                            "value": "12345"
-                        },
-                        {
-                            "$type": "productId",
-                            "value": "AZ"
-                        },
-                        {
-                            "$type": "serialNumber",
-                            "value": "ABCDEFGHIJKLMNOP"
-                        }]
-                    }
-                }]
-            ]
+            }
         },
         "rules": {
             "type": "array",
-            "default": [],
-            "title": "The rules Schema",
+            "title": "The rules which define the behavior of device control for a group of devices",
             "items": {
                 "type": "object",
-                "title": "A Schema",
+                "title": "A device control rule",
                 "required": [
                     "id",
                     "name",
                     "includeGroups",
-                    "excludeGroups",
                     "entries"
                 ],
                 "properties": {
                     "id": {
                         "type": "string",
-                        "title": "The id Schema",
+                        "title": "UUID to uniquely identify this rule.",
+                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                         "examples": [
                             "772cef80-229f-48b4-bd17-a6913009298d",
                             "bfabe24b-37a6-4bc0-9778-421aeaeece23"
@@ -226,567 +80,119 @@
                     },
                     "name": {
                         "type": "string",
-                        "title": "The name Schema",
+                        "title": "Friendly name for the rule",
                         "examples": [
-                            "Removable Media",
+                            "Removable Media: Read Only",
                             "Test Rule #1"
                         ]
                     },
                     "includeGroups": {
                         "type": "array",
-                        "title": "The includeGroups Schema",
+                        "title": "List of all the groups that a device must be a member of (logical AND) for this rule to be applicable.",
                         "items": {
                             "type": "string",
-                            "title": "A Schema",
+                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                            "title": "UUID of a group",
                             "examples": [
                                 "3f082cd3-f701-4c21-9a6a-ed115c28e217",
                                 "03f025f6-ee9d-49b2-b192-fc7a00df6856",
                                 "03f025f6-ee9d-49b2-b192-fc7a00df6857"
                             ]
-                        },
-                        "examples": [
-                            [
-                                "3f082cd3-f701-4c21-9a6a-ed115c28e217"],
-                            ["03f025f6-ee9d-49b2-b192-fc7a00df6856",
-                                "03f025f6-ee9d-49b2-b192-fc7a00df6857",
-                                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
-                            ]
-                        ]
+                        }
                     },
                     "excludeGroups": {
                         "type": "array",
-                        "default": [],
-                        "title": "The excludeGroups Schema",
+                        "title": "List of groups which override the applicability logic of includeGroups.  Membership in any of these groups (logical OR) will disable the rule for a device.",
                         "items": {
                             "type": "string",
-                            "default": "",
-                            "title": "A Schema",
+                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                            "title": "UUID of a group",
                             "examples": [
                                 "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                             ]
-                        },
-                        "examples": [
-                            [
-                                "34aec8e5-e2fa-4d1e-8788-2b1284226653"]
-                        ]
+                        }
                     },
                     "entries": {
                         "type": "array",
-                        "title": "The entries Schema",
+                        "title": "The enforcement behavior for this rule.  Entries are traversed in order, and the first match dictates the action taken.",
                         "items": {
                             "type": "object",
-                            "title": "A Schema",
-                            "required": [
-                                "$type",
-                                "enforcement",
-                                "access"
-                            ],
-                            "properties": {
-                                "$type": {
-                                    "type": "string",
-                                    "title": "The $type Schema",
-                                    "examples": [
-                                        "appleDevice",
-                                        "removableMedia",
-                                        "generic"
-                                    ]
-                                },
-                                "enforcement": {
-                                    "type": "object",
-                                    "title": "The enforcement Schema",
-                                    "required": [
-                                        "$type",
-                                        "options"
-                                    ],
-                                    "properties": {
-                                        "$type": {
-                                            "type": "string",
-                                            "title": "The $type Schema",
-                                            "examples": [
-                                                "allow",
-                                                "deny"
-                                            ]
-                                        },
-                                        "options": {
-                                            "type": "array",
-                                            "title": "The options Schema",
-                                            "items": {
-                                                "type": "string",
-                                                "title": "A Schema",
-                                                "examples": [
-                                                    "disable_audit_deny",
-                                                    "disable_audit_allow"
-                                                ]
-                                            },
-                                            "examples": [
-                                                ["disable_audit_deny",
-                                                    "disable_audit_allow"
-                                                ],
-                                                [
-                                                    "disable_audit_deny"]
-                                            ]
-                                        }
-                                    },
-                                    "examples": [{
-                                        "$type": "allow",
-                                        "options": [
-                                            "disable_audit_deny",
-                                            "disable_audit_allow"
-                                        ]
-                                    },
-                                    {
-                                        "$type": "deny",
-                                        "options": [
-                                            "disable_audit_deny"
-                                        ]
-                                    },
-                                    {
-                                        "$type": "deny"
-                                    },
-                                    {
-                                        "$type": "allow"
-                                    }]
-                                },
-                                "access": {
-                                    "type": "array",
-                                    "title": "The access Schema",
-                                    "items": {
-                                        "type": "string",
-                                        "title": "A Schema",
-                                        "examples": [
-                                            "download_files_from_device",
-                                            "sync_content_to_device",
-                                            "backup_device",
-                                            "update_device",
-                                            "download_photos_from_device",
-                                            "read",
-                                            "write",
-                                            "execute",
-                                            "generic_read",
-                                            "generic_write",
-                                            "generic_execute"
-                                        ]
-                                    },
-                                    "examples": [
-                                        ["download_files_from_device",
-                                            "sync_content_to_device",
-                                            "backup_device",
-                                            "update_device",
-                                            "download_photos_from_device"
-                                        ],
-                                        ["read",
-                                            "write",
-                                            "execute"
-                                        ],
-                                        ["generic_read",
-                                            "generic_write",
-                                            "generic_execute"
-                                        ],
-                                        [
-                                            "update_device"]
-                                    ]
-                                }
-                            },
-                            "examples": [{
-                                "$type": "appleDevice",
-                                "enforcement": {
-                                    "$type": "allow",
-                                    "options": [
-                                        "disable_audit_deny",
-                                        "disable_audit_allow"
-                                    ]
-                                },
-                                "access": [
-                                    "download_files_from_device",
-                                    "sync_content_to_device",
-                                    "backup_device",
-                                    "update_device",
-                                    "download_photos_from_device"
-                                ]
-                            },
-                            {
-                                "$type": "removableMedia",
-                                "enforcement": {
-                                    "$type": "deny",
-                                    "options": [
-                                        "disable_audit_deny"
-                                    ]
-                                },
-                                "access": [
-                                    "read",
-                                    "write",
-                                    "execute"
-                                ]
-                            },
-                            {
-                                "$type": "generic",
-                                "enforcement": {
-                                    "$type": "deny"
-                                },
-                                "access": [
-                                    "generic_read",
-                                    "generic_write",
-                                    "generic_execute"
-                                ]
-                            },
-                            {
-                                "$type": "appleDevice",
-                                "enforcement": {
-                                    "$type": "allow"
-                                },
-                                "access": [
-                                    "update_device"
-                                ]
-                            }]
-                        },
-                        "examples": [
-                            [{
-                                "$type": "appleDevice",
-                                "enforcement": {
-                                    "$type": "allow",
-                                    "options": [
-                                        "disable_audit_deny",
-                                        "disable_audit_allow"
-                                    ]
-                                },
-                                "access": [
-                                    "download_files_from_device",
-                                    "sync_content_to_device",
-                                    "backup_device",
-                                    "update_device",
-                                    "download_photos_from_device"
-                                ]
-                            },
-                            {
-                                "$type": "removableMedia",
-                                "enforcement": {
-                                    "$type": "deny",
-                                    "options": [
-                                        "disable_audit_deny"
-                                    ]
-                                },
-                                "access": [
-                                    "read",
-                                    "write",
-                                    "execute"
-                                ]
-                            },
-                            {
-                                "$type": "generic",
-                                "enforcement": {
-                                    "$type": "deny"
-                                },
-                                "access": [
-                                    "generic_read",
-                                    "generic_write",
-                                    "generic_execute"
-                                ]
-                            }],
-                            [{
-                                "$type": "appleDevice",
-                                "enforcement": {
-                                    "$type": "allow"
-                                },
-                                "access": [
-                                    "update_device"
-                                ]
-                            }]
-                        ]
+                            "title": "A rule entry",
+                            "oneOf": [
+                                { "$ref": "#/$defs/appleDeviceEntry" },
+                                { "$ref": "#/$defs/genericEntry" }
+                            ]
+                        }
                     }
-                },
-                "examples": [{
-                    "id": "772cef80-229f-48b4-bd17-a6913009298d",
-                    "name": "Removable Media",
-                    "includeGroups": [
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217"
-                    ],
-                    "excludeGroups": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ],
-                    "entries": [{
-                        "$type": "appleDevice",
-                        "enforcement": {
-                            "$type": "allow",
-                            "options": [
-                                "disable_audit_deny",
-                                "disable_audit_allow"
-                            ]
-                        },
-                        "access": [
-                            "download_files_from_device",
-                            "sync_content_to_device",
-                            "backup_device",
-                            "update_device",
-                            "download_photos_from_device"
-                        ]
-                    },
-                    {
-                        "$type": "removableMedia",
-                        "enforcement": {
-                            "$type": "deny",
-                            "options": [
-                                "disable_audit_deny"
-                            ]
-                        },
-                        "access": [
-                            "read",
-                            "write",
-                            "execute"
-                        ]
-                    },
-                    {
-                        "$type": "generic",
-                        "enforcement": {
-                            "$type": "deny"
-                        },
-                        "access": [
-                            "generic_read",
-                            "generic_write",
-                            "generic_execute"
-                        ]
-                    }]
-                },
-                {
-                    "id": "bfabe24b-37a6-4bc0-9778-421aeaeece23",
-                    "name": "Test Rule #1",
-                    "includeGroups": [
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6856",
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6857",
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217"
-                    ],
-                    "entries": [{
-                        "$type": "appleDevice",
-                        "enforcement": {
-                            "$type": "allow"
-                        },
-                        "access": [
-                            "update_device"
-                        ]
-                    }]
-                }]
-            },
-            "examples": [
-                [{
-                    "id": "772cef80-229f-48b4-bd17-a6913009298d",
-                    "name": "Removable Media",
-                    "includeGroups": [
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217"
-                    ],
-                    "excludeGroups": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ],
-                    "entries": [{
-                        "$type": "appleDevice",
-                        "enforcement": {
-                            "$type": "allow",
-                            "options": [
-                                "disable_audit_deny",
-                                "disable_audit_allow"
-                            ]
-                        },
-                        "access": [
-                            "download_files_from_device",
-                            "sync_content_to_device",
-                            "backup_device",
-                            "update_device",
-                            "download_photos_from_device"
-                        ]
-                    },
-                    {
-                        "$type": "removableMedia",
-                        "enforcement": {
-                            "$type": "deny",
-                            "options": [
-                                "disable_audit_deny"
-                            ]
-                        },
-                        "access": [
-                            "read",
-                            "write",
-                            "execute"
-                        ]
-                    },
-                    {
-                        "$type": "generic",
-                        "enforcement": {
-                            "$type": "deny"
-                        },
-                        "access": [
-                            "generic_read",
-                            "generic_write",
-                            "generic_execute"
-                        ]
-                    }]
-                },
-                {
-                    "id": "bfabe24b-37a6-4bc0-9778-421aeaeece23",
-                    "name": "Test Rule #1",
-                    "includeGroups": [
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6856",
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6857",
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217"
-                    ],
-                    "entries": [{
-                        "$type": "appleDevice",
-                        "enforcement": {
-                            "$type": "allow"
-                        },
-                        "access": [
-                            "update_device"
-                        ]
-                    }]
-                }]
-            ]
+                }
+            }
         },
         "settings": {
             "type": "object",
             "default": {},
-            "title": "The settings Schema",
-            "required": [
-                "features",
-                "global",
-                "ux"
-            ],
+            "title": "Settings to control Device Control",
             "properties": {
                 "features": {
                     "type": "object",
                     "default": {},
-                    "title": "The features Schema",
-                    "required": [
-                        "appleDevice",
-                        "portableDevice",
-                        "removableMedia"
-                    ],
+                    "title": "Feature specific settings",
                     "properties": {
                         "appleDevice": {
                             "type": "object",
                             "default": {},
-                            "title": "The appleDevice Schema",
-                            "required": [
-                                "disable"
-                            ],
+                            "title": "Settings for Apple Devices",
                             "properties": {
                                 "disable": {
                                     "type": "boolean",
-                                    "default": false,
-                                    "title": "The disable Schema",
+                                    "default": true,
+                                    "title": "Disable the Apple Devices feature?",
                                     "examples": [
                                         false
                                     ]
                                 }
-                            },
-                            "examples": [{
-                                "disable": false
-                            }]
-                        },
-                        "portableDevice": {
-                            "type": "object",
-                            "default": {},
-                            "title": "The portableDevice Schema",
-                            "required": [
-                                "disable"
-                            ],
-                            "properties": {
-                                "disable": {
-                                    "type": "boolean",
-                                    "default": false,
-                                    "title": "The disable Schema",
-                                    "examples": [
-                                        true
-                                    ]
-                                }
-                            },
-                            "examples": [{
-                                "disable": true
-                            }]
-                        },
-                        "removableMedia": {
-                            "type": "object",
-                            "default": {},
-                            "title": "The removableMedia Schema",
-                            "required": [
-                                "disable"
-                            ],
-                            "properties": {
-                                "disable": {
-                                    "type": "null",
-                                    "default": null,
-                                    "title": "The disable Schema",
-                                    "examples": [
-                                        null
-                                    ]
-                                }
-                            },
-                            "examples": [{
-                                "disable": null
-                            }]
+                            }
                         }
                     },
                     "examples": [{
                         "appleDevice": {
                             "disable": false
-                        },
-                        "portableDevice": {
-                            "disable": true
-                        },
-                        "removableMedia": {
-                            "disable": null
                         }
                     }]
                 },
                 "global": {
                     "type": "object",
                     "default": {},
-                    "title": "The global Schema",
-                    "required": [
-                        "defaultEnforcement"
-                    ],
+                    "title": "Global Settings",
                     "properties": {
                         "defaultEnforcement": {
-                            "type": "string",
-                            "default": "",
-                            "title": "The defaultEnforcement Schema",
+                            "enum": [ "allow", "deny" ],
+                            "default": "allow",
+                            "title": "Default Enforcement if no rules match an action.",
                             "examples": [
                                 "deny"
                             ]
                         }
-                    },
-                    "examples": [{
-                        "defaultEnforcement": "deny"
-                    }]
+                    }
                 },
                 "ux": {
                     "type": "object",
                     "default": {},
-                    "title": "The ux Schema",
-                    "required": [
-                        "navigationTarget"
-                    ],
+                    "title": "UX settings",
                     "properties": {
                         "navigationTarget": {
                             "type": "string",
-                            "default": "",
-                            "title": "The navigationTarget Schema",
+                            "title": "URI to direct users to if the UX notification is clicked.",
                             "examples": [
                                 "http://www.microsoft.com"
                             ]
                         }
-                    },
-                    "examples": [{
-                        "navigationTarget": "http://www.microsoft.com"
-                    }]
+                    }
                 }
             },
             "examples": [{
                 "features": {
                     "appleDevice": {
                         "disable": false
-                    },
-                    "portableDevice": {
-                        "disable": true
-                    },
-                    "removableMedia": {
-                        "disable": null
                     }
                 },
                 "global": {
@@ -986,6 +392,185 @@
                     "value": "ABCDEFGHIJKLMNOP"
                 }]
             }]
+        },
+        "denyEnforcement": {
+            "title": "Access should be denied",
+            "required": [
+                "$type"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "deny" ]
+                },
+                "options": {
+                    "type": "array",
+                    "title": "Options to control the behavior of block events",
+                    "items": {
+                        "enum": [
+                            "disable_audit_deny"
+                        ]
+                    }
+                }
+            }
+        },
+        "allowEnforcement": {
+            "title": "Access should be allowed",
+            "required": [
+                "$type"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "allow" ]
+                },
+                "options": {
+                    "type": "array",
+                    "title": "Options to control the behavior of allow events",
+                    "items": {
+                        "enum": [
+                            "disable_audit_deny",
+                            "disable_audit_allow"
+                        ]
+                    }
+                }
+            }
+        },
+        "auditDenyEnforcement": {
+            "title": "Deny events should be audited",
+            "required": [
+                "$type"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "auditDeny" ]
+                },
+                "options": {
+                    "type": "array",
+                    "title": "Options to control the logging of block events",
+                    "items": {
+                        "enum": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    }
+                }
+            }
+        },
+        "auditAllowEnforcement": {
+            "title": "Access should be allowed",
+            "required": [
+                "$type",
+                "options"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "auditAllow" ]
+                },
+                "options": {
+                    "type": "array",
+                    "title": "Options to control the logging of allow events",
+                    "items": {
+                        "enum": [
+                            "send_event"
+                        ]
+                    }
+                }
+            }
+        },
+        "enforcement": {
+            "oneOf": [
+                "#/$defs/denyEnforcement",
+                "#/$defs/allowEnforcement",
+                "#/$defs/auditDenyEnforcement",
+                "#/$defs/auditAllowEnforcement"
+            ]
+        },
+        "appleDeviceEntry": {
+            "title": "An entry to control actions for apple devices",
+            "required": [
+                "$type",
+                "enforcement",
+                "access"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "appleDevice" ]
+                },
+                "enforcement": { "$ref": "#/$defs/enforcement" },
+                "access": {
+                    "type": "array",
+                    "title": "The access kind to control",
+                    "items": {
+                        "enum": [
+                            "download_files_from_device",
+                            "sync_content_to_device",
+                            "backup_device",
+                            "update_device",
+                            "download_photos_from_device"
+                        ],
+                        "title": "Apple specific access types",
+                        "examples": [
+                            "download_files_from_device"
+                        ]
+                    }
+                }
+            },
+            "examples": [{
+                "$type": "appleDevice",
+                "enforcement": {
+                    "$type": "allow",
+                    "options": [
+                        "disable_audit_deny",
+                        "disable_audit_allow"
+                    ]
+                },
+                "access": [
+                    "download_files_from_device",
+                    "sync_content_to_device",
+                    "backup_device",
+                    "update_device",
+                    "download_photos_from_device"
+                ]
+            }]
+        },
+        "genericEntry": {
+            "title": "An entry to generically control actions",
+            "required": [
+                "$type",
+                "enforcement",
+                "access"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "generic" ]
+                },
+                "enforcement": { "$ref": "#/$defs/enforcement" },
+                "access": {
+                    "type": "array",
+                    "title": "The access kind to control.  Will be translated into device specific access kinds.",
+                    "items": {
+                        "enum": [
+                            "generic_read",
+                            "generic_write",
+                            "generic_execute"
+                        ],
+                        "title": "Generic access types",
+                        "examples": [
+                            "generic_read"
+                        ]
+                    }
+                }
+            },
+            "examples": [{
+                "$type": "generic",
+                "enforcement": {
+                    "$type": "deny"
+                },
+                "access": [
+                    "generic_read",
+                    "generic_write",
+                    "generic_execute"
+                ]
+            }]
         }
     },
     "examples": [{
@@ -1068,7 +653,7 @@
         }],
         "rules": [{
             "id": "772cef80-229f-48b4-bd17-a6913009298d",
-            "name": "Removable Media",
+            "name": "Test Rule #1",
             "includeGroups": [
                 "3f082cd3-f701-4c21-9a6a-ed115c28e217"
             ],
@@ -1093,20 +678,6 @@
                 ]
             },
             {
-                "$type": "removableMedia",
-                "enforcement": {
-                    "$type": "deny",
-                    "options": [
-                        "disable_audit_deny"
-                    ]
-                },
-                "access": [
-                    "read",
-                    "write",
-                    "execute"
-                ]
-            },
-            {
                 "$type": "generic",
                 "enforcement": {
                     "$type": "deny"
@@ -1120,7 +691,7 @@
         },
         {
             "id": "bfabe24b-37a6-4bc0-9778-421aeaeece23",
-            "name": "Test Rule #1",
+            "name": "Test Rule #2",
             "includeGroups": [
                 "03f025f6-ee9d-49b2-b192-fc7a00df6856",
                 "03f025f6-ee9d-49b2-b192-fc7a00df6857",
