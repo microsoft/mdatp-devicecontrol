@@ -1,0 +1,8 @@
+<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7be5170dfb-19a9-4466-8109-d36c9c912b4e%7d/GroupData -->
+   <Name>PDF_XPS Printer</Name>
+   <MatchType>MatchAny</MatchType>
+   <DescriptorIdList>
+      <PrinterConnectionId>File</PrinterConnectionId>
+   </DescriptorIdList>
+</Group>

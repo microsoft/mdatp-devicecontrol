@@ -1,0 +1,11 @@
+<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7d/GroupData -->
+   <Name>Corporate VPN</Name>
+   <MatchType>MatchAll</MatchType>
+   <DescriptorIdList>
+      <NameId>MSFTVPN</NameId>
+      <VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+      <VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+      <VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+   </DescriptorIdList>
+</Group>

@@ -1,0 +1,40 @@
+<Groups>	
+	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+		<Name>PDF_XPS Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
+	
+	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	
+	
+	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+				<NameId>corp.microsoft.com</NameId>				
+				<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>
+	
+	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
+		<Name>Corporate VPN</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>MSFTVPN</NameId>
+			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+		</DescriptorIdList>
+	</Group>
+		
+</Groups>
