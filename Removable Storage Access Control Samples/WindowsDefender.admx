@@ -338,11 +338,6 @@
                             <decimal value="5" />
                         </value>
                     </item>
-                    <item displayName="$(string.Root_UpdateChannel_Dropdown_Delayed)">
-                        <value>
-                            <decimal value="6" />
-                        </value>
-                    </item>
                 </enum>
             </elements>
         </policy>
@@ -693,6 +688,23 @@
         <policy name="Reporting_DisableEnhancedNotifications" class="Machine" displayName="$(string.Reporting_DisableEnhancedNotifications)" explainText="$(string.Reporting_DisableEnhancedNotifications_Explain)" key="Software\Policies\Microsoft\Windows Defender\Reporting" valueName="DisableEnhancedNotifications">
             <parentCategory ref="Reporting" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0" />
+            <enabledValue>
+            <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+            <decimal value="0" />
+            </disabledValue>
+        </policy>
+        <policy name="Reporting_ServiceHealthReportInterval" class="Machine" displayName="$(string.Reporting_ServiceHealthReportInterval)" explainText="$(string.Reporting_ServiceHealthReportInterval_Explain)" key="Software\Policies\Microsoft\Windows Defender\Reporting" valueName="ServiceHealthReportInterval" presentation="$(presentation.Reporting_ServiceHealthReportInterval)">
+            <parentCategory ref="Reporting" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
+            <elements>
+                <decimal id="Reporting_ServiceHealthReportInterval" valueName="ServiceHealthReportInterval" minValue="0" maxValue="14400" />
+            </elements>
+        </policy>
+        <policy name="Reporting_EnableDynamicSignatureDroppedEventReporting" class="Machine" displayName="$(string.Reporting_EnableDynamicSignatureDroppedEventReporting)" explainText="$(string.Reporting_EnableDynamicSignatureDroppedEventReporting_Explain)" key="Software\Policies\Microsoft\Windows Defender\Reporting" valueName="EnableDynamicSignatureDroppedEventReporting">
+            <parentCategory ref="Reporting" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
             <enabledValue>
             <decimal value="1" />
             </enabledValue>
@@ -1351,13 +1363,6 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
-        <policy name="UX_Configuration_CustomDefaultActionToastString" class="Machine" displayName="$(string.UX_Configuration_CustomDefaultActionToastString)" explainText="$(string.UX_Configuration_CustomDefaultActionToastString_Explain)" key="Software\Policies\Microsoft\Windows Defender\UX Configuration" presentation="$(presentation.UX_Configuration_CustomDefaultActionToastString)">
-            <parentCategory ref="ClientInterface" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <elements>
-                <text id="UX_Configuration_CustomDefaultActionToastString" valueName="CustomDefaultActionToastString" required="true" />
-            </elements>
-        </policy>
         <policy name="MpEngine_MpCloudBlockLevel" class="Machine" displayName="$(string.MpCloudBlockLevel)" explainText="$(string.MpCloudBlockLevel_Explain)" key="Software\Policies\Microsoft\Windows Defender\MpEngine" valueName="MpCloudBlockLevel" presentation="$(presentation.MpCloudBlockLevel)">
         <parentCategory ref="MpEngine" />
         <supportedOn ref="windows:SUPPORTED_Windows_10_0" />
@@ -1501,6 +1506,16 @@
             <elements>
                 <list id="ExploitGuard_ControlledFolderAccess_ProtectedFolders" additive="true" explicitValue="true" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ProtectedFolders" />
             </elements>
+        </policy>
+        <policy name="Features_TDTFeatureEnabled" class="Machine" displayName="$(string.Features_TDTFeatureEnabled)" explainText="$(string.Features_TDTFeatureEnabled_Explain)" key="Software\Policies\Microsoft\Windows Defender\Features" valueName="TDTFeatureEnabled">
+            <parentCategory ref="Features" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0" />
+            <enabledValue>
+                <decimal value="0" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="2" />
+            </disabledValue>
         </policy>
     </policies>
 </policyDefinitions>
