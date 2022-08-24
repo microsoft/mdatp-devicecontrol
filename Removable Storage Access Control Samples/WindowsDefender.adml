@@ -390,7 +390,20 @@
       
       If you enable this setting, Microsoft Defender Antivirus enhanced notifications will not display on clients.
     </string>
+    <string id="Reporting_ServiceHealthReportInterval">Configure time interval for service health reports</string>
+    <string id="Reporting_ServiceHealthReportInterval_Explain">This policy setting configures the time interval (in minutes) for the service health reports to be sent from endpoints.
 
+    If you disable or do not configure this setting, the default value will be applied. The default value is set at 60 minutes (1 hour).
+
+    If you configure this setting to 0, no service health reports will be sent.
+
+    The maximum value allowed to be set is 14400 minutes (10 days).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Configure whether to report Dynamic Signature dropped events</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">This policy setting configures whether to report Dynamic Signature dropped events.
+
+    If you do not configure this setting, the default value will be applied. The default value is set to disabled (such events are not reported).
+    If you configure this setting to enabled, Dynamic Signature dropped events will be reported.
+    If you configure this setting to disabled, Dynamic Signature dropped events will not be reported.</string>
       <string id="Scan_AllowPause">Allow users to pause scan</string>
     <string id="Scan_AllowPause_Explain">This policy setting allows you to manage whether or not end users can pause a scan in progress.
 
@@ -816,12 +829,6 @@
 
       If you enable this setting, Microsoft Defender Antivirus notifications will not display on clients.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Display additional text to clients when they need to perform an action</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">This policy setting allows you to configure whether or not to display additional text to clients when they need to perform an action. The text displayed is a custom administrator-defined string. For example, the phone number to call the company help desk. The client interface will only display a maximum of 1024 characters. Longer strings will be truncated before display.
-
-    If you enable this setting, the additional text specified will be displayed.
-
-    If you disable or do not configure this setting, there will be no additional text displayed.</string>
     <string id="MpCloudBlockLevel">Select cloud protection level</string>
     <string id="MpCloudBlockLevel_Explain">
       This policy setting determines how aggressive Microsoft Defender Antivirus will be in blocking and scanning suspicious files.
@@ -1112,6 +1119,12 @@
         Enable or Disable Defender Device Control on this machine.
         Note: You must be enrolled as E3 or E5 in order for Device Control to be enabled.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT Integration Level</string>
+    <string id="Features_TDTFeatureEnabled_Explain">This policy setting configures the integration level for Intel TDT integration for Intel TDT-capable devices.
+
+        If you do not configure this setting, the default value will be applied. The default value is set to control by signatures. TDT will be enabled based on particular signatures that are released by Microsoft.
+
+        If you configure this setting to disabled, Intel TDT integration will be turned off.</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1185,6 +1198,9 @@
     <presentation id="Reporting_WppTracingLevel">
     <decimalTextBox refId="Reporting_WppTracingLevel" defaultValue="0">Configure WPP tracing level</decimalTextBox>
     </presentation>
+    <presentation id="Reporting_ServiceHealthReportInterval">
+    <decimalTextBox refId="Reporting_ServiceHealthReportInterval" defaultValue="60">Configure time interval for service health reports</decimalTextBox>
+    </presentation>
     <presentation id="Scan_ArchiveMaxDepth">
     <decimalTextBox refId="Scan_ArchiveMaxDepth" defaultValue="0">Specify the maximum depth to scan archive files</decimalTextBox>
     </presentation>
@@ -1256,11 +1272,6 @@
     </presentation>
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Specify threat alert levels at which default action should not be taken when detected</listBox>
-    </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Display additional text to clients when they need to perform an action</label>
-    </textBox>
     </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Specify the interval for expiry notification</decimalTextBox>
