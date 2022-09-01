@@ -13,7 +13,7 @@
         <category name="Exclusions" displayName="$(string.Exclusions)">
             <parentCategory ref="AntiSpywareDefender" />
         </category>
-        <category name="Features" displayName="$(string.Features)">
+                <category name="Features" displayName="$(string.Features)">
             <parentCategory ref="AntiSpywareDefender" />
         </category>
         <category name="DeviceControl" displayName="$(string.DeviceControl)">
@@ -81,14 +81,14 @@
         </policy>
         <policy name="DeviceControl_PolicyGroups" class="Machine" displayName="$(string.DeviceControl_PolicyGroups)" explainText="$(string.DeviceControl_PolicyGroups_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control\Policy Groups" presentation="$(presentation.DeviceControl_PolicyGroups)">
             <parentCategory ref="DeviceControl" />
-            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <supportedOn ref="windows:SUPPORTED_Windows10" />
             <elements>
                 <text id="DeviceControl_PolicyGroups" valueName="PolicyGroups" required="true" />
             </elements>
         </policy>
         <policy name="DeviceControl_PolicyRules" class="Machine" displayName="$(string.DeviceControl_PolicyRules)" explainText="$(string.DeviceControl_PolicyRules_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control\Policy Rules" presentation="$(presentation.DeviceControl_PolicyRules)">
             <parentCategory ref="DeviceControl" />
-            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <supportedOn ref="windows:SUPPORTED_Windows10" />
             <elements>
                 <text id="DeviceControl_PolicyRules" valueName="PolicyRules" required="true" />
             </elements>
@@ -118,7 +118,6 @@
                 <text id="DeviceControl_DataDuplicationRemoteLocation" valueName="DataDuplicationRemoteLocation" required="true" />
             </elements>
         </policy>
-
         <policy name="DisableAutoExclusions" class="Machine" displayName="$(string.DisableAutoExclusions)" explainText="$(string.DisableAutoExclusions_Explain)" key="Software\Policies\Microsoft\Windows Defender\Exclusions" valueName="DisableAutoExclusions">
             <parentCategory ref="Exclusions" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_SERVER" />
@@ -153,10 +152,10 @@
             <parentCategory ref="AntiSpywareDefender" />
             <supportedOn ref="windows:SUPPORTED_Windows8" />
             <enabledValue>
-                <decimal value="1" />
+                <decimal value="0" />
             </enabledValue>
             <disabledValue>
-                <decimal value="0" />
+                <decimal value="1" />
             </disabledValue>
         </policy>
         <policy name="DisableRoutinelyTakingAction" class="Machine" displayName="$(string.DisableRoutinelyTakingAction)" explainText="$(string.DisableRoutinelyTakingActionDefender_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="DisableRoutinelyTakingAction">
@@ -200,13 +199,6 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
-        <policy name="SchedulerRandomizationTime" class="Machine" displayName="$(string.SchedulerRandomizationTime)" explainText="$(string.SchedulerRandomizationTime_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="SchedulerRandomizationTime" presentation="$(presentation.SchedulerRandomizationTime)">
-            <parentCategory ref="AntiSpywareDefender" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <elements>
-                <decimal id="SchedulerRandomizationTime" valueName="SchedulerRandomizationTime" minValue="1" maxValue="23" />
-            </elements>
-        </policy>
         <policy name="ServiceKeepAlive" class="Machine" displayName="$(string.ServiceKeepAlive)" explainText="$(string.ServiceKeepAlive_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="ServiceKeepAlive">
             <parentCategory ref="AntiSpywareDefender" />
             <supportedOn ref="windows:SUPPORTED_Windows8" />
@@ -216,13 +208,6 @@
             <disabledValue>
                 <decimal value="0" />
             </disabledValue>
-        </policy>
-        <policy name="SupportLogLocation" class="Machine" displayName="$(string.SupportLogLocation)" explainText="$(string.SupportLogLocation_Explain)" key="Software\Policies\Microsoft\Windows Defender" presentation="$(presentation.SupportLogLocation)">
-            <parentCategory ref="AntiSpywareDefender" />
-            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
-            <elements>
-                <text id="SupportLogLocation" valueName="SupportLogLocation" required="true" />
-            </elements>
         </policy>
         <policy name="HideExclusionsFromLocalAdmins" class="Machine" displayName="$(string.HideExclusionsFromLocalAdmins)" explainText="$(string.HideExclusionsFromLocalAdmins_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="HideExclusionsFromLocalAdmins">
             <parentCategory ref="AntiSpywareDefender" />
@@ -763,16 +748,6 @@
                 <decimal value="1" />
             </disabledValue>
         </policy>
-        <policy name="Scan_DisableCatchupFullScan" class="Machine" displayName="$(string.Scan_DisableCatchupFullScan)" explainText="$(string.Scan_DisableCatchupFullScan_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableCatchupFullScan">
-            <parentCategory ref="Scan" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <enabledValue>
-                <decimal value="0" />
-            </enabledValue>
-            <disabledValue>
-                <decimal value="1" />
-            </disabledValue>
-        </policy>
         <policy name="Scan_ThrottleForScheduledScanOnly" class="Machine" displayName="$(string.Scan_ThrottleForScheduledScanOnly)" explainText="$(string.Scan_ThrottleForScheduledScanOnly_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="ThrottleForScheduledScanOnly">
             <parentCategory ref="Scan" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
@@ -781,36 +756,6 @@
             </enabledValue>
             <disabledValue>
                 <decimal value="0" />
-            </disabledValue>
-        </policy>
-        <policy name="Scan_DisableCatchupQuickScan" class="Machine" displayName="$(string.Scan_DisableCatchupQuickScan)" explainText="$(string.Scan_DisableCatchupQuickScan_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableCatchupQuickScan">
-            <parentCategory ref="Scan" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <enabledValue>
-                <decimal value="0" />
-            </enabledValue>
-            <disabledValue>
-                <decimal value="1" />
-            </disabledValue>
-        </policy>
-        <policy name="Scan_DisableEmailScanning" class="Machine" displayName="$(string.Scan_DisableEmailScanning)" explainText="$(string.Scan_DisableEmailScanning_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableEmailScanning">
-            <parentCategory ref="Scan" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <enabledValue>
-                <decimal value="0" />
-            </enabledValue>
-            <disabledValue>
-                <decimal value="1" />
-            </disabledValue>
-        </policy>
-        <policy name="Scan_DisableHeuristics" class="Machine" displayName="$(string.Scan_DisableHeuristics)" explainText="$(string.Scan_DisableHeuristics_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableHeuristics">
-            <parentCategory ref="Scan" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <enabledValue>
-                <decimal value="0" />
-            </enabledValue>
-            <disabledValue>
-                <decimal value="1" />
             </disabledValue>
         </policy>
         <policy name="Scan_DisableRemovableDriveScanning" class="Machine" displayName="$(string.Scan_DisableRemovableDriveScanning)" explainText="$(string.Scan_DisableRemovableDriveScanning_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableRemovableDriveScanning">
@@ -1362,6 +1307,13 @@
             <disabledValue>
                 <decimal value="0" />
             </disabledValue>
+        </policy>
+        <policy name="UX_Configuration_CustomDefaultActionToastString" class="Machine" displayName="$(string.UX_Configuration_CustomDefaultActionToastString)" explainText="$(string.UX_Configuration_CustomDefaultActionToastString_Explain)" key="Software\Policies\Microsoft\Windows Defender\UX Configuration" presentation="$(presentation.UX_Configuration_CustomDefaultActionToastString)">
+            <parentCategory ref="ClientInterface" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
+            <elements>
+                <text id="UX_Configuration_CustomDefaultActionToastString" valueName="CustomDefaultActionToastString" required="true" />
+            </elements>
         </policy>
         <policy name="MpEngine_MpCloudBlockLevel" class="Machine" displayName="$(string.MpCloudBlockLevel)" explainText="$(string.MpCloudBlockLevel_Explain)" key="Software\Policies\Microsoft\Windows Defender\MpEngine" valueName="MpCloudBlockLevel" presentation="$(presentation.MpCloudBlockLevel)">
         <parentCategory ref="MpEngine" />
