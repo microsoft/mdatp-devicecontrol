@@ -29,7 +29,7 @@
 		<Entry Id="{979701d8-584a-4f27-8b68-2ecca59ccabd}">
 			<Type>AuditAllowed</Type>
 			<Options>2</Options>
-			<AccessMask>6</AccessMask>
+			<AccessMask>54</AccessMask>
 		</Entry>
 	</PolicyRule>
 
