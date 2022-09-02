@@ -8,11 +8,11 @@
     <Entry Id="{a0bcff88-b8e4-4f48-92be-16c36adac930}">
         <Type>Allow</Type>
         <Options>0</Options>
-        <AccessMask>6</AccessMask>
+        <AccessMask>54</AccessMask>
     </Entry>
     <Entry Id="{4a17df0b-d89d-430b-9cbe-8e0721192281}">
         <Type>AuditAllowed</Type>
         <Options>2</Options>
-        <AccessMask>6</AccessMask>
+        <AccessMask>54</AccessMask>
     </Entry>
 </PolicyRule>
