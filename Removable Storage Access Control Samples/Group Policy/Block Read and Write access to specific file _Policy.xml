@@ -1,0 +1,29 @@
+<PolicyRules>	
+
+	<PolicyRule Id="{5038638c-9352-47bb-88df-8a659f0c02a7}">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b5038638c-9352-47bb-88df-8a659f0c02a7%7d/RuleData -->
+		<Name>Block Read and Write access to specific file</Name>
+		<IncludedIdList>
+			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+	   <Entry Id="{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d}">
+		  <Type>Deny</Type>
+		  <Options>0</Options>
+		  <AccessMask>40</AccessMask>
+		  <Parameters MatchType="MatchAll">
+				<File MatchType="MatchAny">
+					<GroupId>{e5f619a7-5c58-4927-90cd-75da2348a30f}</GroupId>
+				</File>
+		  </Parameters>
+	   </Entry>
+	   <Entry Id="{2925ecd8-40dc-42bb-a972-da0de839dd4f}">
+		  <Type>AuditDenied</Type>
+		  <Options>3</Options>
+		  <AccessMask>63</AccessMask>
+	   </Entry>
+	</PolicyRule>
+
+
+</PolicyRules>

@@ -1,0 +1,19 @@
+<Groups>
+	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}">
+		<!-- any removable storage group -->
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
+	 <Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File" MatchType="MatchAny">
+	   <!-- unauthorized file group -->
+
+		<DescriptorIdList>
+			<PathId>*.exe</PathId>
+			<PathId>*.dll</PathId>
+		</DescriptorIdList>
+	</Group>
+</Groups>
