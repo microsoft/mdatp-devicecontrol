@@ -1,0 +1,8 @@
+ <Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File" MatchType="MatchAny">
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7be5f619a7-5c58-4927-90cd-75da2348a30f%7d/GroupData -->
+
+    <DescriptorIdList>
+		<PathId>*.exe</PathId>
+		<PathId>*.dll</PathId>
+	</DescriptorIdList>
+</Group>
