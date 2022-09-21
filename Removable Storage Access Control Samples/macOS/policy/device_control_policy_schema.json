@@ -297,6 +297,12 @@
             }]
         },
         "query": {
+            "oneOf": [
+                { "$ref": "#/$defs/binaryQuery" },
+                { "$ref": "#/$defs/unaryQuery" }
+            ]
+        },
+        "binaryQuery": {
             "type": "object",
             "title": "A query which describes the devices to include in this group",
             "required": [
@@ -316,7 +322,7 @@
             ],
             "properties": {
                 "$type": {
-                    "enum": [ "any", "all" ],
+                    "enum": [ "any", "or", "all", "and" ],
                     "title": "Describes how this query combines clauses and subqueries",
                     "examples": [
                         "all",
@@ -410,6 +416,38 @@
                     "$type": "serialNumber",
                     "value": "ABCDEFGHIJKLMNOP"
                 }]
+            }]
+        },
+        "unaryQuery": {
+            "type": "object",
+            "title": "A query which describes the devices to include in this group",
+            "required": [
+                "$type",
+                "query"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "not" ],
+                    "title": "Describes how this query combines clauses and subqueries",
+                    "examples": [
+                        "not"
+                    ]
+                },
+                "query": { "$ref": "#/$defs/query" }
+            },
+            "examples": [{
+                "$type": "not",
+                "query": {
+                    "$type": "and",
+                    "clauses": [{
+                        "$type": "primaryId",
+                        "value": "apple_devices"
+                    },
+                    {
+                        "$type": "primaryId",
+                        "value": "other_devices"
+                    }]
+                }
             }]
         },
         "denyEnforcement": {
