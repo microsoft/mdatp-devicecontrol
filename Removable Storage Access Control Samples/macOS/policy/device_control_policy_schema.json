@@ -124,6 +124,7 @@
                             "title": "A rule entry",
                             "oneOf": [
                                 { "$ref": "#/$defs/appleDeviceEntry" },
+                                { "$ref": "#/$defs/removableMediaEntry" },
                                 { "$ref": "#/$defs/genericEntry" }
                             ]
                         }
@@ -153,6 +154,22 @@
                                     "type": "boolean",
                                     "default": true,
                                     "title": "Disable the Apple Devices feature?",
+                                    "examples": [
+                                        false
+                                    ]
+                                }
+                            }
+                        },
+                        "removableMedia": {
+                            "type": "object",
+                            "default": {},
+                            "title": "Settings for Removable Media Devices",
+                            "additionalProperties": false,
+                            "properties": {
+                                "disable": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "title": "Disable the Removable Media feature?",
                                     "examples": [
                                         false
                                     ]
@@ -225,7 +242,7 @@
                     "enum": [ "primaryId" ]
                 },
                 "value": {
-                    "enum": [ "apple_devices" ],
+                    "enum": [ "apple_devices", "removable_media_devices" ],
                     "title": "The device family"
                 }
             },
@@ -597,6 +614,37 @@
                     "download_photos_from_device"
                 ]
             }]
+        },
+        "removableMediaEntry": {
+            "title": "An entry for a removable media device",
+            "required": [
+                "$type",
+                "enforcement",
+                "access"
+            ],
+            "properties": {
+                "$type": {
+                    "enum": [ "removableMedia" ]
+                },
+                "enforcement": { "$ref": "#/$defs/enforcement" },
+                "access": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "title": "The access kind to control",
+                    "items": {
+                        "enum": [
+                            "read",
+                            "write",
+                            "execute"
+                        ],
+                        "title": "Removable Media specific access types",
+                        "examples": [
+                            "read"
+                        ]
+                    }
+                }
+            }
         },
         "genericEntry": {
             "title": "An entry to generically control actions",
