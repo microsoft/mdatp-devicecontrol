@@ -22,6 +22,7 @@
                     "name",
                     "query"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "id": {
                         "type": "string",
@@ -41,7 +42,9 @@
                             "Dev Devices"
                         ]
                     },
-                    "query": { "$ref": "#/$defs/query" }
+                    "query": { 
+                        "$ref": "#/$defs/query" 
+                    }
                 },
                 "examples": [{
                     "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
@@ -69,6 +72,7 @@
                     "includeGroups",
                     "entries"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "id": {
                         "type": "string",
@@ -254,6 +258,7 @@
                 "$type",
                 "value"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "primaryId" ]
@@ -274,6 +279,7 @@
                 "$type",
                 "value"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "vendorId" ]
@@ -295,6 +301,7 @@
                 "$type",
                 "value"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "productId" ]
@@ -316,6 +323,7 @@
                 "$type",
                 "value"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "serialNumber" ]
@@ -354,6 +362,7 @@
                     ]
                 }
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "any", "or", "all", "and" ],
@@ -459,6 +468,7 @@
                 "$type",
                 "query"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "not" ],
@@ -467,7 +477,9 @@
                         "not"
                     ]
                 },
-                "query": { "$ref": "#/$defs/query" }
+                "query": { 
+                    "$ref": "#/$defs/query"
+                }
             },
             "examples": [{
                 "$type": "not",
@@ -489,6 +501,7 @@
             "required": [
                 "$type"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "deny" ]
@@ -502,6 +515,10 @@
                             "disable_audit_deny"
                         ]
                     }
+                },
+                "tag": {
+                    "type": "number",
+                    "title": "Custom tag to propogate to portal"
                 }
             }
         },
@@ -510,6 +527,7 @@
             "required": [
                 "$type"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "allow" ]
@@ -524,6 +542,10 @@
                             "disable_audit_allow"
                         ]
                     }
+                },
+                "tag": {
+                    "type": "number",
+                    "title": "Custom tag to propogate to portal"
                 }
             }
         },
@@ -533,6 +555,7 @@
                 "$type",
                 "options"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "auditDeny" ]
@@ -557,6 +580,7 @@
                 "$type",
                 "options"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "auditAllow" ]
@@ -589,6 +613,7 @@
                 "enforcement",
                 "access"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "appleDevice" ]
@@ -639,6 +664,7 @@
                 "enforcement",
                 "access"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "removableMedia" ]
@@ -670,6 +696,7 @@
                 "enforcement",
                 "access"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "bluetoothDevice" ]
@@ -700,6 +727,7 @@
                 "enforcement",
                 "access"
             ],
+            "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [ "generic" ]
