@@ -44,6 +44,9 @@
                     },
                     "query": {
                         "$ref": "#/$defs/query"
+                    },
+                    "__comments": {
+                        "type": "string"
                     }
                 },
                 "examples": [
@@ -73,7 +76,6 @@
                 "required": [
                     "id",
                     "name",
-                    "includeGroups",
                     "entries"
                 ],
                 "additionalProperties": false,
@@ -97,7 +99,7 @@
                     },
                     "includeGroups": {
                         "type": "array",
-                        "minItems": 1,
+                        "minItems": 0,
                         "title": "List of all the groups that a device must be a member of (logical AND) for this rule to be applicable.",
                         "items": {
                             "type": "string",
@@ -112,7 +114,7 @@
                     },
                     "excludeGroups": {
                         "type": "array",
-                        "minItems": 1,
+                        "minItems": 0,
                         "title": "List of groups which override the applicability logic of includeGroups.  Membership in any of these groups (logical OR) will disable the rule for a device.",
                         "items": {
                             "type": "string",
@@ -148,6 +150,9 @@
                                 }
                             ]
                         }
+                    },
+                    "__comments": {
+                        "type": "string"
                     }
                 }
             }
@@ -177,6 +182,9 @@
                                     "examples": [
                                         false
                                     ]
+                                },
+                                "__comments": {
+                                    "type": "string"
                                 }
                             }
                         },
@@ -193,6 +201,9 @@
                                     "examples": [
                                         false
                                     ]
+                                },
+                                "__comments": {
+                                    "type": "string"
                                 }
                             }
                         },
@@ -209,6 +220,9 @@
                                     "examples": [
                                         true
                                     ]
+                                },
+                                "__comments": {
+                                    "type": "string"
                                 }
                             }
                         },
@@ -225,8 +239,14 @@
                                     "examples": [
                                         true
                                     ]
+                                },
+                                "__comments": {
+                                    "type": "string"
                                 }
                             }
+                        },
+                        "__comments": {
+                            "type": "string"
                         }
                     },
                     "examples": [
@@ -253,6 +273,9 @@
                             "examples": [
                                 "deny"
                             ]
+                        },
+                        "__comments": {
+                            "type": "string"
                         }
                     }
                 },
@@ -268,8 +291,14 @@
                             "examples": [
                                 "http://www.microsoft.com"
                             ]
+                        },
+                        "__comments": {
+                            "type": "string"
                         }
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -287,6 +316,9 @@
                     }
                 }
             ]
+        },
+        "__comments": {
+            "type": "string"
         }
     },
     "$defs": {
@@ -312,6 +344,9 @@
                         "portable_devices"
                     ],
                     "title": "The device family"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -339,6 +374,9 @@
                     "type": "string",
                     "pattern": "^[a-fA-F0-9]{4}$",
                     "title": "4 digit vendor ID in hexadecimal"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -366,6 +404,9 @@
                     "type": "string",
                     "pattern": "^[a-fA-F0-9]{4}$",
                     "title": "4 digit product ID in hexadecimal"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -392,6 +433,9 @@
                 "value": {
                     "type": "string",
                     "title": "Serial Number"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -424,6 +468,9 @@
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653",
                         "03f025f6-ee9d-49b2-b192-fc7a00df6856"
                     ]
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -504,6 +551,9 @@
                             }
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -611,6 +661,9 @@
                 },
                 "query": {
                     "$ref": "#/$defs/query"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -657,6 +710,9 @@
                 "tag": {
                     "type": "number",
                     "title": "Custom tag to propogate to portal"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -686,6 +742,9 @@
                 "tag": {
                     "type": "number",
                     "title": "Custom tag to propogate to portal"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -713,6 +772,9 @@
                             "show_notification"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -739,6 +801,9 @@
                             "send_event"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -793,6 +858,9 @@
                             "download_files_from_device"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [
@@ -848,6 +916,9 @@
                             "read"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -883,6 +954,9 @@
                             "send_files_to_device"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -920,6 +994,9 @@
                             "send_files_to_device"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
@@ -956,6 +1033,9 @@
                             "generic_read"
                         ]
                     }
+                },
+                "__comments": {
+                    "type": "string"
                 }
             },
             "examples": [

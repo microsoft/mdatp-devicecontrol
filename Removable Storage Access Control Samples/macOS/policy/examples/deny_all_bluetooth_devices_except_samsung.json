@@ -1,0 +1,111 @@
+{
+    "groups": [
+        {
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+            "name": "All Bluetooth Devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "bluetooth_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "1A783D32-C6A3-4F5F-9D47-271B12130DFD",
+            "name": "Samsung Galaxy S21",
+            "query": {
+                "$type": "and",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "bluetooth_devices"
+                    },
+                    {
+                        "$type": "vendorId",
+                        "value": "0075"
+                    },
+                    {
+                        "$type": "productId",
+                        "value": "0100"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "772cef80-229f-48b4-bd17-a6913009248d",
+            "name": "Deny all Bluetooth Devices",
+            "includeGroups": [
+                "3f082cd3-f701-4c21-9a6a-ed115c28e417"
+            ],
+            "excludeGroups": [
+                "1A783D32-C6A3-4F5F-9D47-271B12130DFD"
+            ],
+            "entries": [
+                {
+                    "$type": "bluetoothDevice",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device"
+                    ]
+                },
+                {
+                    "$type": "bluetoothDevice",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3C094B7B-DB94-4F17-86B8-3AA1D6547C58",
+            "name": "Audit S21",
+            "includeGroups": [
+                "1A783D32-C6A3-4F5F-9D47-271B12130DFD"
+            ],
+            "entries": [
+                {
+                    "$type": "bluetoothDevice",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "bluetoothDevice": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}

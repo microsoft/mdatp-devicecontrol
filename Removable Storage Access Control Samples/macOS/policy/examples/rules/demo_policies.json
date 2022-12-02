@@ -1,0 +1,58 @@
+{
+    "rules": [
+        {
+            "id": "f7e75634-7eec-4e67-bec5-5e7750cb9e02",
+            "name": "Allow Read Activity",
+            "includeGroups": [
+                "9b28fae8-72f7-4267-a1a5-685f747a7146"
+            ],
+            "excludeGroups": [],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "enforcement": {
+                        "$type": "allow"
+                    },
+                    "access": [
+                        "generic_read"
+                    ]
+                },
+                {
+                    "$type": "generic",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "generic_read"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "f3520ea7-fd1b-4237-8ebc-96911db44f8e",
+            "name": "Default Deny",
+            "includeGroups": [],
+            "excludeGroups": [],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                }
+            ]
+        }
+    ]
+}

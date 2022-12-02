@@ -1,0 +1,73 @@
+{
+    "rules": [
+        {
+            "id": "36ae1037-a639-4cff-946b-b36c53089a4c",
+            "name": "Audit Write and Execute access to aproved USBs",
+            "includeGroups": [
+                "65fa649a-a111-4912-9294-fb6337a25038"
+            ],
+            "excludeGroups": [],
+            "entries": [
+                {
+                    "$type": "removableMedia",
+                    "enforcement": {
+                        "$type": "allow"
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "c544a991-5786-4402-949e-a032cb790d0e",
+            "name": "Block Write and Execute Access",
+            "includeGroups": [
+                "9b28fae8-72f7-4267-a1a5-685f747a7146"
+            ],
+            "excludeGroups": [
+                "65fa649a-a111-4912-9294-fb6337a25038"
+            ],
+            "entries": [
+                {
+                    "$type": "removableMedia",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+                    ]
+                }
+            ]
+        }
+    ]
+}
