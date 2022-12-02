@@ -433,25 +433,6 @@
                 }
             ]
         },
-        "queryClause": {
-            "title": "Query Clause",
-            "description": "Match if a subquery matches",
-            "required": [
-                "$type",
-                "value"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "query"
-                    ]
-                },
-                "value": {
-                    "$ref": "#/$defs/query"
-                }
-            }
-        },
         "query": {
             "oneOf": [
                 {
@@ -519,7 +500,7 @@
                                 "$ref": "#/$defs/groupIdClause"
                             },
                             {
-                                "$ref": "#/$defs/queryClause"
+                                "$ref": "#/$defs/query"
                             }
                         ]
                     }
