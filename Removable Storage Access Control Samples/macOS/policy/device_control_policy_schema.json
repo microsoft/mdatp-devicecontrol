@@ -498,16 +498,11 @@
                             },
                             {
                                 "$ref": "#/$defs/groupIdClause"
+                            },
+                            {
+                                "$ref": "#/$defs/query"
                             }
                         ]
-                    }
-                },
-                "subqueries": {
-                    "type": "array",
-                    "minItems": 1,
-                    "title": "Subqueries to evaluate",
-                    "items": {
-                        "$ref": "#/$defs/query"
                     }
                 }
             },
