@@ -1,0 +1,21 @@
+{
+    "groups": [
+        {
+            "id": "9b28fae8-72f7-4267-a1a5-685f747a7146",
+            "name": "Any Removable Storage and Portable Device",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    },
+                    {
+                        "$type": "primaryId",
+                        "value": "portable_devices"
+                    }
+                ]
+            }
+        }
+    ]
+}
