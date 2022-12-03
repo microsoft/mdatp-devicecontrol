@@ -41,6 +41,16 @@
                 <integer>1</integer>
                 <key>PayloadEnabled</key>
                 <true/>
+				<key>dlp</key>
+				<dict>
+				    <key>features</key>
+					<dict>
+					    <key>name</key>
+                        <string>DC_in_dlp</string>
+						<key>state</key>
+						<string>enabled</string>
+					</dict>
+				</dict>
                 <key>deviceControl</key>
                 <dict>
 				    <key>policy</key>
