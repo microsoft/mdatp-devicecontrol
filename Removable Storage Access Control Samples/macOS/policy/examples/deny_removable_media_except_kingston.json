@@ -40,6 +40,7 @@
             "entries": [
                 {
                     "$type": "removableMedia",
+                    "id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
                     "enforcement": {
                         "$type": "deny"
                     },
@@ -51,6 +52,7 @@
                 },
                 {
                     "$type": "removableMedia",
+                    "id": "18BA3DD5-4C9A-458B-A756-F1499FE94FB4",
                     "enforcement": {
                         "$type": "auditDeny",
                         "options": [

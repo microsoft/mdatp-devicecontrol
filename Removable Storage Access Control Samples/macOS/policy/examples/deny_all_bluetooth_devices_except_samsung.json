@@ -48,6 +48,7 @@
             "entries": [
                 {
                     "$type": "bluetoothDevice",
+                    "id": "803B32D7-639A-4A05-BFFB-E8998AA3304B",
                     "enforcement": {
                         "$type": "deny"
                     },
@@ -58,6 +59,7 @@
                 },
                 {
                     "$type": "bluetoothDevice",
+                    "id": "5AC7FBBF-5D96-4440-A5C2-87AB9055B45F",
                     "enforcement": {
                         "$type": "auditDeny",
                         "options": [
@@ -81,6 +83,7 @@
             "entries": [
                 {
                     "$type": "bluetoothDevice",
+                    "id": "477C626F-510E-4881-B475-592CF6E501AF",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [

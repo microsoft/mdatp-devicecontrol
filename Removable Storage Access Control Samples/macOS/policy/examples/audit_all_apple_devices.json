@@ -24,6 +24,7 @@
             "entries": [
                 {
                     "$type": "appleDevice",
+                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [

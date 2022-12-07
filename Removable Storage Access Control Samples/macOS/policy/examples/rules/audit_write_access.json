@@ -10,6 +10,7 @@
             "entries": [
                 {
                     "$type": "removableMedia",
+                    "id": "ad2f69df-e6c5-4cd7-a2bf-bf7ef8c6c2b5",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [

@@ -1,4 +1,5 @@
 {
+    "__comment": "Rule {b2061588-029e-427d-8404-6dfec096a571} is not translated as 'capture file information for write' is not currently supported on macOS.",
     "rules": [
         {
             "id": "f7e75634-7eec-4e67-bec5-5e7750cb9e02",
@@ -10,6 +11,7 @@
             "entries": [
                 {
                     "$type": "generic",
+                    "id": "27c79875-25d2-4765-aec2-cb2d1000613f",
                     "enforcement": {
                         "$type": "allow"
                     },
@@ -19,6 +21,7 @@
                 },
                 {
                     "$type": "generic",
+                    "id": "b280c2bf-ca5d-46a1-afc9-7e34d8098ca7",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [
@@ -39,6 +42,7 @@
             "entries": [
                 {
                     "$type": "generic",
+                    "id": "6b9cf286-ec70-4463-bfaf-29f32bb5f0dc",
                     "enforcement": {
                         "$type": "auditDeny",
                         "options": [
