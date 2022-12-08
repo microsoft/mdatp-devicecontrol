@@ -859,6 +859,14 @@
                         ]
                     }
                 },
+                "id": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                    "title": "UUID of the entry",
+                    "examples": [
+                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                    ]
+                },
                 "__comments": {
                     "type": "string"
                 }
@@ -879,7 +887,8 @@
                         "backup_device",
                         "update_device",
                         "download_photos_from_device"
-                    ]
+                    ],
+                    "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                 }
             ]
         },
@@ -916,6 +925,14 @@
                             "read"
                         ]
                     }
+                },
+                "id": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                    "title": "UUID of the entry",
+                    "examples": [
+                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                    ]
                 },
                 "__comments": {
                     "type": "string"
@@ -954,6 +971,14 @@
                             "send_files_to_device"
                         ]
                     }
+                },
+                "id": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                    "title": "UUID of the entry",
+                    "examples": [
+                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                    ]
                 },
                 "__comments": {
                     "type": "string"
@@ -995,6 +1020,14 @@
                         ]
                     }
                 },
+                "id": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                    "title": "UUID of the entry",
+                    "examples": [
+                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                    ]
+                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1034,6 +1067,14 @@
                         ]
                     }
                 },
+                "id": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                    "title": "UUID of the entry",
+                    "examples": [
+                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                    ]
+                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1048,7 +1089,8 @@
                         "generic_read",
                         "generic_write",
                         "generic_execute"
-                    ]
+                    ],
+                    "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                 }
             ]
         }

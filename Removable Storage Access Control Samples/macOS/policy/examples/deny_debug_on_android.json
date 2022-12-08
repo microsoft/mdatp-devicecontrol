@@ -24,6 +24,7 @@
             "entries": [
                 {
                     "$type": "portableDevice",
+                    "id": "60D3AF56-A990-45D1-A67F-591B9E230E84",
                     "enforcement": {
                         "$type": "deny"
                     },
@@ -33,6 +34,7 @@
                 },
                 {
                     "$type": "portableDevice",
+                    "id": "3E611FD9-6CE0-4412-AA21-0FCC9F303BDE",
                     "enforcement": {
                         "$type": "auditDeny",
                         "options": [
@@ -46,6 +48,7 @@
                 },
                 {
                     "$type": "portableDevice",
+                    "id": "D23E59C8-B271-4500-8906-BDCEF9B31688",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [
