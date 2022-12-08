@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-import json
-import os
-import os.path
 import xml.etree.ElementTree as ET
-import xml.dom.minidom as minidom
 
 def log_error(text):
     print("\033[0;31m" + text + "\033[00m")
@@ -400,6 +396,7 @@ def convert_rules(rules_file, strict):
 
 if __name__ == '__main__':
     import argparse
+    import json
 
     arg_parser = argparse.ArgumentParser(
         description='Converts an existing DC policy written for Windows into an equivalent policy for macOS.')
