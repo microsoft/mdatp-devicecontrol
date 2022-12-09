@@ -408,12 +408,12 @@ if __name__ == '__main__':
 
     args = arg_parser.parse_args()
 
-    if args.groups_file is None and args.rules_file is None:
-        raise Exception('')
-
-    converted_policy = {}
-
     try:
+        if args.groups_file is None and args.rules_file is None:
+            raise Exception('At least --groups or --rules must be specified')
+
+        converted_policy = {}
+
         if args.groups_file is not None:
             converted_policy["groups"] = convert_groups(args.groups_file, args.strict)
 

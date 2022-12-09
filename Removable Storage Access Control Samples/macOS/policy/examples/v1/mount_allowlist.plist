@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Block all removable storage devices except specific devices defined by Vendor ID, Product ID, and Serial Number -->
+<plist version="1.0">
+<dict>
+    <key>deviceControl</key>
+    <dict>
+        <key>removableMediaPolicy</key>
+        <dict>
+            <key>enforcementLevel</key>
+            <string>block</string>
+            <!-- Default to block all devices -->
+            <key>permission</key>
+            <array>
+                <string>none</string>
+            </array>
+            <key>vendors</key>
+            <dict>
+                <key>0951</key>
+                <dict>
+                    <key>permission</key>
+                    <array>
+                        <string>none</string>
+                    </array>
+                    <key>products</key>
+                    <dict>
+                        <key>16AE</key>
+                        <dict>
+                            <key>permission</key>
+                            <array>
+                                <string>none</string>
+                            </array>
+                            <key>serialNumbers</key>
+                            <dict>
+                                <!-- Only devices that match VID, PID, and SN have RWX permissions -->
+                                <key>1C1B0D03D8C0E5B0A909025A</key>
+                                <array>
+                                    <string>read</string>
+                                    <string>write</string>
+                                    <string>execute</string>
+                                </array>
+                                <key>1C1B0D03D8C0E5B0A909025B</key>
+                                <array>
+                                    <string>read</string>
+                                    <string>write</string>
+                                    <string>execute</string>
+                                </array>
+                            </dict>
+                        </dict>
+                    </dict>
+                </dict>
+                <key>2537</key>
+                <dict>
+                    <key>permission</key>
+                    <array>
+                        <string>none</string>
+                    </array>
+                    <key>products</key>
+                    <dict>
+                        <key>1081</key>
+                        <dict>
+                            <key>permission</key>
+                            <array>
+                                <string>none</string>
+                            </array>
+                            <key>serialNumbers</key>
+                            <dict>
+                                <key>0123456789ABCDE</key>
+                                <array>
+                                    <string>read</string>
+                                    <string>write</string>
+                                    <string>execute</string>
+                                </array>
+                            </dict>
+                        </dict>
+                    </dict>
+                </dict>
+            </dict>
+        </dict>
+    </dict>
+</dict>
+</plist>

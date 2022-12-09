@@ -42,3 +42,7 @@ The Device Control Policy schema is defined in [device_control_policy_schema.jso
 ## Examples
 
 The [examples](./examples/) directory contains a variety of example device control policies.
+
+## Scripts
+
+The [scripts](./scripts/) directory contains useful scripts for manipulating the policy JSON.
