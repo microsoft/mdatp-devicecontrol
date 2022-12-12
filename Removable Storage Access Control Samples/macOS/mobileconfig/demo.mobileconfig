@@ -58,6 +58,7 @@
 						{
 						   "groups":[
 							  {
+								 "$type": "device",
 								 "id":"cb2a7864-0b0d-4951-a628-ac09259ca0a2",
 								 "name":"All Apple devices",
 								 "query":{
@@ -71,6 +72,7 @@
 								 }
 							  },
 							  {
+								 "$type": "device",
 								 "id":"34aec8e5-e2fa-4d1e-8788-2b1284226653",
 								 "name":"Allow-backup devices",
 								 "query":{
@@ -88,6 +90,7 @@
 								 }
 							  },
 							  {
+								 "$type": "device",
 								 "id":"03f025f6-ee9d-49b2-b192-fc7a00df6856",
 								 "name":"Allow-full-access devices",
 								 "query":{
