@@ -18,12 +18,18 @@
                 "type": "object",
                 "title": "Identifies a specific group of devices",
                 "required": [
+                    "$type",
                     "id",
                     "name",
                     "query"
                 ],
                 "additionalProperties": false,
                 "properties": {
+                    "$type": {
+                        "enum": [
+                            "device"
+                        ]
+                    },
                     "id": {
                         "type": "string",
                         "title": "UUID representing a unique ID for this group.",

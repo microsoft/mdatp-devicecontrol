@@ -143,6 +143,7 @@ def add_serial_number_rule(upgraded_policy, vendor_id, product_id, serial_number
 
         group_id = str(uuid.uuid4())
         group = {
+            "$type": "device",
             "id": group_id,
             "name": "Removable Storage Devices: Vendor " + vendor_id + ", Product " + product_id + ", Serial Number " + serial_number,
             "query": {
@@ -191,6 +192,7 @@ def add_product_rules(upgraded_policy, vendor_id, products, block):
 
         group_id = str(uuid.uuid4())
         group = {
+            "$type": "device",
             "id": group_id,
             "name": "Removable Storage Devices: Vendor " + vendor_id + ", Product " + product_id,
             "query": {
@@ -240,6 +242,7 @@ def add_vendor_rules(upgraded_policy, vendors, block):
 
         group_id = str(uuid.uuid4())
         group = {
+            "$type": "device",
             "id": group_id,
             "name": "Removable Storage Devices: Vendor " + vendor_id,
             "query": {
@@ -282,6 +285,7 @@ def add_global_rule(upgraded_policy, block, removable_media_policy):
     print("Adding global rule")
     group_id = str(uuid.uuid4())
     group = {
+        "$type": "device",
         "id": group_id,
         "name": "Removable Storage Devices: All",
         "query": {

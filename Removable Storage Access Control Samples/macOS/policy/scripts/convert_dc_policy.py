@@ -121,7 +121,9 @@ def convert_query(match_type, descriptor_id_list, strict):
 
 
 def convert_group(group, strict):
-    converted_group = {}
+    converted_group = {
+        "$type": "device"
+    }
 
     id = group.attrib['Id']
     if id is None:
