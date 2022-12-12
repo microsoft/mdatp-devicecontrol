@@ -1,6 +1,7 @@
 {
     "groups": [
         {
+            "type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
             "name": "All Apple Devices",
             "query": {

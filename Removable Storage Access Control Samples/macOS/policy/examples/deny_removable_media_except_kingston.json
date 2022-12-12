@@ -1,6 +1,7 @@
 {
     "groups": [
         {
+            "type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
             "name": "All Removable Media Devices",
             "query": {
@@ -14,6 +15,7 @@
             }
         },
         {
+            "type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
             "name": "Kingston Devices",
             "query": {

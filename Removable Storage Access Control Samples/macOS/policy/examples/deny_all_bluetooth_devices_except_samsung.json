@@ -1,6 +1,7 @@
 {
     "groups": [
         {
+            "type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
             "name": "All Bluetooth Devices",
             "query": {
@@ -14,6 +15,7 @@
             }
         },
         {
+            "type": "device",
             "id": "1A783D32-C6A3-4F5F-9D47-271B12130DFD",
             "name": "Samsung Galaxy S21",
             "query": {

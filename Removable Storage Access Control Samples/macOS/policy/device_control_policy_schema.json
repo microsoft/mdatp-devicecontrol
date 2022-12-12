@@ -16,52 +16,10 @@
             "title": "The machine groups to be used within rules",
             "items": {
                 "type": "object",
-                "title": "Identifies a specific group of devices",
-                "required": [
-                    "id",
-                    "name",
-                    "query"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "UUID representing a unique ID for this group.",
-                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                        "examples": [
-                            "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                            "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                            "03f025f6-ee9d-49b2-b192-fc7a00df6856"
-                        ]
-                    },
-                    "name": {
-                        "type": "string",
-                        "title": "A friendly name for the group",
-                        "examples": [
-                            "All Apple Devices",
-                            "Dev Devices"
-                        ]
-                    },
-                    "query": {
-                        "$ref": "#/$defs/query"
-                    },
-                    "__comments": {
-                        "type": "string"
-                    }
-                },
-                "examples": [
+                "title": "A group",
+                "oneOf": [
                     {
-                        "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                        "name": "All Apple Devices",
-                        "query": {
-                            "$type": "all",
-                            "clauses": [
-                                {
-                                    "$type": "primaryId",
-                                    "value": "apple_devices"
-                                }
-                            ]
-                        }
+                        "$ref": "#/$defs/deviceGroup"
                     }
                 ]
             }
@@ -322,277 +280,251 @@
         }
     },
     "$defs": {
-        "primaryIdClause": {
-            "title": "Primary ID Clause",
-            "description": "Match a device to an overall device family",
-            "required": [
-                "$type",
-                "value"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "primaryId"
-                    ]
-                },
-                "value": {
-                    "enum": [
-                        "apple_devices",
-                        "removable_media_devices",
-                        "bluetooth_devices",
-                        "portable_devices"
-                    ],
-                    "title": "The device family"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "primaryId",
-                    "value": "apple_devices"
-                }
-            ]
-        },
-        "vendorIdClause": {
-            "title": "Vendor ID Clause",
-            "description": "Match a device with a specific vendor ID",
-            "required": [
-                "$type",
-                "value"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "vendorId"
-                    ]
-                },
-                "value": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{4}$",
-                    "title": "4 digit vendor ID in hexadecimal"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "vendorId",
-                    "value": "1234"
-                }
-            ]
-        },
-        "productIdClause": {
-            "title": "Product ID Clause",
-            "description": "Match a device with a specific product ID",
-            "required": [
-                "$type",
-                "value"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "productId"
-                    ]
-                },
-                "value": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{4}$",
-                    "title": "4 digit product ID in hexadecimal"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "productId",
-                    "value": "12AB"
-                }
-            ]
-        },
-        "serialNumberClause": {
-            "title": "Serial Number Clause",
-            "description": "Match a device with a specific serial number",
-            "required": [
-                "$type",
-                "value"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "serialNumber"
-                    ]
-                },
-                "value": {
-                    "type": "string",
-                    "title": "Serial Number"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "serialNumber",
-                    "value": "ABCDEFGHIJKLMNOP"
-                }
-            ]
-        },
-        "groupIdClause": {
-            "title": "Group ID Clause",
-            "description": "Match if a device is a member of a different group.  Note: ID must belong to a group that was defined prior to this clause.",
-            "required": [
-                "$type",
-                "value"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "groupId"
-                    ]
-                },
-                "value": {
-                    "type": "string",
-                    "title": "Group ID",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                    "examples": [
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6856"
-                    ]
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "groupId",
-                    "value": "3f082cd3-f701-4c21-9a6a-ed115c28e217"
-                }
-            ]
-        },
-        "query": {
-            "oneOf": [
-                {
-                    "$ref": "#/$defs/binaryQuery"
-                },
-                {
-                    "$ref": "#/$defs/unaryQuery"
-                }
-            ]
-        },
-        "binaryQuery": {
-            "type": "object",
-            "title": "A query which describes the devices to include in this group",
-            "required": [
-                "$type"
-            ],
-            "anyOf": [
-                {
-                    "required": [
-                        "clauses"
-                    ]
-                },
-                {
-                    "required": [
-                        "subqueries"
-                    ]
-                }
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "any",
-                        "or",
-                        "all",
-                        "and"
-                    ],
-                    "title": "Describes how this query combines clauses and subqueries",
-                    "examples": [
-                        "all",
-                        "any"
-                    ]
-                },
-                "clauses": {
-                    "type": "array",
-                    "minItems": 1,
-                    "title": "Clauses to evaluate",
-                    "items": {
-                        "type": "object",
-                        "title": "An individual clause to match against a device",
-                        "oneOf": [
-                            {
-                                "$ref": "#/$defs/primaryIdClause"
-                            },
-                            {
-                                "$ref": "#/$defs/vendorIdClause"
-                            },
-                            {
-                                "$ref": "#/$defs/productIdClause"
-                            },
-                            {
-                                "$ref": "#/$defs/serialNumberClause"
-                            },
-                            {
-                                "$ref": "#/$defs/groupIdClause"
-                            },
-                            {
-                                "$ref": "#/$defs/query"
-                            }
+        "clauses": {
+            "primaryId": {
+                "title": "Primary ID Clause",
+                "description": "Match a device to an overall device family",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "primaryId"
                         ]
+                    },
+                    "value": {
+                        "enum": [
+                            "apple_devices",
+                            "removable_media_devices",
+                            "bluetooth_devices",
+                            "portable_devices"
+                        ],
+                        "title": "The device family"
+                    },
+                    "__comments": {
+                        "type": "string"
                     }
                 },
-                "__comments": {
-                    "type": "string"
-                }
+                "examples": [
+                    {
+                        "$type": "primaryId",
+                        "value": "apple_devices"
+                    }
+                ]
             },
-            "examples": [
-                {
-                    "$type": "all",
-                    "clauses": [
+            "vendorId": {
+                "title": "Vendor ID Clause",
+                "description": "Match a device with a specific vendor ID",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "vendorId"
+                        ]
+                    },
+                    "value": {
+                        "type": "string",
+                        "pattern": "^[a-fA-F0-9]{4}$",
+                        "title": "4 digit vendor ID in hexadecimal"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "vendorId",
+                        "value": "1234"
+                    }
+                ]
+            },
+            "productId": {
+                "title": "Product ID Clause",
+                "description": "Match a device with a specific product ID",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "productId"
+                        ]
+                    },
+                    "value": {
+                        "type": "string",
+                        "pattern": "^[a-fA-F0-9]{4}$",
+                        "title": "4 digit product ID in hexadecimal"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "productId",
+                        "value": "12AB"
+                    }
+                ]
+            },
+            "serialNumber": {
+                "title": "Serial Number Clause",
+                "description": "Match a device with a specific serial number",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "serialNumber"
+                        ]
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Serial Number"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "serialNumber",
+                        "value": "ABCDEFGHIJKLMNOP"
+                    }
+                ]
+            },
+            "groupId": {
+                "title": "Group ID Clause",
+                "description": "Match if a device is a member of a different group.  Note: ID must belong to a group that was defined prior to this clause.",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "groupId"
+                        ]
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Group ID",
+                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                        "examples": [
+                            "3f082cd3-f701-4c21-9a6a-ed115c28e217",
+                            "34aec8e5-e2fa-4d1e-8788-2b1284226653",
+                            "03f025f6-ee9d-49b2-b192-fc7a00df6856"
+                        ]
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "groupId",
+                        "value": "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                    }
+                ]
+            }
+        },
+        "groups": {
+            "device": {
+                "query": {
+                    "oneOf": [
                         {
-                            "$type": "primaryId",
-                            "value": "apple_devices"
+                            "$ref": "#/$defs/groups/device/binaryQuery"
+                        },
+                        {
+                            "$ref": "#/$defs/groups/device/unaryQuery"
                         }
                     ]
                 },
-                {
-                    "$type": "any",
-                    "clauses": [
+                "binaryQuery": {
+                    "type": "object",
+                    "title": "A query which describes the devices to include in this group",
+                    "required": [
+                        "$type"
+                    ],
+                    "anyOf": [
                         {
-                            "$type": "vendorId",
-                            "value": "1234"
+                            "required": [
+                                "clauses"
+                            ]
                         },
                         {
-                            "$type": "productId",
-                            "value": "4321"
-                        },
-                        {
-                            "$type": "serialNumber",
-                            "value": "ABCDEFGHIJKLMNOP"
+                            "required": [
+                                "subqueries"
+                            ]
                         }
                     ],
-                    "subqueries": [
+                    "additionalProperties": false,
+                    "properties": {
+                        "$type": {
+                            "enum": [
+                                "any",
+                                "or",
+                                "all",
+                                "and"
+                            ],
+                            "title": "Describes how this query combines clauses and subqueries",
+                            "examples": [
+                                "all",
+                                "any"
+                            ]
+                        },
+                        "clauses": {
+                            "type": "array",
+                            "minItems": 1,
+                            "title": "Clauses to evaluate",
+                            "items": {
+                                "type": "object",
+                                "title": "An individual clause to match against a device",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/clauses/primaryId"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/clauses/vendorId"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/clauses/productId"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/clauses/serialNumber"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/clauses/groupId"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/groups/device/query"
+                                    }
+                                ]
+                            }
+                        },
+                        "__comments": {
+                            "type": "string"
+                        }
+                    },
+                    "examples": [
                         {
                             "$type": "all",
                             "clauses": [
                                 {
-                                    "$type": "vendorId",
-                                    "value": "4321"
-                                },
-                                {
-                                    "$type": "productId",
-                                    "value": "1234"
+                                    "$type": "primaryId",
+                                    "value": "apple_devices"
                                 }
                             ]
                         },
@@ -601,11 +533,15 @@
                             "clauses": [
                                 {
                                     "$type": "vendorId",
-                                    "value": "2222"
+                                    "value": "1234"
                                 },
                                 {
                                     "$type": "productId",
-                                    "value": "3333"
+                                    "value": "4321"
+                                },
+                                {
+                                    "$type": "serialNumber",
+                                    "value": "ABCDEFGHIJKLMNOP"
                                 }
                             ],
                             "subqueries": [
@@ -614,53 +550,141 @@
                                     "clauses": [
                                         {
                                             "$type": "vendorId",
-                                            "value": "4444"
+                                            "value": "4321"
+                                        },
+                                        {
+                                            "$type": "productId",
+                                            "value": "1234"
                                         }
                                     ]
+                                },
+                                {
+                                    "$type": "any",
+                                    "clauses": [
+                                        {
+                                            "$type": "vendorId",
+                                            "value": "2222"
+                                        },
+                                        {
+                                            "$type": "productId",
+                                            "value": "3333"
+                                        }
+                                    ],
+                                    "subqueries": [
+                                        {
+                                            "$type": "all",
+                                            "clauses": [
+                                                {
+                                                    "$type": "vendorId",
+                                                    "value": "4444"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "$type": "any",
+                            "clauses": [
+                                {
+                                    "$type": "vendorId",
+                                    "value": "12345"
+                                },
+                                {
+                                    "$type": "productId",
+                                    "value": "AZ"
+                                },
+                                {
+                                    "$type": "serialNumber",
+                                    "value": "ABCDEFGHIJKLMNOP"
                                 }
                             ]
                         }
                     ]
                 },
-                {
-                    "$type": "any",
-                    "clauses": [
-                        {
-                            "$type": "vendorId",
-                            "value": "12345"
+                "unaryQuery": {
+                    "type": "object",
+                    "title": "A query which describes the devices to include in this group",
+                    "required": [
+                        "$type",
+                        "query"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "$type": {
+                            "enum": [
+                                "not"
+                            ],
+                            "title": "Describes how this query combines clauses and subqueries",
+                            "examples": [
+                                "not"
+                            ]
                         },
-                        {
-                            "$type": "productId",
-                            "value": "AZ"
+                        "query": {
+                            "$ref": "#/$defs/groups/device/query"
                         },
+                        "__comments": {
+                            "type": "string"
+                        }
+                    },
+                    "examples": [
                         {
-                            "$type": "serialNumber",
-                            "value": "ABCDEFGHIJKLMNOP"
+                            "$type": "not",
+                            "query": {
+                                "$type": "and",
+                                "clauses": [
+                                    {
+                                        "$type": "primaryId",
+                                        "value": "apple_devices"
+                                    },
+                                    {
+                                        "$type": "primaryId",
+                                        "value": "other_devices"
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
-            ]
+            }
         },
-        "unaryQuery": {
+        "deviceGroup": {
             "type": "object",
-            "title": "A query which describes the devices to include in this group",
+            "title": "Identifies a specific group of devices",
             "required": [
                 "$type",
+                "id",
+                "name",
                 "query"
             ],
             "additionalProperties": false,
             "properties": {
                 "$type": {
                     "enum": [
-                        "not"
-                    ],
-                    "title": "Describes how this query combines clauses and subqueries",
+                        "device"
+                    ]
+                },
+                "id": {
+                    "type": "string",
+                    "title": "UUID representing a unique ID for this group.",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                     "examples": [
-                        "not"
+                        "3f082cd3-f701-4c21-9a6a-ed115c28e217",
+                        "34aec8e5-e2fa-4d1e-8788-2b1284226653",
+                        "03f025f6-ee9d-49b2-b192-fc7a00df6856"
+                    ]
+                },
+                "name": {
+                    "type": "string",
+                    "title": "A friendly name for the group",
+                    "examples": [
+                        "All Apple Devices",
+                        "Dev Devices"
                     ]
                 },
                 "query": {
-                    "$ref": "#/$defs/query"
+                    "$ref": "#/$defs/groups/device/query"
                 },
                 "__comments": {
                     "type": "string"
@@ -668,17 +692,15 @@
             },
             "examples": [
                 {
-                    "$type": "not",
+                    "$type": "device",
+                    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
+                    "name": "All Apple Devices",
                     "query": {
-                        "$type": "and",
+                        "$type": "all",
                         "clauses": [
                             {
                                 "$type": "primaryId",
                                 "value": "apple_devices"
-                            },
-                            {
-                                "$type": "primaryId",
-                                "value": "other_devices"
                             }
                         ]
                     }
@@ -1099,6 +1121,7 @@
         {
             "groups": [
                 {
+                    "$type": "device",
                     "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
                     "name": "All Apple Devices",
                     "query": {
@@ -1112,6 +1135,7 @@
                     }
                 },
                 {
+                    "$type": "device",
                     "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653",
                     "query": {
                         "$type": "any",
@@ -1171,6 +1195,7 @@
                     }
                 },
                 {
+                    "$type": "device",
                     "id": "03f025f6-ee9d-49b2-b192-fc7a00df6856",
                     "name": "Dev Machines",
                     "query": {

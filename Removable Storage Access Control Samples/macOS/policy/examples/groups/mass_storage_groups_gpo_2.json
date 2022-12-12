@@ -1,6 +1,7 @@
 {
     "groups": [
         {
+            "type": "device",
             "id": "fb4ad01e-f41a-46c6-9ac1-268efa0ea083",
             "name": "Group for all mass storage devices groups",
             "query": {
