@@ -438,6 +438,40 @@
                         "value": "3f082cd3-f701-4c21-9a6a-ed115c28e217"
                     }
                 ]
+            },
+            "encryption": {
+                "title": "Encryption Clause",
+                "description": "Match if a device is encrypted. (Only supports Removable Media Devices)",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "encryption"
+                        ]
+                    },
+                    "value": {
+                        "enum": [
+                            "apfs"
+                        ],
+                        "title": "Group ID",
+                        "examples": [
+                            "apfs"
+                        ]
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "encryption",
+                        "value": "apfs"
+                    }
+                ]
             }
         },
         "groups": {
@@ -507,6 +541,9 @@
                                     },
                                     {
                                         "$ref": "#/$defs/clauses/groupId"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/clauses/encryption"
                                     },
                                     {
                                         "$ref": "#/$defs/groups/device/query"
