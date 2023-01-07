@@ -1,0 +1,80 @@
+{
+    "groups": [
+        {
+            "type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e41D",
+            "name": "All Android Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "portable_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "772cef80-229f-48b4-bd17-a6913009249d",
+            "name": "Deny all Portable Devices",
+            "includeGroups": [
+                "3f082cd3-f701-4c21-9a6a-ed115c28e41D"
+            ],
+            "entries": [
+                {
+                    "$type": "portableDevice",
+                    "id": "60D3AF56-A990-45D1-A67F-591B9E230E84",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "debug"
+                    ]
+                },
+                {
+                    "$type": "portableDevice",
+                    "id": "3E611FD9-6CE0-4412-AA21-0FCC9F303BDE",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "debug"
+                    ]
+                },
+                {
+                    "$type": "portableDevice",
+                    "id": "D23E59C8-B271-4500-8906-BDCEF9B31688",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "portableDevice": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}

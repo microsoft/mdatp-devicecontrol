@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Block all removable storage devices -->
+<plist version="1.0">
+<dict>
+    <key>deviceControl</key>
+    <dict>
+        <key>navigationTarget</key>
+        <string>https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide</string> 
+        <key>removableMediaPolicy</key>
+        <dict>
+            <key>enforcementLevel</key>
+            <string>block</string>
+            <!-- Default to block all devices -->
+            <key>permission</key>
+            <array>
+                <string>none</string>
+            </array>
+        </dict>
+    </dict>
+</dict>
+</plist>
