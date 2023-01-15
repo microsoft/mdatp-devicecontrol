@@ -1,0 +1,20 @@
+<PolicyRule Id="{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e}"> 
+   <!-- Block Rubber Ducky USB -->
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7be08f02f2-6649-4b8e-bed0-eced2c7b1a2e%7d/RuleData -->
+   <Name>Block Rubber Ducky USBs</Name>
+   <IncludedIdList>
+		<GroupId>{c75f14fb-70ab-49ba-988e-cfe80eb48304}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{b0cc6095-b14b-41dc-9e45-f0df60829f03}">
+      <Type>Deny</Type>
+      <Options>0</Options>
+      <AccessMask>63</AccessMask>
+   </Entry>
+   <Entry Id="{6084471f-bd6d-4d7d-a8bc-6b878d22265e}">
+      <Type>AuditDenied</Type>
+      <Options>3</Options>
+      <AccessMask>54</AccessMask>
+   </Entry>
+</PolicyRule>
