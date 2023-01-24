@@ -1,0 +1,23 @@
+<PolicyRule Id="{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}">
+	   <!-- default deny -->
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7d/RuleData -->
+	   <Name>Default Deny</Name>
+	   <IncludedIdList>
+			<GroupId>{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}</GroupId>
+		</IncludedIdList>
+	   <ExcludedIdList>
+	   <!-- exclude USB printer group and pdf/xps printer group -->
+			<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
+			<GroupId>{05b56e90-e682-48ff-a6c0-5602c9638182}</GroupId>
+	   </ExcludedIdList>
+	   <Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
+	      <Type>Deny</Type>
+	      <Options>0</Options>
+	      <AccessMask>64</AccessMask>
+	   </Entry>
+	   <Entry Id="{48fe1c20-83ef-4163-aa99-882f49f3ec1d}">
+	      <Type>AuditDenied</Type>
+	      <Options>3</Options>
+	      <AccessMask>64</AccessMask>
+	   </Entry>
+</PolicyRule>

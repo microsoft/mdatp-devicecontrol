@@ -1,0 +1,19 @@
+<PolicyRule Id="{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d}">
+   <!-- Allow PDF/XPS -->
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b07fb98fd-f25b-4aec-bb99-69d4abd4ec4d%7d/RuleData -->
+   <Name>Allow PDF and XPS Printing</Name>
+   <IncludedIdList>
+      <GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList />
+   <Entry Id="{e8cc55ec-17a8-4900-8df5-1af801342e9d}">
+      <Type>Allow</Type>
+      <Options>8</Options>
+      <AccessMask>64</AccessMask>
+   </Entry>
+   <Entry Id="{2b410b9c-c940-42ec-be1c-1fcb8cc32bc4}">
+      <Type>AuditAllowed</Type>
+      <Options>2</Options>
+      <AccessMask>64</AccessMask>
+   </Entry>
+</PolicyRule>

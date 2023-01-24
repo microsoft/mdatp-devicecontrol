@@ -1,0 +1,15 @@
+<PolicyRule Id="{b11f0734-8029-4c90-aff0-95dfc0354584}">
+	<!-- Default removable storage Allow -->
+   <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bb11f0734-8029-4c90-aff0-95dfc0354584%7d/RuleData -->
+	<Name>Default removable storage Allow</Name>
+	<IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{80991b41-7116-4321-91dc-aa825976c490}">
+		<Type>Allow</Type>
+		<Options>4</Options>
+		<AccessMask>63</AccessMask>
+	</Entry>
+</PolicyRule>

@@ -1,0 +1,112 @@
+<PolicyRules>
+
+	<PolicyRule Id="{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}">
+		<Name>Authorized removable storage policy</Name>
+		<IncludedIdList>
+			<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		
+	   <Entry Id="{9f421985-127d-4819-ae64-84b4d526e6d5}">
+		  <Type>Deny</Type>
+		  <Options>0</Options>
+		  <AccessMask>40</AccessMask> <!-- Read (File system 8) + Execute (file system 32) -->
+		  <Parameters MatchType="MatchAll">
+				<File MatchType="MatchAny">
+					<GroupId>{e5f619a7-5c58-4927-90cd-75da2348a30f}</GroupId>
+				</File>
+		  </Parameters>
+	   </Entry>
+	   
+	   <Entry Id="{49eb971a-8ef5-4db0-a790-27163447d5c3}">
+		  <Type>Allow</Type>
+		  <Options>8</Options> <!-- have a copy of the file as evidence when this Entry is triggered -->
+		  <AccessMask>16</AccessMask> <!-- Write (File system level 16) -->
+		  <Sid>xxxxx</Sid> <!-- can be local or AD group user sid or Azure AD group Object Id -->  
+	   </Entry>
+	   
+		<Entry Id="{cf378fd0-ef21-4a17-b101-20ad0909e91a}">
+		  <Type>Allow</Type>
+		  <Options>0</Options>
+		  <AccessMask>2</AccessMask> <!-- Write (disk level 2) -->
+		  <Sid>xxxxx</Sid> <!-- can be local or AD group user sid or Azure AD group Object Id -->  
+	   </Entry>
+	   
+	   <Entry Id="{94325d58-0a7b-4ef6-868f-765a0673777e}">
+		  <Type>Allow</Type>
+		  <Options>0</Options>
+		  <AccessMask>45</AccessMask> <!-- Read (1+8) + Execute (4+32) -->
+	   </Entry>
+	   
+	   
+	   <Entry Id="{11ba2408-3ad9-4a8e-9d57-c069eff74d00}">
+		  <Type>AuditAllowed</Type>
+		  <Options>2</Options>
+		  <AccessMask>54</AccessMask> <!-- Execute (4+32) + Write (2+16), if want to audit Read + (1+8) -->
+	   </Entry>
+	   
+	   <Entry Id="{0ee3bb3f-7fe7-48fa-972d-6eefd85d66e9}">
+		  <Type>Deny</Type>
+		  <Options>0</Options>
+		  <AccessMask>63</AccessMask> <!-- Read (1+8) + Execute (4+32) + Write (2+16) -->
+	   </Entry>
+	   
+	   
+	   <Entry Id="{bf1b0973-7ea6-4a31-a7c3-5022baa9ea1a}">
+		  <Type>AuditDenied</Type>
+		  <Options>3</Options>
+		  <AccessMask>7</AccessMask>
+	   </Entry>
+	</PolicyRule>
+
+	<PolicyRule Id="{3984f1f4-7f66-4848-96de-491e2d038b07}">
+		<Name>Authorized removable storage policy</Name>
+		<IncludedIdList>
+			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
+		</ExcludedIdList>
+		
+	   <Entry Id="{3d15f184-1f3b-4a32-b5b6-47b560b0c44b}">
+		  <Type>Deny</Type>
+		  <Options>0</Options>
+		  <AccessMask>40</AccessMask> <!-- Read (File system 8) + Execute (file system 32) -->
+		  <Parameters MatchType="MatchAll">
+				<File MatchType="MatchAny">
+					<GroupId>{e5f619a7-5c58-4927-90cd-75da2348a30f}</GroupId>
+				</File>
+		  </Parameters>
+	   </Entry>
+	 
+	   
+	   <Entry Id="{61e73502-ce08-4dab-80a3-d5847d21b651}">
+		  <Type>Allow</Type>
+		  <Options>0</Options>
+		  <AccessMask>45</AccessMask> <!-- Read (1+8) + Execute (4+32) -->
+	   </Entry>
+	   
+	   
+	   <Entry Id="{69ae539b-66f7-4b3a-aaec-53982d2b5254}">
+		  <Type>AuditAllowed</Type>
+		  <Options>2</Options>
+		  <AccessMask>54</AccessMask> <!-- Execute (4+32) + Write (2+16), if want to audit Read + (1+8) -->
+	   </Entry>
+	   
+	   <Entry Id="{ac0c096f-f612-4c5d-a191-d39ea0093eea}">
+		  <Type>Deny</Type>
+		  <Options>0</Options>
+		  <AccessMask>63</AccessMask> <!-- Read (1+8) + Execute (4+32) + Write (2+16) -->
+	   </Entry>
+	   
+	   
+	   <Entry Id="{2c03a431-ac9a-4cdb-b260-7dac59550a37}">
+		  <Type>AuditDenied</Type>
+		  <Options>3</Options>
+		  <AccessMask>7</AccessMask>
+	   </Entry>
+	</PolicyRule>
+
+
+</PolicyRules>

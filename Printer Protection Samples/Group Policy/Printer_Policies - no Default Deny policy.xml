@@ -1,0 +1,83 @@
+<PolicyRules>
+
+	<PolicyRule Id="{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"> 
+	<!-- Allow PDF/XPS -->
+	   <Name>Allow PDF and XPS Printing</Name>
+	   <IncludedIdList>
+		<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
+	   </IncludedIdList>
+	   <ExcludedIdList>
+	   </ExcludedIdList>
+	   <Entry Id="{12bd5f8e-94e8-4205-a990-635c24e43c59}">
+		  <Type>Allow</Type>
+		  <Options>0</Options>
+		  <AccessMask>64</AccessMask>
+	   </Entry>
+	 <Entry Id="{0fef09f8-7a68-4827-841b-d48afef6ba4c}">
+		  <Type>AuditAllowed</Type>
+		  <Options>2</Options>
+		  <AccessMask>64</AccessMask>
+	   </Entry>
+	</PolicyRule>
+
+
+	<PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"> 
+	<!-- Allow approved USB Printer when machine it Corporate Network or VPN connected -->
+	   <Name>Only allow approved USB Printer</Name>
+	   <IncludedIdList>
+		<GroupId>{05b56e90-e682-48ff-a6c0-5602c9638182}</GroupId>
+	   </IncludedIdList>
+	   <ExcludedIdList>
+	   </ExcludedIdList>
+	   <Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+		  <Type>Allow</Type>
+		  <Options>0</Options>
+		  <AccessMask>64</AccessMask>
+		  <Parameters MatchType="MatchAny">
+				<Network MatchType="MatchAny">
+					<GroupId>{83d4b74a-af7c-4399-812c-fb9037e2c2b7}</GroupId>
+				</Network>
+				<VPNConnection MatchType="MatchAny">
+					<GroupId>{d633d17d-d1d1-4c73-aa27-c545c343b6d7}</GroupId>
+				</VPNConnection>
+			</Parameters>
+	   </Entry>
+	 <Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
+		  <Type>AuditAllowed</Type>
+		  <Options>2</Options>
+		  <AccessMask>64</AccessMask>
+	 </Entry>
+	   <Entry Id="{e1c591a1-c8b8-4cfa-986a-aa0a689097b6}">
+	      <Type>Deny</Type>
+	      <Options>0</Options>
+	      <AccessMask>64</AccessMask>
+	   </Entry>
+	   <Entry Id="{c413f1f2-109f-43ca-a8a2-a40ab689fe86}">
+	      <Type>AuditDenied</Type>
+	      <Options>3</Options>
+	      <AccessMask>64</AccessMask>
+	   </Entry>
+	</PolicyRule>	
+
+	<PolicyRule Id="{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}">
+	   <!-- default deny -->
+	   <Name>Default Deny</Name>
+	   <IncludedIdList>
+			<GroupId>{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}</GroupId>
+		</IncludedIdList>
+	   <ExcludedIdList>
+			<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
+			<GroupId>{05b56e90-e682-48ff-a6c0-5602c9638182}</GroupId>
+	   </ExcludedIdList>
+	   <Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
+	      <Type>Deny</Type>
+	      <Options>0</Options>
+	      <AccessMask>64</AccessMask>
+	   </Entry>
+	   <Entry Id="{48fe1c20-83ef-4163-aa99-882f49f3ec1d}">
+	      <Type>AuditDenied</Type>
+	      <Options>3</Options>
+	      <AccessMask>64</AccessMask>
+	   </Entry>
+	</PolicyRule>
+</PolicyRules>
