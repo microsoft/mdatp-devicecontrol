@@ -141,6 +141,25 @@
                                         false
                                     ]
                                 },
+                                "unallowedApplications": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "title": "Additional applications to restrict when a restricted apple device is attached to the system.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Application to restrict",
+                                        "$ref": "#/$defs/applicationIdentifier"
+                                    }
+                                },
+                                "excludedPaths": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "title": "Paths to allow restricted applications to access.",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Path to exclude"
+                                    }
+                                },
                                 "__comments": {
                                     "type": "string"
                                 }
@@ -179,6 +198,25 @@
                                         true
                                     ]
                                 },
+                                "unallowedApplications": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "title": "Additional applications to restrict when a restricted bluetooth device is attached to the system.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Application to restrict",
+                                        "$ref": "#/$defs/applicationIdentifier"
+                                    }
+                                },
+                                "excludedPaths": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "title": "Paths to allow restricted applications to access.",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Path to exclude"
+                                    }
+                                },
                                 "__comments": {
                                     "type": "string"
                                 }
@@ -197,6 +235,25 @@
                                     "examples": [
                                         true
                                     ]
+                                },
+                                "unallowedApplications": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "title": "Additional applications to restrict when a restricted portable device is attached to the system.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Application to restrict",
+                                        "$ref": "#/$defs/applicationIdentifier"
+                                    }
+                                },
+                                "excludedPaths": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "title": "Paths to allow restricted applications to access.",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Path to exclude"
+                                    }
                                 },
                                 "__comments": {
                                     "type": "string"
@@ -231,6 +288,15 @@
                             "examples": [
                                 "deny"
                             ]
+                        },
+                        "protectedLocations": {
+                            "type": "array",
+                            "minItems": 1,
+                            "title": "Additional paths that should be protected from restricted applications.",
+                            "items": {
+                                "type": "string",
+                                "title": "Path to protect from restricted applications."
+                            }
                         },
                         "__comments": {
                             "type": "string"
@@ -1113,6 +1179,47 @@
                         "generic_execute"
                     ],
                     "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                }
+            ]
+        },
+        "applicationIdentifier": {
+            "title": "Identify an application",
+            "description": "Identifying information for an application.  Only one property is required, if multiple are provided will match any process that satisfies any provided identifiers.",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+                "signingId": {
+                    "type": "string",
+                    "title": "The signing_id of an application",
+                    "examples": [
+                        "com.microsoft.Word"
+                    ]
+                },
+                "processName": {
+                    "type": "string",
+                    "title": "Name of executable",
+                    "examples": [
+                        "Microsoft Word"
+                    ]
+                },
+                "executablePath": {
+                    "type": "string",
+                    "title": "Full path to an executable",
+                    "examples": [
+                        "/Applications/Microsoft Word.app/Contents/MacOS/Microsoft Word"
+                    ]
+                },
+                "__comments": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "signingId": "com.microsoft.Word"
+                },
+                {
+                    "signingId": "com.contoso.signed",
+                    "executablePath": "/Applications/Contoso App.app/Contents/MacOS/unsigned"
                 }
             ]
         }
