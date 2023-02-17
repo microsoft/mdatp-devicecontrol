@@ -1,14 +1,24 @@
 <PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}">
 <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7d/RuleData -->
-			<Name>Audit File Information</Name>
-					<IncludedIdList>
-						<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
-					</IncludedIdList>
-					<ExcludedIdList>
-					</ExcludedIdList>
-					<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
-						<Type>Allow</Type>
-						<Options>16</Options>
-						<AccessMask>16</AccessMask>
-					</Entry>
+	<Name>Audit File Information</Name>
+	<IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+    <Entry Id="{fcc786c6-6e5a-45bb-b11f-871497f05846}">
+        <Type>Allow</Type>
+        <Options>0</Options>
+        <AccessMask>47</AccessMask>
+    </Entry>
+    <Entry Id="{0a7adab1-0e51-4d17-8938-981ce4b953e0}">
+        <Type>Allow</Type>
+        <Options>16</Options>
+        <AccessMask>16</AccessMask>
+    </Entry>
+    <Entry Id="{22974e5f-383b-4cd9-bc86-7bdf122134b0}">
+        <Type>AuditAllowed</Type>
+        <Options>2</Options>
+        <AccessMask>63</AccessMask>
+    </Entry>
 </PolicyRule>
