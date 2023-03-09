@@ -1,7 +1,7 @@
 {
     "groups": [
         {
-            "type": "device",
+            "$type": "device",
             "id": "fb4ad01e-f41a-46c6-9ac1-268efa0ea083",
             "name": "Group for all mass storage devices groups",
             "query": {
@@ -58,6 +58,7 @@
             }
         },
         {
+            "$type": "device",
             "id": "7f191817-c305-451d-812a-1c4b03ebcec8",
             "name": "Group for authorized dictaphones",
             "query": {
@@ -166,6 +167,7 @@
             }
         },
         {
+            "$type": "device",
             "id": "1653593b-5b92-47e6-975a-c43ffa9cd28d",
             "name": "Group for authorized image devices",
             "query": {
@@ -337,6 +339,7 @@
             }
         },
         {
+            "$type": "device",
             "id": "d2887bd4-a916-4011-a385-83c6b15df529",
             "name": "Group for authorized immo devices",
             "query": {
