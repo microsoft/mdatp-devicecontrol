@@ -1206,7 +1206,7 @@
                 "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                 "title": "AzureAD Object ID of the entry as a UUID",
                 "examples": [
-                    "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                    "ae908c30-a360-4264-9bb8-ca0c5a19d05c"
                 ]
             },
             "oneOf": [
