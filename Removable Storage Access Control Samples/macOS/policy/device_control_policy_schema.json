@@ -1192,6 +1192,33 @@
                 }
             ]
         },
+        "securityIdentifier": {
+            "SID": {
+                "type": "string",
+                "pattern": "^S-[a-fA-F0-9\\-]*$",
+                "title": "AzureAD Object ID of the entry as a UUID",
+                "examples": [
+                    "S-1-12-1-2928708656-1113891680-214612123-1557141850"
+                ]
+            },
+            "ObjectID": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+                "title": "AzureAD Object ID of the entry as a UUID",
+                "examples": [
+                    "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+                ]
+            },
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/securityIdentifier/SID"
+                },
+                {
+                    "$ref": "#/$defs/securityIdentifier/ObjectID"
+                }
+            ]
+            
+        },
         "appleDeviceEntry": {
             "title": "An entry to control actions for apple devices",
             "required": [
@@ -1235,6 +1262,9 @@
                     "examples": [
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                     ]
+                },
+                "securityIdentifier": {
+                    "$ref": "#/$defs/securityIdentifier"
                 },
                 "__comments": {
                     "type": "string"
@@ -1409,6 +1439,9 @@
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                     ]
                 },
+                "securityIdentifier": {
+                    "$ref": "#/$defs/securityIdentifier"
+                },
                 "parameters": {
                     "$ref": "#/$defs/parameterTypes/parameters"
                 },
@@ -1458,6 +1491,9 @@
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                     ]
                 },
+                "securityIdentifier": {
+                    "$ref": "#/$defs/securityIdentifier"
+                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1506,6 +1542,9 @@
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                     ]
                 },
+                "securityIdentifier": {
+                    "$ref": "#/$defs/securityIdentifier"
+                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1552,6 +1591,9 @@
                     "examples": [
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                     ]
+                },
+                "securityIdentifier": {
+                    "$ref": "#/$defs/securityIdentifier"
                 },
                 "__comments": {
                     "type": "string"
