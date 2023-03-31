@@ -796,11 +796,6 @@
                             "required": [
                                 "clauses"
                             ]
-                        },
-                        {
-                            "required": [
-                                "subqueries"
-                            ]
                         }
                     ],
                     "additionalProperties": false,
@@ -812,7 +807,7 @@
                                 "all",
                                 "and"
                             ],
-                            "title": "Describes how this query combines clauses and subqueries",
+                            "title": "Describes how this query combines clauses",
                             "examples": [
                                 "all",
                                 "any"
@@ -856,9 +851,7 @@
                                 {
                                     "$type": "fileType",
                                     "value": ".txt"
-                                }
-                            ],
-                            "subqueries": [
+                                },
                                 {
                                     "$type": "any",
                                     "clauses": [
@@ -869,9 +862,7 @@
                                         {
                                             "$type": "fileType",
                                             "value": ".docx"
-                                        }
-                                    ],
-                                    "subqueries": [
+                                        },
                                         {
                                             "$type": "all",
                                             "clauses": [
@@ -900,7 +891,7 @@
                             "enum": [
                                 "not"
                             ],
-                            "title": "Describes how this query combines clauses and subqueries",
+                            "title": "Describes how this query combines clauses",
                             "examples": [
                                 "not"
                             ]

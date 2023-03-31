@@ -62,7 +62,7 @@
     "rules": [
         {
             "id": "772cef80-229f-48b4-bd17-a69130092981",
-            "name": "Deny X to all Removable Media Devices",
+            "name": "Deny Execute on all Removable Media Devices",
             "includeGroups": [
                 "3f082cd3-f701-4c21-9a6a-ed115c28e211"
             ],
@@ -76,6 +76,16 @@
                     },
                     "access": [
                         "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "read"
                     ],
                     "parameters": {
                         "$type": "any",
