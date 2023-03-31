@@ -594,19 +594,8 @@
                     "type": "object",
                     "title": "A query which describes the devices to include in this group",
                     "required": [
-                        "$type"
-                    ],
-                    "anyOf": [
-                        {
-                            "required": [
-                                "clauses"
-                            ]
-                        },
-                        {
-                            "required": [
-                                "subqueries"
-                            ]
-                        }
+                        "$type",
+                        "clauses"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -617,7 +606,7 @@
                                 "all",
                                 "and"
                             ],
-                            "title": "Describes how this query combines clauses and subqueries",
+                            "title": "Describes how this query combines clauses",
                             "examples": [
                                 "all",
                                 "any"
@@ -683,9 +672,7 @@
                                 {
                                     "$type": "serialNumber",
                                     "value": "ABCDEFGHIJKLMNOP"
-                                }
-                            ],
-                            "subqueries": [
+                                },
                                 {
                                     "$type": "all",
                                     "clauses": [
@@ -709,9 +696,7 @@
                                         {
                                             "$type": "productId",
                                             "value": "3333"
-                                        }
-                                    ],
-                                    "subqueries": [
+                                        },
                                         {
                                             "$type": "all",
                                             "clauses": [
@@ -757,7 +742,7 @@
                             "enum": [
                                 "not"
                             ],
-                            "title": "Describes how this query combines clauses and subqueries",
+                            "title": "Negates the result of the contained query",
                             "examples": [
                                 "not"
                             ]
@@ -1666,9 +1651,7 @@
                             {
                                 "$type": "serialNumber",
                                 "value": "ABCDEFGHIJKLMNOP"
-                            }
-                        ],
-                        "subqueries": [
+                            },
                             {
                                 "$type": "all",
                                 "clauses": [
@@ -1692,9 +1675,7 @@
                                     {
                                         "$type": "productId",
                                         "value": "3333"
-                                    }
-                                ],
-                                "subqueries": [
+                                    },
                                     {
                                         "$type": "all",
                                         "clauses": [
