@@ -789,14 +789,8 @@
                     "type": "object",
                     "title": "A query which describes the files to include in this group",
                     "required": [
-                        "$type"
-                    ],
-                    "anyOf": [
-                        {
-                            "required": [
-                                "clauses"
-                            ]
-                        }
+                        "$type",
+                        "clauses"
                     ],
                     "additionalProperties": false,
                     "properties": {
