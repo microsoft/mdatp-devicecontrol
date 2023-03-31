@@ -1397,11 +1397,11 @@
                         "34aec8e5-e2fa-4d1e-8788-2b1284226653"
                     ]
                 },
-                "__comments": {
-                    "type": "string"
-                },
                 "parameters": {
                     "$ref": "#/$defs/parameterTypes/parameters"
+                },
+                "__comments": {
+                    "type": "string"
                 }
             }
         },
