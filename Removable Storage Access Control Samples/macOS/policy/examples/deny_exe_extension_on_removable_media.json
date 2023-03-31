@@ -62,7 +62,7 @@
     "rules": [
         {
             "id": "772cef80-229f-48b4-bd17-a69130092981",
-            "name": "Deny RWX to all Removable Media Devices except Kingston",
+            "name": "Deny X to all Removable Media Devices",
             "includeGroups": [
                 "3f082cd3-f701-4c21-9a6a-ed115c28e211"
             ],
@@ -75,8 +75,6 @@
                         "$type": "deny"
                     },
                     "access": [
-                        "read",
-                        "write",
                         "execute"
                     ],
                     "parameters": {
