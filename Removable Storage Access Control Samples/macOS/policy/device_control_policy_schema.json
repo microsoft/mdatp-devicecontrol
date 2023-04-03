@@ -1065,8 +1065,14 @@
                     }
                 },
                 "tag": {
-                    "type": "number",
-                    "title": "Custom tag to propogate to portal"
+                    "type": "string",
+                    "title": "Custom tag to propogate to portal [64 bit unsigned integer]",
+                    "pattern": "^[0-9]+$",
+                    "format": "uint64",
+                    "examples": [
+                        "42",
+                        "98765432100"
+                    ]
                 },
                 "__comments": {
                     "type": "string"
@@ -1097,8 +1103,14 @@
                     }
                 },
                 "tag": {
-                    "type": "number",
-                    "title": "Custom tag to propogate to portal"
+                    "type": "string",
+                    "title": "Custom tag to propogate to portal [64 bit unsigned integer]",
+                    "pattern": "^[0-9]+$",
+                    "format": "uint64",
+                    "examples": [
+                        "42",
+                        "98765432100"
+                    ]
                 },
                 "__comments": {
                     "type": "string"
