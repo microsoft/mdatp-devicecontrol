@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+    <dict>
+        <key>PayloadUUID</key>
+        <string>C4E6A782-0C8D-44AB-A025-EB893987A295</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadOrganization</key>
+        <string>Microsoft</string>
+        <key>PayloadIdentifier</key>
+        <string>com.microsoft.wdav</string>
+        <key>PayloadDisplayName</key>
+        <string>Microsoft Defender for Endpoint settings</string>
+        <key>PayloadDescription</key>
+        <string>Microsoft Defender for Endpoint configuration settings</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true/>
+        <key>PayloadRemovalDisallowed</key>
+        <true/>
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadUUID</key>
+                <string>99DBC2BC-3B3A-46A2-A413-C8F9BB9A7295</string>
+                <key>PayloadType</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadOrganization</key>
+                <string>Microsoft</string>
+                <key>PayloadIdentifier</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadDisplayName</key>
+                <string>Microsoft Defender for Endpoint configuration settings</string>
+                <key>PayloadDescription</key>
+                <string/>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadEnabled</key>
+                <true/>
+                <key>dlp</key>
+                <dict>
+                    <key>features</key>
+                    <array>
+                        <dict>
+                            <key>name</key>
+                            <string>DC_in_dlp</string>
+                            <key>state</key>
+                            <string>enabled</string>
+                        </dict>
+                    </array>
+                </dict>
+                <key>deviceControl</key>
+                <dict>
+                    <key>policy</key>
+                    <string>
+{
+	"groups":[
+		{
+			"$type": "device",
+			"id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
+			"name": "All Removable Media Devices",
+			"query": {
+				"$type": "all",
+				"clauses": [
+					{
+						"$type": "primaryId",
+						"value": "removable_media_devices"
+					}
+				]
+			}
+		},
+		{
+			"$type": "device",
+			"id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+			"name": "Kingston Devices",
+			"query": {
+				"$type": "all",
+				"clauses": [
+					{
+						"$type": "vendorId",
+						"value": "0951"
+					}
+				]
+			}
+		}
+	],
+	"rules":[
+		{
+			"id": "772cef80-229f-48b4-bd17-a69130092981",
+			"name": "Deny RWX to all Removable Media Devices except Kingston",
+			"includeGroups": [
+				"3f082cd3-f701-4c21-9a6a-ed115c28e211"
+			],
+			"excludeGroups": [
+				"3f082cd3-f701-4c21-9a6a-ed115c28e212"
+			],
+			"entries": [
+				{
+					"$type": "removableMedia",
+					"id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
+					"enforcement": {
+						"$type": "deny"
+					},
+					"access": [
+						"read",
+						"write",
+						"execute"
+					]
+				},
+				{
+					"$type": "removableMedia",
+					"id": "18BA3DD5-4C9A-458B-A756-F1499FE94FB4",
+					"enforcement": {
+						"$type": "auditDeny",
+						"options": [
+							"send_event",
+							"show_notification"
+						]
+					},
+					"access": [
+						"read",
+						"write",
+						"execute"
+					]
+				}
+			]
+		}
+	],
+	"settings":{
+		"features": {
+			"removableMedia": {
+				"disable": false
+			}
+		},
+		"global": {
+			"defaultEnforcement": "allow"
+		},
+		"ux": {
+			"navigationTarget": "http://www.microsoft.com"
+		}
+	}
+}				
+					</string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
