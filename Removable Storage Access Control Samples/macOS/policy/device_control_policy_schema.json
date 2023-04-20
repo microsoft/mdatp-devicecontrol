@@ -42,13 +42,8 @@
                 "additionalProperties": false,
                 "properties": {
                     "id": {
-                        "type": "string",
                         "title": "UUID to uniquely identify this rule.",
-                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                        "examples": [
-                            "772cef80-229f-48b4-bd17-a6913009298d",
-                            "bfabe24b-37a6-4bc0-9778-421aeaeece23"
-                        ]
+                        "$ref": "#/$defs/uuid"
                     },
                     "name": {
                         "type": "string",
@@ -61,29 +56,19 @@
                     "includeGroups": {
                         "type": "array",
                         "minItems": 0,
-                        "title": "List of all the groups that a device must be a member of (logical AND) for this rule to be applicable.",
+                        "title": "List of all the device groups that a device must be a member of (logical AND) for this rule to be applicable.",
                         "items": {
-                            "type": "string",
-                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                            "title": "UUID of a group",
-                            "examples": [
-                                "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                                "03f025f6-ee9d-49b2-b192-fc7a00df6856",
-                                "03f025f6-ee9d-49b2-b192-fc7a00df6857"
-                            ]
+                            "title": "UUID of a device group",
+                            "$ref": "#/$defs/uuid"
                         }
                     },
                     "excludeGroups": {
                         "type": "array",
                         "minItems": 0,
-                        "title": "List of groups which override the applicability logic of includeGroups.  Membership in any of these groups (logical OR) will disable the rule for a device.",
+                        "title": "List of device groups which override the applicability logic of includeGroups.  Membership in any of these groups (logical OR) will disable the rule for a device.",
                         "items": {
-                            "type": "string",
-                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                            "title": "UUID of a group",
-                            "examples": [
-                                "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                            ]
+                            "title": "UUID of a device group",
+                            "$ref": "#/$defs/uuid"
                         }
                     },
                     "entries": {
@@ -349,6 +334,13 @@
         }
     },
     "$defs": {
+        "uuid": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+            "examples": [
+                "34aec8e5-e2fa-4d1e-8788-2b1284226653"
+            ]
+        },
         "clauses": {
             "primaryId": {
                 "title": "Primary ID Clause",
@@ -488,14 +480,8 @@
                         ]
                     },
                     "value": {
-                        "type": "string",
                         "title": "Group ID",
-                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                        "examples": [
-                            "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                            "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                            "03f025f6-ee9d-49b2-b192-fc7a00df6856"
-                        ]
+                        "$ref": "#/$defs/uuid"
                     },
                     "__comments": {
                         "type": "string"
@@ -526,7 +512,7 @@
                         "enum": [
                             "apfs"
                         ],
-                        "title": "Group ID",
+                        "title": "Encryption Type",
                         "examples": [
                             "apfs"
                         ]
@@ -935,14 +921,8 @@
                     ]
                 },
                 "id": {
-                    "type": "string",
-                    "title": "UUID representing a unique ID for this group.",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                    "examples": [
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6856"
-                    ]
+                    "title": "UUID representing a unique ID for this device group.",
+                    "$ref": "#/$defs/uuid"
                 },
                 "name": {
                     "type": "string",
@@ -993,14 +973,8 @@
                     ]
                 },
                 "id": {
-                    "type": "string",
-                    "title": "UUID representing a unique ID for this group.",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                    "examples": [
-                        "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                        "03f025f6-ee9d-49b2-b192-fc7a00df6856"
-                    ]
+                    "title": "UUID representing a unique ID for this file group.",
+                    "$ref": "#/$defs/uuid"
                 },
                 "name": {
                     "type": "string",
@@ -1195,19 +1169,15 @@
         "securityIdentifier": {
             "SID": {
                 "type": "string",
-                "pattern": "^S-[a-fA-F0-9\\-]*$",
+                "pattern": "^S-[0-9\\-]*$",
                 "title": "AzureAD Object ID of the entry as a UUID",
                 "examples": [
                     "S-1-12-1-2928708656-1113891680-214612123-1557141850"
                 ]
             },
             "ObjectID": {
-                "type": "string",
-                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                 "title": "AzureAD Object ID of the entry as a UUID",
-                "examples": [
-                    "ae908c30-a360-4264-9bb8-ca0c5a19d05c"
-                ]
+                "$ref": "#/$defs/uuid"
             },
             "oneOf": [
                 {
@@ -1256,12 +1226,8 @@
                     }
                 },
                 "id": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                     "title": "UUID of the entry",
-                    "examples": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ]
+                    "$ref": "#/$defs/uuid"
                 },
                 "securityIdentifier": {
                     "$ref": "#/$defs/securityIdentifier"
@@ -1306,14 +1272,8 @@
                         ]
                     }, 
                     "groupId": {
-                        "type": "string",
                         "title": "Group ID",
-                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-                        "examples": [
-                            "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                            "34aec8e5-e2fa-4d1e-8788-2b1284226653",
-                            "03f025f6-ee9d-49b2-b192-fc7a00df6856"
-                        ]
+                        "$ref": "#/$defs/uuid"
                     }
                 }
             },
@@ -1432,12 +1392,8 @@
                     }
                 },
                 "id": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                     "title": "UUID of the entry",
-                    "examples": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ]
+                    "$ref": "#/$defs/uuid"
                 },
                 "securityIdentifier": {
                     "$ref": "#/$defs/securityIdentifier"
@@ -1484,12 +1440,8 @@
                     }
                 },
                 "id": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                     "title": "UUID of the entry",
-                    "examples": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ]
+                    "$ref": "#/$defs/uuid"
                 },
                 "securityIdentifier": {
                     "$ref": "#/$defs/securityIdentifier"
@@ -1535,12 +1487,8 @@
                     }
                 },
                 "id": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                     "title": "UUID of the entry",
-                    "examples": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ]
+                    "$ref": "#/$defs/uuid"
                 },
                 "securityIdentifier": {
                     "$ref": "#/$defs/securityIdentifier"
@@ -1585,12 +1533,8 @@
                     }
                 },
                 "id": {
-                    "type": "string",
-                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
                     "title": "UUID of the entry",
-                    "examples": [
-                        "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                    ]
+                    "$ref": "#/$defs/uuid"
                 },
                 "securityIdentifier": {
                     "$ref": "#/$defs/securityIdentifier"
