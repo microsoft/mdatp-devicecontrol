@@ -13,7 +13,7 @@
         "groups": {
             "type": "array",
             "minItems": 1,
-            "title": "The machine groups to be used within rules",
+            "title": "Groups to be used within rules",
             "items": {
                 "type": "object",
                 "title": "A group",
@@ -23,6 +23,9 @@
                     },
                     {
                         "$ref": "#/$defs/fileGroup"
+                    },
+                    {
+                        "$ref": "#/$defs/userGroup"
                     }
                 ]
             }
@@ -341,6 +344,14 @@
                 "34aec8e5-e2fa-4d1e-8788-2b1284226653"
             ]
         },
+        "sid": {
+            "type": "string",
+            "pattern": "^S-[0-9\\-]*$",
+            "title": "Security Identifier",
+            "examples": [
+                "S-1-12-1-2928708656-1113891680-214612123-1557141850"
+            ]
+        },
         "clauses": {
             "primaryId": {
                 "title": "Primary ID Clause",
@@ -560,6 +571,62 @@
                     {
                         "$type": "fileType",
                         "value": ".exe"
+                    }
+                ]
+            },
+            "securityIdentifier": {
+                "title": "Security Identifier Clause",
+                "description": "Match against a specific security identifier.",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "securityIdentifier"
+                        ]
+                    },
+                    "value": {
+                        "$ref": "#/$defs/sid"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "securityIdentifier",
+                        "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
+                    }
+                ]
+            },
+            "aadObjectId": {
+                "title": "AzureAD Object ID Clause",
+                "description": "Match against an AzureAD object ID",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "aadObjectId"
+                        ]
+                    },
+                    "value": {
+                        "$ref": "#/$defs/uuid"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "type": "aadObjectId",
+                        "value": "FE09D726-F582-479E-A737-AAAEE124864F"
                     }
                 ]
             }
@@ -799,7 +866,7 @@
                             "title": "Clauses to evaluate",
                             "items": {
                                 "type": "object",
-                                "title": "An individual clause to match against a device",
+                                "title": "An individual clause to match against a file",
                                 "oneOf": [
                                     {
                                         "$ref": "#/$defs/clauses/fileType"
@@ -896,6 +963,139 @@
                                     {
                                         "$type": "fileType",
                                         "value": ".pdf"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "user": {
+                "query": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/groups/user/binaryQuery"
+                        },
+                        {
+                            "$ref": "#/$defs/groups/user/unaryQuery"
+                        }
+                    ]
+                },
+                "binaryQuery": {
+                    "type": "object",
+                    "title": "A query which describes the users to include in this group",
+                    "required": [
+                        "$type",
+                        "clauses"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "$type": {
+                            "enum": [
+                                "any",
+                                "or",
+                                "all",
+                                "and"
+                            ],
+                            "title": "Describes how this query combines clauses",
+                            "examples": [
+                                "all",
+                                "any"
+                            ]
+                        },
+                        "clauses": {
+                            "type": "array",
+                            "minItems": 1,
+                            "title": "Clauses to evaluate",
+                            "items": {
+                                "type": "object",
+                                "title": "An individual clause to match against a user",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/clauses/securityIdentifier"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/clauses/aadObjectId"
+                                    }
+                                ]
+                            }
+                        },
+                        "__comments": {
+                            "type": "string"
+                        }
+                    },
+                    "examples": [
+                        {
+                            "$type": "or",
+                            "clauses": [
+                                {
+                                    "$type": "securityIdentifier",
+                                    "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
+                                }
+                            ]
+                        },
+                        {
+                            "$type": "or",
+                            "clauses": [
+                                {
+                                    "$type": "securityIdentifier",
+                                    "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
+                                },
+                                {
+                                    "$type": "securityIdentifier",
+                                    "value": "S-1-12-1-2928708656-1113891680-214612123-1557141851"
+                                },
+                                {
+                                    "$type": "and",
+                                    "clauses": [
+                                        {
+                                            "$type": "aadObjectId",
+                                            "value": "FE09D726-F582-479E-A737-AAAEE1248640"
+                                        },
+                                        {
+                                            "$type": "aadObjectId",
+                                            "value": "FE09D726-F582-479E-A737-AAAEE1248641"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "unaryQuery": {
+                    "type": "object",
+                    "title": "A query which describes the users to include in this group",
+                    "required": [
+                        "$type",
+                        "query"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "$type": {
+                            "enum": [
+                                "not"
+                            ],
+                            "title": "Describes how this query combines clauses",
+                            "examples": [
+                                "not"
+                            ]
+                        },
+                        "query": {
+                            "$ref": "#/$defs/groups/user/query"
+                        },
+                        "__comments": {
+                            "type": "string"
+                        }
+                    },
+                    "examples": [
+                        {
+                            "$type": "not",
+                            "query": {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "securityIdentifier",
+                                        "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
                                     }
                                 ]
                             }
@@ -1010,6 +1210,62 @@
                             {
                                 "$type": "fileType",
                                 "value": ".ps1"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "userGroup": {
+            "type": "object",
+            "title": "Identifies a specific group of users",
+            "required": [
+                "$type",
+                "id",
+                "name",
+                "query"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "$type": {
+                    "enum": [
+                        "user"
+                    ]
+                },
+                "id": {
+                    "title": "UUID representing a unique ID for this user group.",
+                    "$ref": "#/$defs/uuid"
+                },
+                "name": {
+                    "type": "string",
+                    "title": "A friendly name for the group",
+                    "examples": [
+                        "Developers",
+                        "Marketing"
+                    ]
+                },
+                "query": {
+                    "$ref": "#/$defs/groups/user/query"
+                },
+                "__comments": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "$type": "user",
+                    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
+                    "name": "Developers",
+                    "query": {
+                        "$type": "or",
+                        "clauses": [
+                            {
+                                "$type": "securityIdentifier",
+                                "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
+                            },
+                            {
+                                "$type": "securityIdentifier",
+                                "value": "S-1-12-1-2928708656-1113891680-214612123-1557141851"
                             }
                         ]
                     }
@@ -1166,28 +1422,110 @@
                 }
             ]
         },
-        "securityIdentifier": {
-            "SID": {
-                "type": "string",
-                "pattern": "^S-[0-9\\-]*$",
-                "title": "AzureAD Object ID of the entry as a UUID",
-                "examples": [
-                    "S-1-12-1-2928708656-1113891680-214612123-1557141850"
-                ]
-            },
-            "ObjectID": {
-                "title": "AzureAD Object ID of the entry as a UUID",
-                "$ref": "#/$defs/uuid"
-            },
-            "oneOf": [
-                {
-                    "$ref": "#/$defs/securityIdentifier/SID"
+        "parameters": {
+            "clause": {
+                "file": {
+                    "title": "A file parameter",
+                    "required": [
+                        "$type",
+                        "groupId"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "$type": {
+                            "enum": [
+                                "file"
+                            ]
+                        },
+                        "groupId": {
+                            "title": "File Group ID",
+                            "$ref": "#/$defs/uuid"
+                        }
+                    }
                 },
-                {
-                    "$ref": "#/$defs/securityIdentifier/ObjectID"
+                "user": {
+                    "title": "A user parameter",
+                    "required": [
+                        "$type",
+                        "groupId"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "$type": {
+                            "enum": [
+                                "user"
+                            ]
+                        },
+                        "groupId": {
+                            "title": "User Group ID",
+                            "$ref": "#/$defs/uuid"
+                        }
+                    }
                 }
-            ]
-            
+            },
+            "standard": {
+                "title": "Parameters for an entry",
+                "required": [
+                    "$type",
+                    "values"
+                ],
+                "additionalProperties": false,
+                    "properties": {
+                    "$type": {
+                        "enum": [
+                            "any",
+                            "or",
+                            "all",
+                            "and"
+                        ]
+                    },
+                    "values": {
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "The parameters to use",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/$defs/parameters/clause/user"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "removableMedia": {
+                "title": "Parameters for a removable_media entry",
+                "required": [
+                    "$type",
+                    "values"
+                ],
+                "additionalProperties": false,
+                    "properties": {
+                    "$type": {
+                        "enum": [
+                            "any",
+                            "or",
+                            "all",
+                            "and"
+                        ]
+                    },
+                    "values": {
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "The parameters to use",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/$defs/parameters/clause/user"
+                                },
+                                {
+                                    "$ref": "#/$defs/parameters/clause/file"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         },
         "appleDeviceEntry": {
             "title": "An entry to control actions for apple devices",
@@ -1229,8 +1567,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "securityIdentifier": {
-                    "$ref": "#/$defs/securityIdentifier"
+                "parameters": {
+                    "$ref": "#/$defs/parameters/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1257,106 +1595,7 @@
                 }
             ]
         },
-        "parameterTypes": {
-            "file": {
-                "title": "A file parameter",
-                "required": [
-                    "$type",
-                    "groupId"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                    "$type": {
-                        "enum": [
-                            "file"
-                        ]
-                    }, 
-                    "groupId": {
-                        "title": "Group ID",
-                        "$ref": "#/$defs/uuid"
-                    }
-                }
-            },
-            "parameter": {
-                "oneOf": [
-                    {
-                        "$ref": "#/$defs/parameterTypes/file"
-                    }
-                ]
-            },
-            
-            "any": {
-                "type": "object",
-                "title": "A paramter query which requires only one of its members to be included",
-                "required": [
-                    "$type",
-                    "values"
-                ],
-                "additionalProperties": false,
-                    "properties": {
-                    "$type": {
-                        "enum": [
-                            "any"
-                        ]
-                    },
-                    "values": {
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "The file groups to be used within the entry",
-                        "items": {
-                            "type": "object",
-                            "title": "A file group",
-                            "oneOf": [
-                                {
-                                    "$ref": "#/$defs/parameterTypes/parameter"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "all": {
-                "type": "object",
-                "title": "A paramter query which requires all of its members to be included",
-                "required": [
-                    "$type",
-                    "values"
-                ],
-                "additionalProperties": false,
-                    "properties": {
-                    "$type": {
-                        "enum": [
-                            "all"
-                        ]
-                    },
-                    "values": {
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "The file groups to be used within the entry",
-                        "items": {
-                            "type": "object",
-                            "title": "A file group",
-                            "oneOf": [
-                                {
-                                    "$ref": "#/$defs/parameterTypes/parameter"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "parameters": {
-                "oneOf": [
-                    {
-                        "$ref": "#/$defs/parameterTypes/any"
-                    },
-                    {
-                        "$ref": "#/$defs/parameterTypes/all"
-                    }
-                ]
-            }
 
-        },
         "removableMediaEntry": {
             "title": "An entry for a removable media device",
             "required": [
@@ -1395,11 +1634,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "securityIdentifier": {
-                    "$ref": "#/$defs/securityIdentifier"
-                },
                 "parameters": {
-                    "$ref": "#/$defs/parameterTypes/parameters"
+                    "$ref": "#/$defs/parameters/removableMedia"
                 },
                 "__comments": {
                     "type": "string"
@@ -1443,8 +1679,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "securityIdentifier": {
-                    "$ref": "#/$defs/securityIdentifier"
+                "parameters": {
+                    "$ref": "#/$defs/parameters/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1490,8 +1726,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "securityIdentifier": {
-                    "$ref": "#/$defs/securityIdentifier"
+                "parameters": {
+                    "$ref": "#/$defs/parameters/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1536,8 +1772,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "securityIdentifier": {
-                    "$ref": "#/$defs/securityIdentifier"
+                "parameters": {
+                    "$ref": "#/$defs/parameters/standard"
                 },
                 "__comments": {
                     "type": "string"
