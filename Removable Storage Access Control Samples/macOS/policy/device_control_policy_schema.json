@@ -1097,7 +1097,6 @@
                     "title": "Options to control the behavior of allow events",
                     "items": {
                         "enum": [
-                            "disable_audit_deny",
                             "disable_audit_allow"
                         ]
                     }
