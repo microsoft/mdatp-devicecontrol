@@ -87,7 +87,7 @@
                     "access": [
                         "read"
                     ],
-                    "parameters": {
+                    "conditions": {
                         "$type": "any",
                         "values": [
                             {
