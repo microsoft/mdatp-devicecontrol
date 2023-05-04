@@ -1421,10 +1421,10 @@
                 }
             ]
         },
-        "parameters": {
+        "conditions": {
             "clause": {
                 "file": {
-                    "title": "A file parameter",
+                    "title": "A file condition",
                     "required": [
                         "$type",
                         "groupId"
@@ -1443,7 +1443,7 @@
                     }
                 },
                 "user": {
-                    "title": "A user parameter",
+                    "title": "A user condition",
                     "required": [
                         "$type",
                         "groupId"
@@ -1463,7 +1463,7 @@
                 }
             },
             "standard": {
-                "title": "Parameters for an entry",
+                "title": "Conditions for any entry",
                 "required": [
                     "$type",
                     "values"
@@ -1481,11 +1481,11 @@
                     "values": {
                         "type": "array",
                         "minItems": 1,
-                        "title": "The parameters to use",
+                        "title": "The conditions to use",
                         "items": {
                             "oneOf": [
                                 {
-                                    "$ref": "#/$defs/parameters/clause/user"
+                                    "$ref": "#/$defs/conditions/clause/user"
                                 }
                             ]
                         }
@@ -1493,7 +1493,7 @@
                 }
             },
             "removableMedia": {
-                "title": "Parameters for a removable_media entry",
+                "title": "Conditions for a removable_media entry",
                 "required": [
                     "$type",
                     "values"
@@ -1511,14 +1511,14 @@
                     "values": {
                         "type": "array",
                         "minItems": 1,
-                        "title": "The parameters to use",
+                        "title": "The conditions to use",
                         "items": {
                             "oneOf": [
                                 {
-                                    "$ref": "#/$defs/parameters/clause/user"
+                                    "$ref": "#/$defs/conditions/clause/user"
                                 },
                                 {
-                                    "$ref": "#/$defs/parameters/clause/file"
+                                    "$ref": "#/$defs/conditions/clause/file"
                                 }
                             ]
                         }
@@ -1566,8 +1566,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "parameters": {
-                    "$ref": "#/$defs/parameters/standard"
+                "conditions": {
+                    "$ref": "#/$defs/conditions/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1633,8 +1633,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "parameters": {
-                    "$ref": "#/$defs/parameters/removableMedia"
+                "conditions": {
+                    "$ref": "#/$defs/conditions/removableMedia"
                 },
                 "__comments": {
                     "type": "string"
@@ -1678,8 +1678,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "parameters": {
-                    "$ref": "#/$defs/parameters/standard"
+                "conditions": {
+                    "$ref": "#/$defs/conditions/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1725,8 +1725,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "parameters": {
-                    "$ref": "#/$defs/parameters/standard"
+                "conditions": {
+                    "$ref": "#/$defs/conditions/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1771,8 +1771,8 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "parameters": {
-                    "$ref": "#/$defs/parameters/standard"
+                "conditions": {
+                    "$ref": "#/$defs/conditions/standard"
                 },
                 "__comments": {
                     "type": "string"
