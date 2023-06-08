@@ -1,0 +1,64 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+            "name": "All Mobile Devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "portable_devices"
+                    },
+                    {
+                        "$type": "primaryId",
+                        "value": "apple_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "2275E5E3-44D4-429E-A8BF-F73B390CBF46",
+            "name": "Audit All Mobile Devices",
+            "includeGroups": [
+                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
+            ],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "id": "0B77527F-ED25-4136-93CC-F604E847DAC4",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "appleDevice": {
+                "disable": false
+            },
+            "portableDevice": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
