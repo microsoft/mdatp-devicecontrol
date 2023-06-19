@@ -1,0 +1,72 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "519a2e50-3bb7-49b7-9ae0-6feb415d58ca",
+            "name": "All Removable Media Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "69a4a010-acb1-4573-8a58-50cf4ee7bc7f",
+            "name": "Deny RWX to all Removable Media Devices",
+            "includeGroups": [
+                "519a2e50-3bb7-49b7-9ae0-6feb415d58ca"
+            ],
+            "entries": [
+                {
+                    "__comments": "Deny Read, Write, and Execute.",
+                    "$type": "removableMedia",
+                    "id": "c7a13940-5c14-49f6-b0fb-b0978bf0f8cc",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "__comments": "Show UX and send events for all blocked operations.",
+                    "$type": "removableMedia",
+                    "id": "ae5672a9-0746-41e7-8c21-63222f1aa304",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "removableMedia": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
