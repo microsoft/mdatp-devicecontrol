@@ -247,7 +247,7 @@ def convert_enforcement(entry_type, options, strict):
                 if options != 0:
                     log_warning(f"Unsupported AuditDeny options [{hex(options)}]", strict)
 
-                enforcement['options'] = converted_option
+                enforcement['options'] = converted_options
         case _:
             log_warning(f"Unsupported entry type [{entry_type}]", strict)
     
@@ -359,9 +359,10 @@ def convert_rule(rule, strict):
         converted_rule['includeGroups'] = include_groups
 
     exluded_id_list = rule.find('ExcludedIdList')
-    exclude_groups = convert_id_list(exluded_id_list, strict)
-    if exclude_groups is not None:
-        converted_rule['excludeGroups'] = exclude_groups
+    if exluded_id_list is not None:
+        exclude_groups = convert_id_list(exluded_id_list, strict)
+        if exclude_groups is not None:
+            converted_rule['excludeGroups'] = exclude_groups
 
     entries = rule.findall('Entry')
     if entries is None:
