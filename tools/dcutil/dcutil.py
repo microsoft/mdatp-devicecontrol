@@ -69,11 +69,17 @@ class Entry:
 
     def __init__(self,entry):
         self.id = entry.attrib["Id"]
-        self.type = entry.find(".//Type").text
-        self.options = entry.find(".//Options").text
-        self.access_mask = entry.find(".//AccessMask").text
+        self.type = entry.find("./Type").text
+        self.options = entry.find("./Options").text
+        self.access_mask = entry.find("./AccessMask").text
 
-        parameters = entry.find(".//Parameters")
+        sid = entry.find("./Sid")
+        if sid is not None:
+            self.sid = sid.text
+        else:
+            self.sid = None
+
+        parameters = entry.find("./Parameters")
         if parameters is not None:
             self.parameters = Parameters(parameters)
         else:

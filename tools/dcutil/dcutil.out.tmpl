@@ -4,14 +4,14 @@
 ##{{ value.name }}
 Entries:
     {% for entry in value.entries %}
-        {{ entry.type }} {{ entry.access_mask }} {{ entry.options }} {{ entry.parameters }}
+        {{ entry.type }} {{ entry.access_mask }} {{ entry.options }} {{ entry.parameters }} {{ entry.sid }}
     {% endfor %}
 Included Devices: 
     {% for included_id in value.included_groups %}
-    - {{ groups[included_id].name }}
+    - {{ groups[included_id].name }} {{ groups[included_id].id }} 
     {% endfor %}
 Excluded Devices: 
     {% for excluded_id in value.excluded_groups %}
-    - {{ groups[excluded_id].name }}
+    - {{ groups[excluded_id].name }} {{ groups[excluded_id].id }}
     {% endfor %}
 {% endfor %}
