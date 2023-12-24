@@ -1,0 +1,17 @@
+# Device Control Policy
+
+{% for key,value in rules.items() %}
+##{{ value.name }}
+Entries:
+    {% for entry in value.entries %}
+        {{ entry.type }} {{ entry.access_mask }} {{ entry.options }} {{ entry.parameters }}
+    {% endfor %}
+Included Devices: 
+    {% for included_id in value.included_groups %}
+    - {{ groups[included_id].name }}
+    {% endfor %}
+Excluded Devices: 
+    {% for excluded_id in value.excluded_groups %}
+    - {{ groups[excluded_id].name }}
+    {% endfor %}
+{% endfor %}

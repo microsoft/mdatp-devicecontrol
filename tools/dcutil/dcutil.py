@@ -4,6 +4,8 @@ import xml.etree.ElementTree as ET
 import argparse
 import os
 import pandas as pd
+import jinja2
+import pathlib
 
 
 class Group:
@@ -73,9 +75,57 @@ class Entry:
 
         parameters = entry.find(".//Parameters")
         if parameters is not None:
-            print(parameters)
+            self.parameters = Parameters(parameters)
+        else:
+            self.parameters = None
         return
     
+    def get_group_ids(self):
+        if self.parameters is not None:
+            return self.parameters.get_group_ids()
+        else:
+            return []
+    
+class Parameters:
+
+    def __init__(self,parameters):
+        self.match_type = parameters.attrib['MatchType']
+        self.conditions = []
+        for condition in parameters.findall("./"):
+            match condition.tag:
+                case "Network":
+                    self.conditions.append(Condition(condition))
+                case "VPNConnection":
+                    self.conditions.append(Condition(condition))
+                case "File":
+                    self.conditions.append(Condition(condition))
+                case "Parameters":
+                    self.conditions.append(Parameters(condition))
+                case other:
+                    raise Exception('Unknown condition '+condition.tag)
+
+    def get_group_ids(self):
+        groups = []
+        for condition in self.conditions:
+            group_ids = condition.get_group_ids()
+            for group_id in group_ids:
+                groups.append(group_id)
+
+        return groups
+
+
+class Condition:
+    def __init__(self,condition):
+        self.match_type = condition.attrib['MatchType']
+        self.groups = []
+        self.condition_type = condition.tag
+        for group in condition.findall(".//GroupId"):
+            self.groups.append(group.text)
+
+    def get_group_ids(self):
+        return self.groups
+
+
 class Inventory:
 
  
@@ -87,7 +137,8 @@ class Inventory:
             "path":[],
             "name":[],
             "id":[],
-            "match_type":[]
+            "match_type":[],
+            "object":[]
         }
 
         rule_columns = {
@@ -95,7 +146,8 @@ class Inventory:
             "name":[],
             "id":[],
             "included_groups":[],
-            "excluded_groups":[]
+            "excluded_groups":[],
+            "object":[]
         }
 
         self.groups = pd.DataFrame(group_columns)
@@ -103,7 +155,7 @@ class Inventory:
 
         self.load_inventory()
 
-        print(self.groups)
+        
 
     def load_inventory(self):
         for path in self.paths:
@@ -118,7 +170,6 @@ class Inventory:
         try:
             with open(xml_path) as file:
                 root = ET.fromstring(file.read())
-                print (root.tag)
                 match root.tag:
                     case "Group":
                         self.addGroup(Group(root),xml_path)
@@ -134,6 +185,7 @@ class Inventory:
                 return root
 
         except Exception as e:
+            print ("Error in "+xml_path+": "+e.msg)
             return
 
     def addGroup(self,group,path):
@@ -143,7 +195,8 @@ class Inventory:
             "path":path,
             "name":group.name,
             "id":group.id,
-            "match_type":group.match_type
+            "match_type":group.match_type,
+            "object": group
         }])
 
         self.groups = pd.concat([self.groups,new_row],ignore_index=True)
@@ -155,12 +208,36 @@ class Inventory:
             "name":rule.name,
             "id":rule.id,
             "included_groups":rule.included_groups,
-            "excluded_groups":rule.excluded_groups
+            "excluded_groups":rule.excluded_groups,
+            "object": rule
         }])
 
         self.policy_rules = pd.concat([self.policy_rules,new_row],ignore_index=True)
 
         return
+    
+    def get_groups_for_rule(self,rule):
+        groups_for_rule = {}
+        for included_group in rule.included_groups:
+            g = self.get_group_by_id(included_group)
+            groups_for_rule[g.id] = g
+
+        for excluded_group in rule.excluded_groups:
+            g = self.get_group_by_id(excluded_group)
+            groups_for_rule[g.id] = g
+
+        for entry in rule.entries:
+            groups = entry.get_group_ids()
+            for entry_group in groups:
+                g = self.get_group_by_id(entry_group)
+                groups_for_rule[g.id] = g
+        
+        return groups_for_rule
+
+
+    def get_group_by_id(self,group_id):
+        group_frame = self.groups.query("id == '"+group_id+"'")
+        return group_frame.iloc[0]["object"]
 
 
 def dir_path(string):
@@ -172,13 +249,46 @@ def dir_path(string):
             raise NotADirectoryError(path)
     return paths
 
+def format(string):
+    match string:
+        case "text":
+            return string
+        case other:
+            raise argparse.ArgumentError("Invalid format "+string)
+
 if __name__ == '__main__':
 
     arg_parser = argparse.ArgumentParser(
         description='Utility for importing/exporting device control policies.')
 
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
+    arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default='path.str.contains(".xml")')
+    arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
+    arg_parser.add_argument('-o','--output',dest="out_path",help="The output path",default="dcutil.out")
+    arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.out.tmpl")
 
     args = arg_parser.parse_args()
 
     inventory = Inventory(args.source_path)
+
+    filtered_rules = inventory.policy_rules.query(args.query, engine='python')
+
+    rules = {}
+    groups = {}
+    for ind in filtered_rules.index:
+        rule = filtered_rules['object'][ind]
+        rules[rule.id] = rule
+        groups_for_rule = inventory.get_groups_for_rule(rule)
+        for group in groups_for_rule:
+            groups[group] = groups_for_rule[group]
+
+    if args.format == "text":
+        templatePath = pathlib.Path(__file__).parent.resolve()
+        templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        TEMPLATE_FILE = args.template
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        out = template.render({"rules":rules,"groups":groups})
+        with open(args.out_path,"w") as out_path:
+            out_path.write(out)
+            out_path.close()
