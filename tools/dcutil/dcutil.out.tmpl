@@ -8,10 +8,10 @@ Entries:
     {% endfor %}
 Included Devices: 
     {% for included_id in value.included_groups %}
-    - {{ groups[included_id].name }} {{ groups[included_id].id }} 
+    - {{ groups[included_id].name }} {{ groups[included_id].id }} {{ groups[included_id].match_type }} {{ groups[included_id].properties }} 
     {% endfor %}
 Excluded Devices: 
     {% for excluded_id in value.excluded_groups %}
-    - {{ groups[excluded_id].name }} {{ groups[excluded_id].id }}
+    - {{ groups[excluded_id].name }} {{ groups[excluded_id].id }} {{ groups[excluded_id].match_type }}{{ groups[excluded_id].properties }}
     {% endfor %}
 {% endfor %}

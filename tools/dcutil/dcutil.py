@@ -32,6 +32,10 @@ class Group:
         else:
             self.match_type = match_node.text
 
+        self.properties = {}
+        descriptors = root.findall("./DescriptorIdList//")
+        for descriptor in descriptors:
+            self.properties[descriptor.tag] = descriptor.text
         return
 
 class PolicyRule:
