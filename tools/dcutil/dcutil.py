@@ -71,17 +71,71 @@ class PolicyRule:
 
 class Entry:
 
+
+
+    access_masks = {
+        0x01: "Disk Read",
+        0x02: "Disk Write",
+        0x04: "Disk Execute",
+        0x08: "File Read",
+        0x10: "File Write",
+        0x20: "File Execute",
+        0x40: "Print"
+    }
+
+    allow_notification_masks = {
+        0x04: "Disable",
+        0x08: "Create File Evidence"
+    }
+
+    deny_notification_masks = {
+        0x04: "Disable"
+    }
+
+    audit_allowed_notification_masks = {
+        0x01: "Nothing",
+        0x02: "Send Event"
+    }
+
+    audit_denied_notification_masks = {
+        0x01: "Show Notification",
+        0x02: "Send Event"
+    }
+
+    notification_masks = {
+        "Allow": allow_notification_masks,
+        "AuditAllowed": audit_allowed_notification_masks,
+        "Deny": deny_notification_masks,
+        "AuditDenied": audit_denied_notification_masks
+    }
+
+
     def __init__(self,entry):
         self.id = entry.attrib["Id"]
         self.type = entry.find("./Type").text
         self.options = entry.find("./Options").text
         self.access_mask = entry.find("./AccessMask").text
 
+        self.permissions = []
+        self.notifications = []
+
+        for mask in Entry.access_masks.keys():
+            if int(self.access_mask) & mask:
+                self.permissions.append(Entry.access_masks[mask])
+
+        notification_masks = Entry.notification_masks[self.type]
+        for mask in notification_masks:
+            if int(self.options) & mask:
+                self.notifications.append(notification_masks[mask])
+        
+        if len(self.notifications) == 0:
+            self.notifications.append("Nothing")
+
         sid = entry.find("./Sid")
         if sid is not None:
             self.sid = sid.text
         else:
-            self.sid = None
+            self.sid = "All Users"
 
         parameters = entry.find("./Parameters")
         if parameters is not None:
@@ -195,7 +249,7 @@ class Inventory:
                 return root
 
         except Exception as e:
-            print ("Error in "+xml_path+": "+e.msg)
+            print ("Error in "+xml_path+": "+str(e))
             return
 
     def addGroup(self,group,path):

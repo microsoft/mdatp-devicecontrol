@@ -1,17 +1,67 @@
-# Device Control Policy
-
-{% for key,value in rules.items() %}
-##{{ value.name }}
-Entries:
-    {% for entry in value.entries %}
-        {{ entry.type }} {{ entry.access_mask }} {{ entry.options }} {{ entry.parameters }} {{ entry.sid }}
-    {% endfor %}
-Included Devices: 
-    {% for included_id in value.included_groups %}
-    - {{ groups[included_id].name }} {{ groups[included_id].id }} {{ groups[included_id].match_type }} {{ groups[included_id].properties }} 
-    {% endfor %}
-Excluded Devices: 
-    {% for excluded_id in value.excluded_groups %}
-    - {{ groups[excluded_id].name }} {{ groups[excluded_id].id }} {{ groups[excluded_id].match_type }}{{ groups[excluded_id].properties }}
-    {% endfor %}
-{% endfor %}
+<table>
+    <tr>
+        <th>Rule</th>
+        <th>Permissions</th>
+        <th>Access</th>
+        <th>Notification</th>
+        <th>User SID</th>
+        <th>Conditions</th>
+        <th>Included</th>
+        <th>Excluded</th>
+    </tr>
+    {%- for key,value in rules.items() -%}
+        <tr>
+            <td rowspan="{{ value.entries | length }}">{{ value.name }}</td>
+            <td>{{ value.entries[0].type }}</td>
+            <td>{{ value.entries[0].permissions }} ({{ value.entries[0].access_mask }})</td>
+            <td>{{ value.entries[0].notifications }} ({{ value.entries[0].options }})</td> 
+            <td>{{ value.entries[0].sid }}</td>
+            <td>{{ value.entries[0].parameters.match_type }}
+                <ul> 
+                {%- for condition in value.entries[0].parameters.conditions -%}
+                    <li> {{ condition.match_type }} 
+                        <ul>
+                        {%- for id in condition.groups -%}
+                            <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}
+                        {%- endfor -%}
+                        </ul>
+                {%- endfor %}
+                </ul>
+            </td>
+            <td rowspan="{{ value.entries | length }}">
+                <ul>
+                {%- for id in value.included_groups  -%}
+                    <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}  
+                {%- endfor -%}
+                </ul>
+            </td>
+            <td rowspan="{{ value.entries | length }}">
+                <ul>
+                {%- for id in value.excluded_groups  -%}
+                    <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}  
+                {%- endfor -%}
+                </ul>
+            </td>
+        </tr>
+        {%- for entry in value.entries[1:] -%}
+        <tr>
+            <td>{{ entry.type }}</td>
+            <td>{{ entry.permissions }} ({{ entry.access_mask }})</td>
+            <td>{{ entry.notifications }} ({{ entry.options }})</td>
+            <td>{{ entry.sid }}</td>
+            <td>{{ entry.parameters.match_type }}
+                <ul> 
+                {%- for condition in entry.parameters.conditions -%}
+                    <li> {{ condition.match_type }} 
+                        <ul>
+                        {%- for id in condition.groups -%}
+                            <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}
+                        {%- endfor -%}
+                        </ul>
+                {%- endfor %}
+                </ul>
+            </td>
+        </tr>
+        {%- endfor -%}
+    {%- endfor -%}
+</table>
