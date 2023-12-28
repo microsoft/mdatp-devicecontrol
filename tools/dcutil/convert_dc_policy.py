@@ -377,12 +377,11 @@ def convert_rule(rule, strict):
     
     return converted_rule
 
-def convert_rules(rules_file, strict):
+def convert_rules(root, strict):
     print('Converting Rules...')
     
     rules = []
 
-    root = ET.fromstring(rules_file.read())
     if root.tag != "PolicyRules":
         raise Exception('Invalid Groups XML')
 
