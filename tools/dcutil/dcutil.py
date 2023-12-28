@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import jinja2
 import pathlib
+import urllib.parse
 
 
 class Group:
@@ -38,6 +39,26 @@ class Group:
             self.properties.append({descriptor.tag: descriptor.text})
         return
 
+
+    def toXML(self,indent = "\t"):
+
+        out = indent + "<Group Id=\""+self.id+"\" Type=\""+self.type+"\">\n"
+        out +=indent + "\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData -->\n"
+        out +=indent + "\t<Name>"+self.name+"</Name>\n"
+        out +=indent + "\t<MatchType>"+self.match_type+"</MatchType>\n"
+        out +=indent + "\t<DescriptorIdList>\n"
+        
+        for property in self.properties:
+            tag = list(property.keys())[0]
+            text = property[tag]
+
+            out += indent +"\t\t<"+tag+">"+text+"</"+tag+">\n"
+
+        out += indent +"\t</DescriptorIdList>\n"
+        out += indent +"</Group>"
+
+        return out
+
 class PolicyRule:
 
     def __init__(self,root):
@@ -69,6 +90,30 @@ class PolicyRule:
 
         return
 
+    def toXML(self,indent = "\t"):
+
+        out = indent + "<PolicyRule Id=\""+self.id+"\" >\n"
+        out +=indent + "\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote_plus(self.id)+"/RuleData -->\n"
+        out +=indent + "\t<Name>"+self.name+"</Name>\n"
+        
+        out +=indent + "\t<IncludedIdList>\n"
+        for group in self.included_groups:
+            out += indent +"\t\t<GroupId>"+group+"</GroupId>\n"
+        out +=indent + "\t</IncludedIdList>\n"
+
+        out += indent +"\t<ExcludedIdList>\n"
+        for group in self.excluded_groups:
+            out += indent +"\t\t<GroupId>"+group+"</GroupId>\n"
+        out += indent +"\t</ExcludedIdList>\n"
+
+        for entry in self.entries:
+
+            out += entry.toXML(indent+"\t")
+
+
+        out += indent +"</PolicyRule>"
+
+        return out
 class Entry:
 
 
@@ -150,6 +195,24 @@ class Entry:
         else:
             return []
     
+    def toXML(self,indent):
+
+        out = indent + "<Entry>\n"
+        out += indent +"\t<Type>"+self.type+"</Type>\n"
+        out += indent +"\t<AccessMake>"+self.access_mask+"</AccessMask>\n"
+        out += indent +"\t<Options>"+self.options+"</Options>\n"
+
+        if self.sid is not "All Users":
+            out += indent +"\t<Sid>"+self.sid+"</Sid>\n"
+
+        if self.parameters is not None:
+            out += self.parameters.toXML(indent+"\t")
+            
+
+        out += indent +"</Entry>\n"
+
+        return out
+        
 class Parameters:
 
     def __init__(self,parameters):
@@ -177,17 +240,38 @@ class Parameters:
 
         return groups
 
+    def toXML(self,indent):
+
+        out = indent + "<Parameters MatchType=\""+self.match_type+"\">\n"
+
+        for condition in self.conditions:
+            out += condition.toXML(indent+"\t")
+
+        out += indent + "</Parameters>\n"
+
+        return out
 
 class Condition:
     def __init__(self,condition):
         self.match_type = condition.attrib['MatchType']
         self.groups = []
+        self.tag = condition.tag
         self.condition_type = condition.tag
         for group in condition.findall(".//GroupId"):
             self.groups.append(group.text)
 
     def get_group_ids(self):
         return self.groups
+    
+    def toXML(self,indent):
+        out = indent + "<"+self.tag+" MatchType=\""+self.match_type+"\">\n"
+
+        for group in self.groups:
+            out += indent +"\t<GroupId>"+group+"</GroupId>\n"
+
+        out += indent + "</"+self.tag+">\n"
+
+        return out
 
 
 class Inventory:
@@ -339,12 +423,20 @@ if __name__ == '__main__':
 
     rules = {}
     groups = {}
+    groupsXML = "<Groups>"
+    rulesXML  = "<PolicyRules>"
+
     for ind in filtered_rules.index:
         rule = filtered_rules['object'][ind]
         rules[rule.id] = rule
+        rulesXML += "\n"+rule.toXML()
         groups_for_rule = inventory.get_groups_for_rule(rule)
         for group in groups_for_rule:
             groups[group] = groups_for_rule[group]
+            groupsXML += "\n"+groups[group].toXML()
+
+    groupsXML += "\n</Groups>"
+    rulesXML += "\n</PolicyRules>"
 
     if args.format == "text":
         templatePath = pathlib.Path(__file__).parent.resolve()
@@ -352,7 +444,7 @@ if __name__ == '__main__':
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
-        out = template.render({"rules":rules,"groups":groups})
+        out = template.render({"rules":rules,"groups":groups, "groupsXML": groupsXML, "rulesXML":rulesXML})
         with open(args.out_path,"w") as out_path:
             out_path.write(out)
             out_path.close()
