@@ -2,13 +2,13 @@
 
 import xml.etree.ElementTree as ET
 import argparse
-import os
+import os, sys
 import pandas as pd
 import jinja2
 import pathlib
 import urllib.parse
 
-
+import convert_dc_policy as mac 
 class Group:
 
     def __init__(self,root):
@@ -202,7 +202,7 @@ class Entry:
         out += indent +"\t<AccessMake>"+self.access_mask+"</AccessMask>\n"
         out += indent +"\t<Options>"+self.options+"</Options>\n"
 
-        if self.sid is not "All Users":
+        if self.sid != "All Users":
             out += indent +"\t<Sid>"+self.sid+"</Sid>\n"
 
         if self.parameters is not None:
@@ -438,13 +438,33 @@ if __name__ == '__main__':
     groupsXML += "\n</Groups>"
     rulesXML += "\n</PolicyRules>"
 
+    try:
+        mac_policy = {}
+        mac_error = None
+        mac_policy["groups"] = mac.convert_groups(ET.fromstring(groupsXML),True)
+        mac_policy["rules"] = mac.convert_rules(ET.fromstring(rulesXML),True)
+    except Exception as e:
+        mac.log_error("Failed to convert policy to Mac:")
+        mac.log_error(str(e))
+        mac_policy = None
+        mac_error = str(e)
+        
+        
+
     if args.format == "text":
         templatePath = pathlib.Path(__file__).parent.resolve()
         templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
-        out = template.render({"rules":rules,"groups":groups, "groupsXML": groupsXML, "rulesXML":rulesXML})
+        out = template.render(
+            {"rules":rules,
+             "groups":groups, 
+             "groupsXML": groupsXML, 
+             "rulesXML":rulesXML,
+             "macPolicy":mac_policy,
+             "macError": mac_error})
+        
         with open(args.out_path,"w") as out_path:
             out_path.write(out)
             out_path.close()

@@ -151,12 +151,12 @@ def convert_group(group, strict):
 
     return converted_group
 
-def convert_groups(groups_file, strict):
+def convert_groups(root, strict):
     print('Converting Groups...')
 
     groups = []
 
-    root = ET.fromstring(groups_file.read())
+    
     if root.tag != "Groups":
         raise Exception('Invalid Groups XML')
 
@@ -418,10 +418,12 @@ if __name__ == '__main__':
         converted_policy = {}
 
         if args.groups_file is not None:
-            converted_policy["groups"] = convert_groups(args.groups_file, args.strict)
+            groups_root = ET.fromstring(args.groups_file.read())
+            converted_policy["groups"] = convert_groups(groups_root, args.strict)
 
         if args.rules_file is not None:
-            converted_policy["rules"] = convert_rules(args.rules_file, args.strict)
+            rules_root = ET.fromstring(args.rules_file.read())
+            converted_policy["rules"] = convert_rules(rules_root, args.strict)
 
         args.output_file.write(json.dumps(converted_policy, indent=2))
     except Exception as e:
