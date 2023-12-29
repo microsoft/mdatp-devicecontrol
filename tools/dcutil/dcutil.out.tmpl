@@ -12,7 +12,7 @@
     </tr>
     {%- for key,value in rules.items() -%}
         <tr>
-            <td rowspan="{{ value.entries | length }}">{{ value.name }}</td>
+            <td rowspan="{{ value.entries | length }}"><b>{{ value.name }}</b></td>
             <td>{{ value.entries[0].type }}</td>
             <td>{{ value.entries[0].permissions }} ({{ value.entries[0].access_mask }})</td>
             <td>{{ value.entries[0].notifications }} ({{ value.entries[0].options }})</td> 
@@ -32,14 +32,14 @@
             <td rowspan="{{ value.entries | length }}">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}  
+                    <li><b>{{ groups[id].name }}</b> - {{ groups[id].match_type }} {{ groups[id].properties }}  
                 {%- endfor -%}
                 </ul>
             </td>
             <td rowspan="{{ value.entries | length }}">
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}  
+                    <li><b>{{ groups[id].name }}</b> - {{ groups[id].match_type }} {{ groups[id].properties }}  
                 {%- endfor -%}
                 </ul>
             </td>
@@ -67,7 +67,14 @@
     {%- endfor -%}
 </table>
 
-# GPO
+## Files
+This policy is based on information in the following files:
+
+{% for path in paths %}
+- {{ path }}
+{% endfor %}
+
+## GPO
 ### Groups
 ```
 {{ groupsXML }}
@@ -86,8 +93,3 @@
 This policy is not supported on Mac because {{ macError }}
 {% endif %}
 
-## Files
-
-{% for path in paths %}
-- {{ path }}
-{% endfor %}

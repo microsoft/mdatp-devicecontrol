@@ -354,6 +354,12 @@ class Inventory:
 
     def addGroup(self,group,path):
 
+        if group.name == "?":
+            paths = str(path).split(os.sep)
+            last_path = paths[-1]
+            fileWithoutExtension = last_path.split(".")[0]
+            group.name = fileWithoutExtension
+
         new_row = pd.DataFrame([{
             "type":group.type,
             "path":path,
