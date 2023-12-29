@@ -9,6 +9,22 @@ import pathlib
 import urllib.parse
 
 import convert_dc_policy as mac 
+
+
+def xml_safe_text(text):
+
+    try:
+        
+        ET.fromstring("<test>"+text+"</test>")
+        return text
+    except Exception as e:
+        out = str(text).replace("&","&amp;")
+        out = str(out).replace("<","&lt;")
+        out = str(out).replace(">","&gt;")
+        out = str(out).replace("'","&apos;")
+        out = str(out).replace("\"","&quot;")
+        return out
+
 class Group:
 
     def __init__(self,root):
@@ -44,7 +60,7 @@ class Group:
 
         out = indent + "<Group Id=\""+self.id+"\" Type=\""+self.type+"\">\n"
         out +=indent + "\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData -->\n"
-        out +=indent + "\t<Name>"+self.name+"</Name>\n"
+        out +=indent + "\t<Name>"+xml_safe_text(self.name)+"</Name>\n"
         out +=indent + "\t<MatchType>"+self.match_type+"</MatchType>\n"
         out +=indent + "\t<DescriptorIdList>\n"
         
@@ -52,7 +68,7 @@ class Group:
             tag = list(property.keys())[0]
             text = property[tag]
 
-            out += indent +"\t\t<"+tag+">"+text+"</"+tag+">\n"
+            out += indent +"\t\t<"+tag+">"+xml_safe_text(text)+"</"+tag+">\n"
 
         out += indent +"\t</DescriptorIdList>\n"
         out += indent +"</Group>"
@@ -94,7 +110,7 @@ class PolicyRule:
 
         out = indent + "<PolicyRule Id=\""+self.id+"\" >\n"
         out +=indent + "\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote_plus(self.id)+"/RuleData -->\n"
-        out +=indent + "\t<Name>"+self.name+"</Name>\n"
+        out +=indent + "\t<Name>"+xml_safe_text(self.name)+"</Name>\n"
         
         out +=indent + "\t<IncludedIdList>\n"
         for group in self.included_groups:
@@ -199,7 +215,7 @@ class Entry:
 
         out = indent + "<Entry>\n"
         out += indent +"\t<Type>"+self.type+"</Type>\n"
-        out += indent +"\t<AccessMake>"+self.access_mask+"</AccessMask>\n"
+        out += indent +"\t<AccessMask>"+self.access_mask+"</AccessMask>\n"
         out += indent +"\t<Options>"+self.options+"</Options>\n"
 
         if self.sid != "All Users":
@@ -368,24 +384,35 @@ class Inventory:
         groups_for_rule = {}
         for included_group in rule.included_groups:
             g = self.get_group_by_id(included_group)
-            groups_for_rule[g.id] = g
+            if g is not None:
+                groups_for_rule[g.id] = g
 
         for excluded_group in rule.excluded_groups:
             g = self.get_group_by_id(excluded_group)
-            groups_for_rule[g.id] = g
+            if g is not None:
+                groups_for_rule[g.id] = g
 
         for entry in rule.entries:
             groups = entry.get_group_ids()
             for entry_group in groups:
                 g = self.get_group_by_id(entry_group)
-                groups_for_rule[g.id] = g
+                if g is not None:
+                    groups_for_rule[g.id] = g
         
         return groups_for_rule
 
 
     def get_group_by_id(self,group_id):
         group_frame = self.groups.query("id == '"+group_id+"'")
-        return group_frame.iloc[0]["object"]
+        if group_frame.size == 0:
+            print ("No ground found for "+group_id)
+            return None
+        else:
+            return group_frame.iloc[0]["object"]
+    
+    def get_path_for_group(self,group_id):
+        group_frame = self.groups.query("id == '"+group_id+"'")
+        return group_frame.iloc[0]["path"]
 
 
 def dir_path(string):
@@ -409,8 +436,12 @@ if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser(
         description='Utility for importing/exporting device control policies.')
 
+    query = "*"
+    if "DC_QUERY" in os.environ.keys():
+        query = os.environ["DC_QUERY"]
+
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
-    arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default='path.str.contains(".xml")')
+    arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default="path.str.contains('"+query+"')")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
     arg_parser.add_argument('-o','--output',dest="out_path",help="The output path",default="dcutil.out")
     arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.out.tmpl")
@@ -426,14 +457,24 @@ if __name__ == '__main__':
     groupsXML = "<Groups>"
     rulesXML  = "<PolicyRules>"
 
+    paths = []
+
     for ind in filtered_rules.index:
+        rule_path = filtered_rules['path'][ind]
+        if rule_path not in paths:
+            paths.append(rule_path)
+
         rule = filtered_rules['object'][ind]
         rules[rule.id] = rule
         rulesXML += "\n"+rule.toXML()
         groups_for_rule = inventory.get_groups_for_rule(rule)
         for group in groups_for_rule:
-            groups[group] = groups_for_rule[group]
-            groupsXML += "\n"+groups[group].toXML()
+            if not group in groups.keys():
+                groups[group] = groups_for_rule[group]
+                groupsXML += "\n"+groups[group].toXML()
+                group_path = inventory.get_path_for_group(group)
+                if group_path not in paths:
+                    paths.append(group_path)
 
     groupsXML += "\n</Groups>"
     rulesXML += "\n</PolicyRules>"
@@ -458,12 +499,14 @@ if __name__ == '__main__':
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
         out = template.render(
-            {"rules":rules,
+            {"paths":paths,
+             "rules":rules,
              "groups":groups, 
              "groupsXML": groupsXML, 
              "rulesXML":rulesXML,
              "macPolicy":mac_policy,
-             "macError": mac_error})
+             "macError": mac_error,
+             "env":os.environ})
         
         with open(args.out_path,"w") as out_path:
             out_path.write(out)

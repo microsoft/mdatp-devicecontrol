@@ -1,4 +1,4 @@
-# Policy
+# Device Control Policy: {{ env['DC_QUERY'] }}
 <table>
     <tr>
         <th>Rule</th>
@@ -68,16 +68,26 @@
 </table>
 
 # GPO
-## groups
+### Groups
 ```
 {{ groupsXML }}
 ```
-## rules
+### Rules
 ```
 {{ rulesXML }}
 ```
 
 ## Mac
+{% if macError is none %}
 ```
 {{ macPolicy }}
 ```
+{% else %}
+This policy is not supported on Mac because {{ macError }}
+{% endif %}
+
+## Files
+
+{% for path in paths %}
+- {{ path }}
+{% endfor %}
