@@ -27,6 +27,33 @@ def xml_safe_text(text):
         return out
 
 
+class IntuneCustomRow:
+
+    Integer_DataType = "Integer"
+    XML_DataType = "String (XML File)"
+    String_DataType = "String"
+
+    def __init__(self,object):
+        self.name = ""
+        self.description = ""
+        self.OMA_URI = ""
+        self.data_type = IntuneCustomRow.XML_DataType
+        self.value = ""
+
+        match object.__class__.__name__:
+
+            case "Group":
+                self.name = object.name
+                self.OMA_URI = object.get_oma_uri()
+                self.value = object.path
+            case "PolicyRule":
+                self.name = object.name
+                self.OMA_URI = object.get_oma_uri()
+                self.value = object.path
+            case other:
+                print ("Unknown object class "+str(object.__class__.__name__))
+            
+
 class Group:
 
     def __init__(self,root):
@@ -59,10 +86,13 @@ class Group:
         self.path = ""
         self.format = ""
 
+    def get_oma_uri(self):
+        return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData"
+    
     def toXML(self,indent = "\t"):
 
         out = indent + "<Group Id=\""+self.id+"\" Type=\""+self.type+"\">\n"
-        out +=indent + "\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData -->\n"
+        out +=indent + "\t<!-- "+self.get_oma_uri()+" -->\n"
         out +=indent + "\t<Name>"+xml_safe_text(self.name)+"</Name>\n"
         out +=indent + "\t<MatchType>"+self.match_type+"</MatchType>\n"
         out +=indent + "\t<DescriptorIdList>\n"
@@ -137,10 +167,13 @@ class PolicyRule:
         self.path = ""            
         return
 
+    def get_oma_uri(self):
+        return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote_plus(self.id)+"/RuleData"
+    
     def toXML(self,indent = "\t"):
 
         out = indent + "<PolicyRule Id=\""+self.id+"\" >\n"
-        out +=indent + "\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote_plus(self.id)+"/RuleData -->\n"
+        out +=indent + "\t<!-- "+self.get_oma_uri()+" -->\n"
         out +=indent + "\t<Name>"+xml_safe_text(self.name)+"</Name>\n"
         
         out +=indent + "\t<IncludedIdList>\n"
@@ -505,14 +538,18 @@ class Inventory:
         for i in range(0,rule_frame.index.size):
             rule = rule_frame.iloc[i]["object"]
             format = rule_frame.iloc[i]["format"]
-            path = rule_frame.iloc[i]["path"]
             rule_id = rule.id
+
+            if format == "oma-uri":
+                rule_id = rule.get_oma_uri()
 
             rules_for_format = rules[format]
             if rule_id in rules_for_format:
                 existing_rule = rules_for_format[rule_id]
                 if existing_rule != rule:
-                    print ("Conflicting rules for id "+rule_id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
+                    print ("Conflicting rules for id "+rule.id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
+            elif format == "oma-uri":
+                rules[format][rule_id] = IntuneCustomRow(rule)
             else:
                 rules[format][rule_id] = rule 
 
@@ -590,7 +627,7 @@ if __name__ == '__main__':
                 paths.append(group.path)
             
         for oma_uri_group in groups_for_rule["oma-uri"]:
-            oma_uri[oma_uri_group.id] = oma_uri_group
+            oma_uri[oma_uri_group.get_oma_uri()] = IntuneCustomRow(oma_uri_group)
         
 
     groupsXML += "\n</Groups>"
@@ -616,7 +653,7 @@ if __name__ == '__main__':
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
         out = template.render(
-            {"oma_uri":oma_uri,
+            {"intuneCustomSettings":oma_uri,
              "paths":paths,
              "rules":rules,
              "groups":groups, 

@@ -83,10 +83,12 @@ This policy is based on information in the following files:
 ```
 {{ rulesXML }}
 ```
-## OMA-URI
+## Intune Custom Settings
 
-{% for row in oma_uri %}
-- {{ row }}
+| Name | Description | OMA-URI | Type | Value |
+|---  |---          |---      |---   |---    |
+{% for oma_uri in intuneCustomSettings -%}
+| {{intuneCustomSettings[oma_uri].name}} | {{intuneCustomSettings[oma_uri].description}} | {{ oma_uri }} | {{intuneCustomSettings[oma_uri].data_type }} | {{intuneCustomSettings[oma_uri].value }} |
 {% endfor %}
 
 ## Mac
