@@ -7,6 +7,7 @@ import pandas as pd
 import jinja2
 import pathlib
 import urllib.parse
+import copy
 
 import convert_dc_policy as mac 
 
@@ -24,6 +25,7 @@ def xml_safe_text(text):
         out = str(out).replace("'","&apos;")
         out = str(out).replace("\"","&quot;")
         return out
+
 
 class Group:
 
@@ -53,8 +55,9 @@ class Group:
         descriptors = root.findall("./DescriptorIdList//")
         for descriptor in descriptors:
             self.properties.append({descriptor.tag: descriptor.text})
-        return
 
+        self.path = ""
+        self.format = ""
 
     def toXML(self,indent = "\t"):
 
@@ -74,6 +77,31 @@ class Group:
         out += indent +"</Group>"
 
         return out
+    
+    def __str__(self):
+        return self.toXML()
+    
+    def __eq__(self,other):
+        if self.match_type == other.match_type and len(self.properties) == len(other.properties):
+            for property in self.properties:
+                if property in other.properties:
+                    continue
+                else:
+                    return False
+            return True
+        return False
+    
+    def __hash__(self):
+        hashList = []
+        for property in self.properties:
+            key = next(iter(property))
+            value = property[key]
+            hashList.append(key+"="+value)
+
+        hashList.append ("type="+self.match_type)
+
+        hashList.sort()
+        return hash(str(hashList))
 
 class PolicyRule:
 
@@ -104,6 +132,9 @@ class PolicyRule:
         for entry in root.findall(".//Entry"):
             self.entries.append(Entry(entry))        
 
+                    
+        self.format = ""
+        self.path = ""            
         return
 
     def toXML(self,indent = "\t"):
@@ -130,6 +161,14 @@ class PolicyRule:
         out += indent +"</PolicyRule>"
 
         return out
+    
+    def __eq__(self,other):
+        self_xml = self.toXML()
+        other_xml = other.toXML()
+        return self_xml == other_xml
+    
+    def __hash__(self):
+        return hash(self.toXML())
 class Entry:
 
 
@@ -299,6 +338,7 @@ class Inventory:
         group_columns = {
             "type":[],
             "path":[],
+            "format":[],
             "name":[],
             "id":[],
             "match_type":[],
@@ -307,6 +347,7 @@ class Inventory:
 
         rule_columns = {
             "path":[],
+            "format":[],
             "name":[],
             "id":[],
             "included_groups":[],
@@ -336,12 +377,12 @@ class Inventory:
                 root = ET.fromstring(file.read())
                 match root.tag:
                     case "Group":
-                        self.addGroup(Group(root),xml_path)
+                        self.addGroup(Group(root),xml_path,"oma-uri")
                     case "Groups":
                         for group in root.findall(".//Group"):
                             self.addGroup(Group(group),xml_path)
                     case "PolicyRule":
-                        self.addPolicyRule(PolicyRule(root),xml_path)
+                        self.addPolicyRule(PolicyRule(root),xml_path,"oma-uri")
                     case "PolicyRules":
                         for policyRule in root.findall(".//PolicyRule"):
                             self.addPolicyRule(PolicyRule(policyRule),xml_path)
@@ -352,7 +393,7 @@ class Inventory:
             print ("Error in "+xml_path+": "+str(e))
             return
 
-    def addGroup(self,group,path):
+    def addGroup(self,group,path,format = "gpo"):
 
         if group.name == "?":
             paths = str(path).split(os.sep)
@@ -360,9 +401,13 @@ class Inventory:
             fileWithoutExtension = last_path.split(".")[0]
             group.name = fileWithoutExtension
 
+        group.path = path
+        group.format = format
+
         new_row = pd.DataFrame([{
             "type":group.type,
             "path":path,
+            "format":format,
             "name":group.name,
             "id":group.id,
             "match_type":group.match_type,
@@ -371,10 +416,14 @@ class Inventory:
 
         self.groups = pd.concat([self.groups,new_row],ignore_index=True)
 
-    def addPolicyRule(self,rule,path):
+    def addPolicyRule(self,rule,path,format="gpo"):
+
+        rule.format = format
+        rule.path = path
 
         new_row = pd.DataFrame([{
             "path":path,
+            "format":format,
             "name":rule.name,
             "id":rule.id,
             "included_groups":rule.included_groups,
@@ -387,23 +436,29 @@ class Inventory:
         return
     
     def get_groups_for_rule(self,rule):
-        groups_for_rule = {}
+        groups_for_rule = {
+            "gpo":[],
+            "oma-uri":[]
+        }
         for included_group in rule.included_groups:
             g = self.get_group_by_id(included_group)
             if g is not None:
-                groups_for_rule[g.id] = g
+                groups_for_rule["gpo"] += g["gpo"] 
+                groups_for_rule["oma-uri"] += g["oma-uri"]
 
         for excluded_group in rule.excluded_groups:
             g = self.get_group_by_id(excluded_group)
             if g is not None:
-                groups_for_rule[g.id] = g
+                groups_for_rule["gpo"] += g["gpo"]
+                groups_for_rule["oma-uri"] += g["oma-uri"]
 
         for entry in rule.entries:
             groups = entry.get_group_ids()
             for entry_group in groups:
                 g = self.get_group_by_id(entry_group)
                 if g is not None:
-                    groups_for_rule[g.id] = g
+                    groups_for_rule["gpo"] += g["gpo"]
+                    groups_for_rule["oma-uri"] += g["oma-uri"]
         
         return groups_for_rule
 
@@ -411,14 +466,64 @@ class Inventory:
     def get_group_by_id(self,group_id):
         group_frame = self.groups.query("id == '"+group_id+"'")
         if group_frame.size == 0:
-            print ("No ground found for "+group_id)
+            print ("No group found for "+group_id)
             return None
         else:
-            return group_frame.iloc[0]["object"]
+            groups = {
+                "gpo":[],
+                "oma-uri":[]
+            }
+            for i in range(0,group_frame.index.size):
+                group = group_frame.iloc[i]["object"]
+                format = group_frame.iloc[i]["format"]
+                path = group_frame.iloc[i]["path"]
+                if group in groups[format]:
+                    continue
+                elif len(groups[format]) == 0:
+                    groups[format].append(group)
+                else:
+                    print("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
+
+            if len(groups["oma-uri"]) == 0:
+                self.missing_oma_uri(group_id)
+
+            return groups
     
     def get_path_for_group(self,group_id):
         group_frame = self.groups.query("id == '"+group_id+"'")
         return group_frame.iloc[0]["path"]
+    
+
+    def query_policy_rules(self,query):
+        rules = {
+            "gpo":{},
+            "oma-uri":{},
+            "all":[]
+        }
+
+        rule_frame = self.policy_rules.query(query, engine='python')
+        for i in range(0,rule_frame.index.size):
+            rule = rule_frame.iloc[i]["object"]
+            format = rule_frame.iloc[i]["format"]
+            path = rule_frame.iloc[i]["path"]
+            rule_id = rule.id
+
+            rules_for_format = rules[format]
+            if rule_id in rules_for_format:
+                existing_rule = rules_for_format[rule_id]
+                if existing_rule != rule:
+                    print ("Conflicting rules for id "+rule_id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
+            else:
+                rules[format][rule_id] = rule 
+
+            rules["all"].append(rule)
+
+        rules["all"] = set(rules["all"])
+        return rules
+    
+
+    def missing_oma_uri(self,object_id):
+        print("Missing oma-uri for id "+object_id)
 
 
 def dir_path(string):
@@ -456,31 +561,37 @@ if __name__ == '__main__':
 
     inventory = Inventory(args.source_path)
 
-    filtered_rules = inventory.policy_rules.query(args.query, engine='python')
+    filtered_rules = inventory.query_policy_rules(args.query)
 
     rules = {}
     groups = {}
+    paths = []
     groupsXML = "<Groups>"
     rulesXML  = "<PolicyRules>"
 
-    paths = []
+    oma_uri = filtered_rules["oma-uri"]
 
-    for ind in filtered_rules.index:
-        rule_path = filtered_rules['path'][ind]
-        if rule_path not in paths:
-            paths.append(rule_path)
+    for rule in filtered_rules["all"]:
 
-        rule = filtered_rules['object'][ind]
+        if rule.id in rules:
+            print ("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
+            continue
+        
         rules[rule.id] = rule
+        paths.append(rule.path)
+
         rulesXML += "\n"+rule.toXML()
         groups_for_rule = inventory.get_groups_for_rule(rule)
-        for group in groups_for_rule:
-            if not group in groups.keys():
-                groups[group] = groups_for_rule[group]
-                groupsXML += "\n"+groups[group].toXML()
-                group_path = inventory.get_path_for_group(group)
-                if group_path not in paths:
-                    paths.append(group_path)
+        all_groups = set(groups_for_rule["gpo"]+groups_for_rule["oma-uri"])
+        for group in all_groups:
+            if group.id not in groups:
+                groupsXML += "\n"+group.toXML()
+                groups[group.id] = group
+                paths.append(group.path)
+            
+        for oma_uri_group in groups_for_rule["oma-uri"]:
+            oma_uri[oma_uri_group.id] = oma_uri_group
+        
 
     groupsXML += "\n</Groups>"
     rulesXML += "\n</PolicyRules>"
@@ -505,7 +616,8 @@ if __name__ == '__main__':
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
         out = template.render(
-            {"paths":paths,
+            {"oma_uri":oma_uri,
+             "paths":paths,
              "rules":rules,
              "groups":groups, 
              "groupsXML": groupsXML, 

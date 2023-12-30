@@ -83,6 +83,11 @@ This policy is based on information in the following files:
 ```
 {{ rulesXML }}
 ```
+## OMA-URI
+
+{% for row in oma_uri %}
+- {{ row }}
+{% endfor %}
 
 ## Mac
 {% if macError is none %}
