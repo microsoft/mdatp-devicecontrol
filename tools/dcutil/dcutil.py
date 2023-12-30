@@ -543,6 +543,7 @@ class Inventory:
             "all":[]
         }
 
+        
         rule_frame = self.policy_rules.query(query, engine='python')
         for i in range(0,rule_frame.index.size):
             rule = rule_frame.iloc[i]["object"]
@@ -598,7 +599,7 @@ if __name__ == '__main__':
         query = os.environ["DC_QUERY"]
 
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
-    arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default="path.str.contains('"+query+"')")
+    arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default="path.str.contains('"+query+"',regex=False)")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
     arg_parser.add_argument('-o','--output',dest="out_path",help="The output path",default="dcutil.out")
     arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.out.tmpl")
