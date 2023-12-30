@@ -249,12 +249,21 @@ class Entry:
         self.options = entry.find("./Options").text
         self.access_mask = entry.find("./AccessMask").text
 
-        self.permissions = []
+        self.permissions = {
+            1: False,
+            2: False,
+            4: False,
+            8: False,
+            16: False,
+            32: False,
+            64: False
+        }
+
         self.notifications = []
 
         for mask in Entry.access_masks.keys():
             if int(self.access_mask) & mask:
-                self.permissions.append(Entry.access_masks[mask])
+                self.permissions[mask] = True
 
         notification_masks = Entry.notification_masks[self.type]
         for mask in notification_masks:

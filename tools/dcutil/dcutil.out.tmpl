@@ -1,20 +1,35 @@
 # Device Control Policy: {{ env['DC_QUERY'] }}
 <table>
     <tr>
-        <th>Rule</th>
-        <th>Permissions</th>
-        <th>Access</th>
-        <th>Notification</th>
-        <th>User SID</th>
-        <th>Conditions</th>
-        <th>Included</th>
-        <th>Excluded</th>
+        <th rowspan="2" valign="top">Rule</th>
+        <th rowspan="2" valign="top">Permissions</th>
+        <th colspan="7" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
+        <th rowspan="2" valign="top">User SID</th>
+        <th rowspan="2" valign="top">Conditions</th>
+        <th rowspan="2" valign="top">Included</th>
+        <th rowspan="2" valign="top">Excluded</th>
     </tr>
+    <tr>
+		<th>Disk Read</th>
+		<th>Disk Write</th>
+		<th>Disk Execute</th>
+		<th>File Read</th>
+		<th>File Write</th>
+		<th>File Execute</th>
+		<th>Print</th>
+	</tr>
     {%- for key,value in rules.items() -%}
         <tr>
             <td rowspan="{{ value.entries | length }}"><b>{{ value.name }}</b></td>
             <td>{{ value.entries[0].type }}</td>
-            <td>{{ value.entries[0].permissions }} ({{ value.entries[0].access_mask }})</td>
+            <td>{{ value.entries[0].permissions[1] }}</td>
+            <td>{{ value.entries[0].permissions[2] }}</td>
+            <td>{{ value.entries[0].permissions[4] }}</td>
+            <td>{{ value.entries[0].permissions[8] }}</td>
+            <td>{{ value.entries[0].permissions[16] }}</td>
+            <td>{{ value.entries[0].permissions[32] }}</td>
+            <td>{{ value.entries[0].permissions[64] }}</td>
             <td>{{ value.entries[0].notifications }} ({{ value.entries[0].options }})</td> 
             <td>{{ value.entries[0].sid }}</td>
             <td>{{ value.entries[0].parameters.match_type }}
@@ -47,7 +62,13 @@
         {%- for entry in value.entries[1:] -%}
         <tr>
             <td>{{ entry.type }}</td>
-            <td>{{ entry.permissions }} ({{ entry.access_mask }})</td>
+            <td>{{ entry.permissions[1] }}</td>
+            <td>{{ entry.permissions[2] }}</td>
+            <td>{{ entry.permissions[4] }}</td>
+            <td>{{ entry.permissions[8] }}</td>
+            <td>{{ entry.permissions[16] }}</td>
+            <td>{{ entry.permissions[32] }}</td>
+            <td>{{ entry.permissions[64] }}</td>
             <td>{{ entry.notifications }} ({{ entry.options }})</td>
             <td>{{ entry.sid }}</td>
             <td>{{ entry.parameters.match_type }}
