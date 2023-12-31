@@ -1,0 +1,13 @@
+- Create a reusable setting for {{ groups[group_id].name }}  
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the {{ groups[group_id].name }} for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to {{ groups[group_id].match_type }}
+   {% for property in groups[group_id].properties %}
+   {% include "reusable_setting_property.j2" %}
+   {% endfor %}
+   8. Click "Next"
+   9. Click "Add"

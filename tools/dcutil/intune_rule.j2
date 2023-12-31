@@ -1,0 +1,21 @@
+- Add a rule for {{ rules[rule_id].name }} to the policy
+{% if rules[rule_id].included_groups | length != 0 %}
+   1. Click on "+ Set reusable settings" under Included Id
+{% for group_id in rules[rule_id].included_groups %}
+   1. Click on *{{ groups[group_id].name }}*
+{% endfor %}
+   1. Click on "Select"
+{% endif %}
+{% if rules[rule_id].excluded_groups | length != 0 %}
+   1. Click on "+ Set reusable settings" under Excluded Id
+{% for group_id in rules[rule_id].excluded_groups %}
+   1. Click on *{{ groups[group_id].name }}*
+{% endfor %}
+   1. Click on "Select"
+{% endif %}
+   1. Click on "+ Edit Entry"
+   1. Enter *{{ rules[rule_id].name }}* for the name
+{% for entry in rules[rule_id].entries %}
+{% set i = loop.index0 %}
+{% include "intune_entry.j2" %}
+{% endfor %}

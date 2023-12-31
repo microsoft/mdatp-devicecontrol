@@ -1,4 +1,4 @@
-# Device Control Policy: {{ env['DC_QUERY'] }}
+# Device Control Policy: {{ env['TITLE'] }}
 <table>
     <tr>
         <th rowspan="2" valign="top">Rule</th>
@@ -91,9 +91,19 @@
 ## Files
 This policy is based on information in the following files:
 
-{% for path in paths %}
+{% for path in paths -%}
 - {{ path }}
 {% endfor %}
+
+## Intune UX
+{%  if intune_ux_support.isValid()   %}
+{% include "intune_ux.j2" %}
+{% else %}
+Intune UX is not supported for this policy because:
+    {% for issue in intune_ux_support.issues -%}
+- {{ issue }}
+    {% endfor %}
+{% endif %}
 
 ## GPO
 ### Groups

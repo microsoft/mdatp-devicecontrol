@@ -1,0 +1,7 @@
+{% for group_id in groups -%}
+    {% include "reusable_settings.j2" %}
+{% endfor -%}
+{% include "intune_configuration_profile.j2" %}
+{% for rule_id in rules -%}
+{% include "intune_rule.j2" %}
+{% endfor %}

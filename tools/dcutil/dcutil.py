@@ -26,6 +26,18 @@ def xml_safe_text(text):
         out = str(out).replace("\"","&quot;")
         return out
 
+def full_stack():
+    import traceback, sys
+    exc = sys.exc_info()[0]
+    stack = traceback.extract_stack()[:-1]  # last one would be full_stack()
+    if exc is not None:  # i.e. an exception is present
+        del stack[-1]       # remove call of full_stack, the printed exception
+                            # will contain the caught exception caller instead
+    trc = 'Traceback (most recent call last):\n'
+    stackstr = trc + ''.join(traceback.format_list(stack))
+    if exc is not None:
+         stackstr += '  ' + traceback.format_exc().lstrip(trc)
+    return stackstr
 
 class IntuneCustomRow:
 
@@ -318,6 +330,30 @@ class Entry:
         out += indent +"</Entry>\n"
 
         return out
+    
+    def validateSupport(self,feature_data,support):
+
+        unsupported_access_masks = feature_data["unsupported_access_masks"]
+
+        for mask in self.permissions.keys():
+            enabled = self.permissions[mask]
+            if enabled and unsupported_access_masks[mask]:
+                support.issues.append(Entry.access_masks[mask]+" ("+str(mask)+") is an unsupported access mask")
+
+        if self.type not in feature_data["supported_types"]:
+            support.issues.append("Unsupported type of entry "+self.type)
+        else:
+            unsupported_notifications = feature_data["supported_types"][self.type]["unsupported_notifications"]
+            notification_masks_for_type = Entry.notification_masks[self.type]
+            for mask in notification_masks_for_type:
+                if int(self.options) & mask:
+                    if unsupported_notifications[mask]:
+                        support.issues.append(notification_masks_for_type[mask]+" ("+str(mask)+") is an unsupported notification.")
+
+        if self.parameters is not None:
+            if "parameters" not in feature_data.keys():
+                support.issues.append("Parameters are not supported")
+
         
 class Parameters:
 
@@ -387,14 +423,48 @@ class Support:
     def isValid(self):
         return len(self.issues) == 0
     
+    def __add__(self,other):
+        result = copy.copy(self)
+        result.issues = list(set(other.issues+self.issues))
+
+        return result
+    
 class Feature:
+
+    def get_unsupported_dictionary(supported_values):
+        unsupported_access_masks = {
+            1: True,
+            2: True,
+            4: True,
+            8: True,
+            16: True,
+            32: True,
+            64: True
+        } 
+
+        for value in supported_values:
+            unsupported_access_masks[value] = False
+
+        return unsupported_access_masks
 
     def __init__(self, feature_data):
         self.feature_data = feature_data
+        self.support_data = {}
+        entry_data = self.feature_data["entry"]
+        entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary(entry_data["access_masks"])
+        for type in entry_data["supported_types"]:
+            notifications = entry_data["supported_types"][type]["notifications"]
+            entry_data["supported_types"][type]["unsupported_notifications"] = Feature.get_unsupported_dictionary(notifications)
+
+
 
     def get_support_for(self,object):
 
+        if object.id in self.support_data.keys():
+            return self.support_data[object.id]
+        
         support = Support()
+        self.support_data[object.id] = support
 
         match object.__class__.__name__:
             case "Group":
@@ -418,14 +488,45 @@ class Feature:
                     support.issues.append(object.match_type+" not supported.")
 
             case "PolicyRule":
-                rule_support = self.feature_data["policy_rule"]
+                
+                entry_support = self.feature_data["entry"]
+                for entry in object.entries:
+                    entry.validateSupport(entry_support,support)
+
 
         return support
 
 
 class Inventory:
 
-    intune_ux = Feature(
+    
+    def __init__(self,source_path):
+        self.paths = source_path
+
+        group_columns = {
+            "type":[],
+            "path":[],
+            "format":[],
+            "name":[],
+            "id":[],
+            "match_type":[],
+            "object":[]
+        }
+
+        rule_columns = {
+            "path":[],
+            "format":[],
+            "name":[],
+            "id":[],
+            "included_groups":[],
+            "excluded_groups":[],
+            "object":[]
+        }
+
+        self.groups = pd.DataFrame(group_columns)
+        self.policy_rules = pd.DataFrame(rule_columns)
+
+        self.intune_ux = Feature(
         {
             "group": {
                 "supported_types": {
@@ -462,7 +563,7 @@ class Inventory:
                 },
                 "match_types": ["MatchAll","MatchAny"]
             },
-            "policy_rule":{
+            "entry":{
                 "access_masks":[1,2,4,64],
                 "supported_types":{
                     "Allow":{
@@ -480,34 +581,9 @@ class Inventory:
 
                 }
             }
-        }
-    )
+        })
+    
  
-    def __init__(self,source_path):
-        self.paths = source_path
-
-        group_columns = {
-            "type":[],
-            "path":[],
-            "format":[],
-            "name":[],
-            "id":[],
-            "match_type":[],
-            "object":[]
-        }
-
-        rule_columns = {
-            "path":[],
-            "format":[],
-            "name":[],
-            "id":[],
-            "included_groups":[],
-            "excluded_groups":[],
-            "object":[]
-        }
-
-        self.groups = pd.DataFrame(group_columns)
-        self.policy_rules = pd.DataFrame(rule_columns)
 
         self.load_inventory()
 
@@ -541,6 +617,7 @@ class Inventory:
                 return root
 
         except Exception as e:
+            print(full_stack())
             print ("Error in "+xml_path+": "+str(e))
             return
 
@@ -555,11 +632,7 @@ class Inventory:
         group.path = path
         group.format = format
 
-        support = Inventory.intune_ux.get_support_for(group)
-
-        if not support.isValid():
-            print(str(support.issues))
-
+        #Could check for Intune UX support
         new_row = pd.DataFrame([{
             "type":group.type,
             "path":path,
@@ -577,6 +650,7 @@ class Inventory:
         rule.format = format
         rule.path = path
 
+        
         new_row = pd.DataFrame([{
             "path":path,
             "format":format,
@@ -715,8 +789,8 @@ if __name__ == '__main__':
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
     arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default="path.str.contains('"+query+"',regex=False)")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
-    arg_parser.add_argument('-o','--output',dest="out_path",help="The output path",default="dcutil.out")
-    arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.out.tmpl")
+    arg_parser.add_argument('-o','--output',dest="out_path",help="The output path",default="dcutil.md")
+    arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.j2")
 
     args = arg_parser.parse_args()
 
@@ -727,6 +801,7 @@ if __name__ == '__main__':
     rules = {}
     groups = {}
     paths = []
+    intune_ux_support = Support()
     groupsXML = "<Groups>"
     rulesXML  = "<PolicyRules>"
 
@@ -740,6 +815,7 @@ if __name__ == '__main__':
         
         rules[rule.id] = rule
         paths.append(rule.path)
+        intune_ux_support += inventory.intune_ux.get_support_for(rule)
 
         rulesXML += "\n"+rule.toXML()
         groups_for_rule = inventory.get_groups_for_rule(rule)
@@ -749,6 +825,7 @@ if __name__ == '__main__':
                 groupsXML += "\n"+group.toXML()
                 groups[group.id] = group
                 paths.append(group.path)
+                intune_ux_support += inventory.intune_ux.get_support_for(group)
             
         for oma_uri_group in groups_for_rule["oma-uri"]:
             oma_uri[oma_uri_group.get_oma_uri()] = IntuneCustomRow(oma_uri_group)
@@ -781,6 +858,7 @@ if __name__ == '__main__':
              "paths":paths,
              "rules":rules,
              "groups":groups, 
+             "intune_ux_support":intune_ux_support,
              "groupsXML": groupsXML, 
              "rulesXML":rulesXML,
              "macPolicy":mac_policy,
