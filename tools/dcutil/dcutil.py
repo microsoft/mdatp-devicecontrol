@@ -56,7 +56,13 @@ class IntuneCustomRow:
 
 class Group:
 
+    supported_match_types = [
+        "MatchAny",
+        "MatchAll"
+    ]
+
     def __init__(self,root):
+
         self.id = root.attrib["Id"]
         if "Type" in root.attrib.keys():
             self.type = root.attrib["Type"]
@@ -78,6 +84,7 @@ class Group:
         else:
             self.match_type = match_node.text
 
+
         self.properties = []
         descriptors = root.findall("./DescriptorIdList//")
         for descriptor in descriptors:
@@ -86,9 +93,11 @@ class Group:
         self.path = ""
         self.format = ""
 
+
     def get_oma_uri(self):
         return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData"
     
+
     def toXML(self,indent = "\t"):
 
         out = indent + "<Group Id=\""+self.id+"\" Type=\""+self.type+"\">\n"
@@ -370,9 +379,109 @@ class Condition:
 
         return out
 
+class Support:
+
+    def __init__(self):
+        self.issues = []
+
+    def isValid(self):
+        return len(self.issues) == 0
+    
+class Feature:
+
+    def __init__(self, feature_data):
+        self.feature_data = feature_data
+
+    def get_support_for(self,object):
+
+        support = Support()
+
+        match object.__class__.__name__:
+            case "Group":
+                group_support = self.feature_data["group"]
+                supported_group_types = group_support["supported_types"]
+                if object.type not in supported_group_types:
+                    support.issues.append(object.type+" not supported.")
+                else:
+                    supported_properties = supported_group_types[object.type]["properties"]
+                    for property in object.properties:
+                        propertyId = next(iter(property))
+                        value = property[propertyId]
+                        if propertyId not in supported_properties:
+                            support.issues.append(propertyId+" not supported for "+object.type+" group.")
+                        else: 
+                            if "values" in supported_properties[propertyId].keys() and value not in supported_properties[propertyId]["values"]:
+                                support.issues.append(value+" not supported for "+propertyId+" of "+object.type+" group.")
+
+                supported_match_types = group_support["match_types"]
+                if object.match_type not in supported_match_types:
+                    support.issues.append(object.match_type+" not supported.")
+
+            case "PolicyRule":
+                rule_support = self.feature_data["policy_rule"]
+
+        return support
+
 
 class Inventory:
 
+    intune_ux = Feature(
+        {
+            "group": {
+                "supported_types": {
+                    "Device":{
+                        "properties":{
+                            "BusId":{},
+                            "DeviceId":{},
+                            "FriendlyNameId":{},
+                            "HardwareId":{},
+                            "InstancePathId":{},
+                            "VID_PID":{},
+                            "VID":{},
+                            "PID":{},
+                            "PrimaryId":{
+                                "values":["RemovableMediaDevices", 
+                                          "CdRomDevices",
+                                           "WpdDevices",
+                                           "PrinterDevices"]
+                            },
+                            "SerialNumberId":{},
+                            "PrinterConnectionId":{
+                                "values":[
+                                    "USB",
+                                    "Corporate",
+                                    "Network",
+                                    "Universal",
+                                    "File",
+                                    "Custom",
+                                    "Local"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "match_types": ["MatchAll","MatchAny"]
+            },
+            "policy_rule":{
+                "access_masks":[1,2,4,64],
+                "supported_types":{
+                    "Allow":{
+                        "notifications":[0,4]
+                    },
+                    "AuditAllowed":{
+                        "notifications":[0,2]
+                    },
+                    "Deny":{
+                        "notifications":[0,2]
+                    },
+                    "AuditDenied":{
+                        "notifications":[0,1,2]
+                    }
+
+                }
+            }
+        }
+    )
  
     def __init__(self,source_path):
         self.paths = source_path
@@ -445,6 +554,11 @@ class Inventory:
 
         group.path = path
         group.format = format
+
+        support = Inventory.intune_ux.get_support_for(group)
+
+        if not support.isValid():
+            print(str(support.issues))
 
         new_row = pd.DataFrame([{
             "type":group.type,
