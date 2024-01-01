@@ -23,13 +23,13 @@
         <tr>
             <td rowspan="{{ value.entries | length }}"><b>{{ value.name }}</b></td>
             <td>{{ value.entries[0].type_text }}</td>
-            <td>{{ value.entries[0].permissions[1] }}</td>
-            <td>{{ value.entries[0].permissions[2] }}</td>
-            <td>{{ value.entries[0].permissions[4] }}</td>
-            <td>{{ value.entries[0].permissions[8] }}</td>
-            <td>{{ value.entries[0].permissions[16] }}</td>
-            <td>{{ value.entries[0].permissions[32] }}</td>
-            <td>{{ value.entries[0].permissions[64] }}</td>
+            <td>{{ value.entries[0].permission_icons[1] }}</td>
+            <td>{{ value.entries[0].permission_icons[2] }}</td>
+            <td>{{ value.entries[0].permission_icons[4] }}</td>
+            <td>{{ value.entries[0].permission_icons[8] }}</td>
+            <td>{{ value.entries[0].permission_icons[16] }}</td>
+            <td>{{ value.entries[0].permission_icons[32] }}</td>
+            <td>{{ value.entries[0].permission_icons[64] }}</td>
             <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options }})</td> 
             <td>{{ value.entries[0].sid }}</td>
             <td>{{ value.entries[0].parameters.match_type }}
@@ -62,13 +62,13 @@
         {%- for entry in value.entries[1:] -%}
         <tr>
             <td>{{ entry.type_text }}</td>
-            <td>{{ entry.permissions[1] }}</td>
-            <td>{{ entry.permissions[2] }}</td>
-            <td>{{ entry.permissions[4] }}</td>
-            <td>{{ entry.permissions[8] }}</td>
-            <td>{{ entry.permissions[16] }}</td>
-            <td>{{ entry.permissions[32] }}</td>
-            <td>{{ entry.permissions[64] }}</td>
+            <td>{{ entry.permission_icons[1] }}</td>
+            <td>{{ entry.permission_icons[2] }}</td>
+            <td>{{ entry.permission_icons[4] }}</td>
+            <td>{{ entry.permission_icons[8] }}</td>
+            <td>{{ entry.permission_icons[16] }}</td>
+            <td>{{ entry.permission_icons[32] }}</td>
+            <td>{{ entry.permission_icons[64] }}</td>
             <td>{{ entry.options_text }} ({{ entry.options }})</td>
             <td>{{ entry.sid }}</td>
             <td>{{ entry.parameters.match_type }}

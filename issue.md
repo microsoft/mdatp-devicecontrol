@@ -1,4 +1,4 @@
-# Device Control Policy: 
+# Device Control Policy: Issue with User Policies
 <table>
     <tr>
         <th rowspan="2" valign="top">Rule</th>
@@ -21,13 +21,13 @@
 	</tr><tr>
             <td rowspan="2"><b>Allow Read,Execute Access to non-encrypted removable devices</b></td>
             <td>Deny</td>
-            <td>False</td>
+            <td>-</td>
             <td>:x:</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>None (0)</td> 
             <td>S-1-5-21-602162358-1563985344-839522115-286196</td>
             <td>
@@ -42,13 +42,13 @@
             </td>
         </tr><tr>
             <td>Audit Denied</td>
-            <td>False</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>Show notification and Send event (3)</td>
             <td>All Users</td>
             <td>
@@ -58,13 +58,13 @@
         </tr><tr>
             <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
             <td>Allow</td>
-            <td>True</td>
-            <td>True</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>None (0)</td> 
             <td>S-1-5-21-602162358-1563985344-839522115-286197</td>
             <td>
@@ -79,13 +79,13 @@
             </td>
         </tr><tr>
             <td>Audit Allowed</td>
-            <td>False</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>None and Send event (3)</td>
             <td>All Users</td>
             <td>
@@ -95,13 +95,13 @@
         </tr><tr>
             <td rowspan="2"><b>Allow Read,Write, Execute Access to encrypted removable devices</b></td>
             <td>Allow</td>
-            <td>True</td>
-            <td>True</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>None (0)</td> 
             <td>S-1-5-21-602162358-1563985344-839522115-288583</td>
             <td>
@@ -116,13 +116,13 @@
             </td>
         </tr><tr>
             <td>Audit Allowed</td>
-            <td>False</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>None and Send event (3)</td>
             <td>All Users</td>
             <td>
@@ -132,13 +132,13 @@
         </tr><tr>
             <td rowspan="2"><b>Block Read,Write,Execute Access to all removable devices</b></td>
             <td>Deny</td>
-            <td>True</td>
-            <td>True</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>None (0)</td> 
             <td>All Users</td>
             <td>
@@ -153,13 +153,13 @@
             </td>
         </tr><tr>
             <td>Audit Denied</td>
-            <td>True</td>
-            <td>True</td>
-            <td>True</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
-            <td>False</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>Show notification and Send event (3)</td>
             <td>All Users</td>
             <td>
@@ -346,7 +346,7 @@ This policy is based on information in the following files:
    3. Under Platform, select "Windows 10 and later"
    4. Under Profile, select "Device Control Rules"
    5. Click "Create"
-   6. Under Name, enter **
+   6. Under Name, enter *Issue with User Policies*
    7. Optionally, enter a description
    8. Click "Next"
 

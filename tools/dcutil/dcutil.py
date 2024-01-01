@@ -282,6 +282,12 @@ class Entry:
         "AuditDenied": "Audit Denied"
     }
 
+    true_icons = {
+        "Allow":":white_check_mark:",
+        "AuditAllowed":":page_facing_up:",
+        "Deny":":x:",
+        "AuditDenied":":page_facing_up:"
+    }
 
     def __init__(self,entry):
         self.id = entry.attrib["Id"]
@@ -300,6 +306,18 @@ class Entry:
             64: False
         }
 
+        self.permission_icons = {
+            1: "-",
+            2: "-",
+            4: "-",
+            8: "-",
+            16: "-",
+            32: "-",
+            64: "-"
+        }
+
+
+
         self.notifications = []
         self.access_mask_text = ""
         self.options_text = ""
@@ -308,6 +326,7 @@ class Entry:
             if int(self.access_mask) & mask:
                 self.permissions[mask] = True
                 self.access_mask_text = self.access_mask_text+", "+Entry.access_mask_text_labels[mask]
+                self.permission_icons[mask] = Entry.true_icons[self.type]
 
         #replaces last , with and
         self.access_mask_text = self.access_mask_text[2:]
