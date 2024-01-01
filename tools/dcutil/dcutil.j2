@@ -104,7 +104,12 @@ The match type for the group is *{{ groups[group_id].match_type }}*.
 {% for key,value in property.items() -%} 
 | {{ key }} | {{ value }} |
 {% endfor -%}
-{% endfor -%}
+{% endfor %}
+
+XML
+```
+{{ groups[group_id].toXML() }}
+```
 {% endfor %}
 
 ## Files
