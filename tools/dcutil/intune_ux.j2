@@ -10,5 +10,6 @@
 > Consider using ```default deny```.   
 {% endif %}
 {% for rule_id in rules -%}
+{% set r = loop.index0 %}
 {% include "intune_rule.j2" %}
 {% endfor %}

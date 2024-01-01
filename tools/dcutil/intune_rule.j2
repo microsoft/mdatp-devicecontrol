@@ -1,5 +1,8 @@
 <details>
 <summary>Add a rule for {{ rules[rule_id].name }} to the policy</summary>
+{% if r != 0 %}
+   1. Add another rule.  Click on "+ Add"
+{% endif %}
 {% if rules[rule_id].included_groups | length != 0 %}
    1. Click on "+ Set reusable settings" under Included Id
 {% for group_id in rules[rule_id].included_groups %}
@@ -20,4 +23,5 @@
 {% set i = loop.index0 %}
 {% include "intune_entry.j2" %}
 {% endfor %}
+   1. Click "OK"
 </details>
