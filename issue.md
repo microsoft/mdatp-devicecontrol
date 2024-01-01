@@ -23,7 +23,7 @@
 	</tr><tr>
             <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>[Global-Removable_Group_Baseline (1)_3]</ul>
+                <a href="#group-1" title="These are the details">here</a>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
