@@ -1,14 +1,14 @@
 # Device Control Policy: Issue with User Policies
 <table>
     <tr>
-        <th rowspan="2" valign="top">Rule</th>
-        <th rowspan="2" valign="top">Permissions</th>
+        <th rowspan="2" valign="top">Name</th>
+        <th rowspan="2" valign="top">Devices</th>
+        <th rowspan="2" valign="top">Excluding</th>
+        <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="7" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
-        <th rowspan="2" valign="top">Included</th>
-        <th rowspan="2" valign="top">Excluded</th>
     </tr>
     <tr>
 		<th>Disk Read</th>
@@ -19,44 +19,13 @@
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
-            <td rowspan="2"><b>Allow Read,Execute Access to non-encrypted removable devices</b></td>
-            <td>Deny</td>
-            <td>-</td>
-            <td>:x:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>S-1-5-21-602162358-1563985344-839522115-286196</td>
-            <td>
-                <ul>
-                </ul>
+            <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>[Global-Removable_Group_Baseline (1)_3]</ul>
             </td>
-            <td rowspan="2">
-                <ul><li>[Global-Removable_Group_Baseline (1)_2](## MatchAny [{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}])</ul>
-            </td>
-            <td rowspan="2">
+            <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
-        </tr><tr>
-            <td>Audit Denied</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Show notification and Send event (3)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
-        </tr><tr>
-            <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
             <td>Allow</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
@@ -70,12 +39,6 @@
             <td>
                 <ul>
                 </ul>
-            </td>
-            <td rowspan="2">
-                <ul><li>[Global-Removable_Group_Baseline (1)_3](## MatchAny [{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}])</ul>
-            </td>
-            <td rowspan="2">
-                <ul></ul>
             </td>
         </tr><tr>
             <td>Audit Allowed</td>
@@ -93,7 +56,50 @@
                 </ul>
             </td>
         </tr><tr>
+            <td rowspan="2"><b>Allow Read,Execute Access to non-encrypted removable devices</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>[Global-Removable_Group_Baseline (1)_2]</ul>
+            </td>
+            <td rowspan="2" valign="top">
+                <ul></ul>
+            </td>
+            <td>Deny</td>
+            <td>-</td>
+            <td>:x:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>None (0)</td> 
+            <td>S-1-5-21-602162358-1563985344-839522115-286196</td>
+            <td>
+                <ul>
+                </ul>
+            </td>
+        </tr><tr>
+            <td>Audit Denied</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
+            <td>All Users</td>
+            <td>
+                <ul>
+                </ul>
+            </td>
+        </tr><tr>
             <td rowspan="2"><b>Allow Read,Write, Execute Access to encrypted removable devices</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>[Global-Removable_Group_Baseline (1)_3]</ul>
+            </td>
+            <td rowspan="2" valign="top">
+                <ul></ul>
+            </td>
             <td>Allow</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
@@ -107,12 +113,6 @@
             <td>
                 <ul>
                 </ul>
-            </td>
-            <td rowspan="2">
-                <ul><li>[Global-Removable_Group_Baseline (1)_3](## MatchAny [{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}])</ul>
-            </td>
-            <td rowspan="2">
-                <ul></ul>
             </td>
         </tr><tr>
             <td>Audit Allowed</td>
@@ -131,6 +131,12 @@
             </td>
         </tr><tr>
             <td rowspan="2"><b>Block Read,Write,Execute Access to all removable devices</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>[Global-Removable_Group_Baseline (1)_1]</ul>
+            </td>
+            <td rowspan="2" valign="top">
+                <ul><li>[Global-Removable_Group_Baseline (1)_2]<li>[Global-Removable_Group_Baseline (1)_3]</ul>
+            </td>
             <td>Deny</td>
             <td>:x:</td>
             <td>:x:</td>
@@ -144,12 +150,6 @@
             <td>
                 <ul>
                 </ul>
-            </td>
-            <td rowspan="2">
-                <ul><li>[Global-Removable_Group_Baseline (1)_1](## MatchAny [{'PrimaryId': 'RemovableMediaDevices'}, {'PrimaryId': 'CdRomDevices'}, {'PrimaryId': 'WpdDevices'}])</ul>
-            </td>
-            <td rowspan="2">
-                <ul><li>[Global-Removable_Group_Baseline (1)_2](## MatchAny [{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}])<li>[Global-Removable_Group_Baseline (1)_3](## MatchAny [{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}])</ul>
             </td>
         </tr><tr>
             <td>Audit Denied</td>
@@ -177,11 +177,11 @@ This policy is based on information in the following files:
 
 ## Intune UX
 
-- Create a reusable setting for Global-Removable_Group_Baseline (1)_2  
+- Create a reusable setting for Global-Removable_Group_Baseline (1)_3  
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Global-Removable_Group_Baseline (1)_2 for the name.  
+   4. Enter the Global-Removable_Group_Baseline (1)_3 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -238,11 +238,11 @@ This policy is based on information in the following files:
    
    8. Click "Next"
    9. Click "Add"
-- Create a reusable setting for Global-Removable_Group_Baseline (1)_3  
+- Create a reusable setting for Global-Removable_Group_Baseline (1)_2  
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Global-Removable_Group_Baseline (1)_3 for the name.  
+   4. Enter the Global-Removable_Group_Baseline (1)_2 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -350,36 +350,6 @@ This policy is based on information in the following files:
    7. Optionally, enter a description
    8. Click "Next"
 
-- Add a rule for Allow Read,Execute Access to non-encrypted removable devices to the policy
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Global-Removable_Group_Baseline (1)_2*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Allow Read,Execute Access to non-encrypted removable devices* for the name
-
-
-
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Write* from "Access mask"
-
-   1. Enter *S-1-5-21-602162358-1563985344-839522115-286196* for "Sid"
-
-
-
-
-   1. Click on "+ Add"
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification and Send event* from "Options"
-   1. Select *Write* from "Access mask"
-
-
 - Add a rule for Allow Read,Write, Execute Access to removable devices to the policy
 
    1. Click on "+ Set reusable settings" under Included Id
@@ -407,6 +377,36 @@ This policy is based on information in the following files:
 
    1. Select *Audit Allowed* from "Type"
    1. Select *None and Send event* from "Options"
+   1. Select *Write* from "Access mask"
+
+
+- Add a rule for Allow Read,Execute Access to non-encrypted removable devices to the policy
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Global-Removable_Group_Baseline (1)_2*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Allow Read,Execute Access to non-encrypted removable devices* for the name
+
+
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Write* from "Access mask"
+
+   1. Enter *S-1-5-21-602162358-1563985344-839522115-286196* for "Sid"
+
+
+
+
+   1. Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
    1. Select *Write* from "Access mask"
 
 
@@ -483,9 +483,9 @@ This policy is based on information in the following files:
 ### Groups
 ```
 <Groups>
-	<Group Id="{6be3d9b7-ec8e-4ab3-862c-023e4a5e0c74}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B6be3d9b7-ec8e-4ab3-862c-023e4a5e0c74%7D/GroupData -->
-		<Name>Global-Removable_Group_Baseline (1)_2</Name>
+	<Group Id="{43786489-56fc-4cb8-98ba-44255de7b8b8}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B43786489-56fc-4cb8-98ba-44255de7b8b8%7D/GroupData -->
+		<Name>Global-Removable_Group_Baseline (1)_3</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<HardwareId>USBSTOR\DiskKingstonDTVaultPrivacy30PMAP</HardwareId>
@@ -495,9 +495,9 @@ This policy is based on information in the following files:
 			<HardwareId>USBSTOR\DiskKingstonDataTraveler_3.0PMAP</HardwareId>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{43786489-56fc-4cb8-98ba-44255de7b8b8}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B43786489-56fc-4cb8-98ba-44255de7b8b8%7D/GroupData -->
-		<Name>Global-Removable_Group_Baseline (1)_3</Name>
+	<Group Id="{6be3d9b7-ec8e-4ab3-862c-023e4a5e0c74}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B6be3d9b7-ec8e-4ab3-862c-023e4a5e0c74%7D/GroupData -->
+		<Name>Global-Removable_Group_Baseline (1)_2</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<HardwareId>USBSTOR\DiskKingstonDTVaultPrivacy30PMAP</HardwareId>
@@ -522,26 +522,6 @@ This policy is based on information in the following files:
 ### Rules
 ```
 <PolicyRules>
-	<PolicyRule Id="{ee022bf3-c61a-4780-92a0-e4f78fd91182}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bee022bf3-c61a-4780-92a0-e4f78fd91182%7D/RuleData -->
-		<Name>Allow Read,Execute Access to non-encrypted removable devices</Name>
-		<IncludedIdList>
-			<GroupId>{6be3d9b7-ec8e-4ab3-862c-023e4a5e0c74}</GroupId>
-		</IncludedIdList>
-		<ExcludedIdList>
-		</ExcludedIdList>
-		<Entry>
-			<Type>Deny</Type>
-			<AccessMask>2</AccessMask>
-			<Options>0</Options>
-			<Sid>S-1-5-21-602162358-1563985344-839522115-286196</Sid>
-		</Entry>
-		<Entry>
-			<Type>AuditDenied</Type>
-			<AccessMask>2</AccessMask>
-			<Options>3</Options>
-		</Entry>
-	</PolicyRule>
 	<PolicyRule Id="{dd69607b-15c2-469d-ad1f-3f529e367f0a}" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bdd69607b-15c2-469d-ad1f-3f529e367f0a%7D/RuleData -->
 		<Name>Allow Read,Write, Execute Access to removable devices</Name>
@@ -558,6 +538,26 @@ This policy is based on information in the following files:
 		</Entry>
 		<Entry>
 			<Type>AuditAllowed</Type>
+			<AccessMask>2</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>
+	<PolicyRule Id="{ee022bf3-c61a-4780-92a0-e4f78fd91182}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bee022bf3-c61a-4780-92a0-e4f78fd91182%7D/RuleData -->
+		<Name>Allow Read,Execute Access to non-encrypted removable devices</Name>
+		<IncludedIdList>
+			<GroupId>{6be3d9b7-ec8e-4ab3-862c-023e4a5e0c74}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry>
+			<Type>Deny</Type>
+			<AccessMask>2</AccessMask>
+			<Options>0</Options>
+			<Sid>S-1-5-21-602162358-1563985344-839522115-286196</Sid>
+		</Entry>
+		<Entry>
+			<Type>AuditDenied</Type>
 			<AccessMask>2</AccessMask>
 			<Options>3</Options>
 		</Entry>
