@@ -21,7 +21,7 @@
 	</tr><tr>
             <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>[Global-Removable_Group_Baseline (1)_3]</ul>
+                <a href="#group-1">here</a>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
@@ -167,6 +167,11 @@
                 </ul>
             </td>
         </tr></table>
+
+## Groups
+
+### Group 1
+This is the details of group 1
 
 ## Files
 This policy is based on information in the following files:
