@@ -178,7 +178,7 @@ class Group:
 
 class PolicyRule:
 
-    def __init__(self,root):
+    def __init__(self,root, rule_index = 1):
         self.id = root.attrib["Id"]
         name_node = root.find(".//Name")
         if name_node is None:
@@ -207,7 +207,8 @@ class PolicyRule:
 
                     
         self.format = ""
-        self.path = ""            
+        self.path = ""        
+        self.rule_index = rule_index
         return
 
     def get_oma_uri(self):
@@ -342,7 +343,8 @@ class Entry:
         for mask in Entry.access_masks.keys():
             if int(self.access_mask) & mask:
                 self.permissions[mask] = True
-                self.access_mask_text = self.access_mask_text+", "+Entry.access_mask_text_labels[mask]
+                if mask in Entry.access_mask_text_labels:
+                    self.access_mask_text = self.access_mask_text+", "+Entry.access_mask_text_labels[mask]
                 self.permission_icons[mask] = Entry.true_icons[self.type]
 
         #replaces last , with and
@@ -540,7 +542,7 @@ class Feature:
                 group_support = self.feature_data["group"]
                 supported_group_types = group_support["supported_types"]
                 if object.type not in supported_group_types:
-                    support.issues.append(object.type+" not supported.")
+                    support.issues.append(object.type+" groups not supported.")
                 else:
                     supported_properties = supported_group_types[object.type]["properties"]
                     for property in object.properties:
@@ -591,7 +593,8 @@ class Inventory:
             "id":[],
             "included_groups":[],
             "excluded_groups":[],
-            "object":[]
+            "object":[],
+            "rule_index":[]
         }
 
         self.groups = pd.DataFrame(group_columns)
@@ -684,8 +687,10 @@ class Inventory:
                     case "PolicyRule":
                         self.addPolicyRule(PolicyRule(root),xml_path,"oma-uri")
                     case "PolicyRules":
+                        rule_index = 1
                         for policyRule in root.findall(".//PolicyRule"):
-                            self.addPolicyRule(PolicyRule(policyRule),xml_path)
+                            self.addPolicyRule(PolicyRule(policyRule,rule_index),xml_path,"gpo",rule_index)
+                            rule_index= rule_index + 1
 
                 return root
 
@@ -718,10 +723,11 @@ class Inventory:
 
         self.groups = pd.concat([self.groups,new_row],ignore_index=True)
 
-    def addPolicyRule(self,rule,path,format="gpo"):
+    def addPolicyRule(self,rule,path,format="gpo",rule_index=1):
 
         rule.format = format
         rule.path = path
+        rule.rule_index = rule_index
 
         
         new_row = pd.DataFrame([{
@@ -731,7 +737,8 @@ class Inventory:
             "id":rule.id,
             "included_groups":rule.included_groups,
             "excluded_groups":rule.excluded_groups,
-            "object": rule
+            "object": rule,
+            "rule_index": rule_index
         }])
 
         self.policy_rules = pd.concat([self.policy_rules,new_row],ignore_index=True)
@@ -808,9 +815,11 @@ class Inventory:
 
         
         rule_frame = self.policy_rules.query(query, engine='python')
+        rule_frame = rule_frame.sort_values("rule_index", ascending=True)
         for i in range(0,rule_frame.index.size):
             rule = rule_frame.iloc[i]["object"]
             format = rule_frame.iloc[i]["format"]
+            rule_index = rule_frame.iloc[i]["rule_index"]
             rule_id = rule.id
 
             if format == "oma-uri":
@@ -828,7 +837,8 @@ class Inventory:
 
             rules["all"].append(rule)
 
-        rules["all"] = set(rules["all"])
+        rules["all"] = list(set(rules["all"]))
+        rules["all"].sort(key= lambda x: x.rule_index)
 
         #check for missing oma-uri rules
         for rule in rules["all"]:

@@ -27,14 +27,14 @@
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].properties }}"> (details)</a>  
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>  
                 {%- endfor -%}
                 </ul>
             </td>
             <td rowspan="{{ value.entries | length }}" valign="top">
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].properties }}"> (details)</a>
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
                 {%- endfor -%}
                 </ul>
             </td>
@@ -54,7 +54,7 @@
                     <li> {{ condition.match_type }} 
                         <ul>
                         {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}
+                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
@@ -79,7 +79,7 @@
                     <li> {{ condition.match_type }} 
                         <ul>
                         {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }} {{ groups[id].match_type }} {{ groups[id].properties }}
+                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
@@ -118,7 +118,7 @@ The match type for the group is *{{ groups[group_id].match_type }}*.
 This policy is based on information in the following files:
 
 {% for path in paths -%}
-- {{ path }}
+- [{{ path }}]({{ path }})
 {% endfor %}
 
 ## Intune UX
@@ -126,9 +126,9 @@ This policy is based on information in the following files:
 {% include "intune_ux.j2" %}
 {% else %}
 Intune UX is not supported for this policy because:
-    {% for issue in intune_ux_support.issues -%}
+{% for issue in intune_ux_support.issues -%}
 - {{ issue }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 ## GPO
