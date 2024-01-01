@@ -1,6 +1,9 @@
 {% if i != 0 %}
    1. Click on "+ Add"
 {% endif %}
-   1. Select {{ entry.type }} from "Type"
-   1. Select {{ entry.notifications }} from "Options"
-   1. Select {{ entry.permissions }} from "Access Mask"
+   1. Select *{{ entry.type_text }}* from "Type"
+   1. Select *{{ entry.options_text }}* from "Options"
+   1. Select *{{ entry.access_mask_text }}* from "Access mask"
+{% if entry.sid != 'All Users' %}
+   1. Enter *{{ entry.sid }}* for "Sid"
+{% endif %}

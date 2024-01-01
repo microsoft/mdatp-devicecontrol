@@ -22,7 +22,7 @@
     {%- for key,value in rules.items() -%}
         <tr>
             <td rowspan="{{ value.entries | length }}"><b>{{ value.name }}</b></td>
-            <td>{{ value.entries[0].type }}</td>
+            <td>{{ value.entries[0].type_text }}</td>
             <td>{{ value.entries[0].permissions[1] }}</td>
             <td>{{ value.entries[0].permissions[2] }}</td>
             <td>{{ value.entries[0].permissions[4] }}</td>
@@ -30,7 +30,7 @@
             <td>{{ value.entries[0].permissions[16] }}</td>
             <td>{{ value.entries[0].permissions[32] }}</td>
             <td>{{ value.entries[0].permissions[64] }}</td>
-            <td>{{ value.entries[0].notifications }} ({{ value.entries[0].options }})</td> 
+            <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options }})</td> 
             <td>{{ value.entries[0].sid }}</td>
             <td>{{ value.entries[0].parameters.match_type }}
                 <ul> 
@@ -61,7 +61,7 @@
         </tr>
         {%- for entry in value.entries[1:] -%}
         <tr>
-            <td>{{ entry.type }}</td>
+            <td>{{ entry.type_text }}</td>
             <td>{{ entry.permissions[1] }}</td>
             <td>{{ entry.permissions[2] }}</td>
             <td>{{ entry.permissions[4] }}</td>
@@ -69,7 +69,7 @@
             <td>{{ entry.permissions[16] }}</td>
             <td>{{ entry.permissions[32] }}</td>
             <td>{{ entry.permissions[64] }}</td>
-            <td>{{ entry.notifications }} ({{ entry.options }})</td>
+            <td>{{ entry.options_text }} ({{ entry.options }})</td>
             <td>{{ entry.sid }}</td>
             <td>{{ entry.parameters.match_type }}
                 <ul> 

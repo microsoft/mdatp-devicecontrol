@@ -39,6 +39,11 @@ def full_stack():
          stackstr += '  ' + traceback.format_exc().lstrip(trc)
     return stackstr
 
+# from  https://stackoverflow.com/questions/2556108/rreplace-how-to-replace-the-last-occurrence-of-an-expression-in-a-string
+def rreplace(s, old, new, occurrence):
+    li = s.rsplit(old, occurrence)
+    return new.join(li)
+
 class IntuneCustomRow:
 
     Integer_DataType = "Integer"
@@ -237,6 +242,13 @@ class Entry:
         0x40: "Print"
     }
 
+    access_mask_text_labels = {
+        0x01: "Read",
+        0x02: "Write",
+        0x04: "Execute",
+        0x40: "Print"
+    }
+
     allow_notification_masks = {
         0x04: "Disable",
         0x08: "Create File Evidence"
@@ -247,13 +259,13 @@ class Entry:
     }
 
     audit_allowed_notification_masks = {
-        0x01: "Nothing",
-        0x02: "Send Event"
+        0x01: "None",
+        0x02: "Send event"
     }
 
     audit_denied_notification_masks = {
-        0x01: "Show Notification",
-        0x02: "Send Event"
+        0x01: "Show notification",
+        0x02: "Send event"
     }
 
     notification_masks = {
@@ -263,10 +275,18 @@ class Entry:
         "AuditDenied": audit_denied_notification_masks
     }
 
+    type_label = {
+        "Allow": "Allow",
+        "AuditAllowed": "Audit Allowed",
+        "Deny": "Deny",
+        "AuditDenied": "Audit Denied"
+    }
+
 
     def __init__(self,entry):
         self.id = entry.attrib["Id"]
         self.type = entry.find("./Type").text
+        self.type_text = Entry.type_label[self.type]
         self.options = entry.find("./Options").text
         self.access_mask = entry.find("./AccessMask").text
 
@@ -281,10 +301,18 @@ class Entry:
         }
 
         self.notifications = []
+        self.access_mask_text = ""
+        self.options_text = ""
 
         for mask in Entry.access_masks.keys():
             if int(self.access_mask) & mask:
                 self.permissions[mask] = True
+                self.access_mask_text = self.access_mask_text+", "+Entry.access_mask_text_labels[mask]
+
+        #replaces last , with and
+        self.access_mask_text = self.access_mask_text[2:]
+        self.access_mask_text = rreplace(self.access_mask_text,","," and",1)
+        
 
         notification_masks = Entry.notification_masks[self.type]
         for mask in notification_masks:
@@ -292,7 +320,12 @@ class Entry:
                 self.notifications.append(notification_masks[mask])
         
         if len(self.notifications) == 0:
-            self.notifications.append("Nothing")
+            self.notifications.append("None")
+            self.options_text = "None"
+        elif len(self.notifications) == 1:
+            self.options_text = self.notifications[0]
+        else:
+            self.options_text = self.notifications[0]+" and "+self.notifications[1]
 
         sid = entry.find("./Sid")
         if sid is not None:
@@ -570,7 +603,7 @@ class Inventory:
                         "notifications":[0,4]
                     },
                     "AuditAllowed":{
-                        "notifications":[0,2]
+                        "notifications":[0,1,2]
                     },
                     "Deny":{
                         "notifications":[0,2]
@@ -606,8 +639,10 @@ class Inventory:
                     case "Group":
                         self.addGroup(Group(root),xml_path,"oma-uri")
                     case "Groups":
+                        group_index = 1
                         for group in root.findall(".//Group"):
-                            self.addGroup(Group(group),xml_path)
+                            self.addGroup(Group(group),xml_path,"gpo", group_index)
+                            group_index=group_index+1
                     case "PolicyRule":
                         self.addPolicyRule(PolicyRule(root),xml_path,"oma-uri")
                     case "PolicyRules":
@@ -621,13 +656,13 @@ class Inventory:
             print ("Error in "+xml_path+": "+str(e))
             return
 
-    def addGroup(self,group,path,format = "gpo"):
+    def addGroup(self,group,path,format = "gpo", group_index=0):
 
         if group.name == "?":
             paths = str(path).split(os.sep)
             last_path = paths[-1]
             fileWithoutExtension = last_path.split(".")[0]
-            group.name = fileWithoutExtension
+            group.name = fileWithoutExtension+"_"+str(int(group_index))
 
         group.path = path
         group.format = format
@@ -833,6 +868,9 @@ if __name__ == '__main__':
 
     groupsXML += "\n</Groups>"
     rulesXML += "\n</PolicyRules>"
+
+    #remove duplicates from paths
+    paths = list(set(paths))
 
     try:
         mac_policy = {}
