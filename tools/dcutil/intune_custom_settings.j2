@@ -1,0 +1,16 @@
+<details>
+<summary>Create custom intune configuration</summary>
+
+   1. Navigate to Devices > Configuration profiles
+   2. Click Create (New Policy)
+   3. Select Platform "Windows 10 and Later"
+   4. Select Profile "Templates"
+   5. Select Template Name "Custom"
+   6. Click "Create"
+   7. Under Name, enter *{{ env['TITLE'] }}*
+   8. Optionally, enter a description
+   9. Click "Next" 
+</details>
+{% for oma_uri in intuneCustomSettings -%}
+{% include "intune_custom_settings_row.j2" %}
+{% endfor %}

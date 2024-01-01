@@ -1,0 +1,23 @@
+<details>
+<summary>Add a row for {{intuneCustomSettings[oma_uri].name}}</summary>  
+   {% set row = intuneCustomSettings[oma_uri] %}
+   1. Click "Add"
+   2. For Name, enter *{{row.name}}*
+   3. For Description, enter *{{row.description}}*
+   4. For OMA-URI, enter  *{{ oma_uri }}*
+   5. For Data type, select *{{row.data_type }}*
+   {% if row.data_type == "String (XML File)" %}
+        {% if row.value is none %}
+   6. Save this XML to a file. 
+   ```xml
+   {{ row.object.toXML("") }}
+   ```
+   
+   7. For Custom XML, select the file.
+        {% else %}
+   6. For Custom XML, select  *{{row.value }}*
+        {% endif %} 
+   
+   {% endif %}
+   7. Click "Save"
+</details>

@@ -44,6 +44,19 @@ def rreplace(s, old, new, occurrence):
     li = s.rsplit(old, occurrence)
     return new.join(li)
 
+def clean_up_name(name, new_space = "-"):
+
+    clean_name = name
+    clean_name = str(clean_name).lstrip()
+    clean_name = str(clean_name).rstrip()
+    clean_name = str(clean_name).lower()
+    clean_name = str(clean_name).replace(" ",new_space)
+    clean_name = str(clean_name).replace("(","")
+    clean_name = str(clean_name).replace(")","")
+    clean_name = str(clean_name).replace(",","")
+
+    return clean_name
+
 class IntuneCustomRow:
 
     Integer_DataType = "Integer"
@@ -56,6 +69,7 @@ class IntuneCustomRow:
         self.OMA_URI = ""
         self.data_type = IntuneCustomRow.XML_DataType
         self.value = ""
+        self.object = object
 
         match object.__class__.__name__:
 
@@ -116,15 +130,7 @@ class Group:
     
     def get_section_title(self):
 
-        section_title = self.name
-        section_title = str(section_title).lstrip()
-        section_title = str(section_title).rstrip()
-        section_title = str(section_title).lower()
-        section_title = str(section_title).replace(" ","-")
-        section_title = str(section_title).replace("(","")
-        section_title = str(section_title).replace(")","")
-
-        return section_title
+        return clean_up_name(self.name)
 
     def toXML(self,indent = "\t"):
 
@@ -378,7 +384,7 @@ class Entry:
     
     def toXML(self,indent):
 
-        out = indent + "<Entry>\n"
+        out = indent + "<Entry Id=\""+self.id+"\">\n"
         out += indent +"\t<Type>"+self.type+"</Type>\n"
         out += indent +"\t<AccessMask>"+self.access_mask+"</AccessMask>\n"
         out += indent +"\t<Options>"+self.options+"</Options>\n"
@@ -563,8 +569,10 @@ class Feature:
 class Inventory:
 
     
-    def __init__(self,source_path):
+    def __init__(self,source_path,generate_oma_uri=False,dest="."):
         self.paths = source_path
+        self.generate_oma_uri = generate_oma_uri
+        self.dest_dir = dest
 
         group_columns = {
             "type":[],
@@ -780,7 +788,9 @@ class Inventory:
                     print("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
 
             if len(groups["oma-uri"]) == 0:
-                self.missing_oma_uri(group_id)
+                oma_uri_group = self.missing_oma_uri(groups["gpo"][0])
+                if oma_uri_group is not None:
+                    groups["oma-uri"].append(oma_uri_group)
 
             return groups
     
@@ -819,11 +829,33 @@ class Inventory:
             rules["all"].append(rule)
 
         rules["all"] = set(rules["all"])
+
+        #check for missing oma-uri rules
+        for rule in rules["all"]:
+            if not rule.get_oma_uri() in rules["oma-uri"]:
+                oma_uri_rule = self.missing_oma_uri(rules["gpo"][rule.id])
+                if oma_uri_rule is not None:
+                    rules["oma-uri"][rule.get_oma_uri()] = IntuneCustomRow(oma_uri_rule)
+
         return rules
     
 
-    def missing_oma_uri(self,object_id):
-        print("Missing oma-uri for id "+object_id)
+    def missing_oma_uri(self,object):
+        print("Missing oma-uri for id "+object.id)
+        oma_uri_object = copy.copy(object)
+        oma_uri_object.format = "oma-uri"
+
+        if self.generate_oma_uri:
+            path = self.dest_dir + os.sep + clean_up_name(oma_uri_object.name,"_")+oma_uri_object.id + ".xml"
+            oma_uri_object.path = path
+            with open(path,"w") as generated_file:
+                generated_file.write(oma_uri_object.toXML(""))
+                generated_file.close()
+
+        else:
+            oma_uri_object.path = None
+
+        return oma_uri_object
 
 
 def dir_path(string):
@@ -834,6 +866,13 @@ def dir_path(string):
         else:
             raise NotADirectoryError(path)
     return paths
+
+def dir(path):
+    if os.path.isdir(path):
+        return path
+    else:
+        raise NotADirectoryError(path)
+
 
 def format(string):
     match string:
@@ -854,12 +893,14 @@ if __name__ == '__main__':
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
     arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default="path.str.contains('"+query+"',regex=False)")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
-    arg_parser.add_argument('-o','--output',dest="out_path",help="The output path",default="dcutil.md")
+    arg_parser.add_argument('-o','--output',dest="out_file",help="The output file",default="dcutil.md")
+    arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory",default=".")
+    arg_parser.add_argument('-g','--generate',dest="generate_oma_uri",action="store_true",help='Generates XML for oma-uri')
     arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.j2")
 
     args = arg_parser.parse_args()
 
-    inventory = Inventory(args.source_path)
+    inventory = Inventory(args.source_path,args.generate_oma_uri,args.dest)
 
     filtered_rules = inventory.query_policy_rules(args.query)
 
@@ -933,6 +974,7 @@ if __name__ == '__main__':
              "macError": mac_error,
              "env":os.environ})
         
-        with open(args.out_path,"w") as out_path:
-            out_path.write(out)
-            out_path.close()
+
+        with open(args.dest+os.sep+args.out_file,"w") as out_file:
+            out_file.write(out)
+            out_file.close()

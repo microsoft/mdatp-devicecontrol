@@ -142,11 +142,7 @@ Intune UX is not supported for this policy because:
 ```
 ## Intune Custom Settings
 
-| Name | Description | OMA-URI | Type | Value |
-|---  |---          |---      |---   |---    |
-{% for oma_uri in intuneCustomSettings -%}
-| {{intuneCustomSettings[oma_uri].name}} | {{intuneCustomSettings[oma_uri].description}} | {{ oma_uri }} | {{intuneCustomSettings[oma_uri].data_type }} | {{intuneCustomSettings[oma_uri].value }} |
-{% endfor %}
+{% include "intune_custom_settings.j2" %}
 
 ## Mac
 {% if macError is none %}
