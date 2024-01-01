@@ -22,7 +22,7 @@
             <td rowspan="2"><b>Allow Read,Execute Access to non-encrypted removable devices</b></td>
             <td>Deny</td>
             <td>False</td>
-            <td>❌</td>
+            <td>:x:</td>
             <td>False</td>
             <td>False</td>
             <td>False</td>
