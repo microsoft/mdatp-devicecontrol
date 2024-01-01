@@ -952,6 +952,12 @@ if __name__ == '__main__':
 
     #remove duplicates from paths
     paths = list(set(paths))
+    web_paths = []
+    for path in paths:
+        if str(path).startswith(".\\"):
+            path = path[2:]
+        path = str(path).replace("\\","/")
+        web_paths.append(path)
 
     try:
         mac_policy = {}
@@ -974,7 +980,7 @@ if __name__ == '__main__':
         template = templateEnv.get_template(TEMPLATE_FILE)
         out = template.render(
             {"intuneCustomSettings":oma_uri,
-             "paths":paths,
+             "paths":web_paths,
              "rules":rules,
              "groups":groups, 
              "intune_ux_support":intune_ux_support,
