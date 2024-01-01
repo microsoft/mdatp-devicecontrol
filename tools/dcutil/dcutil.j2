@@ -27,14 +27,14 @@
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}">(details)</a>  
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].properties }}">(details)</a>  
                 {%- endfor -%}
                 </ul>
             </td>
             <td rowspan="{{ value.entries | length }}" valign="top">
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li>[{{ groups[id].name }}]  
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].properties }}">(details)</a>
                 {%- endfor -%}
                 </ul>
             </td>
