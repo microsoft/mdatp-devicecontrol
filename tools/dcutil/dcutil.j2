@@ -1,4 +1,6 @@
 # Device Control Policy: {{ env['TITLE'] }}
+
+## Policy Rules
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
@@ -87,6 +89,13 @@
         {%- endfor -%}
     {%- endfor -%}
 </table>
+
+## Groups
+
+{% for group_id in groups %}
+### {{ groups[group_id].name }}
+{{ groups[group_id].properties }}
+{% endfor %}
 
 ## Files
 This policy is based on information in the following files:
