@@ -21,6 +21,43 @@
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
+            <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>Global-Removable_Group_Baseline (1)_3<a href="#global-removable_group_baseline-1_3" title="[{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}]"> (details)</a></ul>
+            </td>
+            <td rowspan="2" valign="top">
+                <ul></ul>
+            </td>
+            <td>Allow</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>None (0)</td> 
+            <td>S-1-5-21-602162358-1563985344-839522115-286197</td>
+            <td>
+                <ul>
+                </ul>
+            </td>
+        </tr><tr>
+            <td>Audit Allowed</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>None and Send event (3)</td>
+            <td>All Users</td>
+            <td>
+                <ul>
+                </ul>
+            </td>
+        </tr><tr>
             <td rowspan="2"><b>Allow Read,Write, Execute Access to encrypted removable devices</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>Global-Removable_Group_Baseline (1)_3<a href="#global-removable_group_baseline-1_3" title="[{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}]"> (details)</a></ul>
@@ -131,43 +168,6 @@
                 <ul>
                 </ul>
             </td>
-        </tr><tr>
-            <td rowspan="2"><b>Allow Read,Write, Execute Access to removable devices</b></td>
-            <td rowspan="2 valign="top">
-                <ul><li>Global-Removable_Group_Baseline (1)_3<a href="#global-removable_group_baseline-1_3" title="[{'HardwareId': 'USBSTOR\\DiskKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\CdRomKingstonDTVaultPrivacy30PMAP'}, {'HardwareId': 'USBSTOR\\DiskHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\CdRomHypertecEncryptPlusV2___1.21'}, {'HardwareId': 'USBSTOR\\DiskKingstonDataTraveler_3.0PMAP'}]"> (details)</a></ul>
-            </td>
-            <td rowspan="2" valign="top">
-                <ul></ul>
-            </td>
-            <td>Allow</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>S-1-5-21-602162358-1563985344-839522115-286197</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
-        </tr><tr>
-            <td>Audit Allowed</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None and Send event (3)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
         </tr></table>
 
 ## Groups
@@ -269,8 +269,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- C:\Users\joshbregman\Downloads\device control\Global-Removable_Group_Baseline (1).xml
 - C:\Users\joshbregman\Downloads\device control\Global-Removable_Policy_Baseline (1).xml
+- C:\Users\joshbregman\Downloads\device control\Global-Removable_Group_Baseline (1).xml
 
 
 ## Intune UX
@@ -455,7 +455,40 @@ This policy is based on information in the following files:
 > Make sure that policy is not dependent on order to achieve desired result.
 > Consider using ```default deny```.   
 
-- Add a rule for Allow Read,Write, Execute Access to encrypted removable devices to the policy
+<details>
+<summary>- Add a rule for Allow Read,Write, Execute Access to removable devices to the policy</summary>
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Global-Removable_Group_Baseline (1)_3*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Allow Read,Write, Execute Access to removable devices* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+   1. Enter *S-1-5-21-602162358-1563985344-839522115-286197* for "Sid"
+
+
+
+
+   1. Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *None and Send event* from "Options"
+   1. Select *Write* from "Access mask"
+
+
+</details>
+<details>
+<summary>- Add a rule for Allow Read,Write, Execute Access to encrypted removable devices to the policy</summary>
 
    1. Click on "+ Set reusable settings" under Included Id
 
@@ -485,7 +518,9 @@ This policy is based on information in the following files:
    1. Select *Write* from "Access mask"
 
 
-- Add a rule for Allow Read,Execute Access to non-encrypted removable devices to the policy
+</details>
+<details>
+<summary>- Add a rule for Allow Read,Execute Access to non-encrypted removable devices to the policy</summary>
 
    1. Click on "+ Set reusable settings" under Included Id
 
@@ -515,7 +550,9 @@ This policy is based on information in the following files:
    1. Select *Write* from "Access mask"
 
 
-- Add a rule for Block Read,Write,Execute Access to all removable devices to the policy
+</details>
+<details>
+<summary>- Add a rule for Block Read,Write,Execute Access to all removable devices to the policy</summary>
 
    1. Click on "+ Set reusable settings" under Included Id
 
@@ -551,36 +588,7 @@ This policy is based on information in the following files:
    1. Select *Read, Write and Execute* from "Access mask"
 
 
-- Add a rule for Allow Read,Write, Execute Access to removable devices to the policy
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Global-Removable_Group_Baseline (1)_3*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Allow Read,Write, Execute Access to removable devices* for the name
-
-
-
-   1. Select *Allow* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Read, Write and Execute* from "Access mask"
-
-   1. Enter *S-1-5-21-602162358-1563985344-839522115-286197* for "Sid"
-
-
-
-
-   1. Click on "+ Add"
-
-   1. Select *Audit Allowed* from "Type"
-   1. Select *None and Send event* from "Options"
-   1. Select *Write* from "Access mask"
-
-
+</details>
 
 
 
@@ -627,6 +635,26 @@ This policy is based on information in the following files:
 ### Rules
 ```xml
 <PolicyRules>
+	<PolicyRule Id="{dd69607b-15c2-469d-ad1f-3f529e367f0a}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bdd69607b-15c2-469d-ad1f-3f529e367f0a%7D/RuleData -->
+		<Name>Allow Read,Write, Execute Access to removable devices</Name>
+		<IncludedIdList>
+			<GroupId>{43786489-56fc-4cb8-98ba-44255de7b8b8}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry>
+			<Type>Allow</Type>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+			<Sid>S-1-5-21-602162358-1563985344-839522115-286197</Sid>
+		</Entry>
+		<Entry>
+			<Type>AuditAllowed</Type>
+			<AccessMask>2</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>
 	<PolicyRule Id="{3ef71340-2d01-404c-bcd8-b966caa14494}" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B3ef71340-2d01-404c-bcd8-b966caa14494%7D/RuleData -->
 		<Name>Allow Read,Write, Execute Access to encrypted removable devices</Name>
@@ -685,26 +713,6 @@ This policy is based on information in the following files:
 		<Entry>
 			<Type>AuditDenied</Type>
 			<AccessMask>7</AccessMask>
-			<Options>3</Options>
-		</Entry>
-	</PolicyRule>
-	<PolicyRule Id="{dd69607b-15c2-469d-ad1f-3f529e367f0a}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bdd69607b-15c2-469d-ad1f-3f529e367f0a%7D/RuleData -->
-		<Name>Allow Read,Write, Execute Access to removable devices</Name>
-		<IncludedIdList>
-			<GroupId>{43786489-56fc-4cb8-98ba-44255de7b8b8}</GroupId>
-		</IncludedIdList>
-		<ExcludedIdList>
-		</ExcludedIdList>
-		<Entry>
-			<Type>Allow</Type>
-			<AccessMask>7</AccessMask>
-			<Options>0</Options>
-			<Sid>S-1-5-21-602162358-1563985344-839522115-286197</Sid>
-		</Entry>
-		<Entry>
-			<Type>AuditAllowed</Type>
-			<AccessMask>2</AccessMask>
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>
