@@ -105,11 +105,13 @@ The match type for the group is *{{ groups[group_id].match_type }}*.
 | {{ key }} | {{ value }} |
 {% endfor -%}
 {% endfor %}
+<details>
+<summary>View XML</summary>
 
-XML
-```
+```xml
 {{ groups[group_id].toXML() }}
 ```
+</details>
 {% endfor %}
 
 ## Files
