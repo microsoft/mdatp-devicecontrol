@@ -192,6 +192,32 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Corporate Network
+
+This is a group of type *Network*. 
+The match type for the group is *MatchAll*.
+
+|  Property | Value |
+|-----------|-------|
+| NameId | corp.microsoft.com |
+| NetworkCategoryId | DomainAuthenticated |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+	<Name>Corporate Network</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<NameId>corp.microsoft.com</NameId>
+		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Authorized USB Printer
 
 This is a group of type *Device*. 
@@ -248,32 +274,6 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
-### Corporate Network
-
-This is a group of type *Network*. 
-The match type for the group is *MatchAll*.
-
-|  Property | Value |
-|-----------|-------|
-| NameId | corp.microsoft.com |
-| NetworkCategoryId | DomainAuthenticated |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-	<Name>Corporate Network</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<NameId>corp.microsoft.com</NameId>
-		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Any Printer
 
 This is a group of type *Device*. 
@@ -302,15 +302,15 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Printer Protection Samples\Group Policy\Printer_Policies - no Default Deny policy.xml](Printer%20Protection%20Samples%5CGroup%20Policy%5CPrinter_Policies%20-%20no%20Default%20Deny%20policy.xml)
-- [Printer Protection Samples\Group Policy\Printer_Groups.xml](Printer%20Protection%20Samples%5CGroup%20Policy%5CPrinter_Groups.xml)
+- [.\Group Policy\Printer_Policies - no Default Deny policy.xml](.%5CGroup%20Policy%5CPrinter_Policies%20-%20no%20Default%20Deny%20policy.xml)
+- [.\Group Policy\Printer_Groups.xml](.%5CGroup%20Policy%5CPrinter_Groups.xml)
 
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Network groups not supported.
 - Parameters are not supported
+- Network groups not supported.
 - VPNConnection groups not supported.
 
 
@@ -325,6 +325,15 @@ Intune UX is not supported for this policy because:
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>corp.microsoft.com</NameId>
+			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
@@ -345,15 +354,6 @@ Intune UX is not supported for this policy because:
 			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
 			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
 			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-		<Name>Corporate Network</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<NameId>corp.microsoft.com</NameId>
-			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
@@ -610,7 +610,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
    
@@ -626,7 +626,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Authorized USB Printer.xml*
          
    
    
@@ -642,7 +642,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Corporate Network.xml*
          
    
    
@@ -658,7 +658,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Corporate VPN.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Corporate VPN.xml*
          
    
    
@@ -674,7 +674,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Any printer group.xml*
          
    
    
