@@ -47,14 +47,14 @@
             <td rowspan="{{ value.entries | length }}">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li><b>{{ groups[id].name }}</b> - {{ groups[id].match_type }} {{ groups[id].properties }}  
+                    <li>[{{ groups[id].name }}](## {{ groups[id].match_type }} {{ groups[id].properties }})  
                 {%- endfor -%}
                 </ul>
             </td>
             <td rowspan="{{ value.entries | length }}">
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li><b>{{ groups[id].name }}</b> - {{ groups[id].match_type }} {{ groups[id].properties }}  
+                    <li>[{{ groups[id].name }}](## {{ groups[id].match_type }} {{ groups[id].properties }})  
                 {%- endfor -%}
                 </ul>
             </td>
