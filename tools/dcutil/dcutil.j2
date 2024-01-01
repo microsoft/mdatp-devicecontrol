@@ -27,7 +27,7 @@
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>[{{ groups[id].name }}]  
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}">(details)</a>  
                 {%- endfor -%}
                 </ul>
             </td>

@@ -114,6 +114,17 @@ class Group:
     def get_oma_uri(self):
         return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData"
     
+    def get_section_title(self):
+
+        section_title = self.name
+        section_title = str(section_title).lstrip()
+        section_title = str(section_title).rstrip()
+        section_title = str(section_title).lower()
+        section_title = str(section_title).replace(" ","-")
+        section_title = str(section_title).replace("(","")
+        section_title = str(section_title).replace(")","")
+
+        return section_title
 
     def toXML(self,indent = "\t"):
 
