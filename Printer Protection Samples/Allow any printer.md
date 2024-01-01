@@ -75,8 +75,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- Printer Protection Samples\Intune OMA-URI\Allow any printer.xml
-- Printer Protection Samples\Group Policy\Printer_Groups.xml
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Allow any printer.xml](Intune%20OMA-URI/Allow%20any%20printer.xml)
 
 
 ## Intune UX
@@ -203,7 +203,7 @@ This policy is based on information in the following files:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Allow any printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Allow any printer.xml*
          
    
    
@@ -219,7 +219,7 @@ This policy is based on information in the following files:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Any printer group.xml*
          
    
    

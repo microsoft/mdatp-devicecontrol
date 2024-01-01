@@ -147,36 +147,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Corporate VPN
-
-This is a group of type *VPNConnection*. 
-The match type for the group is *MatchAll*.
-
-|  Property | Value |
-|-----------|-------|
-| NameId | MSFTVPN |
-| VPNServerAddressId | msftvpn.*.microsoft.com |
-| VPNDnsSuffixId | corp.microsoft.com |
-| VPNConnectionStatusId | Connected |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
-	<Name>Corporate VPN</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<NameId>MSFTVPN</NameId>
-		<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
-		<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
-		<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Corporate Network
 
 This is a group of type *Network*. 
@@ -229,20 +199,50 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Corporate VPN
+
+This is a group of type *VPNConnection*. 
+The match type for the group is *MatchAll*.
+
+|  Property | Value |
+|-----------|-------|
+| NameId | MSFTVPN |
+| VPNServerAddressId | msftvpn.*.microsoft.com |
+| VPNDnsSuffixId | corp.microsoft.com |
+| VPNConnectionStatusId | Connected |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
+	<Name>Corporate VPN</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<NameId>MSFTVPN</NameId>
+		<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+		<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+		<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Files
 This policy is based on information in the following files:
 
-- Printer Protection Samples\Group Policy\Printer_Groups.xml
-- Printer Protection Samples\Group Policy\Printer_Policies.xml
+- [Group Policy/Printer_Policies.xml](Group%20Policy/Printer_Policies.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- VPNConnection not supported.
 - Parameters are not supported
-- Network not supported.
+- VPNConnection groups not supported.
+- Network groups not supported.
 
 
 
@@ -256,17 +256,6 @@ Intune UX is not supported for this policy because:
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrinterConnectionId>File</PrinterConnectionId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
-		<Name>Corporate VPN</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<NameId>MSFTVPN</NameId>
-			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
-			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
-			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
@@ -285,6 +274,17 @@ Intune UX is not supported for this policy because:
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
+		<Name>Corporate VPN</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>MSFTVPN</NameId>
+			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -497,7 +497,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
    
@@ -513,7 +513,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Authorized USB Printer.xml*
          
    
    
@@ -529,7 +529,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Corporate Network.xml*
          
    
    
@@ -545,7 +545,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *Printer Protection Samples\Intune OMA-URI\Corporate VPN.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Corporate VPN.xml*
          
    
    
