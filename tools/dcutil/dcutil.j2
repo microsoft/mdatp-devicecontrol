@@ -118,7 +118,7 @@ The match type for the group is *{{ groups[group_id].match_type }}*.
 This policy is based on information in the following files:
 
 {% for path in paths -%}
-- [{{ path }}]({{ path }})
+- [{{ path }}]({{ path | urlencode }})
 {% endfor %}
 
 ## Intune UX

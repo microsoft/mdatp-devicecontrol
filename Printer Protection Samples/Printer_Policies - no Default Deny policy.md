@@ -302,16 +302,16 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Printer Protection Samples\Group Policy\Printer_Policies - no Default Deny policy.xml](Printer Protection Samples\Group Policy\Printer_Policies - no Default Deny policy.xml)
-- [Printer Protection Samples\Group Policy\Printer_Groups.xml](Printer Protection Samples\Group Policy\Printer_Groups.xml)
+- [Printer Protection Samples\Group Policy\Printer_Policies - no Default Deny policy.xml](Printer%20Protection%20Samples%5CGroup%20Policy%5CPrinter_Policies%20-%20no%20Default%20Deny%20policy.xml)
+- [Printer Protection Samples\Group Policy\Printer_Groups.xml](Printer%20Protection%20Samples%5CGroup%20Policy%5CPrinter_Groups.xml)
 
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
 - Network groups not supported.
-- VPNConnection groups not supported.
 - Parameters are not supported
+- VPNConnection groups not supported.
 
 
 
