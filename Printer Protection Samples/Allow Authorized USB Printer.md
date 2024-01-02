@@ -1,4 +1,10 @@
-# Device Control Policy: Allow Authorized USB Printer
+# Device control policy sample: Allow Authorized USB Printer
+
+Description: A sample policy
+
+A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+This sample is based on the [sample files](#files).  
+To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
 <table>
@@ -150,9 +156,21 @@ The match type for the group is *MatchAll*.
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 - [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
+
+# Deployment Instructions
+
+Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
+
+## Windows
+- [Intune UX](#intune-ux)
+- [Intune Custom Settings](#intune-custom-settings)
+- [Group Policy (GPO)](#group-policy-gpo)
+
+## Mac
+- [Mac Policy](#mac-policy)
 
 ## Intune UX
 
@@ -161,10 +179,15 @@ Intune UX is not supported for this policy because:
 - Parameters are not supported
 - VPNConnection groups not supported.
 
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
 
-## GPO
-### Groups
+## Group Policy (GPO)
+<details>
+<summary>Define device control policy groups</summary>
+
+   1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy groups.
+   2. Save the XML below to a network share.
 ```xml
 <Groups>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
@@ -198,7 +221,14 @@ Intune UX is not supported for this policy because:
 	</Group>
 </Groups>
 ```
-### Rules
+   3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
+</details>
+
+<details>
+<summary>Define device control policy rules</summary>
+ 
+  1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy rules.
+  2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
 	<PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}" >
@@ -230,6 +260,9 @@ Intune UX is not supported for this policy because:
 	</PolicyRule>
 </PolicyRules>
 ```
+  3. In the Define device control policy rules window, select *Enabled*, and enter the network share file path containing the XML rules data.
+</details>
+
 ## Intune Custom Settings
 
 <details>
@@ -311,7 +344,10 @@ Intune UX is not supported for this policy because:
 </details>
 
 
-## Mac
+## Mac Policy
 
 This policy is not supported on Mac because Unsupported Descriptor ID NameId
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

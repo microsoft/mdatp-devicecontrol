@@ -942,7 +942,7 @@ class Inventory:
 
         return result    
 
-    def generate_text(self,result,dest,file,title):
+    def generate_text(self,result,dest,file,title, description="A sample policy"):
         templatePath = pathlib.Path(__file__).parent.resolve()
         templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
         templateEnv = jinja2.Environment(loader=templateLoader)
@@ -958,6 +958,7 @@ class Inventory:
              "rulesXML":result["rulesXML"],
              "macPolicy":result["mac_policy"],
              "macError": result["mac_error"],
+             "description": description,
              "env":os.environ,
              "title":title})
         
@@ -1001,10 +1002,10 @@ def parse_in_file(in_file):
     outfile = title+".md"
     return query,title,outfile
 
-def load_policies(policy_file):
-     with open(policy_file) as file:
-         policies = json.loads(file.read())
-         return policies
+def load_scenarios(scenarios_file):
+     with open(scenarios_file) as file:
+         scenarios = json.loads(file.read())
+         return scenarios
      
 def generate_readme(results,dest,title):
     templatePath = pathlib.Path(__file__).parent.resolve()
@@ -1033,7 +1034,7 @@ if __name__ == '__main__':
     
     input_group =arg_parser.add_mutually_exclusive_group()
     input_group.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process')
-    input_group.add_argument('-s','--policies',dest="policies",type=file,help='A JSON file that contains a list of policy rules to process')
+    input_group.add_argument('-s','--scenarios',dest="scenarios",type=file,help='A JSON file that contains a list of scenarios to process')
     input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rules to process')
 
 
@@ -1055,14 +1056,24 @@ if __name__ == '__main__':
 
     out_file = args.out_file
 
-    if args.policies is not None:
+    if args.scenarios is not None:
         results = {}
-        policies = load_policies(args.policies)
-        for policy_file in policies["rules"]:
-            query,title,default_outfile = parse_in_file(policy_file)
+        scenarios = load_scenarios(args.scenarios)
+        for rule in scenarios["rules"]:
+            policy_file = rule["file"]
+            description = "A sample policy"
+            title = None
+            if "description" in rule.keys():
+                description = rule["description"]
+            if "title" in rule.keys():
+                title = rule["title"]
+
+            query,default_title,default_outfile = parse_in_file(policy_file)
             result = inventory.process_query(query)
             if args.format == "text":
-                inventory.generate_text(result,args.dest,default_outfile,title)
+                if title is None:
+                    title = default_title
+                inventory.generate_text(result,args.dest,default_outfile,title,description)
 
             results[policy_file] = {
                 "result":result,
@@ -1070,7 +1081,7 @@ if __name__ == '__main__':
                 "file": default_outfile
             }
 
-        generate_readme(results,args.dest,policies["title"])
+        generate_readme(results,args.dest,scenarios["title"])
 
 
     elif query is None:

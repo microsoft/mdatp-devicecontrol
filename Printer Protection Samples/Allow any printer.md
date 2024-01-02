@@ -1,4 +1,10 @@
-# Device Control Policy: Allow any printer
+# Device control policy sample: Allow any printer
+
+Description: A sample policy
+
+A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+This sample is based on the [sample files](#files).  
+To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
 <table>
@@ -75,9 +81,21 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 - [Intune OMA-URI/Allow any printer.xml](Intune%20OMA-URI/Allow%20any%20printer.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
+
+# Deployment Instructions
+
+Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
+
+## Windows
+- [Intune UX](#intune-ux)
+- [Intune Custom Settings](#intune-custom-settings)
+- [Group Policy (GPO)](#group-policy-gpo)
+
+## Mac
+- [Mac Policy](#mac-policy)
 
 ## Intune UX
 
@@ -145,8 +163,12 @@ This policy is based on information in the following files:
 
 
 
-## GPO
-### Groups
+## Group Policy (GPO)
+<details>
+<summary>Define device control policy groups</summary>
+
+   1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy groups.
+   2. Save the XML below to a network share.
 ```xml
 <Groups>
 	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
@@ -159,7 +181,14 @@ This policy is based on information in the following files:
 	</Group>
 </Groups>
 ```
-### Rules
+   3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
+</details>
+
+<details>
+<summary>Define device control policy rules</summary>
+ 
+  1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy rules.
+  2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
 	<PolicyRule Id="{2f746a4d-4ae1-4bc0-aaef-136d12518fd4}" >
@@ -178,6 +207,9 @@ This policy is based on information in the following files:
 	</PolicyRule>
 </PolicyRules>
 ```
+  3. In the Define device control policy rules window, select *Enabled*, and enter the network share file path containing the XML rules data.
+</details>
+
 ## Intune Custom Settings
 
 <details>
@@ -227,7 +259,10 @@ This policy is based on information in the following files:
 </details>
 
 
-## Mac
+## Mac Policy
 
 This policy is not supported on Mac because Primary ID [PrinterDevices] is not supported on macOS.
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

@@ -1,4 +1,10 @@
-# Device Control Policy: Default Deny - custom policy
+# Device control policy sample: Default Deny - custom policy
+
+Description: A sample policy
+
+A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+This sample is based on the [sample files](#files).  
+To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
 <table>
@@ -62,30 +68,6 @@
 ## Groups
 
 
-### Any Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | PrinterDevices |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-	<Name>Any Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>PrinterDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### PDF_XPS Printer
 
 This is a group of type *Device*. 
@@ -105,6 +87,30 @@ The match type for the group is *MatchAny*.
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrinterConnectionId>File</PrinterConnectionId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Any Printer
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | PrinterDevices |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+	<Name>Any Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>PrinterDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -140,36 +146,24 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 - [Intune OMA-URI/Default Deny - custom policy.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
+
+# Deployment Instructions
+
+Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
+
+## Windows
+- [Intune UX](#intune-ux)
+- [Intune Custom Settings](#intune-custom-settings)
+- [Group Policy (GPO)](#group-policy-gpo)
+
+## Mac
+- [Mac Policy](#mac-policy)
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for Any Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *PrinterDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
 <details>
 <summary>Create a reusable setting for PDF_XPS Printer</summary> 
 
@@ -188,6 +182,30 @@ This policy is based on information in the following files:
         3. Click on "Edit Instance"    
         4. Enter *PrinterConnectionId* for Name
         5. Enter *File* for PrinterConnectionId
+        6. Click "Save"
+    
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Any Printer</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Any Printer for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+      
+   8. Add a Removable Storage object for PrimaryId
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Edit Instance"    
+        4. Enter *PrimaryId* for Name
+        5. Enter *PrinterDevices* for PrimaryId
         6. Click "Save"
     
    
@@ -285,24 +303,28 @@ This policy is based on information in the following files:
 
 
 
-## GPO
-### Groups
+## Group Policy (GPO)
+<details>
+<summary>Define device control policy groups</summary>
+
+   1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy groups.
+   2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-		<Name>Any Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>PrinterDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
 		<Name>PDF_XPS Printer</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+		<Name>Any Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>PrinterDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
@@ -316,7 +338,14 @@ This policy is based on information in the following files:
 	</Group>
 </Groups>
 ```
-### Rules
+   3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
+</details>
+
+<details>
+<summary>Define device control policy rules</summary>
+ 
+  1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy rules.
+  2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
 	<PolicyRule Id="{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}" >
@@ -342,6 +371,9 @@ This policy is based on information in the following files:
 	</PolicyRule>
 </PolicyRules>
 ```
+  3. In the Define device control policy rules window, select *Enabled*, and enter the network share file path containing the XML rules data.
+</details>
+
 ## Intune Custom Settings
 
 <details>
@@ -423,7 +455,10 @@ This policy is based on information in the following files:
 </details>
 
 
-## Mac
+## Mac Policy
 
-This policy is not supported on Mac because Primary ID [PrinterDevices] is not supported on macOS.
+This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

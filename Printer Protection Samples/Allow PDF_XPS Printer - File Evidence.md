@@ -1,4 +1,4 @@
-# Device control policy sample: Default Deny - custom policy2
+# Device control policy sample: Allow PDF_XPS Printer - File Evidence
 
 Description: A sample policy
 
@@ -27,29 +27,29 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
-            <td rowspan="2"><b>Default Deny</b></td>
+            <td rowspan="2"><b>Allow PDF and XPS Printing</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Printer<a href="#any-printer" title="MatchAny [{'PrimaryId': 'PrinterDevices'}]"> (details)</a></ul>
+                <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
-            <td>Deny</td>
+            <td>Allow</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>:x:</td>
-            <td>None (0)</td> 
+            <td>:white_check_mark:</td>
+            <td>Create File Evidence (8)</td> 
             <td>All Users</td>
             <td>
                 <ul>
                 </ul>
             </td>
         </tr><tr>
-            <td>Audit Denied</td>
+            <td>Audit Allowed</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -57,7 +57,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>:page_facing_up:</td>
-            <td>Show notification and Send event (3)</td>
+            <td>Send event (2)</td>
             <td>All Users</td>
             <td>
                 <ul>
@@ -68,25 +68,25 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Any Printer
+### PDF_XPS Printer
 
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| PrimaryId | PrinterDevices |
+| PrinterConnectionId | File |
 
 <details>
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-	<Name>Any Printer</Name>
+<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+	<Name>PDF_XPS Printer</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<PrimaryId>PrinterDevices</PrimaryId>
+		<PrinterConnectionId>File</PrinterConnectionId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -96,8 +96,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Allow PDF_XPS Printer - File Evidence.xml](Intune%20OMA-URI/Allow%20PDF_XPS%20Printer%20-%20File%20Evidence.xml)
 
 
 # Deployment Instructions
@@ -114,77 +114,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for Any Printer</summary> 
+Intune UX is not supported for this policy because:
+- Create File Evidence (8) is an unsupported notification.
 
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *PrinterDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a Device Control Rules configuration profile</summary>  
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on "Create Policy"
-   3. Under Platform, select "Windows 10 and later"
-   4. Under Profile, select "Device Control Rules"
-   5. Click "Create"
-   6. Under Name, enter **
-   7. Optionally, enter a description
-   8. Click "Next"
-</details>
-
-
-<details>
-<summary>Add a rule for Default Deny to the policy</summary>
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Any Printer*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Default Deny* for the name
-
-
-
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Print* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification and Send event* from "Options"
-   1. Select *Print* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
 
 ## Group Policy (GPO)
@@ -195,12 +128,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-		<Name>Any Printer</Name>
+	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+		<Name>PDF_XPS Printer</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<PrimaryId>PrinterDevices</PrimaryId>
+			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -215,23 +148,23 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{2751c448-6e6b-4c2c-81c1-c8ae02911bd5}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2751c448-6e6b-4c2c-81c1-c8ae02911bd5%7D/RuleData -->
-		<Name>Default Deny</Name>
+	<PolicyRule Id="{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B07fb98fd-f25b-4aec-bb99-69d4abd4ec4d%7D/RuleData -->
+		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
-			<GroupId>{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}</GroupId>
+			<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{195b178a-53ad-496e-aae0-282ce7234ae0}">
-			<Type>Deny</Type>
+		<Entry Id="{e8cc55ec-17a8-4900-8df5-1af801342e9d}">
+			<Type>Allow</Type>
 			<AccessMask>64</AccessMask>
-			<Options>0</Options>
+			<Options>8</Options>
 		</Entry>
-		<Entry Id="{4358ef97-578d-4e04-abb1-972e73721c4a}">
-			<Type>AuditDenied</Type>
+		<Entry Id="{2b410b9c-c940-42ec-be1c-1fcb8cc32bc4}">
+			<Type>AuditAllowed</Type>
 			<AccessMask>64</AccessMask>
-			<Options>3</Options>
+			<Options>2</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -255,32 +188,32 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Default Deny</summary>  
+<summary>Add a row for Allow PDF and XPS Printing</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Default Deny*
+   2. For Name, enter *Allow PDF and XPS Printing*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2751c448-6e6b-4c2c-81c1-c8ae02911bd5%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B07fb98fd-f25b-4aec-bb99-69d4abd4ec4d%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Default Deny - custom policy2.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Allow PDF_XPS Printer - File Evidence.xml*
          
    
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for Any Printer</summary>  
+<summary>Add a row for PDF_XPS Printer</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Any Printer*
+   2. For Name, enter *PDF_XPS Printer*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
    
@@ -290,7 +223,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Mac Policy
 
-This policy is not supported on Mac because Primary ID [PrinterDevices] is not supported on macOS.
+This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
 
 Learn more
 - [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)

@@ -1,4 +1,10 @@
-# Device Control Policy: {{ title }}
+# Device control policy sample: {{ title }}
+
+Description: {{ description }}
+
+A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+This sample is based on the [sample files](#files).  
+To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
 <table>
@@ -121,6 +127,18 @@ This policy is based on information in the following files:
 - [{{ path }}]({{ path | urlencode }})
 {% endfor %}
 
+# Deployment Instructions
+
+Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
+
+## Windows
+- [Intune UX](#intune-ux)
+- [Intune Custom Settings](#intune-custom-settings)
+- [Group Policy (GPO)](#group-policy-gpo)
+
+## Mac
+- [Mac Policy](#mac-policy)
+
 ## Intune UX
 {%  if intune_ux_support.isValid()   %}
 {% include "intune_ux.j2" %}
@@ -129,27 +147,25 @@ Intune UX is not supported for this policy because:
 {% for issue in intune_ux_support.issues -%}
 - {{ issue }}
 {% endfor %}
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 {% endif %}
 
-## GPO
-### Groups
-```xml
-{{ groupsXML }}
-```
-### Rules
-```xml
-{{ rulesXML }}
-```
+## Group Policy (GPO)
+{% include "gpo.j2" %}
+
 ## Intune Custom Settings
 
 {% include "intune_custom_settings.j2" %}
 
-## Mac
+## Mac Policy
 {% if macError is none %}
 ```
 {{ macPolicy }}
 ```
 {% else %}
 This policy is not supported on Mac because {{ macError }}
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 {% endif %}
 
