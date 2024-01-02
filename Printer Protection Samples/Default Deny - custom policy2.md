@@ -90,8 +90,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 
 
 ## Intune UX

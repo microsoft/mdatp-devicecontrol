@@ -86,6 +86,30 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### PDF_XPS Printer
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PrinterConnectionId | File |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+	<Name>PDF_XPS Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrinterConnectionId>File</PrinterConnectionId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Authorized USB Printer
 
 This is a group of type *Device*. 
@@ -107,30 +131,6 @@ The match type for the group is *MatchAny*.
 	<DescriptorIdList>
 		<VID_PID>03F0_</VID_PID>
 		<VID_PID>035E_0872</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### PDF_XPS Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrinterConnectionId | File |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-	<Name>PDF_XPS Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>File</PrinterConnectionId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -171,6 +171,30 @@ This policy is based on information in the following files:
    9. Click "Add"
 </details>
 <details>
+<summary>Create a reusable setting for PDF_XPS Printer</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the PDF_XPS Printer for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+      
+   8. Add a Removable Storage object for PrinterConnectionId
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Edit Instance"    
+        4. Enter *PrinterConnectionId* for Name
+        5. Enter *File* for PrinterConnectionId
+        6. Click "Save"
+    
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
 <summary>Create a reusable setting for Authorized USB Printer</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
@@ -198,30 +222,6 @@ This policy is based on information in the following files:
         3. Click on "Edit Instance"    
         4. Enter *VID_PID* for Name
         5. Enter *035E_0872* for VID_PID
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a reusable setting for PDF_XPS Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the PDF_XPS Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrinterConnectionId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrinterConnectionId* for Name
-        5. Enter *File* for PrinterConnectionId
         6. Click "Save"
     
    
@@ -297,6 +297,14 @@ This policy is based on information in the following files:
 			<PrimaryId>PrinterDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
+	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+		<Name>PDF_XPS Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
 		<Name>Authorized USB Printer</Name>
@@ -304,14 +312,6 @@ This policy is based on information in the following files:
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-		<Name>PDF_XPS Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
 </Groups>

@@ -1005,6 +1005,25 @@ def load_policies(policy_file):
      with open(policy_file) as file:
          policies = json.loads(file.read())
          return policies
+     
+def generate_readme(results,dest,title):
+    templatePath = pathlib.Path(__file__).parent.resolve()
+    templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    TEMPLATE_FILE = "readme.j2"
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    out = template.render(
+        {
+            "results":results,
+            "dest":dest,
+            "title":title,
+            "env":os.environ
+         }
+    )
+
+    with open(dest+os.sep+"readme.md","w") as out_file:
+        out_file.write(out)
+        out_file.close()
 
 if __name__ == '__main__':
 
@@ -1037,12 +1056,21 @@ if __name__ == '__main__':
     out_file = args.out_file
 
     if args.policies is not None:
+        results = {}
         policies = load_policies(args.policies)
-        for policy_file in policies:
+        for policy_file in policies["rules"]:
             query,title,default_outfile = parse_in_file(policy_file)
             result = inventory.process_query(query)
             if args.format == "text":
                 inventory.generate_text(result,args.dest,default_outfile,title)
+
+            results[policy_file] = {
+                "result":result,
+                "title": title,
+                "file": default_outfile
+            }
+
+        generate_readme(results,args.dest,policies["title"])
 
 
     elif query is None:

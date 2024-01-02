@@ -64,32 +64,6 @@
 ## Groups
 
 
-### Corporate Network
-
-This is a group of type *Network*. 
-The match type for the group is *MatchAll*.
-
-|  Property | Value |
-|-----------|-------|
-| NameId | corp.microsoft.com |
-| NetworkCategoryId | DomainAuthenticated |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-	<Name>Corporate Network</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<NameId>corp.microsoft.com</NameId>
-		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Authorized USB Printer
 
 This is a group of type *Device*. 
@@ -111,6 +85,32 @@ The match type for the group is *MatchAny*.
 	<DescriptorIdList>
 		<VID_PID>03F0_</VID_PID>
 		<VID_PID>035E_0872</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Corporate Network
+
+This is a group of type *Network*. 
+The match type for the group is *MatchAll*.
+
+|  Property | Value |
+|-----------|-------|
+| NameId | corp.microsoft.com |
+| NetworkCategoryId | DomainAuthenticated |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+	<Name>Corporate Network</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<NameId>corp.microsoft.com</NameId>
+		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -150,16 +150,16 @@ The match type for the group is *MatchAll*.
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
 
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
 - Network groups not supported.
-- VPNConnection groups not supported.
 - Parameters are not supported
+- VPNConnection groups not supported.
 
 
 
@@ -167,15 +167,6 @@ Intune UX is not supported for this policy because:
 ### Groups
 ```xml
 <Groups>
-	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-		<Name>Corporate Network</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<NameId>corp.microsoft.com</NameId>
-			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
 		<Name>Authorized USB Printer</Name>
@@ -183,6 +174,15 @@ Intune UX is not supported for this policy because:
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>corp.microsoft.com</NameId>
+			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
