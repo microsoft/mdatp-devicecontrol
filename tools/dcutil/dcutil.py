@@ -8,6 +8,7 @@ import jinja2
 import pathlib
 import urllib.parse
 import copy
+import json
 
 import convert_dc_policy as mac 
 
@@ -866,7 +867,104 @@ class Inventory:
             oma_uri_object.path = None
 
         return oma_uri_object
+    
+    def process_query(self,query):
 
+        filtered_rules = self.query_policy_rules(query)
+
+        result = {}
+
+        rules = {}
+        groups = {}
+        paths = []
+        intune_ux_support = Support()
+        groupsXML = "<Groups>"
+        rulesXML  = "<PolicyRules>"
+        oma_uri = filtered_rules["oma-uri"]
+
+        for rule in filtered_rules["all"]:
+
+            if rule.id in rules:
+                print ("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
+                continue
+        
+            rules[rule.id] = rule
+            paths.append(rule.path)
+            intune_ux_support += self.intune_ux.get_support_for(rule)
+
+            rulesXML += "\n"+rule.toXML()
+            groups_for_rule = self.get_groups_for_rule(rule)
+            all_groups = set(groups_for_rule["gpo"]+groups_for_rule["oma-uri"])
+            for group in all_groups:
+                if group.id not in groups:
+                    groupsXML += "\n"+group.toXML()
+                    groups[group.id] = group
+                    paths.append(group.path)
+                    intune_ux_support += self.intune_ux.get_support_for(group)
+            
+            for oma_uri_group in groups_for_rule["oma-uri"]:
+                oma_uri[oma_uri_group.get_oma_uri()] = IntuneCustomRow(oma_uri_group)
+        
+
+        groupsXML += "\n</Groups>"
+        rulesXML += "\n</PolicyRules>"
+
+        #remove duplicates from paths
+        paths = list(set(paths))
+        web_paths = []
+        for path in paths:
+            if str(path).startswith(".\\"):
+                path = path[2:]
+            path = str(path).replace("\\","/")
+            web_paths.append(path)
+
+        try:
+            mac_policy = {}
+            mac_error = None
+            mac_policy["groups"] = mac.convert_groups(ET.fromstring(groupsXML),True)
+            mac_policy["rules"] = mac.convert_rules(ET.fromstring(rulesXML),True)
+        except Exception as e:
+            mac.log_error("Failed to convert policy to Mac:")
+            mac.log_error(str(e))
+            mac_policy = None
+            mac_error = str(e)
+    
+        #Gather result
+        result["oma_uri"] = oma_uri
+        result["web_paths"] = web_paths
+        result["rules"] = rules
+        result["groups"] = groups
+        result["intune_ux_support"] = intune_ux_support
+        result["groupsXML"] = groupsXML
+        result["rulesXML"] = rulesXML
+        result["mac_policy"] = mac_policy
+        result["mac_error"] = mac_error
+
+        return result    
+
+    def generate_text(self,result,dest,file,title):
+        templatePath = pathlib.Path(__file__).parent.resolve()
+        templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
+        templateEnv = jinja2.Environment(loader=templateLoader)
+        TEMPLATE_FILE = args.template
+        template = templateEnv.get_template(TEMPLATE_FILE)
+        out = template.render(
+            {"intuneCustomSettings":result["oma_uri"],
+             "paths":result["web_paths"],
+             "rules":result["rules"],
+             "groups":result["groups"], 
+             "intune_ux_support":result["intune_ux_support"],
+             "groupsXML": result["groupsXML"], 
+             "rulesXML":result["rulesXML"],
+             "macPolicy":result["mac_policy"],
+             "macError": result["mac_error"],
+             "env":os.environ,
+             "title":title})
+        
+
+        with open(dest+os.sep+file,"w") as out_file:
+            out_file.write(out)
+            out_file.close()
 
 def dir_path(string):
     paths = string.split(os.pathsep)
@@ -883,6 +981,12 @@ def dir(path):
     else:
         raise NotADirectoryError(path)
 
+def file(path):
+    if os.path.isfile(path):
+        return path
+    else:
+        raise argparse.ArgumentError("Not a file "+path)
+
 
 def format(string):
     match string:
@@ -891,19 +995,32 @@ def format(string):
         case other:
             raise argparse.ArgumentError("Invalid format "+string)
 
+def parse_in_file(in_file):
+    query = "path.str.contains('"+in_file+"',regex=False)"
+    title = str(in_file.split(os.sep)[-1]).split(".")[0]
+    outfile = title+".md"
+    return query,title,outfile
+
+def load_policies(policy_file):
+     with open(policy_file) as file:
+         policies = json.loads(file.read())
+         return policies
+
 if __name__ == '__main__':
 
     arg_parser = argparse.ArgumentParser(
         description='Utility for importing/exporting device control policies.')
 
-    query = "*"
-    if "DC_QUERY" in os.environ.keys():
-        query = os.environ["DC_QUERY"]
+    
+    input_group =arg_parser.add_mutually_exclusive_group()
+    input_group.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process')
+    input_group.add_argument('-s','--policies',dest="policies",type=file,help='A JSON file that contains a list of policy rules to process')
+    input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rules to process')
+
 
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
-    arg_parser.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process',default="path.str.contains('"+query+"',regex=False)")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
-    arg_parser.add_argument('-o','--output',dest="out_file",help="The output file",default="dcutil.md")
+    arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
     arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory",default=".")
     arg_parser.add_argument('-g','--generate',dest="generate_oma_uri",action="store_true",help='Generates XML for oma-uri')
     arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.j2")
@@ -912,85 +1029,31 @@ if __name__ == '__main__':
 
     inventory = Inventory(args.source_path,args.generate_oma_uri,args.dest)
 
-    filtered_rules = inventory.query_policy_rules(args.query)
+    query = args.query
+    title = None
+    if "TITLE" in os.environ.keys():
+        title = os.environ["TITLE"]
 
-    rules = {}
-    groups = {}
-    paths = []
-    intune_ux_support = Support()
-    groupsXML = "<Groups>"
-    rulesXML  = "<PolicyRules>"
+    out_file = args.out_file
 
-    oma_uri = filtered_rules["oma-uri"]
+    if args.policies is not None:
+        policies = load_policies(args.policies)
+        for policy_file in policies:
+            query,title,default_outfile = parse_in_file(policy_file)
+            result = inventory.process_query(query)
+            if args.format == "text":
+                inventory.generate_text(result,args.dest,default_outfile,title)
 
-    for rule in filtered_rules["all"]:
 
-        if rule.id in rules:
-            print ("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
-            continue
+    elif query is None:
+        if args.in_file is not None:
+            query,title,default_outfile = parse_in_file(args.in_file)
+            if out_file is None:
+                out_file = default_outfile
+
+        result = inventory.process_query(query)
         
-        rules[rule.id] = rule
-        paths.append(rule.path)
-        intune_ux_support += inventory.intune_ux.get_support_for(rule)
+        if args.format == "text":
+            inventory.generate_text(result,args.dest,out_file,title)
 
-        rulesXML += "\n"+rule.toXML()
-        groups_for_rule = inventory.get_groups_for_rule(rule)
-        all_groups = set(groups_for_rule["gpo"]+groups_for_rule["oma-uri"])
-        for group in all_groups:
-            if group.id not in groups:
-                groupsXML += "\n"+group.toXML()
-                groups[group.id] = group
-                paths.append(group.path)
-                intune_ux_support += inventory.intune_ux.get_support_for(group)
-            
-        for oma_uri_group in groups_for_rule["oma-uri"]:
-            oma_uri[oma_uri_group.get_oma_uri()] = IntuneCustomRow(oma_uri_group)
         
-
-    groupsXML += "\n</Groups>"
-    rulesXML += "\n</PolicyRules>"
-
-    #remove duplicates from paths
-    paths = list(set(paths))
-    web_paths = []
-    for path in paths:
-        if str(path).startswith(".\\"):
-            path = path[2:]
-        path = str(path).replace("\\","/")
-        web_paths.append(path)
-
-    try:
-        mac_policy = {}
-        mac_error = None
-        mac_policy["groups"] = mac.convert_groups(ET.fromstring(groupsXML),True)
-        mac_policy["rules"] = mac.convert_rules(ET.fromstring(rulesXML),True)
-    except Exception as e:
-        mac.log_error("Failed to convert policy to Mac:")
-        mac.log_error(str(e))
-        mac_policy = None
-        mac_error = str(e)
-        
-        
-
-    if args.format == "text":
-        templatePath = pathlib.Path(__file__).parent.resolve()
-        templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
-        templateEnv = jinja2.Environment(loader=templateLoader)
-        TEMPLATE_FILE = args.template
-        template = templateEnv.get_template(TEMPLATE_FILE)
-        out = template.render(
-            {"intuneCustomSettings":oma_uri,
-             "paths":web_paths,
-             "rules":rules,
-             "groups":groups, 
-             "intune_ux_support":intune_ux_support,
-             "groupsXML": groupsXML, 
-             "rulesXML":rulesXML,
-             "macPolicy":mac_policy,
-             "macError": mac_error,
-             "env":os.environ})
-        
-
-        with open(args.dest+os.sep+args.out_file,"w") as out_file:
-            out_file.write(out)
-            out_file.close()

@@ -1,4 +1,4 @@
-# Device Control Policy: Printer_Policies
+# Device Control Policy: Allow Authorized USB Printer
 
 ## Policy Rules
 <table>
@@ -21,43 +21,6 @@
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
-            <td rowspan="2"><b>Allow PDF and XPS Printing</b></td>
-            <td rowspan="2 valign="top">
-                <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a></ul>
-            </td>
-            <td rowspan="2" valign="top">
-                <ul></ul>
-            </td>
-            <td>Allow</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>:white_check_mark:</td>
-            <td>None (0)</td> 
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
-        </tr><tr>
-            <td>Audit Allowed</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>Send event (2)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
-        </tr><tr>
             <td rowspan="2"><b>Allow approved USB Printer</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny [{'VID_PID': '03F0_'}, {'VID_PID': '035E_0872'}]"> (details)</a></ul>
@@ -96,56 +59,10 @@
                 <ul>
                 </ul>
             </td>
-        </tr><tr>
-            <td rowspan="1"><b>Default Deny</b></td>
-            <td rowspan="1 valign="top">
-                <ul></ul>
-            </td>
-            <td rowspan="1" valign="top">
-                <ul></ul>
-            </td>
-            <td>Audit Denied</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>Show notification and Send event (3)</td> 
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
         </tr></table>
 
 ## Groups
 
-
-### PDF_XPS Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrinterConnectionId | File |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-	<Name>PDF_XPS Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>File</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
 
 ### Corporate Network
 
@@ -233,7 +150,7 @@ The match type for the group is *MatchAll*.
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Policies.xml](Group%20Policy/Printer_Policies.xml)
+- [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
@@ -250,14 +167,6 @@ Intune UX is not supported for this policy because:
 ### Groups
 ```xml
 <Groups>
-	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-		<Name>PDF_XPS Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrinterConnectionId>File</PrinterConnectionId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
 		<Name>Corporate Network</Name>
@@ -292,25 +201,6 @@ Intune UX is not supported for this policy because:
 ### Rules
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{f5877f47-78ab-4f33-94e4-c44f18ec6dca}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
-		<Name>Allow PDF and XPS Printing</Name>
-		<IncludedIdList>
-			<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
-		</IncludedIdList>
-		<ExcludedIdList>
-		</ExcludedIdList>
-		<Entry Id="{12bd5f8e-94e8-4205-a990-635c24e43c59}">
-			<Type>Allow</Type>
-			<AccessMask>64</AccessMask>
-			<Options>0</Options>
-		</Entry>
-		<Entry Id="{0fef09f8-7a68-4827-841b-d48afef6ba4c}">
-			<Type>AuditAllowed</Type>
-			<AccessMask>64</AccessMask>
-			<Options>2</Options>
-		</Entry>
-	</PolicyRule>
 	<PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Allow approved USB Printer</Name>
@@ -338,19 +228,6 @@ Intune UX is not supported for this policy because:
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>
-	<PolicyRule Id="{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
-		<Name>Default Deny</Name>
-		<IncludedIdList>
-		</IncludedIdList>
-		<ExcludedIdList>
-		</ExcludedIdList>
-		<Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
-			<Type>AuditDenied</Type>
-			<AccessMask>64</AccessMask>
-			<Options>3</Options>
-		</Entry>
-	</PolicyRule>
 </PolicyRules>
 ```
 ## Intune Custom Settings
@@ -369,45 +246,6 @@ Intune UX is not supported for this policy because:
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Allow PDF and XPS Printing</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *Allow PDF and XPS Printing*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. Save this XML to a file. 
-   ```xml
-   <PolicyRule Id="{f5877f47-78ab-4f33-94e4-c44f18ec6dca}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
-	<Name>Allow PDF and XPS Printing</Name>
-	<IncludedIdList>
-		<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
-	</IncludedIdList>
-	<ExcludedIdList>
-	</ExcludedIdList>
-	<Entry Id="{12bd5f8e-94e8-4205-a990-635c24e43c59}">
-		<Type>Allow</Type>
-		<AccessMask>64</AccessMask>
-		<Options>0</Options>
-	</Entry>
-	<Entry Id="{0fef09f8-7a68-4827-841b-d48afef6ba4c}">
-		<Type>AuditAllowed</Type>
-		<AccessMask>64</AccessMask>
-		<Options>2</Options>
-	</Entry>
-</PolicyRule>
-   ```
-   
-   7. For Custom XML, select the file.
-         
-   
-   
-   7. Click "Save"
-</details>
-<details>
 <summary>Add a row for Allow approved USB Printer</summary>  
    
    1. Click "Add"
@@ -417,87 +255,7 @@ Intune UX is not supported for this policy because:
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
-	<Name>Allow approved USB Printer</Name>
-	<IncludedIdList>
-		<GroupId>{05b56e90-e682-48ff-a6c0-5602c9638182}</GroupId>
-	</IncludedIdList>
-	<ExcludedIdList>
-	</ExcludedIdList>
-	<Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
-		<Type>Allow</Type>
-		<AccessMask>64</AccessMask>
-		<Options>0</Options>
-		<Parameters MatchType="MatchAny">
-			<Network MatchType="MatchAny">
-				<GroupId>{83d4b74a-af7c-4399-812c-fb9037e2c2b7}</GroupId>
-			</Network>
-			<VPNConnection MatchType="MatchAny">
-				<GroupId>{d633d17d-d1d1-4c73-aa27-c545c343b6d7}</GroupId>
-			</VPNConnection>
-		</Parameters>
-	</Entry>
-	<Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
-		<Type>AuditAllowed</Type>
-		<AccessMask>64</AccessMask>
-		<Options>2</Options>
-	</Entry>
-</PolicyRule>
-   ```
-   
-   7. For Custom XML, select the file.
-         
-   
-   
-   7. Click "Save"
-</details>
-<details>
-<summary>Add a row for Default Deny</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *Default Deny*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. Save this XML to a file. 
-   ```xml
-   <PolicyRule Id="{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
-	<Name>Default Deny</Name>
-	<IncludedIdList>
-	</IncludedIdList>
-	<ExcludedIdList>
-	</ExcludedIdList>
-	<Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
-		<Type>AuditDenied</Type>
-		<AccessMask>64</AccessMask>
-		<Options>3</Options>
-	</Entry>
-</PolicyRule>
-   ```
-   
-   7. For Custom XML, select the file.
-         
-   
-   
-   7. Click "Save"
-</details>
-<details>
-<summary>Add a row for PDF_XPS Printer</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *PDF_XPS Printer*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Allow Authorized USB Printer.xml*
          
    
    
@@ -555,5 +313,5 @@ Intune UX is not supported for this policy because:
 
 ## Mac
 
-This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
+This policy is not supported on Mac because Unsupported Descriptor ID NameId
 

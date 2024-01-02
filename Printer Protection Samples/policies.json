@@ -1,0 +1,9 @@
+[
+    "Group Policy\\Printer_Policies.xml",
+    "Group Policy\\Printer_Policies - no Default Deny policy.xml",
+    "Intune OMA-URI\\Allow any printer.xml",
+    "Intune OMA-URI\\Allow Authorized USB Printer.xml",
+    "Intune OMA-URI\\Default Deny - custom policy2.xml",
+    "Intune OMA-URI\\Default Deny - custom policy.xml"
+    
+]

@@ -1,4 +1,4 @@
-# Device Control Policy: Allow any printer
+# Device Control Policy: Default Deny - custom policy2
 
 ## Policy Rules
 <table>
@@ -21,22 +21,37 @@
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
-            <td rowspan="1"><b>Default Printer Allow</b></td>
-            <td rowspan="1 valign="top">
+            <td rowspan="2"><b>Default Deny</b></td>
+            <td rowspan="2 valign="top">
                 <ul><li>Any Printer<a href="#any-printer" title="MatchAny [{'PrimaryId': 'PrinterDevices'}]"> (details)</a></ul>
             </td>
-            <td rowspan="1" valign="top">
+            <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
-            <td>Allow</td>
+            <td>Deny</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>:white_check_mark:</td>
-            <td>Disable (4)</td> 
+            <td>:x:</td>
+            <td>None (0)</td> 
+            <td>All Users</td>
+            <td>
+                <ul>
+                </ul>
+            </td>
+        </tr><tr>
+            <td>Audit Denied</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>Show notification and Send event (3)</td>
             <td>All Users</td>
             <td>
                 <ul>
@@ -75,7 +90,7 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Allow any printer.xml](Intune%20OMA-URI/Allow%20any%20printer.xml)
+- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
@@ -120,7 +135,7 @@ This policy is based on information in the following files:
 
 
 <details>
-<summary>Add a rule for Default Printer Allow to the policy</summary>
+<summary>Add a rule for Default Deny to the policy</summary>
 
 
    1. Click on "+ Set reusable settings" under Included Id
@@ -131,12 +146,21 @@ This policy is based on information in the following files:
 
 
    1. Click on "+ Edit Entry"
-   1. Enter *Default Printer Allow* for the name
+   1. Enter *Default Deny* for the name
 
 
 
-   1. Select *Allow* from "Type"
-   1. Select *Disable* from "Options"
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Print* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
    1. Select *Print* from "Access mask"
 
 
@@ -162,18 +186,23 @@ This policy is based on information in the following files:
 ### Rules
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{2f746a4d-4ae1-4bc0-aaef-136d12518fd4}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData -->
-		<Name>Default Printer Allow</Name>
+	<PolicyRule Id="{2751c448-6e6b-4c2c-81c1-c8ae02911bd5}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2751c448-6e6b-4c2c-81c1-c8ae02911bd5%7D/RuleData -->
+		<Name>Default Deny</Name>
 		<IncludedIdList>
 			<GroupId>{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{ddcac8c7-e492-4cb9-ac46-28813e195d56}">
-			<Type>Allow</Type>
+		<Entry Id="{195b178a-53ad-496e-aae0-282ce7234ae0}">
+			<Type>Deny</Type>
 			<AccessMask>64</AccessMask>
-			<Options>4</Options>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{4358ef97-578d-4e04-abb1-972e73721c4a}">
+			<Type>AuditDenied</Type>
+			<AccessMask>64</AccessMask>
+			<Options>3</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -194,16 +223,16 @@ This policy is based on information in the following files:
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Default Printer Allow</summary>  
+<summary>Add a row for Default Deny</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Default Printer Allow*
+   2. For Name, enter *Default Deny*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2751c448-6e6b-4c2c-81c1-c8ae02911bd5%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Allow any printer.xml*
+   6. For Custom XML, select  *.\Intune OMA-URI\Default Deny - custom policy2.xml*
          
    
    
