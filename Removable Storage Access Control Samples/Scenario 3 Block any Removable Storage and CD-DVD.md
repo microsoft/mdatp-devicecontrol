@@ -115,8 +115,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml](Intune%20OMA-URI/Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.xml)
 - [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml](Intune%20OMA-URI/Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.xml)
 
 
 # Deployment Instructions

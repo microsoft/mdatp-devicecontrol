@@ -1,4 +1,4 @@
-# Device control policy sample: Scenario 10
+# Device control policy sample: File Duplication
 
 Description: A sample policy
 
@@ -27,37 +27,22 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
-            <td rowspan="2"><b>Block Write Activity</b></td>
-            <td rowspan="2 valign="top">
+            <td rowspan="1"><b>Data Duplication Filesystem Demo</b></td>
+            <td rowspan="1 valign="top">
                 <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}, {'PrimaryId': 'CdRomDevices'}, {'PrimaryId': 'WpdDevices'}]"> (details)</a></ul>
             </td>
-            <td rowspan="2" valign="top">
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
             <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>:white_check_mark:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
-        </tr><tr>
-            <td>Audit Allowed</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Send event (2)</td>
+            <td>Create File Evidence (8)</td> 
             <td>All Users</td>
             <td>
                 <ul>
@@ -100,8 +85,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Scenario 10 Audit Write_Intune.xml](Intune%20OMA-URI/Scenario%2010%20Audit%20Write_Intune.xml)
 - [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Group Policy/File Duplication.xml](Group%20Policy/File%20Duplication.xml)
 
 
 # Deployment Instructions
@@ -118,97 +103,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
+Intune UX is not supported for this policy because:
+- File Write (16) is an unsupported access mask
+- Create File Evidence (8) is an unsupported notification.
 
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *RemovableMediaDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *CdRomDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *WpdDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a Device Control Rules configuration profile</summary>  
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on "Create Policy"
-   3. Under Platform, select "Windows 10 and later"
-   4. Under Profile, select "Device Control Rules"
-   5. Click "Create"
-   6. Under Name, enter **
-   7. Optionally, enter a description
-   8. Click "Next"
-</details>
-
-
-<details>
-<summary>Add a rule for Block Write Activity to the policy</summary>
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Block Write Activity* for the name
-
-
-
-   1. Select *Allow* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Write* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
-
-   1. Select *Audit Allowed* from "Type"
-   1. Select *Send event* from "Options"
-   1. Select *Write* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
 
 ## Group Policy (GPO)
@@ -241,23 +140,18 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{464157c1-2c89-4fe2-b596-ec4919828b2d}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B464157c1-2c89-4fe2-b596-ec4919828b2d%7D/RuleData -->
-		<Name>Block Write Activity</Name>
+	<PolicyRule Id="{7988d6d0-8854-4cad-98de-e4e22e65e058}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7988d6d0-8854-4cad-98de-e4e22e65e058%7D/RuleData -->
+		<Name>Data Duplication Filesystem Demo</Name>
 		<IncludedIdList>
 			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{63daa364-e3d9-4738-9b00-f0da5fa1ab28}">
+		<Entry Id="{93cb364e-7a89-432b-8ec3-3c33096ca962}">
 			<Type>Allow</Type>
-			<AccessMask>2</AccessMask>
-			<Options>0</Options>
-		</Entry>
-		<Entry Id="{24232147-4e0e-4b79-b395-382d56ec4242}">
-			<Type>AuditAllowed</Type>
-			<AccessMask>2</AccessMask>
-			<Options>2</Options>
+			<AccessMask>16</AccessMask>
+			<Options>8</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -281,16 +175,34 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Block Write Activity</summary>  
+<summary>Add a row for Data Duplication Filesystem Demo</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Block Write Activity*
+   2. For Name, enter *Data Duplication Filesystem Demo*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B464157c1-2c89-4fe2-b596-ec4919828b2d%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7988d6d0-8854-4cad-98de-e4e22e65e058%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Scenario 10 Audit Write_Intune.xml*
+   6. Save this XML to a file. 
+   ```xml
+   <PolicyRule Id="{7988d6d0-8854-4cad-98de-e4e22e65e058}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7988d6d0-8854-4cad-98de-e4e22e65e058%7D/RuleData -->
+	<Name>Data Duplication Filesystem Demo</Name>
+	<IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{93cb364e-7a89-432b-8ec3-3c33096ca962}">
+		<Type>Allow</Type>
+		<AccessMask>16</AccessMask>
+		<Options>8</Options>
+	</Entry>
+</PolicyRule>
+   ```
+   
+   7. For Custom XML, select the file.
          
    
    

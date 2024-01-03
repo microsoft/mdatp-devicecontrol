@@ -29,7 +29,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 	</tr><tr>
             <td rowspan="2"><b>Audit Write and Execute access to aproved USBs</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}]"> (details)</a></ul>
+                <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
@@ -69,7 +69,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}, {'PrimaryId': 'CdRomDevices'}, {'PrimaryId': 'WpdDevices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
-                <ul><li>Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}]"> (details)</a></ul>
+                <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>-</td>
@@ -105,14 +105,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Approved USBs Group_1
+### Approved USBs Group_0
 
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&0 |
+| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&* |
 
 <details>
 <summary>View XML</summary>
@@ -120,10 +120,10 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-	<Name>Approved USBs Group_1</Name>
+	<Name>Approved USBs Group_0</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
+		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -161,9 +161,9 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml](Group%20Policy/Scenario%201%20GPO%20Policy%20-%20Prevent%20Write%20and%20Execute%20access%20to%20all%20but%20allow%20specific%20approved%20USBs.xml)
 - [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
+- [Intune OMA-URI/Approved USBs Group.xml](Intune%20OMA-URI/Approved%20USBs%20Group.xml)
+- [Group Policy/Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml](Group%20Policy/Scenario%201%20GPO%20Policy%20-%20Prevent%20Write%20and%20Execute%20access%20to%20all%20but%20allow%20specific%20approved%20USBs.xml)
 
 
 # Deployment Instructions
@@ -181,8 +181,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -197,10 +197,10 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 <Groups>
 	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-		<Name>Approved USBs Group_1</Name>
+		<Name>Approved USBs Group_0</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">

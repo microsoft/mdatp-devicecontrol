@@ -41,6 +41,27 @@
         {
             "file": "Intune OMA-URI\\Scenario 10 Audit Write_Intune.xml",
             "title": "Scenario 10"
+        },
+        {
+            "file": "Group Policy\\Audit File information.xml"
+        },
+        {
+            "file": "Group Policy\\Audit Write Access.xml"
+        },
+        {
+            "file": "Group Policy\\Block Read and Write access to specific file _Policy.xml"
+        },
+        {
+            "file": "Group Policy\\Demo_2_Policies.xml"
+        },
+        {
+            "file": "Group Policy\\Demo_Policies.xml"
+        },
+        {
+            "file": "Group Policy\\File Duplication.xml"
+        },
+        {
+            "file": "Group Policy\\Mass_storage_policies_GPO_2.xml"
         }
     ]
     
