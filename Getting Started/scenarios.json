@@ -8,6 +8,10 @@
         {
             "file": ".\\\\Step 2\\\\allow_authorized_usb_rules.xml",
             "title": "Step 2 - Allow authorized USBs full access"
+        },
+        {
+            "file": ".\\\\Step 3\\\\allow_different_access_to_different_rules.xml",
+            "title": "Step 3 - Allow different access to different devices"
         }
     ]
     
