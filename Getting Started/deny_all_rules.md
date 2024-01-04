@@ -11,7 +11,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
-        <th rowspan="2" valign="top">Excluding</th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="7" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -98,8 +97,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
+- [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
 
 
 # Deployment Instructions
