@@ -862,8 +862,10 @@ class Inventory:
         oma_uri_object = copy.copy(object)
         oma_uri_object.format = "oma-uri"
 
+
         if self.generate_oma_uri:
-            path = self.dest_dir + os.sep + clean_up_name(oma_uri_object.name,"_")+oma_uri_object.id + ".xml"
+            current_object_dir = os.path.dirname(object.path)
+            path = current_object_dir + os.sep + clean_up_name(oma_uri_object.name,"_")+oma_uri_object.id + ".xml"
             oma_uri_object.path = path
             with open(path,"w") as generated_file:
                 generated_file.write(oma_uri_object.toXML(""))

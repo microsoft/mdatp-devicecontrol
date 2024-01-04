@@ -163,9 +163,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Execute (32) is an unsupported access mask
 - File Write (16) is an unsupported access mask
 - File Read (8) is an unsupported access mask
+- File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -270,31 +270,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <PolicyRule Id="{7beca8fe-313a-46f2-a090-399eb3d74318}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
-	<Name>Step 2 - Deny all but authorized USBs</Name>
-	<IncludedIdList>
-		<GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
-	</IncludedIdList>
-	<ExcludedIdList>
-		<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
-	</ExcludedIdList>
-	<Entry Id="{c82cb32c-4c56-4c76-8897-b2cc99558299}">
-		<Type>Deny</Type>
-		<AccessMask>71</AccessMask>
-		<Options>0</Options>
-	</Entry>
-	<Entry Id="{70582e83-ea91-4b14-8f6c-f3921dab9d7a}">
-		<Type>AuditDenied</Type>
-		<AccessMask>71</AccessMask>
-		<Options>3</Options>
-	</Entry>
-</PolicyRule>
-   ```
-   
-   7. For Custom XML, select the file.
+   6. For Custom XML, select  *.\Step 2\step_2_-_deny_all_but_authorized_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml*
          
    
    
@@ -310,25 +286,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <PolicyRule Id="{a054bbcf-3454-4b95-9058-f7ed00deeee9}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
-	<Name>Step 2 - Allow Full Access to Authorized USBs</Name>
-	<IncludedIdList>
-		<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
-	</IncludedIdList>
-	<ExcludedIdList>
-	</ExcludedIdList>
-	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
-		<Type>Allow</Type>
-		<AccessMask>127</AccessMask>
-		<Options>0</Options>
-	</Entry>
-</PolicyRule>
-   ```
-   
-   7. For Custom XML, select the file.
+   6. For Custom XML, select  *.\Step 2\step_2_-_allow_full_access_to_authorized_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml*
          
    
    
@@ -344,19 +302,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>All removable media devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-   ```
-   
-   7. For Custom XML, select the file.
+   6. For Custom XML, select  *.\Step 1\all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml*
          
    
    
@@ -372,19 +318,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
-	<Name>Authorized USBs</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
-	</DescriptorIdList>
-</Group>
-   ```
-   
-   7. For Custom XML, select the file.
+   6. For Custom XML, select  *.\Step 2\authorized_usbs{368a2c82-17be-4137-bffa-370bbdff9672}.xml*
          
    
    

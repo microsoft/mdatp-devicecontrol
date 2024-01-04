@@ -265,30 +265,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <PolicyRule Id="{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd8e6f56c-f4c1-4875-ac45-51ad75d4580e%7D/RuleData -->
-	<Name>Audit Deny</Name>
-	<IncludedIdList>
-		<GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
-	</IncludedIdList>
-	<ExcludedIdList>
-	</ExcludedIdList>
-	<Entry Id="{ad059b6f-bc9d-44e4-8ab9-907d7d00fc97}">
-		<Type>Deny</Type>
-		<AccessMask>71</AccessMask>
-		<Options>0</Options>
-	</Entry>
-	<Entry Id="{4cf50b77-0152-4999-8d82-6f6afdf27b0b}">
-		<Type>AuditDenied</Type>
-		<AccessMask>71</AccessMask>
-		<Options>3</Options>
-	</Entry>
-</PolicyRule>
-   ```
-   
-   7. For Custom XML, select the file.
+   6. For Custom XML, select  *.\Step 1\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml*
          
    
    
@@ -304,19 +281,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. Save this XML to a file. 
-   ```xml
-   <Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>All removable media devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-   ```
-   
-   7. For Custom XML, select the file.
+   6. For Custom XML, select  *.\Step 1\all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml*
          
    
    
