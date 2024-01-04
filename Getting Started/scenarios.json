@@ -1,0 +1,11 @@
+{
+    "title":"Getting Statarted",
+    "rules":[
+        {
+            "file": "Step 1\\deny_all_rules.xml",
+            "title": "Step 1 - Deny all access"
+        }
+    ]
+    
+}
+    

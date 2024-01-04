@@ -685,6 +685,12 @@ class Inventory:
                         for group in root.findall(".//Group"):
                             self.addGroup(Group(group),xml_path,"gpo", group_index)
                             group_index=group_index+1
+                    case "PolicyGroups":
+                        #This is what Intune UX looks like on disk
+                        group_index = 1
+                        for group in root.findall(".//Group"):
+                            self.addGroup(Group(group),xml_path,"gpo", group_index)
+                            group_index=group_index+1
                     case "PolicyRule":
                         self.addPolicyRule(PolicyRule(root),xml_path,"oma-uri")
                     case "PolicyRules":
