@@ -1,9 +1,13 @@
 {
-    "title":"Getting Statarted",
+    "title":"Getting Started",
     "rules":[
         {
-            "file": "Step 1\\deny_all_rules.xml",
+            "file": ".\\\\Step 1\\\\deny_all_rules.xml",
             "title": "Step 1 - Deny all access"
+        },
+        {
+            "file": ".\\\\Step 2\\\\allow_authorized_usb_rules.xml",
+            "title": "Step 2 - Allow authorized USBs full access"
         }
     ]
     

@@ -1,0 +1,16 @@
+<Groups>
+<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}">
+    <Name>All removable media devices</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+	</DescriptorIdList>
+</Group><Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}">
+  <Name>Authorized USBs</Name>
+  <MatchType>MatchAny</MatchType>
+  <DescriptorIdList>
+    <!-- This is an example.  Replace this with the instance path id of your device -->
+    <InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+  </DescriptorIdList>
+</Group>
+</Groups>

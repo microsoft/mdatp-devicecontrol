@@ -1,4 +1,4 @@
-# Device control policy sample: Step 1 - Deny all access
+# Device control policy sample: Step 2 - Allow authorized USBs full access
 
 Description: A sample policy
 
@@ -28,12 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th>
 		<th>Print</th>
 	</tr><tr>
-            <td rowspan="2"><b>Audit Deny</b></td>
+            <td rowspan="2"><b>Step 2 - Deny all but authorized USBs</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
-                <ul></ul>
+                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\\6EA91500558'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -59,6 +59,28 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:page_facing_up:</td>
             <td>Show notification and Send event (3)</td>
+            <td>All Users</td>
+            <td>
+                <ul>
+                </ul>
+            </td>
+        </tr><tr>
+            <td rowspan="1"><b>Step 2 - Allow Full Access to Authorized USBs</b></td>
+            <td rowspan="1 valign="top">
+                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\\6EA91500558'}]"> (details)</a></ul>
+            </td>
+            <td rowspan="1" valign="top">
+                <ul></ul>
+            </td>
+            <td>Allow</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>:white_check_mark:</td>
+            <td>None (0)</td> 
             <td>All Users</td>
             <td>
                 <ul>
@@ -93,12 +115,37 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Authorized USBs
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| InstancePathId | USBSTOR\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\6EA91500558 |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+	<Name>Authorized USBs</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Files
 This policy is based on information in the following files:
 
+- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
+- [Step 2/allow_authorized_usb_rules.xml](Step%202/allow_authorized_usb_rules.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
-- [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
 
 
 # Deployment Instructions
@@ -140,6 +187,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
+<summary>Create a reusable setting for Authorized USBs</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Authorized USBs for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+      
+   8. Add a Removable Storage object for InstancePathId
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Edit Instance"    
+        4. Enter *InstancePathId* for Name
+        5. Enter *USBSTOR\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\6EA91500558* for InstancePathId
+        6. Click "Save"
+    
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
 <summary>Create a Device Control Rules configuration profile</summary>  
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
@@ -152,9 +223,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    8. Click "Next"
 </details>
 
+> [!IMPORTANT]
+> This policy has more than 1 rule.  
+> Policy ordering is not guaranteed by Intune.
+> Make sure that policy is not dependent on order to achieve desired result.
+> Consider using ```default deny```.   
+
 
 <details>
-<summary>Add a rule for Audit Deny to the policy</summary>
+<summary>Add a rule for Step 2 - Deny all but authorized USBs to the policy</summary>
 
 
    1. Click on "+ Set reusable settings" under Included Id
@@ -164,8 +241,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click on "Select"
 
 
+   1. Click on "+ Set reusable settings" under Excluded Id
+
+   1. Click on *Authorized USBs*
+
+   1. Click on "Select"
+
    1. Click on "+ Edit Entry"
-   1. Enter *Audit Deny* for the name
+   1. Enter *Step 2 - Deny all but authorized USBs* for the name
 
 
 
@@ -180,6 +263,32 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Select *Audit Denied* from "Type"
    1. Select *Show notification and Send event* from "Options"
+   1. Select *Read, Write, Execute and Print* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
+<details>
+<summary>Add a rule for Step 2 - Allow Full Access to Authorized USBs to the policy</summary>
+
+   1. Add another rule.  Click on "+ Add"
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Authorized USBs*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Step 2 - Allow Full Access to Authorized USBs* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
    1. Select *Read, Write, Execute and Print* from "Access mask"
 
 
@@ -204,6 +313,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
+	<Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+		<Name>Authorized USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+		</DescriptorIdList>
+	</Group>
 </Groups>
 ```
    3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
@@ -216,23 +333,38 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd8e6f56c-f4c1-4875-ac45-51ad75d4580e%7D/RuleData -->
-		<Name>Audit Deny</Name>
+	<PolicyRule Id="{7beca8fe-313a-46f2-a090-399eb3d74318}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
+		<Name>Step 2 - Deny all but authorized USBs</Name>
 		<IncludedIdList>
 			<GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
+			<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{ad059b6f-bc9d-44e4-8ab9-907d7d00fc97}">
+		<Entry Id="{c82cb32c-4c56-4c76-8897-b2cc99558299}">
 			<Type>Deny</Type>
 			<AccessMask>71</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{4cf50b77-0152-4999-8d82-6f6afdf27b0b}">
+		<Entry Id="{70582e83-ea91-4b14-8f6c-f3921dab9d7a}">
 			<Type>AuditDenied</Type>
 			<AccessMask>71</AccessMask>
 			<Options>3</Options>
+		</Entry>
+	</PolicyRule>
+	<PolicyRule Id="{a054bbcf-3454-4b95-9058-f7ed00deeee9}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
+		<Name>Step 2 - Allow Full Access to Authorized USBs</Name>
+		<IncludedIdList>
+			<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
+			<Type>Allow</Type>
+			<AccessMask>71</AccessMask>
+			<Options>0</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -256,34 +388,69 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Audit Deny</summary>  
+<summary>Add a row for Step 2 - Deny all but authorized USBs</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Audit Deny*
+   2. For Name, enter *Step 2 - Deny all but authorized USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd8e6f56c-f4c1-4875-ac45-51ad75d4580e%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
    6. Save this XML to a file. 
    ```xml
-   <PolicyRule Id="{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}" >
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd8e6f56c-f4c1-4875-ac45-51ad75d4580e%7D/RuleData -->
-	<Name>Audit Deny</Name>
+   <PolicyRule Id="{7beca8fe-313a-46f2-a090-399eb3d74318}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
+	<Name>Step 2 - Deny all but authorized USBs</Name>
 	<IncludedIdList>
 		<GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
 	</IncludedIdList>
 	<ExcludedIdList>
+		<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
 	</ExcludedIdList>
-	<Entry Id="{ad059b6f-bc9d-44e4-8ab9-907d7d00fc97}">
+	<Entry Id="{c82cb32c-4c56-4c76-8897-b2cc99558299}">
 		<Type>Deny</Type>
 		<AccessMask>71</AccessMask>
 		<Options>0</Options>
 	</Entry>
-	<Entry Id="{4cf50b77-0152-4999-8d82-6f6afdf27b0b}">
+	<Entry Id="{70582e83-ea91-4b14-8f6c-f3921dab9d7a}">
 		<Type>AuditDenied</Type>
 		<AccessMask>71</AccessMask>
 		<Options>3</Options>
+	</Entry>
+</PolicyRule>
+   ```
+   
+   7. For Custom XML, select the file.
+         
+   
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for Step 2 - Allow Full Access to Authorized USBs</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *Step 2 - Allow Full Access to Authorized USBs*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData*
+   5. For Data type, select *String (XML File)*
+   
+        
+   6. Save this XML to a file. 
+   ```xml
+   <PolicyRule Id="{a054bbcf-3454-4b95-9058-f7ed00deeee9}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
+	<Name>Step 2 - Allow Full Access to Authorized USBs</Name>
+	<IncludedIdList>
+		<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
+		<Type>Allow</Type>
+		<AccessMask>71</AccessMask>
+		<Options>0</Options>
 	</Entry>
 </PolicyRule>
    ```
@@ -322,11 +489,39 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    
    7. Click "Save"
 </details>
+<details>
+<summary>Add a row for Authorized USBs</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *Authorized USBs*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData*
+   5. For Data type, select *String (XML File)*
+   
+        
+   6. Save this XML to a file. 
+   ```xml
+   <Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+	<Name>Authorized USBs</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+	</DescriptorIdList>
+</Group>
+   ```
+   
+   7. For Custom XML, select the file.
+         
+   
+   
+   7. Click "Save"
+</details>
 
 
 ## Mac Policy
 
-This policy is not supported on Mac because Unsupported AccessMask [0x40]
+This policy is not supported on Mac because Unsupported Descriptor ID InstancePathId
 
 Learn more
 - [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
