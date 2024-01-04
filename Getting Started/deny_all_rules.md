@@ -30,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 	</tr><tr>
             <td rowspan="2"><b>Audit Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>deny_all_groups_1<a href="#deny_all_groups_1" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
+                <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
@@ -69,7 +69,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### deny_all_groups_1
+### All removable media devices
 
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
@@ -84,7 +84,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>deny_all_groups_1</Name>
+	<Name>All removable media devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -97,8 +97,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 - [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
+- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 
 
 # Deployment Instructions
@@ -116,12 +116,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for deny_all_groups_1</summary> 
+<summary>Create a reusable setting for All removable media devices</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the deny_all_groups_1 for the name.  
+   4. Enter the All removable media devices for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -159,7 +159,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Click on "+ Set reusable settings" under Included Id
 
-   1. Click on *deny_all_groups_1*
+   1. Click on *All removable media devices*
 
    1. Click on "Select"
 
@@ -198,7 +198,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 <Groups>
 	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-		<Name>deny_all_groups_1</Name>
+		<Name>All removable media devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -295,10 +295,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for deny_all_groups_1</summary>  
+<summary>Add a row for All removable media devices</summary>  
    
    1. Click "Add"
-   2. For Name, enter *deny_all_groups_1*
+   2. For Name, enter *All removable media devices*
    3. For Description, enter **
    4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData*
    5. For Data type, select *String (XML File)*
@@ -308,7 +308,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    ```xml
    <Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>deny_all_groups_1</Name>
+	<Name>All removable media devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
