@@ -33,7 +33,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\\6EA91500558'}]"> (details)</a></ul>
+                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -67,7 +67,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="1"><b>Step 2 - Allow Full Access to Authorized USBs</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USBSTOR\\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\\6EA91500558'}]"> (details)</a></ul>
+                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}]"> (details)</a></ul>
             </td>
             <td rowspan="1" valign="top">
                 <ul></ul>
@@ -76,9 +76,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>None (0)</td> 
             <td>All Users</td>
@@ -122,7 +122,7 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| InstancePathId | USBSTOR\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\6EA91500558 |
+| InstancePathId | USB\VID_154B&PID_0028\6EA9150055800605 |
 
 <details>
 <summary>View XML</summary>
@@ -133,7 +133,7 @@ The match type for the group is *MatchAny*.
 	<Name>Authorized USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+		<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -144,8 +144,8 @@ The match type for the group is *MatchAny*.
 This policy is based on information in the following files:
 
 - [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
-- [Step 2/allow_authorized_usb_rules.xml](Step%202/allow_authorized_usb_rules.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
+- [Step 2/allow_authorized_usb_rules.xml](Step%202/allow_authorized_usb_rules.xml)
 
 
 # Deployment Instructions
@@ -162,139 +162,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for All removable media devices</summary> 
+Intune UX is not supported for this policy because:
+- File Execute (32) is an unsupported access mask
+- File Write (16) is an unsupported access mask
+- File Read (8) is an unsupported access mask
 
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the All removable media devices for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *RemovableMediaDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a reusable setting for Authorized USBs</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Authorized USBs for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for InstancePathId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *InstancePathId* for Name
-        5. Enter *USBSTOR\DISK&VEN_PNY&PROD_USB_2.0_FD&REV_PMAP\6EA91500558* for InstancePathId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a Device Control Rules configuration profile</summary>  
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on "Create Policy"
-   3. Under Platform, select "Windows 10 and later"
-   4. Under Profile, select "Device Control Rules"
-   5. Click "Create"
-   6. Under Name, enter **
-   7. Optionally, enter a description
-   8. Click "Next"
-</details>
-
-> [!IMPORTANT]
-> This policy has more than 1 rule.  
-> Policy ordering is not guaranteed by Intune.
-> Make sure that policy is not dependent on order to achieve desired result.
-> Consider using ```default deny```.   
-
-
-<details>
-<summary>Add a rule for Step 2 - Deny all but authorized USBs to the policy</summary>
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *All removable media devices*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Set reusable settings" under Excluded Id
-
-   1. Click on *Authorized USBs*
-
-   1. Click on "Select"
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Step 2 - Deny all but authorized USBs* for the name
-
-
-
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Read, Write, Execute and Print* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification and Send event* from "Options"
-   1. Select *Read, Write, Execute and Print* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
-<details>
-<summary>Add a rule for Step 2 - Allow Full Access to Authorized USBs to the policy</summary>
-
-   1. Add another rule.  Click on "+ Add"
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Authorized USBs*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Step 2 - Allow Full Access to Authorized USBs* for the name
-
-
-
-   1. Select *Allow* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Read, Write, Execute and Print* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
 
 ## Group Policy (GPO)
@@ -318,7 +191,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<Name>Authorized USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -363,7 +236,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		</ExcludedIdList>
 		<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 			<Type>Allow</Type>
-			<AccessMask>71</AccessMask>
+			<AccessMask>127</AccessMask>
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>
@@ -449,7 +322,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 	</ExcludedIdList>
 	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 		<Type>Allow</Type>
-		<AccessMask>71</AccessMask>
+		<AccessMask>127</AccessMask>
 		<Options>0</Options>
 	</Entry>
 </PolicyRule>
@@ -506,7 +379,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 	<Name>Authorized USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+		<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
 	</DescriptorIdList>
 </Group>
    ```

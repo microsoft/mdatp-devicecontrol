@@ -24,7 +24,7 @@
   <Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
     <Type>Allow</Type>
     <Options>0</Options>
-    <AccessMask>71</AccessMask>
+    <AccessMask>127</AccessMask>
   </Entry>
   <Name>Step 2 - Allow Full Access to Authorized USBs</Name>
 </PolicyRule></PolicyRules>

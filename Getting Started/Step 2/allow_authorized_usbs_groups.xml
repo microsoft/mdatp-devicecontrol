@@ -10,7 +10,7 @@
   <MatchType>MatchAny</MatchType>
   <DescriptorIdList>
     <!-- This is an example.  Replace this with the instance path id of your device -->
-    <InstancePathId>USBSTOR\DISK&amp;VEN_PNY&amp;PROD_USB_2.0_FD&amp;REV_PMAP\6EA91500558</InstancePathId>
+    <InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
   </DescriptorIdList>
 </Group>
 </Groups>
