@@ -84,8 +84,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
+- [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
 
 
 # Deployment Instructions

@@ -90,30 +90,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### All removable media devices
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>All removable media devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Readonly USBs
 
 This is a group of type *Device*. 
@@ -162,14 +138,38 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### All removable media devices
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+	<Name>All removable media devices</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Files
 This policy is based on information in the following files:
 
+- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
+- [Step 3/allow_different_access_to_different_rules.xml](Step%203/allow_different_access_to_different_rules.xml)
 - [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
 - [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
-- [Step 3/allow_different_access_to_different_rules.xml](Step%203/allow_different_access_to_different_rules.xml)
-- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 
 
 # Deployment Instructions
@@ -187,8 +187,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Read (8) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- File Read (8) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
@@ -202,14 +202,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-		<Name>All removable media devices</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{23c24566-98a5-4218-8802-59614513b97e}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
 		<Name>Readonly USBs</Name>
@@ -224,6 +216,14 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>

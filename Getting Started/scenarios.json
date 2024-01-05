@@ -12,6 +12,10 @@
         {
             "file": ".\\\\Step 3\\\\allow_different_access_to_different_rules.xml",
             "title": "Step 3 - Allow different access to different devices"
+        },
+        {
+            "file": ".\\\\Step 4\\\\allow_different_access_to_different_users_rules.xml",
+            "title": "Step 4 - Allow different access to different devices for different users"
         }
     ]
     
