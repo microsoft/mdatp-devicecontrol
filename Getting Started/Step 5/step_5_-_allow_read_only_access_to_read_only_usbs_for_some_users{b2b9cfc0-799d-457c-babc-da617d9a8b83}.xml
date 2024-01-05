@@ -9,7 +9,7 @@
 	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 		<Type>Allow</Type>
 		<AccessMask>9</AccessMask>
-		<Options>8</Options>
+		<Options>0</Options>
 		<Sid>S-1-1-0</Sid>
 	</Entry>
 </PolicyRule>
