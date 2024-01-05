@@ -1,0 +1,21 @@
+<PolicyRule Id="{7beca8fe-313a-46f2-a090-399eb3d74318}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
+	<Name>Step 5 - Deny all other USBs</Name>
+	<IncludedIdList>
+		<GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+		<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
+		<GroupId>{23c24566-98a5-4218-8802-59614513b97e}</GroupId>
+	</ExcludedIdList>
+	<Entry Id="{c82cb32c-4c56-4c76-8897-b2cc99558299}">
+		<Type>Deny</Type>
+		<AccessMask>7</AccessMask>
+		<Options>0</Options>
+	</Entry>
+	<Entry Id="{70582e83-ea91-4b14-8f6c-f3921dab9d7a}">
+		<Type>AuditDenied</Type>
+		<AccessMask>7</AccessMask>
+		<Options>3</Options>
+	</Entry>
+</PolicyRule>

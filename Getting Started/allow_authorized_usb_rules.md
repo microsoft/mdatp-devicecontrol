@@ -145,9 +145,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
+- File Execute (32) is an unsupported access mask
 - File Write (16) is an unsupported access mask
 - File Read (8) is an unsupported access mask
-- File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 

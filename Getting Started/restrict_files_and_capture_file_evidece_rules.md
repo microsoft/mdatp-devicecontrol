@@ -1,4 +1,4 @@
-# Device control policy sample: Step 3 - Allow different access to different devices
+# Device control policy sample: Step 5 - Restrict files and capture file evidence
 
 Description: A sample policy
 
@@ -25,7 +25,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Step 3 - Deny all other USBs</b></td>
+            <td rowspan="2"><b>Step 5 - Deny all other USBs</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
             </td>
@@ -52,7 +52,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td> 
                 <center>-</center></td>
         </tr><tr>
-            <td rowspan="1"><b>Step 3 - Allow Full Access to Writeable USBs</b></td>
+            <td rowspan="1"><b>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</b></td>
             <td rowspan="1 valign="top">
                 <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}]"> (details)</a></ul>
             </td>
@@ -65,11 +65,18 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td><td>None (0)</td> 
+            <td>:white_check_mark:</td><td>Create File Evidence (8)</td> 
             <td>
-                <center>-</center></td>
+                <details>
+                <summary>View</summary>
+                User condition: S-1-1-0<br>
+                Parameters: MatchAll
+                <ul><li> MatchAll 
+                        <ul><li>Non Restricted File Types<a href="#non-restricted-file-types" title="MatchExcludeAny [{'PathId': '*.pdf'}, {'PathId': '*.xslx'}, {'PathId': '*.docx'}]"> (details)</a></ul>
+                </ul>
+                </details></td>
         </tr><tr>
-            <td rowspan="1"><b>Step 3 - Allow Read Only Access to Read Only USBs</b></td>
+            <td rowspan="1"><b>Step 5 - Allow Read Only Access to Read Only USBs for some users</b></td>
             <td rowspan="1 valign="top">
                 <ul><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny [{'VID_PID': '090C_1000'}]"> (details)</a></ul>
             </td>
@@ -82,9 +89,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:white_check_mark:</td>
             <td>-</td>
-            <td>-</td><td>None (0)</td> 
+            <td>-</td><td>Create File Evidence (8)</td> 
             <td>
-                <center>-</center></td>
+                <details>
+                <summary>View</summary>
+                User condition: S-1-1-0<br>
+                Parameters: 
+                <ul>
+                </ul>
+                </details></td>
         </tr></table>
 
 ## Groups
@@ -162,13 +175,42 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Non Restricted File Types
+
+This is a group of type *File*. 
+The match type for the group is *MatchExcludeAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PathId | *.pdf |
+| PathId | *.xslx |
+| PathId | *.docx |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{940973b7-dacd-4d2f-88f9-1141e20a3b7c}" Type="File">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B940973b7-dacd-4d2f-88f9-1141e20a3b7c%7D/GroupData -->
+	<Name>Non Restricted File Types</Name>
+	<MatchType>MatchExcludeAny</MatchType>
+	<DescriptorIdList>
+		<PathId>*.pdf</PathId>
+		<PathId>*.xslx</PathId>
+		<PathId>*.docx</PathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Files
 This policy is based on information in the following files:
 
-- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
+- [Step 5/restrict_files_and_capture_file_evidence_groups.xml](Step%205/restrict_files_and_capture_file_evidence_groups.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
-- [Step 3/allow_different_access_to_different_rules.xml](Step%203/allow_different_access_to_different_rules.xml)
+- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
+- [Step 5/restrict_files_and_capture_file_evidece_rules.xml](Step%205/restrict_files_and_capture_file_evidece_rules.xml)
 - [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
 
 
@@ -187,9 +229,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
+- File groups not supported.
 - File Execute (32) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 - File Read (8) is an unsupported access mask
+- MatchExcludeAny not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -226,6 +270,16 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VID_PID>090C_1000</VID_PID>
 		</DescriptorIdList>
 	</Group>
+	<Group Id="{940973b7-dacd-4d2f-88f9-1141e20a3b7c}" Type="File">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B940973b7-dacd-4d2f-88f9-1141e20a3b7c%7D/GroupData -->
+		<Name>Non Restricted File Types</Name>
+		<MatchType>MatchExcludeAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.pdf</PathId>
+			<PathId>*.xslx</PathId>
+			<PathId>*.docx</PathId>
+		</DescriptorIdList>
+	</Group>
 </Groups>
 ```
    3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
@@ -240,7 +294,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 <PolicyRules>
 	<PolicyRule Id="{7beca8fe-313a-46f2-a090-399eb3d74318}" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
-		<Name>Step 3 - Deny all other USBs</Name>
+		<Name>Step 5 - Deny all other USBs</Name>
 		<IncludedIdList>
 			<GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
 		</IncludedIdList>
@@ -261,7 +315,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 	</PolicyRule>
 	<PolicyRule Id="{a054bbcf-3454-4b95-9058-f7ed00deeee9}" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
-		<Name>Step 3 - Allow Full Access to Writeable USBs</Name>
+		<Name>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</Name>
 		<IncludedIdList>
 			<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
 		</IncludedIdList>
@@ -270,12 +324,18 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 			<Type>Allow</Type>
 			<AccessMask>63</AccessMask>
-			<Options>0</Options>
+			<Options>8</Options>
+			<Sid>S-1-1-0</Sid>
+			<Parameters MatchType="MatchAll">
+				<File MatchType="MatchAll">
+					<GroupId>{940973b7-dacd-4d2f-88f9-1141e20a3b7c}</GroupId>
+				</File>
+			</Parameters>
 		</Entry>
 	</PolicyRule>
 	<PolicyRule Id="{b2b9cfc0-799d-457c-babc-da617d9a8b83}" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
-		<Name>Step 3 - Allow Read Only Access to Read Only USBs</Name>
+		<Name>Step 5 - Allow Read Only Access to Read Only USBs for some users</Name>
 		<IncludedIdList>
 			<GroupId>{23c24566-98a5-4218-8802-59614513b97e}</GroupId>
 		</IncludedIdList>
@@ -284,7 +344,8 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 			<Type>Allow</Type>
 			<AccessMask>9</AccessMask>
-			<Options>0</Options>
+			<Options>8</Options>
+			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -308,48 +369,48 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Step 3 - Deny all other USBs</summary>  
+<summary>Add a row for Step 5 - Deny all other USBs</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Step 3 - Deny all other USBs*
+   2. For Name, enter *Step 5 - Deny all other USBs*
    3. For Description, enter **
    4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Step 3\step_3_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml*
+   6. For Custom XML, select  *.\Step 5\step_5_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml*
          
    
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for Step 3 - Allow Full Access to Writeable USBs</summary>  
+<summary>Add a row for Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Step 3 - Allow Full Access to Writeable USBs*
+   2. For Name, enter *Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence*
    3. For Description, enter **
    4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Step 3\step_3_-_allow_full_access_to_writeable_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml*
+   6. For Custom XML, select  *.\Step 5\step_5_-_allow_access_to_writeable_usbs_for_some_users_and_files_and_capture_file_evidence{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml*
          
    
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for Step 3 - Allow Read Only Access to Read Only USBs</summary>  
+<summary>Add a row for Step 5 - Allow Read Only Access to Read Only USBs for some users</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Step 3 - Allow Read Only Access to Read Only USBs*
+   2. For Name, enter *Step 5 - Allow Read Only Access to Read Only USBs for some users*
    3. For Description, enter **
    4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Step 3\step_3_-_allow_read_only_access_to_read_only_usbs{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml*
+   6. For Custom XML, select  *.\Step 5\step_5_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml*
          
    
    
@@ -398,6 +459,22 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    
         
    6. For Custom XML, select  *.\Step 3\readonly_usbs{23c24566-98a5-4218-8802-59614513b97e}.xml*
+         
+   
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for Non Restricted File Types</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *Non Restricted File Types*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B940973b7-dacd-4d2f-88f9-1141e20a3b7c%7D/GroupData*
+   5. For Data type, select *String (XML File)*
+   
+        
+   6. For Custom XML, select  *.\Step 5\non_restricted_file_types{940973b7-dacd-4d2f-88f9-1141e20a3b7c}.xml*
          
    
    
