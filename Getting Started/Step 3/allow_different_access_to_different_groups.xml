@@ -18,7 +18,7 @@
   <MatchType>MatchAny</MatchType>
   <DescriptorIdList>
     <!-- This is an example.  Replace this with the VID PID of another device -->
-    <VID_PID>0543_0C14</VID_PID>
+    <VID_PID>090C_1000</VID_PID>
   </DescriptorIdList>
 </Group>
 </Groups>

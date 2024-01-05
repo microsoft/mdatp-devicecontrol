@@ -14,7 +14,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="7" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
-        <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
@@ -54,8 +53,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>{{ value.entries[0].permission_icons[32] }}</td>
             <td>{{ value.entries[0].permission_icons[64] }}</td>
             <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options }})</td> 
-            <td>{{ value.entries[0].sid }}</td>
-            <td>{{ value.entries[0].parameters.match_type }}
+            <td>
+                {% if value.entries[0].sid == "All Users"  and  value.entries[0].parameters is none -%}
+                <center>-</center>
+                {%- else -%}
+                <details>
+                <summary>View</summary>
+                User condition: {{ value.entries[0].sid }}<br>
+                Parameters: {{ value.entries[0].parameters.match_type }}
                 <ul> 
                 {%- for condition in value.entries[0].parameters.conditions -%}
                     <li> {{ condition.match_type }} 
@@ -66,6 +71,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                         </ul>
                 {%- endfor %}
                 </ul>
+                </details>
+                {%- endif -%}
             </td>
         </tr>
         {%- for entry in value.entries[1:] -%}
@@ -79,8 +86,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>{{ entry.permission_icons[32] }}</td>
             <td>{{ entry.permission_icons[64] }}</td>
             <td>{{ entry.options_text }} ({{ entry.options }})</td>
-            <td>{{ entry.sid }}</td>
-            <td>{{ entry.parameters.match_type }}
+            <td> 
+                {% if entry.sid == "All Users"  and  entry.parameters is none -%}
+                <center>-</center>
+                {%- else -%}
+                <details>
+                <summary>View</summary>
+                User Condition: {{ entry.sid }}<br>
+                Parameters: {{ entry.parameters.match_type }}
                 <ul> 
                 {%- for condition in entry.parameters.conditions -%}
                     <li> {{ condition.match_type }} 
@@ -91,6 +104,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                         </ul>
                 {%- endfor %}
                 </ul>
+                </details>
+                {%- endif -%}
             </td>
         </tr>
         {%- endfor -%}

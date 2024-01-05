@@ -143,9 +143,9 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
+- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 - [Step 2/allow_authorized_usb_rules.xml](Step%202/allow_authorized_usb_rules.xml)
-- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
 
 
 # Deployment Instructions
@@ -163,8 +163,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
 - File Read (8) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.

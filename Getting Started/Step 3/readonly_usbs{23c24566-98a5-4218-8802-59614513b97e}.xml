@@ -3,6 +3,6 @@
 	<Name>Readonly USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<VID_PID>0543_0C14</VID_PID>
+		<VID_PID>090C_1000</VID_PID>
 	</DescriptorIdList>
 </Group>

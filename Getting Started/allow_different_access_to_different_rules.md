@@ -33,7 +33,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}]"> (details)</a><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny [{'VID_PID': '0543_0C14'}]"> (details)</a></ul>
+                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}]"> (details)</a><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny [{'VID_PID': '090C_1000'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -89,7 +89,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="1"><b>Step 3 - Allow Read Only Access to Read Only USBs</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny [{'VID_PID': '0543_0C14'}]"> (details)</a></ul>
+                <ul><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny [{'VID_PID': '090C_1000'}]"> (details)</a></ul>
             </td>
             <td rowspan="1" valign="top">
                 <ul></ul>
@@ -120,7 +120,7 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| VID_PID | 0543_0C14 |
+| VID_PID | 090C_1000 |
 
 <details>
 <summary>View XML</summary>
@@ -131,7 +131,7 @@ The match type for the group is *MatchAny*.
 	<Name>Readonly USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<VID_PID>0543_0C14</VID_PID>
+		<VID_PID>090C_1000</VID_PID>
 	</DescriptorIdList>
 </Group>
 ```
@@ -189,10 +189,10 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
+- [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
+- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 - [Step 3/allow_different_access_to_different_rules.xml](Step%203/allow_different_access_to_different_rules.xml)
 - [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
-- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
-- [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
 
 
 # Deployment Instructions
@@ -210,8 +210,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
 - File Read (8) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
@@ -230,7 +230,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<Name>Readonly USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<VID_PID>0543_0C14</VID_PID>
+			<VID_PID>090C_1000</VID_PID>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">

@@ -10,15 +10,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th rowspan="2" valign="top">Devices</th>
-        <th rowspan="2" valign="top">Excluding</th>
+        <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="7" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
-        <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
+        <th>Included</th>
+        <th>Excluded</th>
 		<th>Disk Read</th>
 		<th>Disk Write</th>
 		<th>Disk Execute</th>
@@ -43,11 +43,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:x:</td>
             <td>None (0)</td> 
-            <td>All Users</td>
             <td>
-                <ul>
-                </ul>
-            </td>
+                <center>-</center></td>
         </tr><tr>
             <td>Audit Denied</td>
             <td>-</td>
@@ -58,11 +55,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:page_facing_up:</td>
             <td>Show notification and Send event (3)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
+            <td> 
+                <center>-</center></td>
         </tr></table>
 
 ## Groups
@@ -87,30 +81,6 @@ The match type for the group is *MatchAny*.
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrinterConnectionId>File</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Any Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | PrinterDevices |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-	<Name>Any Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>PrinterDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -142,12 +112,36 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Any Printer
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | PrinterDevices |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+	<Name>Any Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>PrinterDevices</PrimaryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Default Deny - custom policy.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Default Deny - custom policy.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
 
 
 # Deployment Instructions
@@ -189,30 +183,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for Any Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *PrinterDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
 <summary>Create a reusable setting for Authorized USB Printer</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
@@ -240,6 +210,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
         3. Click on "Edit Instance"    
         4. Enter *VID_PID* for Name
         5. Enter *035E_0872* for VID_PID
+        6. Click "Save"
+    
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Any Printer</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Any Printer for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+      
+   8. Add a Removable Storage object for PrimaryId
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Edit Instance"    
+        4. Enter *PrimaryId* for Name
+        5. Enter *PrinterDevices* for PrimaryId
         6. Click "Save"
     
    
@@ -319,14 +313,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-		<Name>Any Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>PrinterDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
 		<Name>Authorized USB Printer</Name>
@@ -334,6 +320,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+		<Name>Any Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>PrinterDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>

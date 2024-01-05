@@ -10,15 +10,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th rowspan="2" valign="top">Devices</th>
-        <th rowspan="2" valign="top">Excluding</th>
+        <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="7" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
-        <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
+        <th>Included</th>
+        <th>Excluded</th>
 		<th>Disk Read</th>
 		<th>Disk Write</th>
 		<th>Disk Execute</th>
@@ -43,13 +43,16 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:white_check_mark:</td>
             <td>None (0)</td> 
-            <td>All Users</td>
-            <td>MatchAny
+            <td>
+                <details>
+                <summary>View</summary>
+                User condition: All Users<br>
+                Parameters: MatchAny
                 <ul><li> MatchAny 
                         <ul><li>Corporate Network<a href="#corporate-network" title="MatchAll [{'NameId': 'corp.microsoft.com'}, {'NetworkCategoryId': 'DomainAuthenticated'}]"> (details)</a></ul><li> MatchAny 
                         <ul><li>Corporate VPN<a href="#corporate-vpn" title="MatchAll [{'NameId': 'MSFTVPN'}, {'VPNServerAddressId': 'msftvpn.*.microsoft.com'}, {'VPNDnsSuffixId': 'corp.microsoft.com'}, {'VPNConnectionStatusId': 'Connected'}]"> (details)</a></ul>
                 </ul>
-            </td>
+                </details></td>
         </tr><tr>
             <td>Audit Allowed</td>
             <td>-</td>
@@ -60,41 +63,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:page_facing_up:</td>
             <td>Send event (2)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
+            <td> 
+                <center>-</center></td>
         </tr></table>
 
 ## Groups
 
-
-### Authorized USB Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 03F0_ |
-| VID_PID | 035E_0872 |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-	<Name>Authorized USB Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>03F0_</VID_PID>
-		<VID_PID>035E_0872</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
 
 ### Corporate Network
 
@@ -117,6 +91,32 @@ The match type for the group is *MatchAll*.
 	<DescriptorIdList>
 		<NameId>corp.microsoft.com</NameId>
 		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Authorized USB Printer
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 03F0_ |
+| VID_PID | 035E_0872 |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+	<Name>Authorized USB Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>03F0_</VID_PID>
+		<VID_PID>035E_0872</VID_PID>
 	</DescriptorIdList>
 </Group>
 ```
@@ -175,8 +175,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Network groups not supported.
 - Parameters are not supported
+- Network groups not supported.
 - VPNConnection groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
@@ -190,15 +190,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-		<Name>Authorized USB Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>03F0_</VID_PID>
-			<VID_PID>035E_0872</VID_PID>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
 		<Name>Corporate Network</Name>
@@ -206,6 +197,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<NameId>corp.microsoft.com</NameId>
 			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">

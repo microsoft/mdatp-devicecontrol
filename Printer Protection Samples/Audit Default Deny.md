@@ -10,15 +10,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th rowspan="2" valign="top">Devices</th>
-        <th rowspan="2" valign="top">Excluding</th>
+        <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="7" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
-        <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
+        <th>Included</th>
+        <th>Excluded</th>
 		<th>Disk Read</th>
 		<th>Disk Write</th>
 		<th>Disk Execute</th>
@@ -43,11 +43,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:page_facing_up:</td>
             <td>Show notification and Send event (3)</td> 
-            <td>All Users</td>
             <td>
-                <ul>
-                </ul>
-            </td>
+                <center>-</center></td>
         </tr></table>
 
 ## Groups
