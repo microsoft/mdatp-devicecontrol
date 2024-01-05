@@ -190,6 +190,7 @@ class PolicyRule:
         self.included_groups = []
         self.excluded_groups = []
         self.entries = []
+        self.has_printing = False
 
         included_groups_node = root.find(".//IncludedIdList")
         if not included_groups_node is None:
@@ -204,6 +205,10 @@ class PolicyRule:
                 self.excluded_groups.append(group.text)
 
         for entry in root.findall(".//Entry"):
+            newEntry = Entry(entry)
+            if newEntry.has_printing:
+                self.has_printing = True
+
             self.entries.append(Entry(entry))        
 
                     
@@ -314,6 +319,7 @@ class Entry:
         self.type_text = Entry.type_label[self.type]
         self.options = entry.find("./Options").text
         self.access_mask = entry.find("./AccessMask").text
+        self.has_printing = False
 
         self.permissions = {
             1: False,
@@ -347,6 +353,8 @@ class Entry:
                 if mask in Entry.access_mask_text_labels:
                     self.access_mask_text = self.access_mask_text+", "+Entry.access_mask_text_labels[mask]
                 self.permission_icons[mask] = Entry.true_icons[self.type]
+                if mask == 64:
+                    self.has_printing = True
 
         #replaces last , with and
         self.access_mask_text = self.access_mask_text[2:]
@@ -889,6 +897,7 @@ class Inventory:
         groupsXML = "<Groups>"
         rulesXML  = "<PolicyRules>"
         oma_uri = filtered_rules["oma-uri"]
+        has_printing = False
 
         for rule in filtered_rules["all"]:
 
@@ -898,6 +907,9 @@ class Inventory:
         
             rules[rule.id] = rule
             paths.append(rule.path)
+            if rule.has_printing:
+                has_printing = True
+
             intune_ux_support += self.intune_ux.get_support_for(rule)
 
             rulesXML += "\n"+rule.toXML()
@@ -947,6 +959,7 @@ class Inventory:
         result["rulesXML"] = rulesXML
         result["mac_policy"] = mac_policy
         result["mac_error"] = mac_error
+        result["has_printing"] = has_printing
 
         return result    
 
@@ -966,6 +979,7 @@ class Inventory:
              "rulesXML":result["rulesXML"],
              "macPolicy":result["mac_policy"],
              "macError": result["mac_error"],
+             "has_printing": result["has_printing"],
              "description": description,
              "env":os.environ,
              "title":title})

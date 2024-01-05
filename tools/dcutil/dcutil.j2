@@ -12,20 +12,27 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
+        {% if has_printing -%}
+        <th colspan="1" valign="top"><center>Access</center></th>
+        {%- else -%}
+        <th colspan="6" valign="top"><center>Access</center></th>
+        {% endif -%}
         <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
+        {% if not has_printing -%}
 		<th>Disk Read</th>
 		<th>Disk Write</th>
 		<th>Disk Execute</th>
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th>
+        {%- else -%}
 		<th>Print</th>
+        {% endif -%}
 	</tr>
     {%- for key,value in rules.items() -%}
         <tr>
@@ -45,13 +52,16 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 </ul>
             </td>
             <td>{{ value.entries[0].type_text }}</td>
+            {% if not has_printing -%}
             <td>{{ value.entries[0].permission_icons[1] }}</td>
             <td>{{ value.entries[0].permission_icons[2] }}</td>
             <td>{{ value.entries[0].permission_icons[4] }}</td>
             <td>{{ value.entries[0].permission_icons[8] }}</td>
             <td>{{ value.entries[0].permission_icons[16] }}</td>
             <td>{{ value.entries[0].permission_icons[32] }}</td>
+            {%- else -%}
             <td>{{ value.entries[0].permission_icons[64] }}</td>
+            {% endif -%}
             <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options }})</td> 
             <td>
                 {% if value.entries[0].sid == "All Users"  and  value.entries[0].parameters is none -%}
@@ -78,13 +88,16 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         {%- for entry in value.entries[1:] -%}
         <tr>
             <td>{{ entry.type_text }}</td>
+            {% if not has_printing -%}
             <td>{{ entry.permission_icons[1] }}</td>
             <td>{{ entry.permission_icons[2] }}</td>
             <td>{{ entry.permission_icons[4] }}</td>
             <td>{{ entry.permission_icons[8] }}</td>
             <td>{{ entry.permission_icons[16] }}</td>
             <td>{{ entry.permission_icons[32] }}</td>
+            {%- else -%}
             <td>{{ entry.permission_icons[64] }}</td>
+            {% endif -%}
             <td>{{ entry.options_text }} ({{ entry.options }})</td>
             <td> 
                 {% if entry.sid == "All Users"  and  entry.parameters is none -%}

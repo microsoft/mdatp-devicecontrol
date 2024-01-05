@@ -12,22 +12,19 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
+        <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
-        <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-		<th>Disk Read</th>
+        <th>Disk Read</th>
 		<th>Disk Write</th>
 		<th>Disk Execute</th>
 		<th>File Read</th>
 		<th>File Write</th>
-		<th>File Execute</th>
-		<th>Print</th>
-	</tr><tr>
+		<th>File Execute</th></tr><tr>
             <td rowspan="2"><b>Step 3 - Deny all other USBs</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
@@ -41,14 +38,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:x:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
-            <td>:x:</td>
-            <td>None (0)</td> 
-            <td>All Users</td>
+            <td>-</td><td>None (0)</td> 
             <td>
-                <ul>
-                </ul>
-            </td>
+                <center>-</center></td>
         </tr><tr>
             <td>Audit Denied</td>
             <td>:page_facing_up:</td>
@@ -56,14 +48,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>Show notification and Send event (3)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
+            <td>-</td><td>Show notification and Send event (3)</td>
+            <td> 
+                <center>-</center></td>
         </tr><tr>
             <td rowspan="1"><b>Step 3 - Allow Full Access to Writeable USBs</b></td>
             <td rowspan="1 valign="top">
@@ -78,14 +65,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>None (0)</td> 
-            <td>All Users</td>
+            <td>:white_check_mark:</td><td>None (0)</td> 
             <td>
-                <ul>
-                </ul>
-            </td>
+                <center>-</center></td>
         </tr><tr>
             <td rowspan="1"><b>Step 3 - Allow Read Only Access to Read Only USBs</b></td>
             <td rowspan="1 valign="top">
@@ -100,18 +82,37 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:white_check_mark:</td>
             <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>All Users</td>
+            <td>-</td><td>None (0)</td> 
             <td>
-                <ul>
-                </ul>
-            </td>
+                <center>-</center></td>
         </tr></table>
 
 ## Groups
 
+
+### All removable media devices
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+	<Name>All removable media devices</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
 
 ### Readonly USBs
 
@@ -161,38 +162,14 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### All removable media devices
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>All removable media devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Files
 This policy is based on information in the following files:
 
-- [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
-- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
-- [Step 3/allow_different_access_to_different_rules.xml](Step%203/allow_different_access_to_different_rules.xml)
 - [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
+- [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
+- [Step 3/allow_different_access_to_different_rules.xml](Step%203/allow_different_access_to_different_rules.xml)
+- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 
 
 # Deployment Instructions
@@ -225,6 +202,14 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{23c24566-98a5-4218-8802-59614513b97e}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
 		<Name>Readonly USBs</Name>
@@ -239,14 +224,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-		<Name>All removable media devices</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -273,12 +250,12 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		</ExcludedIdList>
 		<Entry Id="{c82cb32c-4c56-4c76-8897-b2cc99558299}">
 			<Type>Deny</Type>
-			<AccessMask>71</AccessMask>
+			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
 		<Entry Id="{70582e83-ea91-4b14-8f6c-f3921dab9d7a}">
 			<Type>AuditDenied</Type>
-			<AccessMask>71</AccessMask>
+			<AccessMask>7</AccessMask>
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>
@@ -292,7 +269,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		</ExcludedIdList>
 		<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 			<Type>Allow</Type>
-			<AccessMask>127</AccessMask>
+			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>

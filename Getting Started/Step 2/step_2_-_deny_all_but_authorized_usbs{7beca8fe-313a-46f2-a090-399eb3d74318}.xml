@@ -9,12 +9,12 @@
 	</ExcludedIdList>
 	<Entry Id="{c82cb32c-4c56-4c76-8897-b2cc99558299}">
 		<Type>Deny</Type>
-		<AccessMask>71</AccessMask>
+		<AccessMask>7</AccessMask>
 		<Options>0</Options>
 	</Entry>
 	<Entry Id="{70582e83-ea91-4b14-8f6c-f3921dab9d7a}">
 		<Type>AuditDenied</Type>
-		<AccessMask>71</AccessMask>
+		<AccessMask>7</AccessMask>
 		<Options>3</Options>
 	</Entry>
 </PolicyRule>

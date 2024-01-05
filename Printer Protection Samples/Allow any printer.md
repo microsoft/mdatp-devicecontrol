@@ -12,21 +12,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
-        <th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-		<th>Disk Read</th>
-		<th>Disk Write</th>
-		<th>Disk Execute</th>
-		<th>File Read</th>
-		<th>File Write</th>
-		<th>File Execute</th>
-		<th>Print</th>
-	</tr><tr>
+        <th>Print</th>
+        </tr><tr>
             <td rowspan="1"><b>Default Printer Allow</b></td>
             <td rowspan="1 valign="top">
                 <ul><li>Any Printer<a href="#any-printer" title="MatchAny [{'PrimaryId': 'PrinterDevices'}]"> (details)</a></ul>
@@ -35,12 +28,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul></ul>
             </td>
             <td>Allow</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:white_check_mark:</td>
             <td>Disable (4)</td> 
             <td>

@@ -12,21 +12,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
-        <th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-		<th>Disk Read</th>
-		<th>Disk Write</th>
-		<th>Disk Execute</th>
-		<th>File Read</th>
-		<th>File Write</th>
-		<th>File Execute</th>
-		<th>Print</th>
-	</tr><tr>
+        <th>Print</th>
+        </tr><tr>
             <td rowspan="2"><b>Allow PDF and XPS Printing</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a></ul>
@@ -35,24 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul></ul>
             </td>
             <td>Allow</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:white_check_mark:</td>
             <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
             <td>Audit Allowed</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
             <td>Send event (2)</td>
             <td> 
@@ -66,12 +47,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul></ul>
             </td>
             <td>Allow</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:white_check_mark:</td>
             <td>None (0)</td> 
             <td>
@@ -86,36 +61,18 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 </details></td>
         </tr><tr>
             <td>Audit Allowed</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
             <td>Send event (2)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
             <td>Deny</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:x:</td>
             <td>None (0)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
             <td>Audit Denied</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
             <td>Show notification and Send event (3)</td>
             <td> 
@@ -129,24 +86,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a><li>Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny [{'VID_PID': '03F0_'}, {'VID_PID': '035E_0872'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:x:</td>
             <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
             <td>Audit Denied</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
             <td>Show notification and Send event (3)</td>
             <td> 
@@ -206,32 +151,6 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
-### Authorized USB Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 03F0_ |
-| VID_PID | 035E_0872 |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-	<Name>Authorized USB Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>03F0_</VID_PID>
-		<VID_PID>035E_0872</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Corporate VPN
 
 This is a group of type *VPNConnection*. 
@@ -257,6 +176,32 @@ The match type for the group is *MatchAll*.
 		<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
 		<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
 		<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Authorized USB Printer
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 03F0_ |
+| VID_PID | 035E_0872 |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+	<Name>Authorized USB Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>03F0_</VID_PID>
+		<VID_PID>035E_0872</VID_PID>
 	</DescriptorIdList>
 </Group>
 ```
@@ -290,8 +235,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Policies - no Default Deny policy.xml](Group%20Policy/Printer_Policies%20-%20no%20Default%20Deny%20policy.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Group Policy/Printer_Policies - no Default Deny policy.xml](Group%20Policy/Printer_Policies%20-%20no%20Default%20Deny%20policy.xml)
 
 
 # Deployment Instructions
@@ -309,8 +254,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Parameters are not supported
 - Network groups not supported.
+- Parameters are not supported
 - VPNConnection groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
@@ -341,15 +286,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-		<Name>Authorized USB Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>03F0_</VID_PID>
-			<VID_PID>035E_0872</VID_PID>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
 		<Name>Corporate VPN</Name>
@@ -359,6 +295,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
 			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
 			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">

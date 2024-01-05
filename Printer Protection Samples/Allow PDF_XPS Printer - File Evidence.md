@@ -12,21 +12,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
-        <th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-		<th>Disk Read</th>
-		<th>Disk Write</th>
-		<th>Disk Execute</th>
-		<th>File Read</th>
-		<th>File Write</th>
-		<th>File Execute</th>
-		<th>Print</th>
-	</tr><tr>
+        <th>Print</th>
+        </tr><tr>
             <td rowspan="2"><b>Allow PDF and XPS Printing</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a></ul>
@@ -35,24 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul></ul>
             </td>
             <td>Allow</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:white_check_mark:</td>
             <td>Create File Evidence (8)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
             <td>Audit Allowed</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
             <td>Send event (2)</td>
             <td> 

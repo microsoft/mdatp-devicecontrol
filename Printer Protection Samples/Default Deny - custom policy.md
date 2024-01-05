@@ -12,21 +12,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
-        <th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-		<th>Disk Read</th>
-		<th>Disk Write</th>
-		<th>Disk Execute</th>
-		<th>File Read</th>
-		<th>File Write</th>
-		<th>File Execute</th>
-		<th>Print</th>
-	</tr><tr>
+        <th>Print</th>
+        </tr><tr>
             <td rowspan="2"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>Any Printer<a href="#any-printer" title="MatchAny [{'PrimaryId': 'PrinterDevices'}]"> (details)</a></ul>
@@ -35,24 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a><li>Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny [{'VID_PID': '03F0_'}, {'VID_PID': '035E_0872'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:x:</td>
             <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
             <td>Audit Denied</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
             <td>Show notification and Send event (3)</td>
             <td> 
@@ -61,30 +42,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
-
-### PDF_XPS Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrinterConnectionId | File |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-	<Name>PDF_XPS Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>File</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
 
 ### Authorized USB Printer
 
@@ -136,12 +93,36 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### PDF_XPS Printer
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+|  Property | Value |
+|-----------|-------|
+| PrinterConnectionId | File |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+	<Name>PDF_XPS Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrinterConnectionId>File</PrinterConnectionId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 - [Intune OMA-URI/Default Deny - custom policy.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -158,30 +139,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for PDF_XPS Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the PDF_XPS Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrinterConnectionId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrinterConnectionId* for Name
-        5. Enter *File* for PrinterConnectionId
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
 <details>
 <summary>Create a reusable setting for Authorized USB Printer</summary> 
 
@@ -234,6 +191,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
         3. Click on "Edit Instance"    
         4. Enter *PrimaryId* for Name
         5. Enter *PrinterDevices* for PrimaryId
+        6. Click "Save"
+    
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for PDF_XPS Printer</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the PDF_XPS Printer for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+      
+   8. Add a Removable Storage object for PrinterConnectionId
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Edit Instance"    
+        4. Enter *PrinterConnectionId* for Name
+        5. Enter *File* for PrinterConnectionId
         6. Click "Save"
     
    
@@ -305,14 +286,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-		<Name>PDF_XPS Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrinterConnectionId>File</PrinterConnectionId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
 		<Name>Authorized USB Printer</Name>
@@ -328,6 +301,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>PrinterDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+		<Name>PDF_XPS Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -451,7 +432,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Mac Policy
 
-This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
+This policy is not supported on Mac because Primary ID [PrinterDevices] is not supported on macOS.
 
 Learn more
 - [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
