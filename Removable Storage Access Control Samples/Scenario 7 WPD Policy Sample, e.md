@@ -2,7 +2,7 @@
 
 Description: A sample policy
 
-A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
@@ -10,23 +10,21 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th rowspan="2" valign="top">Devices</th>
-        <th rowspan="2" valign="top">Excluding</th>
+        <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="7" valign="top"><center>Access</center></th>
+        <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
-        <th rowspan="2" valign="top">User SID</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
-		<th>Disk Read</th>
+        <th>Included</th>
+        <th>Excluded</th>
+        <th>Disk Read</th>
 		<th>Disk Write</th>
 		<th>Disk Execute</th>
 		<th>File Read</th>
 		<th>File Write</th>
-		<th>File Execute</th>
-		<th>Print</th>
-	</tr><tr>
+		<th>File Execute</th></tr><tr>
             <td rowspan="2"><b>Deny Wpd Write</b></td>
             <td rowspan="2 valign="top">
                 <ul></ul>
@@ -40,14 +38,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>All Users</td>
+            <td>-</td><td>None (0)</td> 
             <td>
-                <ul>
-                </ul>
-            </td>
+                <center>-</center></td>
         </tr><tr>
             <td>Audit Denied</td>
             <td>-</td>
@@ -55,18 +48,20 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Show notification and Send event (3)</td>
-            <td>All Users</td>
-            <td>
-                <ul>
-                </ul>
-            </td>
+            <td>-</td><td>Show notification and Send event (3)</td>
+            <td> 
+                <center>-</center></td>
         </tr></table>
 
 ## Groups
 
+
+
+## Settings
+| Setting Name |  Setting Value | Documentation |
+|==============|================|===============|
+DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
@@ -203,6 +198,31 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    6. For Custom XML, select  *.\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
          
    
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DefaultEnforcement</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DefaultEnforcement*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *2*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DeviceControlEnabled</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DeviceControlEnabled*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *1*
    
    7. Click "Save"
 </details>

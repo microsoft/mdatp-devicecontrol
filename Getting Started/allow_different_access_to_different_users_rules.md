@@ -179,9 +179,9 @@ The match type for the group is *MatchAny*.
 This policy is based on information in the following files:
 
 - [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
-- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
-- [Step 4/allow_different_access_to_different_users_rules.xml](Step%204/allow_different_access_to_different_users_rules.xml)
 - [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
+- [Step 4/allow_different_access_to_different_users_rules.xml](Step%204/allow_different_access_to_different_users_rules.xml)
+- [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
 
 
 # Deployment Instructions

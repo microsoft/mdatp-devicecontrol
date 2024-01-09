@@ -22,17 +22,23 @@
   <IncludedIdList>
     <GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
   </IncludedIdList>
-  <Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
-    <Type>Allow</Type>
-    <Options>8</Options>
-    <AccessMask>63</AccessMask>
-    <Sid>S-1-1-0</Sid>
-    <Parameters MatchType="MatchAll">
-      <File MatchType="MatchAll">
-        <GroupId>{940973b7-dacd-4d2f-88f9-1141e20a3b7c}</GroupId>
-      </File>
-    </Parameters>
-  </Entry>
+  	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
+		<Type>Allow</Type>
+		<AccessMask>7</AccessMask>
+		<Options>0</Options>
+		<Sid>S-1-1-0</Sid>
+	</Entry>
+	<Entry Id="{c85c27ca-3988-40ea-b80a-48a5641ea862}">
+		<Type>Allow</Type>
+		<AccessMask>56</AccessMask>
+		<Options>8</Options>
+		<Sid>S-1-1-0</Sid>
+		<Parameters MatchType="MatchAll">
+			<File MatchType="MatchAll">
+				<GroupId>{940973b7-dacd-4d2f-88f9-1141e20a3b7c}</GroupId>
+			</File>
+		</Parameters>
+	</Entry>
   <Name>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</Name>
 </PolicyRule>
 <PolicyRule Id="{b2b9cfc0-799d-457c-babc-da617d9a8b83}">

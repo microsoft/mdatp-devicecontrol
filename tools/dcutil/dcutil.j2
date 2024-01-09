@@ -2,7 +2,7 @@
 
 Description: {{ description }}
 
-A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
@@ -148,6 +148,9 @@ The match type for the group is *{{ groups[group_id].match_type }}*.
 ```
 </details>
 {% endfor %}
+
+## Settings
+{% include "settings.j2" %}
 
 ## Files
 This policy is based on information in the following files:

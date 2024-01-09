@@ -52,24 +52,40 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td> 
                 <center>-</center></td>
         </tr><tr>
-            <td rowspan="1"><b>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</b></td>
-            <td rowspan="1 valign="top">
+            <td rowspan="2"><b>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</b></td>
+            <td rowspan="2 valign="top">
                 <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny [{'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}]"> (details)</a></ul>
             </td>
-            <td rowspan="1" valign="top">
+            <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td><td>Create File Evidence (8)</td> 
+            <td>-</td>
+            <td>-</td>
+            <td>-</td><td>None (0)</td> 
             <td>
                 <details>
                 <summary>View</summary>
                 User condition: S-1-1-0<br>
+                Parameters: 
+                <ul>
+                </ul>
+                </details></td>
+        </tr><tr>
+            <td>Allow</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td>
+            <td>:white_check_mark:</td><td>Create File Evidence (8)</td>
+            <td> 
+                <details>
+                <summary>View</summary>
+                User Condition: S-1-1-0<br>
                 Parameters: MatchAll
                 <ul><li> MatchAll 
                         <ul><li>Non Restricted File Types<a href="#non-restricted-file-types" title="MatchExcludeAny [{'PathId': '*.pdf'}, {'PathId': '*.xslx'}, {'PathId': '*.docx'}]"> (details)</a></ul>
@@ -207,11 +223,11 @@ The match type for the group is *MatchExcludeAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
+- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
 - [Step 5/restrict_files_and_capture_file_evidence_groups.xml](Step%205/restrict_files_and_capture_file_evidence_groups.xml)
 - [Step 5/restrict_files_and_capture_file_evidece_rules.xml](Step%205/restrict_files_and_capture_file_evidece_rules.xml)
 - [Step 2/allow_authorized_usbs_groups.xml](Step%202/allow_authorized_usbs_groups.xml)
-- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
+- [Step 3/allow_different_access_to_different_groups.xml](Step%203/allow_different_access_to_different_groups.xml)
 
 
 # Deployment Instructions
@@ -230,10 +246,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 Intune UX is not supported for this policy because:
 - File groups not supported.
-- MatchExcludeAny not supported.
-- File Execute (32) is an unsupported access mask
 - File Read (8) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- File Execute (32) is an unsupported access mask
+- MatchExcludeAny not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -323,7 +339,13 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		</ExcludedIdList>
 		<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 			<Type>Allow</Type>
-			<AccessMask>63</AccessMask>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+			<Sid>S-1-1-0</Sid>
+		</Entry>
+		<Entry Id="{c85c27ca-3988-40ea-b80a-48a5641ea862}">
+			<Type>Allow</Type>
+			<AccessMask>56</AccessMask>
 			<Options>8</Options>
 			<Sid>S-1-1-0</Sid>
 			<Parameters MatchType="MatchAll">

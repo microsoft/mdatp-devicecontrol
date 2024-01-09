@@ -8,9 +8,15 @@
 	</ExcludedIdList>
 	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
 		<Type>Allow</Type>
-		<AccessMask>63</AccessMask>
+		<AccessMask>7</AccessMask>
+		<Options>0</Options>
+		<Sid>S-1-12-1-1994806621-1094465336-811656074-1005234861</Sid>
+	</Entry>
+	<Entry Id="{c85c27ca-3988-40ea-b80a-48a5641ea862}">
+		<Type>Allow</Type>
+		<AccessMask>56</AccessMask>
 		<Options>8</Options>
-		<Sid>S-1-1-0</Sid>
+		<Sid>S-1-12-1-1994806621-1094465336-811656074-1005234861</Sid>
 		<Parameters MatchType="MatchAll">
 			<File MatchType="MatchAll">
 				<GroupId>{940973b7-dacd-4d2f-88f9-1141e20a3b7c}</GroupId>

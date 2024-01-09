@@ -1,0 +1,19 @@
+<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_2</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>07B4_0232</VID_PID>
+		<VID_PID>07B4_0279</VID_PID>
+		<VID_PID>07B4_0244</VID_PID>
+		<VID_PID>07B4_0264</VID_PID>
+		<VID_PID>07B4_0236</VID_PID>
+		<VID_PID>07B4_0245</VID_PID>
+		<VID_PID>0911_1F40</VID_PID>
+		<VID_PID>0911_251C</VID_PID>
+		<VID_PID>1D54_1072</VID_PID>
+		<VID_PID>1D54_1070</VID_PID>
+		<VID_PID>1D54_1080</VID_PID>
+		<VID_PID>054C_0B6F</VID_PID>
+	</DescriptorIdList>
+</Group>

@@ -58,17 +58,150 @@ def clean_up_name(name, new_space = "-"):
 
     return clean_name
 
+
+class Setting: 
+
+    
+    OMA_URI_Integer_DataType = "Integer"
+    OMA_URI_XML_DataType = "String (XML File)"
+    OMA_URI_String_DataType = "String"
+
+    DeviceControlEnabled = "DeviceControlEnabled"
+    DefaultEnforcement = "DefaultEnforcement"
+    DataDuplicationDirectory = "DataDuplicationDirectory"
+    SecuredDevicesConfiguration = "SecuredDevicesConfiguration"
+    DataDuplicationMaximumQuota = "DataDuplicationMaximumQuota"
+    DataDuplicationRemoteLocation = "DataDuplicationRemoteLocation"
+
+    data = {
+        DeviceControlEnabled:{
+            "oma-uri": {
+                "name": "Device Control Enabled",
+                "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled",
+                "type": OMA_URI_Integer_DataType,
+                "value_map": {
+                    True: 1,
+                    False: 0
+                }
+            }
+        },
+        DefaultEnforcement:{
+            "oma-uri": {
+                "name": "Default Enforcement",
+                "oma-uri":"./Vendor/MSFT/Defender/Configuration/DefaultEnforcement",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement",
+                "type": OMA_URI_Integer_DataType,
+                "value_map":{
+                    "Allow": 1,
+                    "Deny": 2
+                }
+            }
+        },
+        DataDuplicationDirectory:{
+            "oma-uri": {
+                "name": "File Evidence Directory",
+                "oma-uri":"./Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationdirectory",
+                "type": OMA_URI_String_DataType
+            }
+        },
+        SecuredDevicesConfiguration: {
+            "oma-uri": {
+                "name": "Secured Devices",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration",
+                "oma-uri": "./Vendor/MSFT/Defender/Configuration/SecuredDevicesConfiguration",
+                "type": OMA_URI_String_DataType
+            }
+        },
+        DataDuplicationMaximumQuota:{
+            "oma-uri":{
+                "name": "File Evidence Quota",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationmaximumquota",
+                "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationMaximumQuota",
+                "type": OMA_URI_Integer_DataType
+            }
+        },
+        DataDuplicationRemoteLocation:{
+            "oma-uri":{
+                "name": "File Evidence Remote Location",
+                "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationremotelocation",
+                "type": OMA_URI_String_DataType
+            }
+        }
+    }
+    
+    def __init__(self,name,value):
+        self.name = name
+        self.value = value
+        
+
+        if name not in Setting.data.keys():
+            raise Exception("Unknown Setting "+name)
+        
+
+    def get_data_type(self, format = "oma-uri"):
+         return Setting.data[self.name][format]["type"]
+    
+    def get_documentation(self, format="oma-uri"):
+        return Setting.data[self.name][format]["documentation"]
+
+    def get_oma_uri(self):
+
+        return Setting.data[self.name]["oma-uri"]["oma-uri"]
+
+    def get_value(self,format = "oma-uri"):
+
+        if format == "oma-uri":
+            oma_uri = Setting.data[self.name]["oma-uri"]
+            if oma_uri["type"] == Setting.OMA_URI_String_DataType:
+                return self.value
+            elif oma_uri["type"] == Setting.OMA_URI_Integer_DataType:
+                if "value_map" in oma_uri.keys():
+                    return int(oma_uri["value_map"][self.value])
+                else:
+                    return self.value
+            else:
+                return self.value
+            
+        else:
+            return self.value
+
+
+
+
+class Settings:
+
+    def __init__(self, setting_dict):
+        self.settings = []
+        for name in setting_dict:
+            value = setting_dict[name]
+            self.settings.append(Setting(name,value))
+
+    def getIntuneCustomValues(self):
+        custom_rows = {}
+
+        for setting in self.settings:
+            row = IntuneCustomRow(setting)
+            custom_rows[row.OMA_URI] = row
+
+        return custom_rows
+    
+    def __iter__(self):
+        return self.settings.__iter__()
+
+    def __next__(self): 
+        return self.settings.__next__()
+
 class IntuneCustomRow:
 
-    Integer_DataType = "Integer"
-    XML_DataType = "String (XML File)"
-    String_DataType = "String"
 
     def __init__(self,object):
         self.name = ""
         self.description = ""
         self.OMA_URI = ""
-        self.data_type = IntuneCustomRow.XML_DataType
+        self.data_type = Setting.OMA_URI_XML_DataType
         self.value = ""
         self.object = object
 
@@ -82,6 +215,11 @@ class IntuneCustomRow:
                 self.name = object.name
                 self.OMA_URI = object.get_oma_uri()
                 self.value = object.path
+            case "Setting":
+                self.name = object.name
+                self.OMA_URI = object.get_oma_uri()
+                self.value = object.get_value("oma-uri")
+                self.data_type = object.get_data_type("oma-uri")
             case other:
                 print ("Unknown object class "+str(object.__class__.__name__))
             
@@ -963,7 +1101,13 @@ class Inventory:
 
         return result    
 
-    def generate_text(self,result,dest,file,title, description="A sample policy"):
+    def generate_text(self,result,dest,file,title, description="A sample policy", settings = None ):
+        
+        if settings is not None:
+            custom_settings_values = settings.getIntuneCustomValues()
+            for custom_settings_value in custom_settings_values:
+                result["oma_uri"][custom_settings_value] = custom_settings_values[custom_settings_value] 
+
         templatePath = pathlib.Path(__file__).parent.resolve()
         templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
         templateEnv = jinja2.Environment(loader=templateLoader)
@@ -981,6 +1125,7 @@ class Inventory:
              "macError": result["mac_error"],
              "has_printing": result["has_printing"],
              "description": description,
+             "settings": settings,
              "env":os.environ,
              "title":title})
         
@@ -988,6 +1133,13 @@ class Inventory:
         with open(dest+os.sep+file,"w") as out_file:
             out_file.write(out)
             out_file.close()
+
+Default_Settings = Settings(
+    {
+        Setting.DefaultEnforcement: "Deny",
+        Setting.DeviceControlEnabled: True
+    }
+)
 
 def dir_path(string):
     paths = string.split(os.pathsep)
@@ -1009,7 +1161,6 @@ def file(path):
         return path
     else:
         raise argparse.ArgumentError("Not a file "+path)
-
 
 def format(string):
     match string:
@@ -1084,18 +1235,21 @@ if __name__ == '__main__':
         for rule in scenarios["rules"]:
             policy_file = rule["file"]
             description = "A sample policy"
+            settings = Default_Settings
             title = None
             if "description" in rule.keys():
                 description = rule["description"]
             if "title" in rule.keys():
                 title = rule["title"]
+            if "settings" in rule.keys():
+                settings = Settings(rule["settings"])
 
             query,default_title,default_outfile = parse_in_file(policy_file)
             result = inventory.process_query(query)
             if args.format == "text":
                 if title is None:
                     title = default_title
-                inventory.generate_text(result,args.dest,default_outfile,title,description)
+                inventory.generate_text(result,args.dest,default_outfile,title,description,settings)
 
             results[policy_file] = {
                 "result":result,

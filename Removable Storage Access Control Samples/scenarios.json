@@ -43,7 +43,13 @@
             "title": "Scenario 10"
         },
         {
-            "file": "Group Policy\\Audit File information.xml"
+            "file": "Group Policy\\\\Audit File Information.xml",
+            "title": "File Evidence",
+            "settings":{
+                "DeviceControlEnabled": true,
+                "DefaultEnforcement": "Deny",
+                "DataDuplicationDirectory": "Enter the directory to store files locally"
+            }
         },
         {
             "file": "Group Policy\\Audit Write Access.xml"

@@ -1,0 +1,5 @@
+| Setting Name |  Setting Value | Documentation |
+|==============|================|===============|
+{% for setting in settings -%}
+{{ setting.name }} | {{ setting.value }} | [documentation]({{ setting.get_documentation() }}) |
+{% endfor -%}
