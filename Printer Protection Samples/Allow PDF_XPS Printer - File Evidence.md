@@ -2,7 +2,7 @@
 
 Description: A sample policy
 
-A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
@@ -68,11 +68,18 @@ The match type for the group is *MatchAny*.
 </details>
 
 
+## Settings
+| Setting Name |  Setting Value | Documentation |
+|--------------|----------------|---------------|
+DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 - [Intune OMA-URI/Allow PDF_XPS Printer - File Evidence.xml](Intune%20OMA-URI/Allow%20PDF_XPS%20Printer%20-%20File%20Evidence.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -175,7 +182,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    6. For Custom XML, select  *.\Intune OMA-URI\Allow PDF_XPS Printer - File Evidence.xml*
          
    
-   
    7. Click "Save"
 </details>
 <details>
@@ -191,6 +197,31 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DefaultEnforcement</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DefaultEnforcement*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *2*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DeviceControlEnabled</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DeviceControlEnabled*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *1*
    
    7. Click "Save"
 </details>

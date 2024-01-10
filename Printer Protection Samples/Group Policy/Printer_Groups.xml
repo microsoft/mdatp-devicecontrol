@@ -6,6 +6,14 @@
 			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
+
+	<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
+		<Name>Network Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>Network</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
 	
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
 		<Name>Authorized USB Printer</Name>
@@ -44,5 +52,6 @@
 			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
 		</DescriptorIdList>
 	</Group>
+
 		
 </Groups>

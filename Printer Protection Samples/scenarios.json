@@ -9,6 +9,16 @@
         ,
         {
             "file": "Group Policy\\Printer_Policies - no Default Deny policy.xml"
+        },
+        {
+            "file": "Group Policy\\Allow Printing to Corporate Network Printers Only.xml",
+            "description": "This policy allows printing only for network printers on the corporate network, and denies everything else.",
+            "title": "Printer Example - Restrict Acccess by Network",
+            "settings":{
+                "DeviceControlEnabled": true,
+                "DefaultEnforcement": "Allow",
+                "SecuredDevicesConfiguration": "PrinterDevices"
+            }
         }
         ,
         {

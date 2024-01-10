@@ -75,6 +75,7 @@ class Setting:
 
     data = {
         DeviceControlEnabled:{
+            "description":"Enables/disables device control",
             "oma-uri": {
                 "name": "Device Control Enabled",
                 "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled",
@@ -84,6 +85,9 @@ class Setting:
                     True: 1,
                     False: 0
                 }
+            },
+            "gpo":{
+
             }
         },
         DefaultEnforcement:{
@@ -101,7 +105,7 @@ class Setting:
         DataDuplicationDirectory:{
             "oma-uri": {
                 "name": "File Evidence Directory",
-                "oma-uri":"./Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
+                "oma-uri":"./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationdirectory",
                 "type": OMA_URI_String_DataType
             }

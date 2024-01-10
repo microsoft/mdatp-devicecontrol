@@ -2,7 +2,7 @@
 
 Description: An example showing how device control can restrict access to printers based on device properties, network, and VPN connection.
 
-A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
@@ -107,32 +107,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Corporate Network
-
-This is a group of type *Network*. 
-The match type for the group is *MatchAll*.
-
-|  Property | Value |
-|-----------|-------|
-| NameId | corp.microsoft.com |
-| NetworkCategoryId | DomainAuthenticated |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-	<Name>Corporate Network</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<NameId>corp.microsoft.com</NameId>
-		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Corporate VPN
 
 This is a group of type *VPNConnection*. 
@@ -189,12 +163,45 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Corporate Network
+
+This is a group of type *Network*. 
+The match type for the group is *MatchAll*.
+
+|  Property | Value |
+|-----------|-------|
+| NameId | corp.microsoft.com |
+| NetworkCategoryId | DomainAuthenticated |
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+	<Name>Corporate Network</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<NameId>corp.microsoft.com</NameId>
+		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+
+## Settings
+| Setting Name |  Setting Value | Documentation |
+|--------------|----------------|---------------|
+DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
 
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 - [Group Policy/Printer_Policies.xml](Group%20Policy/Printer_Policies.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -213,8 +220,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 Intune UX is not supported for this policy because:
 - Network groups not supported.
-- Parameters are not supported
 - VPNConnection groups not supported.
+- Parameters are not supported
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -235,15 +242,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-		<Name>Corporate Network</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<NameId>corp.microsoft.com</NameId>
-			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
 		<Name>Corporate VPN</Name>
@@ -262,6 +260,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>corp.microsoft.com</NameId>
+			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -368,7 +375,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    6. For Custom XML, select  *.\Group Policy\allow_pdf_and_xps_printing{f5877f47-78ab-4f33-94e4-c44f18ec6dca}.xml*
          
    
-   
    7. Click "Save"
 </details>
 <details>
@@ -383,7 +389,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
         
    6. For Custom XML, select  *.\Group Policy\allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml*
          
-   
    
    7. Click "Save"
 </details>
@@ -400,7 +405,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    6. For Custom XML, select  *.\Group Policy\default_deny{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}.xml*
          
    
-   
    7. Click "Save"
 </details>
 <details>
@@ -415,7 +419,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
         
    6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
          
-   
    
    7. Click "Save"
 </details>
@@ -432,7 +435,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    6. For Custom XML, select  *.\Intune OMA-URI\Authorized USB Printer.xml*
          
    
-   
    7. Click "Save"
 </details>
 <details>
@@ -447,7 +449,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
         
    6. For Custom XML, select  *.\Intune OMA-URI\Corporate Network.xml*
          
-   
    
    7. Click "Save"
 </details>
@@ -464,6 +465,31 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    6. For Custom XML, select  *.\Intune OMA-URI\Corporate VPN.xml*
          
    
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DefaultEnforcement</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DefaultEnforcement*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *2*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DeviceControlEnabled</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DeviceControlEnabled*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *1*
    
    7. Click "Save"
 </details>

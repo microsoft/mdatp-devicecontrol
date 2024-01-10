@@ -2,7 +2,7 @@
 
 Description: A sample policy
 
-A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
@@ -36,6 +36,13 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+
+
+## Settings
+| Setting Name |  Setting Value | Documentation |
+|--------------|----------------|---------------|
+DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
@@ -158,6 +165,31 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    6. For Custom XML, select  *.\Intune OMA-URI\Audit Default Deny.xml*
          
    
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DefaultEnforcement</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DefaultEnforcement*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *2*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DeviceControlEnabled</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DeviceControlEnabled*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *1*
    
    7. Click "Save"
 </details>

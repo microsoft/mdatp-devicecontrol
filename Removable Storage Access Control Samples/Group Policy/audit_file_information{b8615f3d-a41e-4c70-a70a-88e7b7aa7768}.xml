@@ -9,6 +9,6 @@
 	<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
 		<Type>Allow</Type>
 		<AccessMask>16</AccessMask>
-		<Options>16</Options>
+		<Options>8</Options>
 	</Entry>
 </PolicyRule>

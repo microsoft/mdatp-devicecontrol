@@ -47,7 +47,7 @@
             "title": "File Evidence",
             "settings":{
                 "DeviceControlEnabled": true,
-                "DefaultEnforcement": "Deny",
+                "DefaultEnforcement": "Allow",
                 "DataDuplicationDirectory": "Enter the directory to store files locally"
             }
         },
