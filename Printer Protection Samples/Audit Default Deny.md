@@ -37,7 +37,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-
 ## Settings
 | Setting Name |  Setting Value | Documentation |
 |--------------|----------------|---------------|

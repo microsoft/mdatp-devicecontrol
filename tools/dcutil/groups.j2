@@ -1,0 +1,84 @@
+{% for group_id in groups %}
+### {{ groups[group_id].name }}
+
+{% set group_type = groups[group_id].type %}
+
+This is a group of type *{{ groups[group_id].type }}*. 
+The match type for the group is *{{ groups[group_id].match_type }}*.
+
+
+|  Property | Value |
+|-----------|-------|
+{% for property in groups[group_id].properties -%}
+{% for key,value in property.items() -%} 
+| {{ key }} | {{ value }} |
+{% endfor -%}
+{% endfor %}
+
+#### Available properties for {{ groups[group_id].name }}
+{% if group_type == "Device" %}
+{% if not has_printing %}
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
+**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
+**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
+**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
+> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
+
+**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
+**BusId**: For example, USB, SCSI         
+**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
+**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
+{% else %}
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+{% endif %}
+{% elif group_type == "Network" %}
+
+**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.         
+**NetworkCategoryId**:  only applicable for Network type Group and includes `Public`, `Private`, `DomainAuthenticated`.         
+**NetworkDomainId**:  only applicable for Network type Group and includes `NonDomain`, `Domain`, `DomainAuthenticated`.              
+
+{% elif group_type == "VPNConnection" %}
+**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.       
+**VPNConnectionStatusId**:  only applicable for VPN Connection type Group and includes `Connected`, `Disconnected`.           
+**VPNServerAddressId**:  string, value of VPNServerAddress, support wildcard and only applicable for VPN Connection type Group.           
+**VPNDnsSuffixId**:  string, value of VPNDnsSuffix, support wildcard and only applicable for VPN Connection type Group.          
+
+{% elif group_type == "File" %}
+**PathId**:  string, value of file path or name, support wildcard and only applicable for File type Group.      
+
+{% elif group_type == "PrintJob" %}
+PrintOutputFileNameId: The output destination file path for print to file. Wildcards are supported. For example, `C:\*\Test.pdf`
+PrintDocumentNameId: The source file path. Wildcards are supported. This path might not exist. For example, add text to a new file in Notepad, and then print without saving the file.
+
+{% endif %}
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+{{ groups[group_id].toXML('') }}
+```
+</details>
+{% endfor %}

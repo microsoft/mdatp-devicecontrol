@@ -62,40 +62,31 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
-
-### Network Printers
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrinterConnectionId | Network |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
-	<Name>Network Printers</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>Network</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Corporate Network
+
+
 
 This is a group of type *Network*. 
 The match type for the group is *MatchAll*.
+
 
 |  Property | Value |
 |-----------|-------|
 | NameId | corp.microsoft.com |
 | NetworkCategoryId | DomainAuthenticated |
+
+
+#### Available properties for Corporate Network
+
+
+**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.         
+**NetworkCategoryId**:  only applicable for Network type Group and includes `Public`, `Private`, `DomainAuthenticated`.         
+**NetworkDomainId**:  only applicable for Network type Group and includes `NonDomain`, `Domain`, `DomainAuthenticated`.              
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -113,14 +104,104 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
-### Any Printer
+### Network Printers
+
+
 
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
 
+
+|  Property | Value |
+|-----------|-------|
+| PrinterConnectionId | Network |
+
+
+#### Available properties for Network Printers
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+	<Name>Network Printers</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrinterConnectionId>Network</PrinterConnectionId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Any Printer
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
 |  Property | Value |
 |-----------|-------|
 | PrimaryId | PrinterDevices |
+
+
+#### Available properties for Any Printer
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -149,8 +230,8 @@ SecuredDevicesConfiguration | PrinterDevices | [documentation](https://learn.mic
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Allow Printing to Corporate Network Printers Only.xml](Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Group Policy/Allow Printing to Corporate Network Printers Only.xml](Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
 
 
 # Deployment Instructions
@@ -182,14 +263,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
-		<Name>Network Printers</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrinterConnectionId>Network</PrinterConnectionId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
 		<Name>Corporate Network</Name>
@@ -197,6 +270,14 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<NameId>corp.microsoft.com</NameId>
 			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+		<Name>Network Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>Network</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
@@ -396,7 +477,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 
 ## Mac Policy
 
-This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
+This policy is not supported on Mac because Unsupported Descriptor ID NameId
 
 Learn more
 - [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)

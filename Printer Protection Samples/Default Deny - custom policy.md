@@ -42,15 +42,104 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+### Any Printer
 
-### PDF_XPS Printer
+
 
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
 
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | PrinterDevices |
+
+
+#### Available properties for Any Printer
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+	<Name>Any Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>PrinterDevices</PrimaryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### PDF_XPS Printer
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
 |  Property | Value |
 |-----------|-------|
 | PrinterConnectionId | File |
+
+
+#### Available properties for PDF_XPS Printer
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -69,13 +158,46 @@ The match type for the group is *MatchAny*.
 
 ### Authorized USB Printer
 
+
+
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
+
 
 |  Property | Value |
 |-----------|-------|
 | VID_PID | 03F0_ |
 | VID_PID | 035E_0872 |
+
+
+#### Available properties for Authorized USB Printer
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -88,30 +210,6 @@ The match type for the group is *MatchAny*.
 	<DescriptorIdList>
 		<VID_PID>03F0_</VID_PID>
 		<VID_PID>035E_0872</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Any Printer
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | PrinterDevices |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-	<Name>Any Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>PrinterDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -146,6 +244,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
+<details>
+<summary>Create a reusable setting for Any Printer</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Any Printer for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+      
+   8. Add a Removable Storage object for PrimaryId
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Edit Instance"    
+        4. Enter *PrimaryId* for Name
+        5. Enter *PrinterDevices* for PrimaryId
+        6. Click "Save"
+    
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
 <details>
 <summary>Create a reusable setting for PDF_XPS Printer</summary> 
 
@@ -198,30 +320,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
         3. Click on "Edit Instance"    
         4. Enter *VID_PID* for Name
         5. Enter *035E_0872* for VID_PID
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a reusable setting for Any Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *PrinterDevices* for PrimaryId
         6. Click "Save"
     
    
@@ -293,6 +391,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+		<Name>Any Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>PrinterDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
 		<Name>PDF_XPS Printer</Name>
@@ -308,14 +414,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-		<Name>Any Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>PrinterDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -461,7 +559,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Mac Policy
 
-This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
+This policy is not supported on Mac because Primary ID [PrinterDevices] is not supported on macOS.
 
 Learn more
 - [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)

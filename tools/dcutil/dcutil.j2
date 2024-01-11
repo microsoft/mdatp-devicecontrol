@@ -126,28 +126,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 </table>
 
 ## Groups
-
-{% for group_id in groups %}
-### {{ groups[group_id].name }}
-
-This is a group of type *{{ groups[group_id].type }}*. 
-The match type for the group is *{{ groups[group_id].match_type }}*.
-
-|  Property | Value |
-|-----------|-------|
-{% for property in groups[group_id].properties -%}
-{% for key,value in property.items() -%} 
-| {{ key }} | {{ value }} |
-{% endfor -%}
-{% endfor %}
-<details>
-<summary>View XML</summary>
-
-```xml
-{{ groups[group_id].toXML('') }}
-```
-</details>
-{% endfor %}
+{% include "groups.j2" %}
 
 ## Settings
 {% include "settings.j2" %}

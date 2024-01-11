@@ -50,11 +50,55 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+### Corporate Network
+
+
+
+This is a group of type *Network*. 
+The match type for the group is *MatchAll*.
+
+
+|  Property | Value |
+|-----------|-------|
+| NameId | corp.microsoft.com |
+| NetworkCategoryId | DomainAuthenticated |
+
+
+#### Available properties for Corporate Network
+
+
+**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.         
+**NetworkCategoryId**:  only applicable for Network type Group and includes `Public`, `Private`, `DomainAuthenticated`.         
+**NetworkDomainId**:  only applicable for Network type Group and includes `NonDomain`, `Domain`, `DomainAuthenticated`.              
+
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+	<Name>Corporate Network</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<NameId>corp.microsoft.com</NameId>
+		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
 
 ### Corporate VPN
 
+
+
 This is a group of type *VPNConnection*. 
 The match type for the group is *MatchAll*.
+
 
 |  Property | Value |
 |-----------|-------|
@@ -62,6 +106,19 @@ The match type for the group is *MatchAll*.
 | VPNServerAddressId | msftvpn.*.microsoft.com |
 | VPNDnsSuffixId | corp.microsoft.com |
 | VPNConnectionStatusId | Connected |
+
+
+#### Available properties for Corporate VPN
+
+**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.       
+**VPNConnectionStatusId**:  only applicable for VPN Connection type Group and includes `Connected`, `Disconnected`.           
+**VPNServerAddressId**:  string, value of VPNServerAddress, support wildcard and only applicable for VPN Connection type Group.           
+**VPNDnsSuffixId**:  string, value of VPNDnsSuffix, support wildcard and only applicable for VPN Connection type Group.          
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -83,13 +140,46 @@ The match type for the group is *MatchAll*.
 
 ### Authorized USB Printer
 
+
+
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
+
 
 |  Property | Value |
 |-----------|-------|
 | VID_PID | 03F0_ |
 | VID_PID | 035E_0872 |
+
+
+#### Available properties for Authorized USB Printer
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
+**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
+**Device instance path (VID_PID)**:      
+- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
+- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
+To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
+For example:       
+  - `0751_55E0` matches that exact VID_PID pair value.
+  - `_55E0` matches any device with the PID value 55E0.
+  - `0751_` matches any device with the VID value 0751.     
+  
+**PrinterConnectionId**: Includes the following values: 
+- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
+- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
+- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
+- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
+- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
+- Custom: A printer that doesn't connect through a Microsoft print port.
+- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
+
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -107,32 +197,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Corporate Network
-
-This is a group of type *Network*. 
-The match type for the group is *MatchAll*.
-
-|  Property | Value |
-|-----------|-------|
-| NameId | corp.microsoft.com |
-| NetworkCategoryId | DomainAuthenticated |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-	<Name>Corporate Network</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<NameId>corp.microsoft.com</NameId>
-		<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -144,8 +208,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
 
 
 # Deployment Instructions
@@ -178,6 +242,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>corp.microsoft.com</NameId>
+			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
 		<Name>Corporate VPN</Name>
@@ -196,15 +269,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<VID_PID>03F0_</VID_PID>
 			<VID_PID>035E_0872</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
-		<Name>Corporate Network</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<NameId>corp.microsoft.com</NameId>
-			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
