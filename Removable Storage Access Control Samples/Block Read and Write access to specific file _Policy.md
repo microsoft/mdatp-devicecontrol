@@ -27,9 +27,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="2"><b>Block Read and Write access to specific file</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}, {'PrimaryId': 'CdRomDevices'}, {'PrimaryId': 'WpdDevices'}]"> (details)</a></ul>
+                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
-            <td rowspan="2" valign="top">
+            <td rowspan="2" valign="top">.
                 <ul></ul>
             </td>
             <td>Deny</td>
@@ -44,8 +44,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <summary>View</summary>
                 User condition: All Users<br>
                 Parameters: MatchAll
-                <ul><li> MatchAny 
-                        <ul><li>Block Read and Write access to specific file _Groups_2<a href="#block-read-and-write-access-to-specific-file-_groups_2" title="MatchAny [{'PathId': '*.exe'}, {'PathId': '*.dll'}]"> (details)</a></ul>
+                <ul>
                 </ul>
                 </details></td>
         </tr><tr>
@@ -62,17 +61,78 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+### Unauthorized File Group_0
+
+
+
+This is a group of type *File*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PathId | *.exe |
+| PathId | *.dll |
+
+
+#### Available properties for Unauthorized File Group_0
+
+**PathId**:  string, value of file path or name, support wildcard and only applicable for File type Group.      
+
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
+	<Name>Unauthorized File Group_0</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PathId>*.exe</PathId>
+		<PathId>*.dll</PathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
 
 ### Any Removable Storage and CD-DVD and WPD Group_1
 
+
+
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
+
 
 |  Property | Value |
 |-----------|-------|
 | PrimaryId | RemovableMediaDevices |
 | PrimaryId | CdRomDevices |
 | PrimaryId | WpdDevices |
+
+
+#### Available properties for Any Removable Storage and CD-DVD and WPD Group_1
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
+**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
+**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
+**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
+> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
+
+**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
+**BusId**: For example, USB, SCSI         
+**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
+**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -91,36 +151,10 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Block Read and Write access to specific file _Groups_2
-
-This is a group of type *File*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PathId | *.exe |
-| PathId | *.dll |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-	<Name>Block Read and Write access to specific file _Groups_2</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PathId>*.exe</PathId>
-		<PathId>*.dll</PathId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
-|==============|================|===============|
+|--------------|----------------|---------------|
 DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
 DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
@@ -128,9 +162,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Block Read and Write access to specific file _Groups.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
-- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Unauthorized File Group.xml](Intune%20OMA-URI/Unauthorized%20File%20Group.xml)
 - [Group Policy/Block Read and Write access to specific file _Policy.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Policy.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -148,11 +182,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
+- File Execute (32) is an unsupported access mask
+- File Read (8) is an unsupported access mask
 - File Write (16) is an unsupported access mask
 - Parameters are not supported
 - File groups not supported.
-- File Execute (32) is an unsupported access mask
-- File Read (8) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -165,6 +199,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
+		<Name>Unauthorized File Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.exe</PathId>
+			<PathId>*.dll</PathId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
 		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
@@ -173,15 +216,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
 			<PrimaryId>CdRomDevices</PrimaryId>
 			<PrimaryId>WpdDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-		<Name>Block Read and Write access to specific file _Groups_2</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PathId>*.exe</PathId>
-			<PathId>*.dll</PathId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -315,7 +349,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 
 ## Mac Policy
 
-This policy is not supported on Mac because Primary ID [CdRomDevices] is not supported on macOS.
+This policy is not supported on Mac because Unsupported Descriptor ID PathId
 
 Learn more
 - [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)

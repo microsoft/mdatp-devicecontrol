@@ -40,14 +40,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>  
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
                 {%- endfor -%}
                 </ul>
             </td>
-            <td rowspan="{{ value.entries | length }}" valign="top">
+            <td rowspan="{{ value.entries | length }}" valign="top">.
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
                 {%- endfor -%}
                 </ul>
             </td>
@@ -72,11 +72,11 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 User condition: {{ value.entries[0].sid }}<br>
                 Parameters: {{ value.entries[0].parameters.match_type }}
                 <ul> 
-                {%- for condition in value.entries[0].parameters.conditions -%}
+                {%- for condition in value.entries[0].parameters.properties -%}
                     <li> {{ condition.match_type }} 
                         <ul>
                         {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
+                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
@@ -108,7 +108,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 User Condition: {{ entry.sid }}<br>
                 Parameters: {{ entry.parameters.match_type }}
                 <ul> 
-                {%- for condition in entry.parameters.conditions -%}
+                {%- for condition in entry.parameters.properties -%}
                     <li> {{ condition.match_type }} 
                         <ul>
                         {%- for id in condition.groups -%}

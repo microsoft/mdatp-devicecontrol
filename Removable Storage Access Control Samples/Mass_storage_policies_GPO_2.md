@@ -27,10 +27,10 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="10"><b>Gestion des périphériques externes</b></td>
             <td rowspan="10 valign="top">
-                <ul><li>Mass_storage_groups_GPO_2_1<a href="#mass_storage_groups_gpo_2_1" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}, {'PrimaryId': 'CdRomDevices'}, {'PrimaryId': 'WpdDevices'}, {'FriendlyNameId': 'SDHC*'}, {'FriendlyNameId': 'SDXC*'}, {'DeviceId': 'USBSTOR\\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3'}, {'VID_PID': '0951_169D'}, {'VID_PID': '2009_16AF'}, {'VID_PID': '1908_0226'}]"> (details)</a></ul>
+                <ul><li>Mass_storage_groups_GPO_2_1<a href="#mass_storage_groups_gpo_2_1" title="MatchAny {'PrimaryId': 'WpdDevices', 'FriendlyNameId': 'SDXC*', 'DeviceId': 'USBSTOR\\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3', 'VID_PID': '1908_0226'}"> (details)</a></ul>
             </td>
-            <td rowspan="10" valign="top">
-                <ul><li>Mass_storage_groups_GPO_2_2<a href="#mass_storage_groups_gpo_2_2" title="MatchAny [{'VID_PID': '07B4_0232'}, {'VID_PID': '07B4_0279'}, {'VID_PID': '07B4_0244'}, {'VID_PID': '07B4_0264'}, {'VID_PID': '07B4_0236'}, {'VID_PID': '07B4_0245'}, {'VID_PID': '0911_1F40'}, {'VID_PID': '0911_251C'}, {'VID_PID': '1D54_1072'}, {'VID_PID': '1D54_1070'}, {'VID_PID': '1D54_1080'}, {'VID_PID': '054C_0B6F'}]"> (details)</a><li>Mass_storage_groups_GPO_2_3<a href="#mass_storage_groups_gpo_2_3" title="MatchAny [{'VID_PID': '046D_0837'}, {'VID_PID': '046D_085B'}, {'VID_PID': '046D_0825'}, {'VID_PID': '03F0_5705'}, {'VID_PID': '03F0_5D05'}, {'VID_PID': '040A_6030'}, {'VID_PID': '040A_601D'}, {'VID_PID': '1083_1646'}, {'VID_PID': '1083_1647'}, {'VID_PID': '04CA_7053'}, {'VID_PID': '04CA_7054'}, {'VID_PID': '04F2_B51C'}, {'VID_PID': '05C8_0383'}, {'VID_PID': '05C8_034B'}, {'VID_PID': '0461_4DFE'}]"> (details)</a><li>Mass_storage_groups_GPO_2_4<a href="#mass_storage_groups_gpo_2_4" title="MatchAny [{'VID_PID': '09CB_1007'}, {'VID_PID': '0F7E_900C'}]"> (details)</a></ul>
+            <td rowspan="10" valign="top">.
+                <ul><li>Mass_storage_groups_GPO_2_2<a href="#mass_storage_groups_gpo_2_2" title="MatchAny {'VID_PID': '054C_0B6F'}"> (details)</a><li>Mass_storage_groups_GPO_2_3<a href="#mass_storage_groups_gpo_2_3" title="MatchAny {'VID_PID': '0461_4DFE'}"> (details)</a><li>Mass_storage_groups_GPO_2_4<a href="#mass_storage_groups_gpo_2_4" title="MatchAny {'VID_PID': '0F7E_900C'}"> (details)</a></ul>
             </td>
             <td>Allow</td>
             <td>:white_check_mark:</td>
@@ -182,9 +182,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="8"><b>Gestion des dictaphones</b></td>
             <td rowspan="8 valign="top">
-                <ul><li>Mass_storage_groups_GPO_2_2<a href="#mass_storage_groups_gpo_2_2" title="MatchAny [{'VID_PID': '07B4_0232'}, {'VID_PID': '07B4_0279'}, {'VID_PID': '07B4_0244'}, {'VID_PID': '07B4_0264'}, {'VID_PID': '07B4_0236'}, {'VID_PID': '07B4_0245'}, {'VID_PID': '0911_1F40'}, {'VID_PID': '0911_251C'}, {'VID_PID': '1D54_1072'}, {'VID_PID': '1D54_1070'}, {'VID_PID': '1D54_1080'}, {'VID_PID': '054C_0B6F'}]"> (details)</a></ul>
+                <ul><li>Mass_storage_groups_GPO_2_2<a href="#mass_storage_groups_gpo_2_2" title="MatchAny {'VID_PID': '054C_0B6F'}"> (details)</a></ul>
             </td>
-            <td rowspan="8" valign="top">
+            <td rowspan="8" valign="top">.
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -305,9 +305,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="8"><b>Gestion des appareils immobiliers</b></td>
             <td rowspan="8 valign="top">
-                <ul><li>Mass_storage_groups_GPO_2_4<a href="#mass_storage_groups_gpo_2_4" title="MatchAny [{'VID_PID': '09CB_1007'}, {'VID_PID': '0F7E_900C'}]"> (details)</a></ul>
+                <ul><li>Mass_storage_groups_GPO_2_4<a href="#mass_storage_groups_gpo_2_4" title="MatchAny {'VID_PID': '0F7E_900C'}"> (details)</a></ul>
             </td>
-            <td rowspan="8" valign="top">
+            <td rowspan="8" valign="top">.
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -429,77 +429,13 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
-
-### Mass_storage_groups_GPO_2_4
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 09CB_1007 |
-| VID_PID | 0F7E_900C |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_4</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>09CB_1007</VID_PID>
-		<VID_PID>0F7E_900C</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Mass_storage_groups_GPO_2_1
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| PrimaryId | CdRomDevices |
-| PrimaryId | WpdDevices |
-| FriendlyNameId | SDHC* |
-| FriendlyNameId | SDXC* |
-| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
-| VID_PID | 0951_169D |
-| VID_PID | 2009_16AF |
-| VID_PID | 1908_0226 |
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
-		<FriendlyNameId>SDHC*</FriendlyNameId>
-		<FriendlyNameId>SDXC*</FriendlyNameId>
-		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-		<VID_PID>0951_169D</VID_PID>
-		<VID_PID>2009_16AF</VID_PID>
-		<VID_PID>1908_0226</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Mass_storage_groups_GPO_2_3
 
+
+
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
+
 
 |  Property | Value |
 |-----------|-------|
@@ -518,6 +454,26 @@ The match type for the group is *MatchAny*.
 | VID_PID | 05C8_0383 |
 | VID_PID | 05C8_034B |
 | VID_PID | 0461_4DFE |
+
+
+#### Available properties for Mass_storage_groups_GPO_2_3
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
+**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
+**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
+**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
+> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
+
+**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
+**BusId**: For example, USB, SCSI         
+**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
+**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -550,8 +506,11 @@ The match type for the group is *MatchAny*.
 
 ### Mass_storage_groups_GPO_2_2
 
+
+
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
+
 
 |  Property | Value |
 |-----------|-------|
@@ -567,6 +526,26 @@ The match type for the group is *MatchAny*.
 | VID_PID | 1D54_1070 |
 | VID_PID | 1D54_1080 |
 | VID_PID | 054C_0B6F |
+
+
+#### Available properties for Mass_storage_groups_GPO_2_2
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
+**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
+**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
+**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
+> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
+
+**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
+**BusId**: For example, USB, SCSI         
+**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
+**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
+
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -594,10 +573,122 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Mass_storage_groups_GPO_2_4
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 09CB_1007 |
+| VID_PID | 0F7E_900C |
+
+
+#### Available properties for Mass_storage_groups_GPO_2_4
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
+**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
+**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
+**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
+> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
+
+**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
+**BusId**: For example, USB, SCSI         
+**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
+**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
+
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_4</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>09CB_1007</VID_PID>
+		<VID_PID>0F7E_900C</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Mass_storage_groups_GPO_2_1
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
+| FriendlyNameId | SDHC* |
+| FriendlyNameId | SDXC* |
+| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
+| VID_PID | 0951_169D |
+| VID_PID | 2009_16AF |
+| VID_PID | 1908_0226 |
+
+
+#### Available properties for Mass_storage_groups_GPO_2_1
+
+
+**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
+**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
+**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
+**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
+> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
+
+**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
+**BusId**: For example, USB, SCSI         
+**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
+**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
+
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_1</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
+		<FriendlyNameId>SDHC*</FriendlyNameId>
+		<FriendlyNameId>SDXC*</FriendlyNameId>
+		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+		<VID_PID>0951_169D</VID_PID>
+		<VID_PID>2009_16AF</VID_PID>
+		<VID_PID>1908_0226</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
-|==============|================|===============|
+|--------------|----------------|---------------|
 DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
 DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
@@ -607,6 +698,7 @@ This policy is based on information in the following files:
 
 - [Group Policy/Mass_storage_groups_GPO_2.xml](Group%20Policy/Mass_storage_groups_GPO_2.xml)
 - [Group Policy/Mass_storage_policies_GPO_2.xml](Group%20Policy/Mass_storage_policies_GPO_2.xml)
+- [Group Policy/mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml](Group%20Policy/mass_storage_groups_gpo_2_2%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D.xml)
 
 
 # Deployment Instructions
@@ -624,144 +716,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *09CB_1007* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *0F7E_900C* for VID_PID
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_1</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_1 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *RemovableMediaDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *CdRomDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *WpdDevices* for PrimaryId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for FriendlyNameId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *FriendlyNameId* for Name
-        5. Enter *SDHC** for FriendlyNameId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for FriendlyNameId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *FriendlyNameId* for Name
-        5. Enter *SDXC** for FriendlyNameId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for DeviceId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *DeviceId* for Name
-        5. Enter *USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3* for DeviceId
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *0951_169D* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *2009_16AF* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *1908_0226* for VID_PID
-        6. Click "Save"
-    
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
 <summary>Create a reusable setting for Mass_storage_groups_GPO_2_3</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
@@ -771,156 +725,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *046D_0837* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *046D_085B* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *046D_0825* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *03F0_5705* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *03F0_5D05* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *040A_6030* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *040A_601D* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *1083_1646* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *1083_1647* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *04CA_7053* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *04CA_7054* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *04F2_B51C* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *05C8_0383* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *05C8_034B* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *0461_4DFE* for VID_PID
-        6. Click "Save"
-    
    
    8. Click "Next"
    9. Click "Add"
@@ -936,125 +740,33 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
    
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *07B4_0232* for VID_PID
-        6. Click "Save"
-    
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
    
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *07B4_0279* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *07B4_0244* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *07B4_0264* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *07B4_0236* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *07B4_0245* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *0911_1F40* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *0911_251C* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *1D54_1072* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *1D54_1070* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *1D54_1080* for VID_PID
-        6. Click "Save"
-    
-   
-      
-   8. Add a Removable Storage object for VID_PID
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *VID_PID* for Name
-        5. Enter *054C_0B6F* for VID_PID
-        6. Click "Save"
-    
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_1</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_1 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
    
    8. Click "Next"
    9. Click "Add"
@@ -1422,31 +1134,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_4</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>09CB_1007</VID_PID>
-			<VID_PID>0F7E_900C</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_1</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<PrimaryId>CdRomDevices</PrimaryId>
-			<PrimaryId>WpdDevices</PrimaryId>
-			<FriendlyNameId>SDHC*</FriendlyNameId>
-			<FriendlyNameId>SDXC*</FriendlyNameId>
-			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-			<VID_PID>0951_169D</VID_PID>
-			<VID_PID>2009_16AF</VID_PID>
-			<VID_PID>1908_0226</VID_PID>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
 		<Name>Mass_storage_groups_GPO_2_3</Name>
@@ -1486,6 +1173,31 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<VID_PID>1D54_1070</VID_PID>
 			<VID_PID>1D54_1080</VID_PID>
 			<VID_PID>054C_0B6F</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_4</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>09CB_1007</VID_PID>
+			<VID_PID>0F7E_900C</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
 		</DescriptorIdList>
 	</Group>
 </Groups>

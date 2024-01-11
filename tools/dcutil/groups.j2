@@ -9,10 +9,8 @@ The match type for the group is *{{ groups[group_id].match_type }}*.
 
 |  Property | Value |
 |-----------|-------|
-{% for property in groups[group_id].properties -%}
-{% for key,value in property.items() -%} 
-| {{ key }} | {{ value }} |
-{% endfor -%}
+{% for property in groups[group_id]._properties -%} 
+| {{ property.name }} | {{ property.value }} |
 {% endfor %}
 
 #### Available properties for {{ groups[group_id].name }}
@@ -39,7 +37,7 @@ For example:
   - `0751_55E0` matches that exact VID_PID pair value.
   - `_55E0` matches any device with the PID value 55E0.
   - `0751_` matches any device with the VID value 0751.     
-  
+
 **PrinterConnectionId**: Includes the following values: 
 - USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
 - Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.

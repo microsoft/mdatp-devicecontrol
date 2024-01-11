@@ -227,6 +227,44 @@ class IntuneCustomRow:
             case other:
                 print ("Unknown object class "+str(object.__class__.__name__))
             
+class Property:
+
+    def __init__(self, property_name, property_value):
+        self.name = property_name
+        self.value = property_value
+
+class Clause:
+
+
+    def __init__(self,clause):
+        self._properties = []
+        self.sub_clauses = []
+        self.sub_clause_type = None
+
+        property = None
+        value = None
+        if "$type" in clause:
+            property = clause.get("$type")
+            if property == "and" or property == "or":
+                self.sub_clause_type = property
+                if "clauses" in clause:
+                    self.has_sub_clauses = True
+                    clauses = clause.get("clauses")
+                    for subclause in clauses:
+                        sc = Clause(subclause)
+                        self.sub_clauses.append(sc)
+                        
+                        
+
+            if "value" in clause:
+                value = clause.get("value")
+
+            if property is not None and value is not None:
+                self._properties.append(Property(property, value))
+            elif self.sub_clause_type is None:
+                print("Unknown Clause")
+                return
+
 
 class Group:
 
@@ -235,38 +273,65 @@ class Group:
         "MatchAll"
     ]
 
-    def __init__(self,root):
+    def __init__(self,root,format,path):
 
-        self.id = root.attrib["Id"]
-        if "Type" in root.attrib.keys():
-            self.type = root.attrib["Type"]
-        else:
-            self.type = "Device"
+        self.format = format
+        self.path = path
+        self._properties = []
+        self.clauses = []
+        self.root = root
+        self.conditions = {}
 
-        name_node = root.find(".//Name")
-        if name_node is None:
-            self.name = "?"
-        else:
-            self.name = name_node.text
+        if format == "gpo" or format =="oma-uri":
 
-        match_node = root.find(".//MatchType")
-        if match_node is None:
-            if "MatchType" in root.attrib.keys():
-                self.match_type = root.attrib["MatchType"]
+            self.id = root.attrib["Id"]
+            if "Type" in root.attrib.keys():
+                self.type = root.attrib["Type"]
             else:
-                self.match_type = "?"
-        else:
-            self.match_type = match_node.text
+                self.type = "Device"
 
+            name_node = root.find(".//Name")
+            if name_node is None:
+                self.name = "?"
+            else:
+                self.name = name_node.text
 
-        self.properties = []
-        descriptors = root.findall("./DescriptorIdList//")
-        for descriptor in descriptors:
-            self.properties.append({descriptor.tag: descriptor.text})
+            match_node = root.find(".//MatchType")
+            if match_node is None:
+                if "MatchType" in root.attrib.keys():
+                    self.match_type = root.attrib["MatchType"]
+                else:
+                    self.match_type = "?"
+            else:
+                self.match_type = match_node.text
+            
+            descriptors = root.findall("./DescriptorIdList//")
+            for descriptor in descriptors:
+                self._properties.append(Property(descriptor.tag, descriptor.text))
+                self.conditions[descriptor.tag] = descriptor.text
 
-        self.path = ""
-        self.format = ""
+        elif format == "mac":
+            if "id" in root.keys():
+                self.id = root["id"]
 
+            if "name" in root.keys():
+                self.name = root["name"]
+
+            if "$type" in root.keys():
+                self.type = root["$type"]
+
+            if "query" in root.keys():
+                query = root["query"]
+
+                if "$type" in query.keys():
+                    self.match_type = query["$type"]
+
+                if "clauses" in query.keys():
+                    clauses = query["clauses"]
+                    for clause in clauses:
+                        self.clauses.append(Clause(clause))
+
+                self.conditions = clauses
 
     def get_oma_uri(self):
         return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData"
@@ -274,6 +339,9 @@ class Group:
     def get_section_title(self):
 
         return clean_up_name(self.name)
+    
+    def get_conditions(self):
+        return self.conditions
 
     def toXML(self,indent = "\t"):
 
@@ -283,9 +351,9 @@ class Group:
         out +=indent + "\t<MatchType>"+self.match_type+"</MatchType>\n"
         out +=indent + "\t<DescriptorIdList>\n"
         
-        for property in self.properties:
-            tag = list(property.keys())[0]
-            text = property[tag]
+        for property in self._properties:
+            tag = property.name
+            text = property.value
 
             out += indent +"\t\t<"+tag+">"+xml_safe_text(text)+"</"+tag+">\n"
 
@@ -294,13 +362,19 @@ class Group:
 
         return out
     
+    def toJSON(self):
+        return json.dumps(self.root)
+    
     def __str__(self):
-        return self.toXML()
+        if self.format != "mac":
+            return self.toXML()
+        else:
+            return self.toJSON()
     
     def __eq__(self,other):
-        if self.match_type == other.match_type and len(self.properties) == len(other.properties):
-            for property in self.properties:
-                if property in other.properties:
+        if self.match_type == other.match_type and len(self._properties) == len(other._properties):
+            for property in self._properties:
+                if property in other._properties:
                     continue
                 else:
                     return False
@@ -309,9 +383,9 @@ class Group:
     
     def __hash__(self):
         hashList = []
-        for property in self.properties:
-            key = next(iter(property))
-            value = property[key]
+        for property in self._properties:
+            key = property.name
+            value = property.value
             hashList.append(key+"="+value)
 
         hashList.append ("type="+self.match_type)
@@ -696,9 +770,9 @@ class Feature:
                     support.issues.append(object.type+" groups not supported.")
                 else:
                     supported_properties = supported_group_types[object.type]["properties"]
-                    for property in object.properties:
-                        propertyId = next(iter(property))
-                        value = property[propertyId]
+                    for property in object._properties:
+                        propertyId = property.name
+                        value = property.value
                         if propertyId not in supported_properties:
                             support.issues.append(propertyId+" not supported for "+object.type+" group.")
                         else: 
@@ -821,25 +895,47 @@ class Inventory:
                 for file in files:
                     if str(file).endswith(".xml"):
                         xml_path = dir[0]+os.sep+file
-                        self.load_file(xml_path)
+                        self.load_xml_file(xml_path)
+                    if str(file).endswith(".json"):
+                        json_path = dir[0]+os.sep+file
+                        self.load_json_file(json_path)
 
-    def load_file(self,xml_path):
+    
+    
+    def load_json_file(self,json_path):
+        try:
+            with open(json_path) as file:
+                json_object = json.load(file)
+
+                if "groups" in json_object.keys():
+                    group_index = 1
+                    for group in json_object["groups"]:
+                        self.addGroup(Group(group,"mac",json_path),group_index)
+                        group_index=group_index+1
+
+            return
+        except Exception as e:
+            print(full_stack())
+            print ("Error in "+json_path+": "+str(e))
+            return
+    
+    def load_xml_file(self,xml_path):
         try:
             with open(xml_path) as file:
                 root = ET.fromstring(file.read())
                 match root.tag:
                     case "Group":
-                        self.addGroup(Group(root),xml_path,"oma-uri")
+                        self.addGroup(Group(root,"oma-uri",xml_path))
                     case "Groups":
                         group_index = 1
                         for group in root.findall(".//Group"):
-                            self.addGroup(Group(group),xml_path,"gpo", group_index)
+                            self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyGroups":
                         #This is what Intune UX looks like on disk
                         group_index = 1
                         for group in root.findall(".//Group"):
-                            self.addGroup(Group(group),xml_path,"gpo", group_index)
+                            self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyRule":
                         self.addPolicyRule(PolicyRule(root),xml_path,"oma-uri")
@@ -856,7 +952,11 @@ class Inventory:
             print ("Error in "+xml_path+": "+str(e))
             return
 
-    def addGroup(self,group,path,format = "gpo", group_index=0):
+    def addGroup(self,group, group_index=0):
+
+        
+        path = group.path
+        format = group.format
 
         if group.name == "?":
             paths = str(path).split(os.sep)
@@ -864,8 +964,6 @@ class Inventory:
             fileWithoutExtension = last_path.split(".")[0]
             group.name = fileWithoutExtension+"_"+str(int(group_index))
 
-        group.path = path
-        group.format = format
 
         #Could check for Intune UX support
         new_row = pd.DataFrame([{
@@ -1028,6 +1126,9 @@ class Inventory:
     
     def process_query(self,query):
 
+        if query is None:
+            query="path.str.contains('(.*)')"
+
         filtered_rules = self.query_policy_rules(query)
 
         result = {}
@@ -1105,6 +1206,11 @@ class Inventory:
 
         return result    
 
+    def generate_csv(self,dest):
+        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep="\t")
+        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep="\t")
+
+
     def generate_text(self,result,dest,file,title, description="A sample policy", settings = None ):
         
         if settings is not None:
@@ -1169,6 +1275,8 @@ def file(path):
 def format(string):
     match string:
         case "text":
+            return string
+        case "csv":
             return string
         case other:
             raise argparse.ArgumentError("Invalid format "+string)
@@ -1270,9 +1378,9 @@ if __name__ == '__main__':
             if out_file is None:
                 out_file = default_outfile
 
-        result = inventory.process_query(query)
-        
         if args.format == "text":
+            result = inventory.process_query(query)
             inventory.generate_text(result,args.dest,out_file,title)
-
+        elif args.format == "csv":
+            inventory.generate_csv(args.dest)
         

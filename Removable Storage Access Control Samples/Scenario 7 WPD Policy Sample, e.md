@@ -29,7 +29,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td rowspan="2 valign="top">
                 <ul></ul>
             </td>
-            <td rowspan="2" valign="top">
+            <td rowspan="2" valign="top">.
                 <ul></ul>
             </td>
             <td>Deny</td>
@@ -56,10 +56,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-
 ## Settings
 | Setting Name |  Setting Value | Documentation |
-|==============|================|===============|
+|--------------|----------------|---------------|
 DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
 DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
