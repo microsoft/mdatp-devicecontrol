@@ -894,7 +894,19 @@ class Entry:
                 WindowsEntryType.FileExecuteMask: False,
                 WindowsEntryType.PrintMask: False
         }
+
+        self.permission_icons = {
+                WindowsEntryType.DiskReadMask: "-",
+                WindowsEntryType.DiskWriteMask: "-",
+                WindowsEntryType.DiskExecuteMask: "-",
+                WindowsEntryType.FileReadMask: "-",
+                WindowsEntryType.FileWriteMask: "-",
+                WindowsEntryType.FileExecuteMask: "-",
+                WindowsEntryType.PrintMask: "-"
+        }
+
         self.parameters = None
+        self.sid = "All Users"
 
         if format == "gpo" or format == "oma-uri":
 
@@ -913,15 +925,7 @@ class Entry:
             has_mixed_entry_type = False
 
             
-            self.permission_icons = {
-                WindowsEntryType.DiskReadMask: "-",
-                WindowsEntryType.DiskWriteMask: "-",
-                WindowsEntryType.DiskExecuteMask: "-",
-                WindowsEntryType.FileReadMask: "-",
-                WindowsEntryType.FileWriteMask: "-",
-                WindowsEntryType.FileExecuteMask: "-",
-                WindowsEntryType.PrintMask: "-"
-            }
+            
 
         
             
@@ -974,6 +978,7 @@ class Entry:
         elif format == "mac":
             self.id = entry["id"]
             
+            
 
             if "$type" in entry.keys():
                 type = entry["$type"]
@@ -1015,7 +1020,12 @@ class Entry:
                             self.permissions[WindowsEntryType.DiskExecuteMask] = True
                             self.permissions[WindowsEntryType.FileExecuteMask] = True
                             
-
+                    self.access_mask = 0
+                    for mask in self.permissions:
+                        enabled = self.permissions[mask]
+                        if enabled:
+                            self.access_mask = self.access_mask+mask
+                            self.permission_icons[mask] = WindowsEntryType.true_icons[self.enforcement.variations["gpo"]]
             
 
 
@@ -1030,9 +1040,9 @@ class Entry:
     def toXML(self,indent):
 
         out = indent + "<Entry Id=\""+self.id+"\">\n"
-        out += indent +"\t<Type>"+self.type+"</Type>\n"
-        out += indent +"\t<AccessMask>"+self.access_mask+"</AccessMask>\n"
-        out += indent +"\t<Options>"+self.options+"</Options>\n"
+        out += indent +"\t<Type>"+self.enforcement.variations["gpo"]+"</Type>\n"
+        out += indent +"\t<AccessMask>"+str(self.access_mask)+"</AccessMask>\n"
+        out += indent +"\t<Options>"+str(int(self.notifications))+"</Options>\n"
 
         if self.sid != "All Users":
             out += indent +"\t<Sid>"+self.sid+"</Sid>\n"
@@ -1665,6 +1675,7 @@ class Inventory:
                     groups[group.id] = group
                     paths.append(group.path)
                     intune_ux_support += self.intune_ux.get_support_for(group)
+                    windows_support.issues+= self.windows_support.get_support_for(group)
             
             for oma_uri_group in groups_for_rule["oma-uri"]:
                 oma_uri[oma_uri_group.get_oma_uri()] = IntuneCustomRow(oma_uri_group)
@@ -1703,7 +1714,8 @@ class Inventory:
         result["rulesXML"] = rulesXML
         result["mac_policy"] = mac_policy
         result["mac_error"] = mac_error
-        result["has_printing"] = has_printing
+        result["windows_support"] = windows_support 
+        result["entry_type"] = entry_type
 
         return result    
 
@@ -1730,11 +1742,12 @@ class Inventory:
              "rules":result["rules"],
              "groups":result["groups"], 
              "intune_ux_support":result["intune_ux_support"],
+             "windows_support": result["windows_support"],
              "groupsXML": result["groupsXML"], 
              "rulesXML":result["rulesXML"],
              "macPolicy":result["mac_policy"],
              "macError": result["mac_error"],
-             "has_printing": result["has_printing"],
+             "entry_type": result["entry_type"],
              "description": description,
              "settings": settings,
              "env":os.environ,
