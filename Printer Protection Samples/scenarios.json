@@ -1,6 +1,6 @@
 {
     "title": "Printers",
-    "rules":[
+    "scenarios":[
         {
             "file": "Group Policy\\Printer_Policies.xml",
             "description": "An example showing how device control can restrict access to printers based on device properties, network, and VPN connection.",

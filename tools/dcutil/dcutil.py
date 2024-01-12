@@ -393,45 +393,124 @@ class Group:
         hashList.sort()
         return hash(str(hashList))
 
+class Enforcement:
+
+    Allow = "allow"
+    Deny = "deny"
+    AuditAllowed = "auditAllowed"
+    AuditDenied = "auditDeny"
+
+    def __init__(self,name,label,variations):
+        self.name = name
+        self.label = label
+        self.variations = variations
+
+    def __str__(self):
+        return self.label
+    
+    def __eq__(self,other):
+        return str(self) == str(other)
+    
+    def __hash__(self):
+        return hash(str(self))
+    
 class PolicyRule:
 
-    def __init__(self,root, rule_index = 1):
-        self.id = root.attrib["Id"]
-        name_node = root.find(".//Name")
-        if name_node is None:
-            self.name = "?"
-        else:
-            self.name = name_node.text
+    Allow = Enforcement(Enforcement.Allow,"Allow",{
+        "mac":"allow",
+        "gpo":"Allow",
+        "oma-uri":"Allow"
+    })
 
+    AuditAllowed = Enforcement(Enforcement.AuditAllowed,"Audit Allowed",{
+        "mac":"auditAllow",
+        "gpo":"AuditAllowed",
+        "oma-uri":"AuditAllowed"
+    })
+
+    Deny = Enforcement(Enforcement.Deny,"Deny",{
+        "mac":"deny",
+        "gpo":"Deny",
+        "oma-uri":"Deny"
+    })
+
+    AuditDenied = Enforcement(Enforcement.AuditDenied,"Audit Denied",{
+        "mac":"auditDeny",
+        "gpo":"AuditDenied",
+        "oma-uri":"AuditDenied"
+    })
+
+    Enforcements = [
+        Allow,Deny,AuditAllowed,AuditDenied
+    ]
+
+    def __init__(self,root, format, path, rule_index = 1):
+
+                            
+        self.root = root
+
+        self.format = format
+        self.path = path        
+        self.rule_index = rule_index
+        self.id = None
+        self.name = None
         self.included_groups = []
         self.excluded_groups = []
         self.entries = []
-        self.has_printing = False
 
-        included_groups_node = root.find(".//IncludedIdList")
-        if not included_groups_node is None:
-            groups = included_groups_node.findall(".//GroupId")
-            for group in groups:
-                self.included_groups.append(group.text)
+        self.entry_type = None
 
-        excluded_groups_node = root.find(".//ExcludedIdList")
-        if not excluded_groups_node is None:
-            groups = excluded_groups_node.findall(".//GroupId")
-            for group in groups:
-                self.excluded_groups.append(group.text)
+        if format == "gpo" or format =="oma-uri":
 
-        for entry in root.findall(".//Entry"):
-            newEntry = Entry(entry)
-            if newEntry.has_printing:
-                self.has_printing = True
+            self.id = root.attrib["Id"]
+            name_node = root.find(".//Name")
+            if name_node is None:
+                self.name = "?"
+            else:
+                self.name = name_node.text
 
-            self.entries.append(Entry(entry))        
+            included_groups_node = root.find(".//IncludedIdList")
+            if not included_groups_node is None:
+                groups = included_groups_node.findall(".//GroupId")
+                for group in groups:
+                    self.included_groups.append(group.text)
 
-                    
-        self.format = ""
-        self.path = ""        
-        self.rule_index = rule_index
-        return
+            excluded_groups_node = root.find(".//ExcludedIdList")
+            if not excluded_groups_node is None:
+                groups = excluded_groups_node.findall(".//GroupId")
+                for group in groups:
+                    self.excluded_groups.append(group.text)
+
+            for entry in root.findall(".//Entry"):
+                self.entries.append(Entry(entry,self.format))     
+
+        elif format == "mac":
+            if "id" in root.keys():
+                self.id = root["id"]
+
+            if "name" in root.keys():
+                self.name = root["name"]
+
+            if "includedGroups" in root.keys():
+                self.included_groups = root["includedGroups"]
+
+            if "entries" in root.keys():
+                entries = root["entries"]
+                for entry in entries:
+                    self.entries.append(Entry(entry,self.format))
+
+        #set the entry_type for the rule
+        # if there is more than 1 make it a generic device
+        for entry in self.entries:
+            if self.entry_type is None:
+                self.entry_type = entry.entry_type
+            elif self.entry_type is not entry.entry_type:
+                if self.format["mac"]:
+                    self.entry_type = Entry.AppleGeneric
+                else:
+                    self.entry_type = Entry.WindowsDevice
+                break
+        
 
     def get_oma_uri(self):
         return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote_plus(self.id)+"/RuleData"
@@ -461,32 +540,141 @@ class PolicyRule:
 
         return out
     
+    def toJSON(self):
+        return json.dumps(self.root)
+    
     def __eq__(self,other):
-        self_xml = self.toXML()
-        other_xml = other.toXML()
-        return self_xml == other_xml
+        return str(self) == str(other)
     
     def __hash__(self):
-        return hash(self.toXML())
-class Entry:
+        if self.format == "mac":
+            return hash(self.toJSON())
+        else:
+            return hash(self.toXML())
 
 
+class Option:
+
+    def __init__(self,name,label,variations):
+        self.name = name
+        self.label = label
+        self.variations = variations
+
+    def __str__(self):
+        return self.label
+
+class Notifications:
+
+    Nothing = Option("nothing","None",{
+        "mac":[],
+        "gpo": 0,
+        "oma-uri":0
+    })
+
+    ShowNotification = Option("show_notification","Show notification",{
+        "mac":"send_notification",
+        "gpo": 1,
+        "oma-uri":1
+    })
+
+    CreatePolicyTriggeredEvent = Option("send_event","Send event",{
+        "mac":"send_event",
+        "gpo": 2,
+        "oma-uri":2
+    })
+
+    
+    DontTriggerAudit = Option("disable","Disable",{
+        "mac": "disable",
+        "gpo": 4,
+        "oma_uri": 4
+    })
+
+    CreateFileEventWithFile = Option("fileEvidenceWithFile","Create file evidence with file",{
+        "mac": None,
+        "gpo": 8,
+        "oma-uri": 8
+    })
+        
+    CreateFileEventNoFile = Option("fileEvidenceWithoutFile","Create file evidence without file",{
+        "mac": None,
+        "gpo": 16,
+        "oma-uri": 16
+    })
+
+
+    def __init__(self,options,format):
+
+        self.notifications = []
+
+        if format == "mac" and options is None:
+            self.notifications.append(Notifications.Nothing)
+        elif options == 0:
+            self.notifications.append(Notifications.Nothing)
+        else:
+            all_notifications = [
+                Notifications.ShowNotification,
+                Notifications.CreatePolicyTriggeredEvent,
+                Notifications.DontTriggerAudit,
+                Notifications.CreateFileEventWithFile,
+                Notifications.CreateFileEventNoFile
+            ]
+
+            if format == "mac":
+                for option in options:
+                    for notification in all_notifications:
+                        if notification.variations["mac"] == option:
+                            self.notifications.append(notification)
+
+            else:
+                #On windows the options are a bit mask
+                for notification in all_notifications:
+                    if notification.variations["format"] & options:
+                        self.notifications.append(notification)
+
+    def __str__(self):
+        out = ""
+        if len(self.notifications) == 0:
+            out = "None"
+        elif len(self.notifications) == 1:
+            out = self.notifications[0]
+        else:
+            out = self.notifications[0]+" and "+self.notifications[1]
+
+        return out
+    
+    def __int__(self):
+        out = 0
+        for notification in self.notifications:
+            out = out + notification.variations["gpo"]
+
+        return out
+
+class WindowsEntryType:
+
+    DiskReadMask = 0x01
+    DiskWriteMask = 0x02
+    DiskExecuteMask = 0x04
+    FileReadMask = 0x08
+    FileWriteMask = 0x10
+    FileExecuteMask = 0x20
+    PrintMask = 0x40
 
     access_masks = {
-        0x01: "Disk Read",
-        0x02: "Disk Write",
-        0x04: "Disk Execute",
-        0x08: "File Read",
-        0x10: "File Write",
-        0x20: "File Execute",
-        0x40: "Print"
+        DiskReadMask: "Disk Read",
+        DiskWriteMask: "Disk Write",
+        DiskExecuteMask: "Disk Execute",
+        FileReadMask: "File Read",
+        FileWriteMask: "File Write",
+        FileExecuteMask: "File Execute",
+        PrintMask: "Print"
     }
 
     access_mask_text_labels = {
-        0x01: "Read",
-        0x02: "Write",
-        0x04: "Execute",
-        0x40: "Print"
+        DiskReadMask: "Read",
+        DiskWriteMask: "Write",
+        DiskExecuteMask: "Execute",
+        PrintMask: "Print"
     }
 
     allow_notification_masks = {
@@ -509,18 +697,12 @@ class Entry:
     }
 
     notification_masks = {
-        "Allow": allow_notification_masks,
-        "AuditAllowed": audit_allowed_notification_masks,
-        "Deny": deny_notification_masks,
-        "AuditDenied": audit_denied_notification_masks
+        PolicyRule.Allow: allow_notification_masks,
+        PolicyRule.AuditAllowed: audit_allowed_notification_masks,
+        PolicyRule.Deny: deny_notification_masks,
+        PolicyRule.AuditDenied: audit_denied_notification_masks
     }
 
-    type_label = {
-        "Allow": "Allow",
-        "AuditAllowed": "Audit Allowed",
-        "Deny": "Deny",
-        "AuditDenied": "Audit Denied"
-    }
 
     true_icons = {
         "Allow":":white_check_mark:",
@@ -529,79 +711,315 @@ class Entry:
         "AuditDenied":":page_facing_up:"
     }
 
-    def __init__(self,entry):
-        self.id = entry.attrib["Id"]
-        self.type = entry.find("./Type").text
-        self.type_text = Entry.type_label[self.type]
-        self.options = entry.find("./Options").text
-        self.access_mask = entry.find("./AccessMask").text
-        self.has_printing = False
 
+    def __init__(self,name, access_masks):
+        self.name = name
+        self.access_masks = access_masks
+
+
+class MacEntryType:
+
+    GenericRead = "generic_read"
+    GenericWrite = "generic_write"
+    GenericExecute = "generic_execute"
+
+    notification_masks = {
+        PolicyRule.Allow: ["disable_audit_allow"],
+        PolicyRule.AuditAllowed: ["send_event"],
+        PolicyRule.Deny: ["disable_audit_allow"],
+        PolicyRule.AuditDenied: ["send_event","send_notification"]
+    }
+
+
+    def __init__(self,name, access_types):
+        self.name = name
+        self.access_types = access_types
+
+    def get_generic_access(self,permission):
+        if permission in [MacEntryType.GenericRead, MacEntryType.GenericWrite, MacEntryType.GenericExecute]:
+            return permission
+         
+        if permission in self.access_types.keys():
+            return self.access_types[permission]["generic_access"]
+        else:
+            return None
+
+
+
+class Entry:
+
+    
+    WindowsPrinter = WindowsEntryType("windows_printer",
+        {
+    
+            "access_masks": [0x40]
+                                              
+        }
+    )
+    WindowsDevice  = WindowsEntryType("windows_device",
+        {
+    
+            "access_masks": [0x01,0x02,0x04,0x08,0x10,0x20]
+                                              
+        }
+    )
+    WindowsGeneric  = WindowsEntryType("windows_generic",
+        {
+    
+            "access_masks": [0x01,0x02,0x04,0x08,0x10,0x20,0x04]
+                                              
+        }
+    )
+    AppleDevice = MacEntryType("appleDevice",
+        {
+            "backup_device": {
+                "generic_access": MacEntryType.GenericRead,
+                "description": "",
+                "label": "Backup device"
+            },
+            "update_device":{
+                "generic_access": MacEntryType.GenericWrite,
+                "description": "",
+                "label": "Update device"
+            },
+            "download_photos_from_device":{
+                "generic_access": MacEntryType.GenericRead,
+                "description": "download photo(s) from the specific iOS device to local machine",
+                "label": "Download photos"
+            },
+            "download_files_from_device":{ 
+                "generic_access": MacEntryType.GenericRead,
+                "description": "download file(s) from the specific iOS device to local machine",
+                "label": "Download files"
+            },
+            "sync_content_to_device":{
+                "generic_access": MacEntryType.GenericWrite,
+                "description": "sync content from local machine to specific iOS device",
+                "label": "Synch device"
+            }
+        }
+    )
+    AppleRemovableMedia = MacEntryType("removableMedia",
+        {
+            "read":{
+                "generic_access":MacEntryType.GenericRead,
+                "label": "Read",
+                "description":""
+            },
+            "write":{
+                "generic_access":MacEntryType.GenericWrite,
+                "label": "Write",
+                "description":""
+            },
+            "execute":{
+                "generic_access":MacEntryType.GenericExecute,
+                "label": "Execute",
+                "description":""
+            }
+        }
+    )
+    AppleGeneric = MacEntryType("generic", {
+        MacEntryType.GenericRead: {
+            "label": "Read",
+            "description": "Equivalent to setting all access values denoted in this table that map to generic_read."
+        },
+        MacEntryType.GenericWrite:{
+            "label": "Write",
+            "description": "Equivalent to setting all access values denoted in this table that map to generic_write.",
+        },
+        MacEntryType.GenericExecute:{
+            "label": "Execute",
+            "description": "Equivalent to setting all access values denoted in this table that map to generic_execute."
+        }
+    })
+    AppleBluetoothDevice = MacEntryType("bluetoothDevice",
+        {
+            "download_files_from_device": {
+                "generic_access": MacEntryType.GenericRead,
+                "label": "Download files",
+                "description":""
+            },
+            "send_files_to_device": {
+                "generic_access": MacEntryType.GenericWrite,
+                "label": "Send files",
+                "description":""
+            }
+        }
+    )
+    ApplePortableDevice = MacEntryType("portableDevice",
+        {
+            "download_files_from_device": {
+                "label": "Download files",
+                "generic_access": MacEntryType.GenericRead,
+                "description":""
+            },
+            "send_files_to_device":{
+                "label": "Send files",
+                "generic_access": MacEntryType.GenericWrite,
+                "description":""
+            },
+            "download_photos_from_device": {
+                "label": "Download photos",
+                "generic_access": MacEntryType.GenericRead,
+                "description":""
+            },
+            "debug": {
+                "label": "Debug",
+                "generic_access": MacEntryType.GenericExecute,
+                "description": "ADB tool control"
+            }
+
+        }
+    )
+
+
+    def get_enforcement(variation,format): 
+        for enforcement in PolicyRule.Enforcements:
+            variations = enforcement.variations
+            variation_for_format = variations[format]
+            if variation == variation_for_format:
+                return enforcement
+            
+        print ("No enforcement for "+variation+" in format "+format)
+
+    def __init__(self,entry,format = "gpo"):
+
+        self.entry_type = None
         self.permissions = {
-            1: False,
-            2: False,
-            4: False,
-            8: False,
-            16: False,
-            32: False,
-            64: False
+                WindowsEntryType.DiskReadMask: False,
+                WindowsEntryType.DiskWriteMask: False,
+                WindowsEntryType.DiskExecuteMask: False,
+                WindowsEntryType.FileReadMask: False,
+                WindowsEntryType.FileWriteMask: False,
+                WindowsEntryType.FileExecuteMask: False,
+                WindowsEntryType.PrintMask: False
         }
+        self.parameters = None
 
-        self.permission_icons = {
-            1: "-",
-            2: "-",
-            4: "-",
-            8: "-",
-            16: "-",
-            32: "-",
-            64: "-"
-        }
+        if format == "gpo" or format == "oma-uri":
 
+            self.id = entry.attrib["Id"]
+            self.enforcement_type = entry.find("./Type").text
+            self.enforcement = Entry.get_enforcement(self.enforcement_type,format)
+            
+            
+            options_mask = entry.find("./Options").text
+            
+            self.notifications = Notifications(int(options_mask),format)
+            self.options_text = str(self.notifications)
+            
+            self.access_mask = entry.find("./AccessMask").text
+            
+            has_mixed_entry_type = False
 
+            
+            self.permission_icons = {
+                WindowsEntryType.DiskReadMask: "-",
+                WindowsEntryType.DiskWriteMask: "-",
+                WindowsEntryType.DiskExecuteMask: "-",
+                WindowsEntryType.FileReadMask: "-",
+                WindowsEntryType.FileWriteMask: "-",
+                WindowsEntryType.FileExecuteMask: "-",
+                WindowsEntryType.PrintMask: "-"
+            }
 
-        self.notifications = []
-        self.access_mask_text = ""
-        self.options_text = ""
-
-        for mask in Entry.access_masks.keys():
-            if int(self.access_mask) & mask:
-                self.permissions[mask] = True
-                if mask in Entry.access_mask_text_labels:
-                    self.access_mask_text = self.access_mask_text+", "+Entry.access_mask_text_labels[mask]
-                self.permission_icons[mask] = Entry.true_icons[self.type]
-                if mask == 64:
-                    self.has_printing = True
-
-        #replaces last , with and
-        self.access_mask_text = self.access_mask_text[2:]
-        self.access_mask_text = rreplace(self.access_mask_text,","," and",1)
         
+            
+            self.access_mask_text = ""
+            
 
-        notification_masks = Entry.notification_masks[self.type]
-        for mask in notification_masks:
-            if int(self.options) & mask:
-                self.notifications.append(notification_masks[mask])
+            for mask in WindowsEntryType.access_masks.keys():
+                if int(self.access_mask) & mask:
+                    self.permissions[mask] = True
+                    if mask in WindowsEntryType.access_mask_text_labels:
+                        self.access_mask_text = self.access_mask_text+", "+WindowsEntryType.access_mask_text_labels[mask]
+                        if self.entry_type is None:
+                            self.entry_type = Entry.WindowsDevice
+                        elif self.entry_type is not Entry.WindowsDevice:
+                            has_mixed_entry_type = True
+                            
+                    self.permission_icons[mask] = WindowsEntryType.true_icons[self.enforcement_type]
+                    if mask == 64:
+                        if self.entry_type is None:
+                            self.entry_type = Entry.WindowsPrinter
+                        elif self.entry_type is not Entry.WindowsPrinter:
+                            has_mixed_entry_type = True
+
+            # The entry type determins the layout of the report
+            if has_mixed_entry_type:
+                self.entry_type = Entry.WindowsGeneric
+
+            #replaces last , with and
+            self.access_mask_text = self.access_mask_text[2:]
+            self.access_mask_text = rreplace(self.access_mask_text,","," and",1)
+
+
+            notification_masks = WindowsEntryType.notification_masks[self.enforcement_type]
+            for mask in notification_masks:
+                if int(self.options_mask) & mask:
+                    self.notifications.append(notification_masks[mask])
+
+           
+            sid = entry.find("./Sid")
+            if sid is not None:
+                self.sid = sid.text
+            else:
+                self.sid = "All Users"
+
+            parameters = entry.find("./Parameters")
+            if parameters is not None:
+                self.parameters = Parameters(parameters)
+            
         
-        if len(self.notifications) == 0:
-            self.notifications.append("None")
-            self.options_text = "None"
-        elif len(self.notifications) == 1:
-            self.options_text = self.notifications[0]
-        else:
-            self.options_text = self.notifications[0]+" and "+self.notifications[1]
+        elif format == "mac":
+            self.id = entry["id"]
+            
 
-        sid = entry.find("./Sid")
-        if sid is not None:
-            self.sid = sid.text
-        else:
-            self.sid = "All Users"
+            if "$type" in entry.keys():
+                type = entry["$type"]
 
-        parameters = entry.find("./Parameters")
-        if parameters is not None:
-            self.parameters = Parameters(parameters)
-        else:
-            self.parameters = None
-        return
+                if type == "appleDevice":
+                    self.entry_type = Entry.AppleDevice
+                elif type == "removableMedia":
+                    self.entry_type = Entry.AppleRemovableMedia
+                elif type == "generic":
+                    self.entry_type = Entry.AppleGeneric
+                elif type == "bluetoothDevice":
+                    self.entry_type = Entry.AppleBluetoothDevice
+                elif type == "portableDevice":
+                    self.entry_type = Entry.ApplePortableDevice
+                else:
+                    print ("Unknown Entry Type "+type)
+
+                if "enforcement" in entry.keys():
+                    enforcement_obj = entry["enforcement"]
+                    self.enforcement = Entry.get_enforcement(enforcement_obj["$type"],"mac")
+
+                    if "options" in enforcement_obj.keys():
+                        self.notifications = Notifications(enforcement_obj["options"],"mac")
+                    else:
+                        self.notifications = Notifications(None,"mac")
+                    
+
+                if "access" in entry.keys():
+                    self.access = entry["access"]
+                    for permission in self.access:
+                        generic_access = self.entry_type.get_generic_access(permission)
+                        if generic_access is MacEntryType.GenericRead:
+                            self.permissions[WindowsEntryType.DiskReadMask] = True
+                            self.permissions[WindowsEntryType.FileReadMask] = True
+                        elif generic_access is MacEntryType.GenericWrite:
+                            self.permissions[WindowsEntryType.DiskWriteMask] = True
+                            self.permissions[WindowsEntryType.FileWriteMask] = True
+                        elif generic_access is MacEntryType.GenericExecute:
+                            self.permissions[WindowsEntryType.DiskExecuteMask] = True
+                            self.permissions[WindowsEntryType.FileExecuteMask] = True
+                            
+
+            
+
+
+
     
     def get_group_ids(self):
         if self.parameters is not None:
@@ -634,15 +1052,15 @@ class Entry:
         for mask in self.permissions.keys():
             enabled = self.permissions[mask]
             if enabled and unsupported_access_masks[mask]:
-                support.issues.append(Entry.access_masks[mask]+" ("+str(mask)+") is an unsupported access mask")
+                support.issues.append(WindowsEntryType.access_masks[mask]+" ("+str(mask)+") is an unsupported access mask")
 
-        if self.type not in feature_data["supported_types"]:
-            support.issues.append("Unsupported type of entry "+self.type)
+        if self.enforcement not in feature_data["supported_notifications"]:
+            support.issues.append("Unsupported type of entry "+self.enforcement)
         else:
-            unsupported_notifications = feature_data["supported_types"][self.type]["unsupported_notifications"]
-            notification_masks_for_type = Entry.notification_masks[self.type]
+            unsupported_notifications = feature_data["supported_notifications"][self.enforcement]["unsupported_notifications"]
+            notification_masks_for_type = WindowsEntryType.notification_masks[self.enforcement]
             for mask in notification_masks_for_type:
-                if int(self.options) & mask:
+                if int(self.notifications) & mask:
                     if unsupported_notifications[mask]:
                         support.issues.append(notification_masks_for_type[mask]+" ("+str(mask)+") is an unsupported notification.")
 
@@ -747,10 +1165,14 @@ class Feature:
         self.feature_data = feature_data
         self.support_data = {}
         entry_data = self.feature_data["entry"]
-        entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary(entry_data["access_masks"])
-        for type in entry_data["supported_types"]:
-            notifications = entry_data["supported_types"][type]["notifications"]
-            entry_data["supported_types"][type]["unsupported_notifications"] = Feature.get_unsupported_dictionary(notifications)
+        if "access_masks" in entry_data.keys():
+            entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary(entry_data["access_masks"])
+        else:
+            entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary([])
+
+        for type in entry_data["supported_notifications"]:
+            notifications = entry_data["supported_notifications"][type]["notifications"]
+            entry_data["supported_notifications"][type]["unsupported_notifications"] = Feature.get_unsupported_dictionary(notifications)
 
 
 
@@ -825,6 +1247,47 @@ class Inventory:
         self.groups = pd.DataFrame(group_columns)
         self.policy_rules = pd.DataFrame(rule_columns)
 
+        self.windows_support = Feature(
+            {
+                "entry":{
+                    "supported_types":{
+                        "windows_printer": Entry.WindowsPrinter,
+                        "windows_device": Entry.WindowsDevice
+                    },
+                    "supported_notifications":{
+                        PolicyRule.Allow:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.DontTriggerAudit,
+                                Notifications.CreateFileEventNoFile,
+                                Notifications.CreateFileEventWithFile]
+                        },
+                        PolicyRule.AuditAllowed:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.CreatePolicyTriggeredEvent]
+                        },
+                        PolicyRule.Deny:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.DontTriggerAudit
+                            ]
+                        },
+                        PolicyRule.AuditDenied:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.ShowNotification,
+                                Notifications.CreatePolicyTriggeredEvent
+                            ]
+                        }
+
+                    }
+                }
+            }
+                    
+        
+    )
+    
         self.intune_ux = Feature(
         {
             "group": {
@@ -864,23 +1327,35 @@ class Inventory:
             },
             "entry":{
                 "access_masks":[1,2,4,64],
-                "supported_types":{
-                    "Allow":{
-                        "notifications":[0,4]
-                    },
-                    "AuditAllowed":{
-                        "notifications":[0,1,2]
-                    },
-                    "Deny":{
-                        "notifications":[0,2]
-                    },
-                    "AuditDenied":{
-                        "notifications":[0,1,2]
-                    }
+                 "supported_notifications":{
+                        PolicyRule.Allow:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.DontTriggerAudit]
+                        },
+                        PolicyRule.AuditAllowed:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.CreatePolicyTriggeredEvent]
+                        },
+                        PolicyRule.Deny:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.DontTriggerAudit
+                            ]
+                        },
+                        PolicyRule.AuditDenied:{
+                            "notifications":[
+                                Notifications.Nothing,
+                                Notifications.ShowNotification,
+                                Notifications.CreatePolicyTriggeredEvent
+                            ]
+                        }
 
+                    }
                 }
             }
-        })
+        )
     
  
 
@@ -913,6 +1388,11 @@ class Inventory:
                         self.addGroup(Group(group,"mac",json_path),group_index)
                         group_index=group_index+1
 
+                if "rules" in json_object.keys():
+                    rule_index = 1
+                    for rule in json_object["rules"]:
+                        self.addPolicyRule(PolicyRule(rule,"mac",json_path,rule_index))
+
             return
         except Exception as e:
             print(full_stack())
@@ -938,11 +1418,11 @@ class Inventory:
                             self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyRule":
-                        self.addPolicyRule(PolicyRule(root),xml_path,"oma-uri")
+                        self.addPolicyRule(PolicyRule(root,"oma-uri",xml_path))
                     case "PolicyRules":
                         rule_index = 1
                         for policyRule in root.findall(".//PolicyRule"):
-                            self.addPolicyRule(PolicyRule(policyRule,rule_index),xml_path,"gpo",rule_index)
+                            self.addPolicyRule(PolicyRule(policyRule,"gpo",xml_path,rule_index))
                             rule_index= rule_index + 1
 
                 return root
@@ -978,13 +1458,15 @@ class Inventory:
 
         self.groups = pd.concat([self.groups,new_row],ignore_index=True)
 
-    def addPolicyRule(self,rule,path,format="gpo",rule_index=1):
+    def addPolicyRule(self,rule):
 
-        rule.format = format
-        rule.path = path
-        rule.rule_index = rule_index
+        path = rule.path
+        format = rule.format
+        rule_index = rule.rule_index
 
-        
+        if rule.id is None:
+            return
+
         new_row = pd.DataFrame([{
             "path":path,
             "format":format,
@@ -998,7 +1480,6 @@ class Inventory:
 
         self.policy_rules = pd.concat([self.policy_rules,new_row],ignore_index=True)
 
-        return
     
     def get_groups_for_rule(self,rule):
         groups_for_rule = {
@@ -1065,9 +1546,11 @@ class Inventory:
         rules = {
             "gpo":{},
             "oma-uri":{},
+            "mac":{},
             "all":[]
         }
 
+        query = str(query).encode('unicode-escape').decode()
         
         rule_frame = self.policy_rules.query(query, engine='python')
         rule_frame = rule_frame.sort_values("rule_index", ascending=True)
@@ -1098,7 +1581,7 @@ class Inventory:
         #check for missing oma-uri rules
         for rule in rules["all"]:
             if not rule.get_oma_uri() in rules["oma-uri"]:
-                oma_uri_rule = self.missing_oma_uri(rules["gpo"][rule.id])
+                oma_uri_rule = self.missing_oma_uri(rules[rule.format][rule.id])
                 if oma_uri_rule is not None:
                     rules["oma-uri"][rule.get_oma_uri()] = IntuneCustomRow(oma_uri_rule)
 
@@ -1136,11 +1619,16 @@ class Inventory:
         rules = {}
         groups = {}
         paths = []
+
         intune_ux_support = Support()
+        windows_support = Support()
+        mac_support = Support()
+
         groupsXML = "<Groups>"
         rulesXML  = "<PolicyRules>"
         oma_uri = filtered_rules["oma-uri"]
-        has_printing = False
+        entry_type = None
+        has_mixed_entry_type = False
 
         for rule in filtered_rules["all"]:
 
@@ -1150,10 +1638,23 @@ class Inventory:
         
             rules[rule.id] = rule
             paths.append(rule.path)
-            if rule.has_printing:
-                has_printing = True
+
+            #sets the entry type to the Generic
+            #if the query returns more than 1
+            if entry_type is None:
+                entry_type = rule.entry_type
+            elif entry_type is not rule.entry_type:
+                if not has_mixed_entry_type:
+                    if rule.format == "mac":
+                        entry_type = Entry.AppleGeneric
+                    else:
+                        entry_type = Entry.WindowsGeneric
+
+                    has_mixed_entry_type = True
+
 
             intune_ux_support += self.intune_ux.get_support_for(rule)
+            windows_support += self.windows_support.get_support_for(rule)
 
             rulesXML += "\n"+rule.toXML()
             groups_for_rule = self.get_groups_for_rule(rule)
@@ -1320,7 +1821,7 @@ if __name__ == '__main__':
     input_group =arg_parser.add_mutually_exclusive_group()
     input_group.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process')
     input_group.add_argument('-s','--scenarios',dest="scenarios",type=file,help='A JSON file that contains a list of scenarios to process')
-    input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rules to process')
+    input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rule to process')
 
 
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
@@ -1344,7 +1845,7 @@ if __name__ == '__main__':
     if args.scenarios is not None:
         results = {}
         scenarios = load_scenarios(args.scenarios)
-        for rule in scenarios["rules"]:
+        for rule in scenarios["scenarios"]:
             policy_file = rule["file"]
             description = "A sample policy"
             settings = Default_Settings

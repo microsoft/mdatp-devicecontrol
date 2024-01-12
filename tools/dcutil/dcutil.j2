@@ -51,7 +51,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 {%- endfor -%}
                 </ul>
             </td>
-            <td>{{ value.entries[0].type_text }}</td>
+            <td>{{ value.entries[0].enforcement }}</td>
             {% if not has_printing -%}
             <td>{{ value.entries[0].permission_icons[1] }}</td>
             <td>{{ value.entries[0].permission_icons[2] }}</td>
@@ -62,7 +62,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             {%- else -%}
             <td>{{ value.entries[0].permission_icons[64] }}</td>
             {% endif -%}
-            <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options }})</td> 
+            <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options_mask }})</td> 
             <td>
                 {% if value.entries[0].sid == "All Users"  and  value.entries[0].parameters is none -%}
                 <center>-</center>
@@ -87,7 +87,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr>
         {%- for entry in value.entries[1:] -%}
         <tr>
-            <td>{{ entry.type_text }}</td>
+            <td>{{ entry.enforcement }}</td>
             {% if not has_printing -%}
             <td>{{ entry.permission_icons[1] }}</td>
             <td>{{ entry.permission_icons[2] }}</td>
@@ -98,7 +98,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             {%- else -%}
             <td>{{ entry.permission_icons[64] }}</td>
             {% endif -%}
-            <td>{{ entry.options_text }} ({{ entry.options }})</td>
+            <td>{{ entry.options_text }} ({{ entry.options_mask }})</td>
             <td> 
                 {% if entry.sid == "All Users"  and  entry.parameters is none -%}
                 <center>-</center>
