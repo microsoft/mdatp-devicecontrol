@@ -72,12 +72,14 @@ class Setting:
     SecuredDevicesConfiguration = "SecuredDevicesConfiguration"
     DataDuplicationMaximumQuota = "DataDuplicationMaximumQuota"
     DataDuplicationRemoteLocation = "DataDuplicationRemoteLocation"
+    UXNavigationTarget = "UXNavigationTarget"
 
     data = {
         DeviceControlEnabled:{
             "description":"Enables/disables device control",
+            "name": "Device Control Enabled",
             "oma-uri": {
-                "name": "Device Control Enabled",
+                "supported": True,
                 "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled",
                 "type": OMA_URI_Integer_DataType,
@@ -87,12 +89,18 @@ class Setting:
                 }
             },
             "gpo":{
+                "supported":True
+
+            },
+            "mac":{
+                "supported":False
 
             }
         },
         DefaultEnforcement:{
+            "name": "Default Enforcement",
             "oma-uri": {
-                "name": "Default Enforcement",
+                "supported":True,
                 "oma-uri":"./Vendor/MSFT/Defender/Configuration/DefaultEnforcement",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement",
                 "type": OMA_URI_Integer_DataType,
@@ -100,40 +108,83 @@ class Setting:
                     "Allow": 1,
                     "Deny": 2
                 }
+            },
+            "gpo": {
+                "supported":True
+            },
+            "mac": {
+                "supported":True,
+                "documentation": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings",
+                "value_map":{
+                    "Allow":"allow",
+                    "Deny":"deny"
+                }
+                
             }
         },
         DataDuplicationDirectory:{
+            "name": "File Evidence Directory",
             "oma-uri": {
-                "name": "File Evidence Directory",
+                "supported":True,
                 "oma-uri":"./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationdirectory",
                 "type": OMA_URI_String_DataType
+            },
+            "mac":{
+                "supported":False
             }
         },
         SecuredDevicesConfiguration: {
+            "name": "Secured Devices",
             "oma-uri": {
-                "name": "Secured Devices",
+                "supported": True,
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration",
                 "oma-uri": "./Vendor/MSFT/Defender/Configuration/SecuredDevicesConfiguration",
                 "type": OMA_URI_String_DataType
+            },
+            "mac": {
+                "supported": True,
+                "documentation": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings"
             }
+
         },
         DataDuplicationMaximumQuota:{
+            "name": "File Evidence Quota",
             "oma-uri":{
-                "name": "File Evidence Quota",
+                "supported":True,
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationmaximumquota",
                 "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationMaximumQuota",
                 "type": OMA_URI_Integer_DataType
+            },
+            "mac":{
+                "supported":False
             }
         },
         DataDuplicationRemoteLocation:{
+            "name": "File Evidence Remote Location",
             "oma-uri":{
-                "name": "File Evidence Remote Location",
+                "supported": True,
                 "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationremotelocation",
                 "type": OMA_URI_String_DataType
+            },
+            "mac":{
+                "supported": False
+            }
+        },
+        UXNavigationTarget: {
+            "name":"UX Navigation Target",
+            "oma-uri":{
+                "supported":False
+            },
+            "gpo":{
+                "supported":False
+            },
+            "mac":{
+                "supported":True
             }
         }
+    
     }
     
     def __init__(self,name,value):
@@ -146,18 +197,33 @@ class Setting:
         
 
     def get_data_type(self, format = "oma-uri"):
-         return Setting.data[self.name][format]["type"]
+         supported = Setting.data[self.name][format]["supported"]
+         if supported:
+            return Setting.data[self.name][format]["type"]
+         else:
+            return ""
     
     def get_documentation(self, format="oma-uri"):
-        return Setting.data[self.name][format]["documentation"]
+        supported = Setting.data[self.name][format]["supported"]
+        if supported:
+            return Setting.data[self.name][format]["documentation"]
+        return ""
 
     def get_oma_uri(self):
 
-        return Setting.data[self.name]["oma-uri"]["oma-uri"]
+        supported = Setting.data[self.name]["oma-uri"]["supported"]
+
+        if supported:
+            return Setting.data[self.name]["oma-uri"]["oma-uri"]
+        else:
+            return ""
 
     def get_value(self,format = "oma-uri"):
 
-        if format == "oma-uri":
+        if not Setting.data[self.name][format]["supported"]:
+            return ""
+        
+        elif format == "oma-uri":
             oma_uri = Setting.data[self.name]["oma-uri"]
             if oma_uri["type"] == Setting.OMA_URI_String_DataType:
                 return self.value
@@ -176,6 +242,64 @@ class Setting:
 
 
 class Settings:
+
+
+    def generate_settings_from_mac_policy(json):
+        settings = None
+
+        default_enforcement_map = {
+            "allow":"Allow",
+            "deny": "Deny"
+        }
+
+        default_features = {
+            "appleDevice": {
+                "disable": True
+            },
+            "removableMedia":{
+                "disable": True
+            },
+            "portableDevice": {
+                "disable": True
+            },
+            "bluetoothDevice":{
+                "disable":True
+            }
+        }
+
+        default_default_enforcement = "allow"
+
+        if "settings" in json.keys():
+
+            settings_dict = {}
+            settings_json = json["settings"]
+
+            if "features" in settings_json:
+                features = default_features
+                for features_key in settings_json["features"]:
+                     features[features_key] = settings_json["features"][features_key]
+                settings_dict[Setting.SecuredDevicesConfiguration] = features
+            else:
+                settings_dict[Setting.SecuredDevicesConfiguration] = default_features
+
+            if "global" in settings_json:
+                global_json = settings_json["global"]
+                mac_default_enforcement = global_json["defaultEnforcement"]
+                default_enforcement = default_enforcement_map[mac_default_enforcement]
+
+                settings_dict[Setting.DefaultEnforcement] = default_enforcement
+            else:
+                settings_dict[Setting.DefaultEnforcement] = default_default_enforcement
+
+            if "ux" in settings_json:
+                ux_json = settings_json["ux"]
+                settings_dict[Setting.UXNavigationTarget] = ux_json["navigationTarget"]
+
+        if len(settings_dict) > 0:
+            settings = Settings(settings_dict)
+
+        return settings
+
 
     def __init__(self, setting_dict):
         self.settings = []
@@ -444,6 +568,13 @@ class PolicyRule:
         Allow,Deny,AuditAllowed,AuditDenied
     ]
 
+    true_icons = {
+        Allow:":white_check_mark:",
+        AuditAllowed:":page_facing_up:",
+        Deny:":x:",
+        AuditDenied:":page_facing_up:"
+    }
+
     def __init__(self,root, format, path, rule_index = 1):
 
                             
@@ -704,18 +835,17 @@ class WindowsEntryType:
     }
 
 
-    true_icons = {
-        "Allow":":white_check_mark:",
-        "AuditAllowed":":page_facing_up:",
-        "Deny":":x:",
-        "AuditDenied":":page_facing_up:"
-    }
+    
 
 
-    def __init__(self,name, access_masks):
+    def __init__(self,name, label,access_masks):
         self.name = name
         self.access_masks = access_masks
+        self.label = label
 
+
+    def __str__(self):
+        return self.label
 
 class MacEntryType:
 
@@ -731,9 +861,10 @@ class MacEntryType:
     }
 
 
-    def __init__(self,name, access_types):
+    def __init__(self,name, label, access_types):
         self.name = name
         self.access_types = access_types
+        self.label = label
 
     def get_generic_access(self,permission):
         if permission in [MacEntryType.GenericRead, MacEntryType.GenericWrite, MacEntryType.GenericExecute]:
@@ -744,33 +875,34 @@ class MacEntryType:
         else:
             return None
 
-
+    def __str__(self):
+        return self.label
 
 class Entry:
 
     
-    WindowsPrinter = WindowsEntryType("windows_printer",
+    WindowsPrinter = WindowsEntryType("windows_printer","Windows Printer",
         {
     
             "access_masks": [0x40]
                                               
         }
     )
-    WindowsDevice  = WindowsEntryType("windows_device",
+    WindowsDevice  = WindowsEntryType("windows_device","Windows Removable Device",
         {
     
             "access_masks": [0x01,0x02,0x04,0x08,0x10,0x20]
                                               
         }
     )
-    WindowsGeneric  = WindowsEntryType("windows_generic",
+    WindowsGeneric  = WindowsEntryType("windows_generic","Windows Generic Device",
         {
     
             "access_masks": [0x01,0x02,0x04,0x08,0x10,0x20,0x04]
                                               
         }
     )
-    AppleDevice = MacEntryType("appleDevice",
+    AppleDevice = MacEntryType("appleDevice","Apple Device",
         {
             "backup_device": {
                 "generic_access": MacEntryType.GenericRead,
@@ -799,7 +931,7 @@ class Entry:
             }
         }
     )
-    AppleRemovableMedia = MacEntryType("removableMedia",
+    AppleRemovableMedia = MacEntryType("removableMedia","Apple Removable Media",
         {
             "read":{
                 "generic_access":MacEntryType.GenericRead,
@@ -818,7 +950,7 @@ class Entry:
             }
         }
     )
-    AppleGeneric = MacEntryType("generic", {
+    AppleGeneric = MacEntryType("generic", "Apple Generic Device", {
         MacEntryType.GenericRead: {
             "label": "Read",
             "description": "Equivalent to setting all access values denoted in this table that map to generic_read."
@@ -832,7 +964,7 @@ class Entry:
             "description": "Equivalent to setting all access values denoted in this table that map to generic_execute."
         }
     })
-    AppleBluetoothDevice = MacEntryType("bluetoothDevice",
+    AppleBluetoothDevice = MacEntryType("bluetoothDevice","Apple Bluetooth Device",
         {
             "download_files_from_device": {
                 "generic_access": MacEntryType.GenericRead,
@@ -846,7 +978,7 @@ class Entry:
             }
         }
     )
-    ApplePortableDevice = MacEntryType("portableDevice",
+    ApplePortableDevice = MacEntryType("portableDevice","Apple Portable Device",
         {
             "download_files_from_device": {
                 "label": "Download files",
@@ -885,7 +1017,14 @@ class Entry:
     def __init__(self,entry,format = "gpo"):
 
         self.entry_type = None
-        self.permissions = {
+        
+
+        self.parameters = None
+        self.sid = "All Users"
+
+        if format == "gpo" or format == "oma-uri":
+
+            self.permissions = {
                 WindowsEntryType.DiskReadMask: False,
                 WindowsEntryType.DiskWriteMask: False,
                 WindowsEntryType.DiskExecuteMask: False,
@@ -893,9 +1032,9 @@ class Entry:
                 WindowsEntryType.FileWriteMask: False,
                 WindowsEntryType.FileExecuteMask: False,
                 WindowsEntryType.PrintMask: False
-        }
+            }
 
-        self.permission_icons = {
+            self.permission_icons = {
                 WindowsEntryType.DiskReadMask: "-",
                 WindowsEntryType.DiskWriteMask: "-",
                 WindowsEntryType.DiskExecuteMask: "-",
@@ -903,12 +1042,7 @@ class Entry:
                 WindowsEntryType.FileWriteMask: "-",
                 WindowsEntryType.FileExecuteMask: "-",
                 WindowsEntryType.PrintMask: "-"
-        }
-
-        self.parameters = None
-        self.sid = "All Users"
-
-        if format == "gpo" or format == "oma-uri":
+            }
 
             self.id = entry.attrib["Id"]
             self.enforcement_type = entry.find("./Type").text
@@ -942,7 +1076,7 @@ class Entry:
                         elif self.entry_type is not Entry.WindowsDevice:
                             has_mixed_entry_type = True
                             
-                    self.permission_icons[mask] = WindowsEntryType.true_icons[self.enforcement_type]
+                    self.permission_icons[mask] = PolicyRule.true_icons[self.enforcement_type]
                     if mask == 64:
                         if self.entry_type is None:
                             self.entry_type = Entry.WindowsPrinter
@@ -976,6 +1110,24 @@ class Entry:
             
         
         elif format == "mac":
+
+            self.permissions = {}
+            self.permission_icons = {}
+            self.generic_windows_permissions = {
+                WindowsEntryType.DiskReadMask: False,
+                WindowsEntryType.DiskWriteMask: False,
+                WindowsEntryType.DiskExecuteMask: False,
+                WindowsEntryType.FileReadMask: False,
+                WindowsEntryType.FileWriteMask: False,
+                WindowsEntryType.FileExecuteMask: False,
+                WindowsEntryType.PrintMask: False
+            }
+            self.generic_mac_permissions = {
+                MacEntryType.GenericRead:False,
+                MacEntryType.GenericWrite:False,
+                MacEntryType.GenericExecute:False 
+            }
+
             self.id = entry["id"]
             
             
@@ -994,7 +1146,26 @@ class Entry:
                 elif type == "portableDevice":
                     self.entry_type = Entry.ApplePortableDevice
                 else:
-                    print ("Unknown Entry Type "+type)
+                    print("Unknown type "+self.entry_type)
+                    self.entry_type = Entry.AppleGeneric
+
+                
+                read_permissions = []
+                write_permissions = []
+                execute_permissions = []
+                
+                for access_type in self.entry_type.access_types:
+                    generic_access = self.entry_type.get_generic_access(access_type)
+
+                    if generic_access == MacEntryType.GenericRead:
+                        read_permissions.append(access_type)
+                    elif generic_access == MacEntryType.GenericWrite:
+                        write_permissions.append(access_type)
+                    else:
+                        execute_permissions.append(access_type)
+
+                #order the permissions rwx
+                all_permissions = read_permissions + write_permissions + execute_permissions        
 
                 if "enforcement" in entry.keys():
                     enforcement_obj = entry["enforcement"]
@@ -1006,27 +1177,38 @@ class Entry:
                         self.notifications = Notifications(None,"mac")
                     
 
+                self.access_mask = 0
+
                 if "access" in entry.keys():
                     self.access = entry["access"]
-                    for permission in self.access:
+                    for permission in all_permissions:
+                        enabled = permission in self.access
                         generic_access = self.entry_type.get_generic_access(permission)
-                        if generic_access is MacEntryType.GenericRead:
-                            self.permissions[WindowsEntryType.DiskReadMask] = True
-                            self.permissions[WindowsEntryType.FileReadMask] = True
-                        elif generic_access is MacEntryType.GenericWrite:
-                            self.permissions[WindowsEntryType.DiskWriteMask] = True
-                            self.permissions[WindowsEntryType.FileWriteMask] = True
-                        elif generic_access is MacEntryType.GenericExecute:
-                            self.permissions[WindowsEntryType.DiskExecuteMask] = True
-                            self.permissions[WindowsEntryType.FileExecuteMask] = True
-                            
-                    self.access_mask = 0
-                    for mask in self.permissions:
-                        enabled = self.permissions[mask]
+
+                        self.permissions[permission] = enabled
                         if enabled:
-                            self.access_mask = self.access_mask+mask
-                            self.permission_icons[mask] = WindowsEntryType.true_icons[self.enforcement.variations["gpo"]]
-            
+                            self.permission_icons[permission] = PolicyRule.true_icons[self.enforcement]
+                        else:
+                            self.permission_icons[permission] = "-"
+
+                        if generic_access is MacEntryType.GenericRead:
+                            self.generic_windows_permissions[WindowsEntryType.DiskReadMask] = enabled
+                            self.generic_windows_permissions[WindowsEntryType.FileReadMask] = enabled
+                            self.access_mask = self.access_mask + WindowsEntryType.DiskReadMask + WindowsEntryType.FileReadMask
+                            self.generic_mac_permissions[MacEntryType.GenericRead] = enabled
+                         
+                        elif generic_access is MacEntryType.GenericWrite:
+                            self.generic_windows_permissions[WindowsEntryType.DiskWriteMask] = enabled
+                            self.generic_windows_permissions[WindowsEntryType.FileWriteMask] = enabled
+                            self.access_mask = self.access_mask + WindowsEntryType.DiskWriteMask + WindowsEntryType.FileWriteMask
+                            self.generic_mac_permissions[MacEntryType.GenericWrite] = enabled
+
+                        elif generic_access is MacEntryType.GenericExecute:
+                            self.generic_windows_permissions[WindowsEntryType.DiskExecuteMask] = enabled
+                            self.generic_windows_permissions[WindowsEntryType.FileExecuteMask] = enabled
+                            self.access_mask = self.access_mask + WindowsEntryType.DiskExecuteMask + WindowsEntryType.FileExecuteMask
+                            self.generic_mac_permissions[MacEntryType.GenericExecute] = enabled
+                            
 
 
 
@@ -1061,8 +1243,14 @@ class Entry:
 
         for mask in self.permissions.keys():
             enabled = self.permissions[mask]
-            if enabled and unsupported_access_masks[mask]:
-                support.issues.append(WindowsEntryType.access_masks[mask]+" ("+str(mask)+") is an unsupported access mask")
+            if enabled: 
+                if mask not in unsupported_access_masks:
+                    if mask not in WindowsEntryType.access_masks:
+                        support.issues.append(mask+" is an unsupported access mask")
+                    else:
+                        support.issues.append(WindowsEntryType.access_masks[mask]+" ("+str(mask)+") is an unsupported access mask")
+                
+                
 
         if self.enforcement not in feature_data["supported_notifications"]:
             support.issues.append("Unsupported type of entry "+self.enforcement)
@@ -1799,7 +1987,20 @@ def parse_in_file(in_file):
     query = "path.str.contains('"+in_file+"',regex=False)"
     title = str(in_file.split(os.sep)[-1]).split(".")[0]
     outfile = title+".md"
-    return query,title,outfile
+    settings = Default_Settings
+
+    #check the settings for the file
+    if in_file.endswith(".json"):
+         with open(in_file,"r") as json_file:
+            mac_policy = json.loads(json_file.read())
+            mac_settings = Settings.generate_settings_from_mac_policy(mac_policy)
+            if mac_settings is not None:
+                settings = mac_settings
+
+            json_file.close()
+            
+
+    return query,title,outfile,settings
 
 def load_scenarios(scenarios_file):
      with open(scenarios_file) as file:
@@ -1888,13 +2089,13 @@ if __name__ == '__main__':
 
     elif query is None:
         if args.in_file is not None:
-            query,title,default_outfile = parse_in_file(args.in_file)
+            query,title,default_outfile,settings = parse_in_file(args.in_file)
             if out_file is None:
                 out_file = default_outfile
 
         if args.format == "text":
             result = inventory.process_query(query)
-            inventory.generate_text(result,args.dest,out_file,title)
+            inventory.generate_text(result,args.dest,out_file,title,None,settings)
         elif args.format == "csv":
             inventory.generate_csv(args.dest)
         

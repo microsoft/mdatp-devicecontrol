@@ -1,0 +1,117 @@
+<table>
+    <tr>
+        <th rowspan="2" valign="top">Name</th>
+        <th colspan="2" valign="top">Devices</th>
+        <th rowspan="2" valign="top">Rule Type</th>
+        {% if has_printing -%}
+        <th colspan="1" valign="top"><center>Access</center></th>
+        {%- else -%}
+        <th colspan="6" valign="top"><center>Access</center></th>
+        {% endif -%}
+        <th rowspan="2" valign="top">Notification</th>
+        <th rowspan="2" valign="top">Conditions</th>
+    </tr>
+    <tr>
+        <th>Included</th>
+        <th>Excluded</th>
+        {% if not has_printing -%}
+		<th>Disk Read</th>
+		<th>Disk Write</th>
+		<th>Disk Execute</th>
+		<th>File Read</th>
+		<th>File Write</th>
+		<th>File Execute</th>
+        {%- else -%}
+		<th>Print</th>
+        {% endif -%}
+	</tr>
+    {%- for key,value in rules.items() -%}
+        <tr>
+            <td rowspan="{{ value.entries | length }}"><b>{{ value.name }}</b></td>
+            <td rowspan="{{ value.entries | length }} valign="top">
+                <ul>
+                {%- for id in value.included_groups  -%}
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
+                {%- endfor -%}
+                </ul>
+            </td>
+            <td rowspan="{{ value.entries | length }}" valign="top">.
+                <ul>
+                {%- for id in value.excluded_groups  -%}
+                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                {%- endfor -%}
+                </ul>
+            </td>
+            <td>{{ value.entries[0].enforcement }}</td>
+            {% if not has_printing -%}
+            <td>{{ value.entries[0].permission_icons[1] }}</td>
+            <td>{{ value.entries[0].permission_icons[2] }}</td>
+            <td>{{ value.entries[0].permission_icons[4] }}</td>
+            <td>{{ value.entries[0].permission_icons[8] }}</td>
+            <td>{{ value.entries[0].permission_icons[16] }}</td>
+            <td>{{ value.entries[0].permission_icons[32] }}</td>
+            {%- else -%}
+            <td>{{ value.entries[0].permission_icons[64] }}</td>
+            {% endif -%}
+            <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options_mask }})</td> 
+            <td>
+                {% if value.entries[0].sid == "All Users"  and  value.entries[0].parameters is none -%}
+                <center>-</center>
+                {%- else -%}
+                <details>
+                <summary>View</summary>
+                User condition: {{ value.entries[0].sid }}<br>
+                Parameters: {{ value.entries[0].parameters.match_type }}
+                <ul> 
+                {%- for condition in value.entries[0].parameters.properties -%}
+                    <li> {{ condition.match_type }} 
+                        <ul>
+                        {%- for id in condition.groups -%}
+                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                        {%- endfor -%}
+                        </ul>
+                {%- endfor %}
+                </ul>
+                </details>
+                {%- endif -%}
+            </td>
+        </tr>
+        {%- for entry in value.entries[1:] -%}
+        <tr>
+            <td>{{ entry.enforcement }}</td>
+            {% if not has_printing -%}
+            <td>{{ entry.permission_icons[1] }}</td>
+            <td>{{ entry.permission_icons[2] }}</td>
+            <td>{{ entry.permission_icons[4] }}</td>
+            <td>{{ entry.permission_icons[8] }}</td>
+            <td>{{ entry.permission_icons[16] }}</td>
+            <td>{{ entry.permission_icons[32] }}</td>
+            {%- else -%}
+            <td>{{ entry.permission_icons[64] }}</td>
+            {% endif -%}
+            <td>{{ entry.options_text }} ({{ entry.options_mask }})</td>
+            <td> 
+                {% if entry.sid == "All Users"  and  entry.parameters is none -%}
+                <center>-</center>
+                {%- else -%}
+                <details>
+                <summary>View</summary>
+                User Condition: {{ entry.sid }}<br>
+                Parameters: {{ entry.parameters.match_type }}
+                <ul> 
+                {%- for condition in entry.parameters.properties -%}
+                    <li> {{ condition.match_type }} 
+                        <ul>
+                        {%- for id in condition.groups -%}
+                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
+                        {%- endfor -%}
+                        </ul>
+                {%- endfor %}
+                </ul>
+                </details>
+                {%- endif -%}
+            </td>
+        </tr>
+        {%- endfor -%}
+    {%- endfor -%}
+</table>
