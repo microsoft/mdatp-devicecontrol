@@ -389,6 +389,71 @@ class Clause:
                 print("Unknown Clause")
                 return
 
+class GroupProperty:
+
+    #Windows Device
+    WindowsDeviceFriendlyName = "FriendlyNameId"
+    WindowsDeviceVendorProduct = "VID_PID"
+    WindowsDeviceVendor = "VID"
+    WindowsDeviceProduct = "PID"
+    WindowsDeviceInstancePath = "InstancePathId"
+    WindowsDeviceId = "DeviceId"
+    WindowsDeviceHardware = "HardwareId"
+    WindowsDeviceBus = "BusId"
+    WindowsDeviceSerialNumber = "SerialNumberId"
+    WindowsDeviceFamily = "PrimaryId"
+
+    WindowsRemovableMediaDevices = "RemovableMediaDevices"
+    WindowsCdRomDevicesDevices = "CdRomDevices"
+    WindowsWpdDevicesDevices = "WpdDevices"
+    WindowsPrinterDevices = "PrinterDevices"
+
+    #Network
+    NetworkCategory = "NetworkCategoryId"
+    NetworkCategoryPublic = "Public"
+    NetworkCategoryPrivate = "Private"
+    NetworkCategoryDomainAuthenticated = "DomainAuthenticated"
+    NetworkName = "NameId"
+
+    NetworkDomain = "NetworkDomainId"
+    NonDomain = "NonDomain"
+    Domain = "Domain"
+    DomainAuthenticated = "DomainAuthenticated"
+
+    #VPN Connection
+    VPNConnectionStatus = "VPNConnectionStatusId"
+    VPNConnectionStatusConnected = "Connected"
+    VPNConnectionStatusDisconnected = "Disconnected"
+    VPNServerAddress = "VPNServerAddressId"
+    VPNDnsSuffix = "VPNDnsSuffixId"
+    VPNConnectionName = "NameId"
+
+    #PrinterConnection
+    PrinterConnection = "PrinterConnectionId"
+    USBPrinterConnection = "USB"
+    CorporatePrinterConnection = "Corporate"
+    NetworkPrinterConnection = "Network"
+    UniversalPrinterConnection = "Universal"
+    FilePrinterConnection = "File"
+    CustomPrinterConnection = "Custom"
+    LocalPrinterConnection = "Local"
+
+    #File
+    FilePath = "PathId"
+
+
+
+
+    def __init__(self,name,label,description,allowed_values = None):
+        self.name = name
+        self.label = label
+        self.description = description
+        self.allowed_values = allowed_values
+
+class GroupType:
+
+    def __init__(self,name):
+        self.name = name
 
 class Group:
 
@@ -622,8 +687,12 @@ class PolicyRule:
             if "name" in root.keys():
                 self.name = root["name"]
 
-            if "includedGroups" in root.keys():
-                self.included_groups = root["includedGroups"]
+            if "includeGroups" in root.keys():
+                self.included_groups = root["includeGroups"]
+            
+            
+            if "excludeGroups" in root.keys():
+                self.excluded_groups = root["excludeGroups"]
 
             if "entries" in root.keys():
                 entries = root["entries"]
@@ -1682,12 +1751,14 @@ class Inventory:
     def get_groups_for_rule(self,rule):
         groups_for_rule = {
             "gpo":[],
-            "oma-uri":[]
+            "oma-uri":[],
+            "mac":[]
         }
         for included_group in rule.included_groups:
             g = self.get_group_by_id(included_group)
             if g is not None:
                 groups_for_rule["gpo"] += g["gpo"] 
+                groups_for_rule["mac"] += g["mac"]
                 groups_for_rule["oma-uri"] += g["oma-uri"]
 
         for excluded_group in rule.excluded_groups:
@@ -1695,6 +1766,7 @@ class Inventory:
             if g is not None:
                 groups_for_rule["gpo"] += g["gpo"]
                 groups_for_rule["oma-uri"] += g["oma-uri"]
+                groups_for_rule["mac"] += g["mac"]
 
         for entry in rule.entries:
             groups = entry.get_group_ids()
@@ -1703,6 +1775,8 @@ class Inventory:
                 if g is not None:
                     groups_for_rule["gpo"] += g["gpo"]
                     groups_for_rule["oma-uri"] += g["oma-uri"]
+                    #Groups in entries not supported on mac
+                    #groups_for_rule["mac"] += g["mac"]
         
         return groups_for_rule
 
@@ -1715,7 +1789,8 @@ class Inventory:
         else:
             groups = {
                 "gpo":[],
-                "oma-uri":[]
+                "oma-uri":[],
+                "mac":[]
             }
             for i in range(0,group_frame.index.size):
                 group = group_frame.iloc[i]["object"]
@@ -1728,8 +1803,14 @@ class Inventory:
                 else:
                     print("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
 
+            #Use either GPO or Mac, to create an OMA-URI group
             if len(groups["oma-uri"]) == 0:
-                oma_uri_group = self.missing_oma_uri(groups["gpo"][0])
+                oma_uri_group = None
+                if len(groups["gpo"]) > 0:
+                    oma_uri_group = self.missing_oma_uri(groups["gpo"][0])
+                elif len(groups["mac"]) >0:
+                    oma_uri_group = self.missing_oma_uri(groups["mac"][0])
+
                 if oma_uri_group is not None:
                     groups["oma-uri"].append(oma_uri_group)
 
