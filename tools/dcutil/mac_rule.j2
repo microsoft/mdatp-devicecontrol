@@ -31,7 +31,7 @@
                 </ul>
             </td>
             <td>{{ value.entries[0].enforcement }}</td>
-            {% for p,icon in value.entries[0].permission_icons.items() -%}
+            {% for p,icon in Icons.get_permission_icons(value.entries[0]).items() -%}
             <td>{{ icon }}</td>
             {% endfor %}
             <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options_mask }})</td> 
