@@ -41,7 +41,7 @@
             <td>{{ entry.enforcement }}</td>
             {% for permission,icon in entry.permission_icons -%}
             <td>{{ icon }}</td>
-            {% endfor %}
+            {% endfor -%}
             <td>{{ entry.notifications | string }}</td>
         </tr>
         {%- endfor -%}

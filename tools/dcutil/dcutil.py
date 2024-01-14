@@ -89,6 +89,41 @@ class Helper:
                 permission_icons[mask] = Helper.true_icons[entry.enforcement_type]
 
         return permission_icons
+    
+    def generate_clause_table(group):
+
+        header = ["Operation","Property","Value"]
+
+        clauses = group.clauses
+        clause_table = Helper.generate_table_for_clauses(clauses)
+        return clause_table
+
+    def generate_table_for_clauses(clauses,offset=1):
+        table = []
+        for clause in clauses:
+            if len(clause.sub_clauses) > 0:
+                sub_table = Helper.generate_clause_table(clause.sub_clauses,offset+1)
+                for row in sub_table:
+                    row = []*offset + row
+                    table.append(row)
+            else:
+                for property in clause._properties:
+                    operator = ""
+                    if len(table) > 0:
+                        operator = clause.clause_type
+                    else:
+                        operator = ""
+
+                    row = ["-"]*offset + [property.name,property.value]
+                    row[offset-1] = operator
+
+                    table.append(row)
+
+        return table
+
+
+
+
 class Inventory:
 
     

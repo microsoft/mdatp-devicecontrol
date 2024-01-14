@@ -1,0 +1,36 @@
+{% for group_id in groups %}
+### {{ groups[group_id].name }}
+
+{% set group_type = groups[group_id].type %}
+
+This is a group of type *{{ groups[group_id].type }}*. 
+The match type for the group is *{{ groups[group_id].match_type }}*.
+
+{% set clause_table = Helper.generate_clause_table(groups[group_id]) %}
+<table>
+<tr>
+<th>Operator</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+{% for row in clause_table %}
+<tr>
+{% for column in row %}
+<td>{{ column }}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+
+#### Available properties for {{ groups[group_id].name }}
+
+
+<details>
+<summary>View JSON</summary>
+
+```json
+{{ groups[group_id].toJSON() }}
+```
+</details>
+{% endfor %}

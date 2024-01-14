@@ -323,8 +323,9 @@ class Property:
 
 class Clause:
 
-    def __init__(self,clause):
+    def __init__(self,clause, clause_type = None):
         self._properties = []
+        self.clause_type = clause_type
         self.sub_clauses = []
         self.sub_clause_type = None
 
@@ -338,10 +339,8 @@ class Clause:
                     self.has_sub_clauses = True
                     clauses = clause.get("clauses")
                     for subclause in clauses:
-                        sc = Clause(subclause)
+                        sc = Clause(subclause,self.sub_clause_type)
                         self.sub_clauses.append(sc)
-                        
-                        
 
             if "value" in clause:
                 value = clause.get("value")
@@ -728,7 +727,7 @@ class Group:
                 if "clauses" in query.keys():
                     clauses = query["clauses"]
                     for clause in clauses:
-                        self.clauses.append(Clause(clause))
+                        self.clauses.append(Clause(clause, self.match_type))
 
                 self.conditions = clauses
 

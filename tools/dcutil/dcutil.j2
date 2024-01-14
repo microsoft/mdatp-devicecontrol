@@ -8,15 +8,18 @@ This sample is based on the [sample files](#files).
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
-{% if "apple" in entry_type.name %}
+{% if "Apple" in entry_type | string %}
 {% include "mac_rule.j2" %}
 {% else %}
 {% include "windows_rule.j2" %}
 {% endif %}
 
 ## Groups
+{% if "Apple" in entry_type | string %}
+{% include "mac_groups.j2" %}
+{% else %}
 {% include "groups.j2" %}
-
+{% endif %}
 ## Settings
 {% include "settings.j2" %}
 
