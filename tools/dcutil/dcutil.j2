@@ -34,14 +34,21 @@ This policy is based on information in the following files:
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+{% if not "Apple" in entry_type | string %}
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
+{% endif %}
 
+{% if "Apple" in entry_type | string or macPolicy is not none %}
 ## Mac
-- [Mac Policy](#mac-policy)
+- [Mac Deployment with Intune](#mac-deployment-with-intune)
+- [Mac Deployment with JAMF](#mac-deployment-with-jamf)
+- [Manual Mac Deployment](#manual-mac-deployment)
+{% endif %}
 
+{% if not "Apple" in entry_type | string %}
 ## Intune UX
 {%  if intune_ux_support.isValid()   %}
 {% include "intune_ux.j2" %}
@@ -59,16 +66,9 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 ## Intune Custom Settings
 
 {% include "intune_custom_settings.j2" %}
-
-## Mac Policy
-{% if macError is none %}
-```
-{{ macPolicy }}
-```
-{% else %}
-This policy is not supported on Mac because {{ macError }}
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 {% endif %}
 
+{% if "Apple" in entry_type | string or macPolicy is not none %}
+## Mac Policy
+{% include "mac_policy.j2" %}
+{% endif %}

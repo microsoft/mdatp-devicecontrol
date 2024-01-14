@@ -207,31 +207,33 @@ class Setting:
 
 class Settings:
 
+    default_enforcement_map = {
+        "allow":"Allow",
+        "deny": "Deny"
+    }
+
+    default_features = {
+        "appleDevice": {
+            "disable": True
+        },
+        "removableMedia":{
+            "disable": True
+        },
+        "portableDevice": {
+            "disable": True
+        },
+        "bluetoothDevice":{
+            "disable":True
+        }
+    }
+
+    mac_default_enforcement = "allow"
 
     def generate_settings_from_mac_policy(json):
         settings = None
 
-        default_enforcement_map = {
-            "allow":"Allow",
-            "deny": "Deny"
-        }
-
-        default_features = {
-            "appleDevice": {
-                "disable": True
-            },
-            "removableMedia":{
-                "disable": True
-            },
-            "portableDevice": {
-                "disable": True
-            },
-            "bluetoothDevice":{
-                "disable":True
-            }
-        }
-
-        default_default_enforcement = "allow"
+        
+        
 
         if "settings" in json.keys():
 
@@ -239,21 +241,21 @@ class Settings:
             settings_json = json["settings"]
 
             if "features" in settings_json:
-                features = default_features
+                features = Settings.default_features
                 for features_key in settings_json["features"]:
                      features[features_key] = settings_json["features"][features_key]
                 settings_dict[Setting.SecuredDevicesConfiguration] = features
             else:
-                settings_dict[Setting.SecuredDevicesConfiguration] = default_features
+                settings_dict[Setting.SecuredDevicesConfiguration] = Settings.default_features
 
             if "global" in settings_json:
                 global_json = settings_json["global"]
                 mac_default_enforcement = global_json["defaultEnforcement"]
-                default_enforcement = default_enforcement_map[mac_default_enforcement]
+                default_enforcement = Settings.default_enforcement_map[mac_default_enforcement]
 
                 settings_dict[Setting.DefaultEnforcement] = default_enforcement
             else:
-                settings_dict[Setting.DefaultEnforcement] = default_default_enforcement
+                settings_dict[Setting.DefaultEnforcement] = Settings.mac_default_enforcement
 
             if "ux" in settings_json:
                 ux_json = settings_json["ux"]
@@ -285,6 +287,29 @@ class Settings:
 
     def __next__(self): 
         return self.settings.__next__()
+    
+
+    def get_mac_settings(self):
+
+        mac_settings = {
+
+        }
+
+        for setting in self.settings:
+
+            if setting.name == Setting.SecuredDevicesConfiguration: 
+                mac_settings["features"] = setting.value
+            
+            if Setting.DefaultEnforcement == setting.name:
+                mac_settings["global"] = {
+                    "defaultEnforcement": str(setting.value).lower()
+                }
+            
+            if Setting.UXNavigationTarget == setting.name:
+                mac_settings["ux"] = {
+                    "navigationTarget":setting.value
+                }
+        return mac_settings
 
 class IntuneCustomRow:
 
@@ -756,14 +781,17 @@ class Group:
 
         return out
     
-    def toJSON(self):
-        return json.dumps(self.root)
+    def toJSON(self,i=0):
+        if i==0:
+            return self.root
+        else:
+            return json.dumps(self.root,indent=i)
     
     def __str__(self):
         if self.format != "mac":
             return self.toXML()
         else:
-            return self.toJSON()
+            return self.toJSON(1)
     
     def __eq__(self,other):
         if self.match_type == other.match_type and len(self._properties) == len(other._properties):
@@ -939,15 +967,18 @@ class PolicyRule:
 
         return out
     
-    def toJSON(self):
-        return json.dumps(self.root)
+    def toJSON(self,i=0):
+        if i==0:
+            return self.root
+        else:
+            return json.dumps(self.root,indent=i)
     
     def __eq__(self,other):
         return str(self) == str(other)
     
     def __hash__(self):
         if self.format == "mac":
-            return hash(self.toJSON())
+            return hash(self.toJSON(1))
         else:
             return hash(self.toXML())
 
@@ -971,7 +1002,7 @@ class Notifications:
     })
 
     ShowNotification = Option("show_notification","Show notification",{
-        "mac":"send_notification",
+        "mac":"show_notification",
         "gpo": 1,
         "oma-uri":1
     })
@@ -1272,6 +1303,19 @@ class Entry:
         }
     )
 
+    WindowsEntryTypes = [
+        WindowsPrinter,
+        WindowsDevice,
+        WindowsGeneric
+    ]
+
+    MacEntryTypes = [
+        AppleBluetoothDevice,
+        AppleDevice,
+        AppleGeneric,
+        ApplePortableDevice,
+        AppleRemovableMedia
+    ]
 
     def get_enforcement(variation,format): 
         for enforcement in PolicyRule.Enforcements:

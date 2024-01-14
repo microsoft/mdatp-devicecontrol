@@ -92,8 +92,6 @@ class Helper:
     
     def generate_clause_table(group):
 
-        header = ["Operation","Property","Value"]
-
         clauses = group.clauses
         clause_table = Helper.generate_table_for_clauses(clauses)
         return clause_table
@@ -436,6 +434,10 @@ class Inventory:
 
         groupsXML = "<Groups>"
         rulesXML  = "<PolicyRules>"
+        mac_policy = {
+            "groups":[],
+            "rules":[]
+        }
         oma_uri = filtered_rules["oma-uri"]
         entry_type = None
         has_mixed_entry_type = False
@@ -448,6 +450,7 @@ class Inventory:
         
             rules[rule.id] = rule
             paths.append(rule.path)
+            mac_policy["rules"].append(rule.toJSON())
 
             #sets the entry type to the Generic
             #if the query returns more than 1
@@ -474,6 +477,8 @@ class Inventory:
                     groupsXML += "\n"+group.toXML()
                     groups[group.id] = group
                     paths.append(group.path)
+                    mac_policy["groups"].append(group.toJSON())
+
                     intune_ux_support += IntuneUXFeature.get_support_for(group)
                     windows_support += WindowsFeature.get_support_for(group)
             
@@ -494,10 +499,11 @@ class Inventory:
             web_paths.append(path)
 
         try:
-            mac_policy = {}
+            
             mac_error = None
-            mac_policy["groups"] = mac.convert_groups(ET.fromstring(groupsXML),True)
-            mac_policy["rules"] = mac.convert_rules(ET.fromstring(rulesXML),True)
+            if entry_type not in Entry.MacEntryTypes:
+                mac_policy["groups"] = mac.convert_groups(ET.fromstring(groupsXML),True)
+                mac_policy["rules"] = mac.convert_rules(ET.fromstring(rulesXML),True)
         except Exception as e:
             mac.log_error("Failed to convert policy to Mac:")
             mac.log_error(str(e))
@@ -530,6 +536,15 @@ class Inventory:
             custom_settings_values = settings.getIntuneCustomValues()
             for custom_settings_value in custom_settings_values:
                 result["oma_uri"][custom_settings_value] = custom_settings_values[custom_settings_value] 
+
+            if result["mac_policy"] is not None:
+                mac_policy = result["mac_policy"]
+                mac_policy["settings"] = settings.get_mac_settings()
+                result["mac_policy"] = mac_policy
+
+        
+        if result["mac_policy"] is not None:
+            result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
 
         templatePath = pathlib.Path(__file__).parent.resolve()
         templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)

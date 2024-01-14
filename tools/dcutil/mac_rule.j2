@@ -39,7 +39,7 @@
         {%- for entry in value.entries[1:] -%}
         <tr>
             <td>{{ entry.enforcement }}</td>
-            {% for permission,icon in entry.permission_icons -%}
+            {% for permission,icon in Helper.get_permission_icons(entry).items() -%}
             <td>{{ icon }}</td>
             {% endfor -%}
             <td>{{ entry.notifications | string }}</td>
