@@ -46,13 +46,14 @@ def clean_up_name(name, new_space = "-"):
 
     return clean_name
 
-def get_section_title_for_object(self,object):
-
-    return clean_up_name(object.name)
 
 
-class Icons:
 
+class Helper:
+
+    def get_section_title_for_object(object):
+        return clean_up_name(object.name)
+    
     true_icons = {
         PolicyRule.Allow:":white_check_mark:",
         PolicyRule.AuditAllowed:":page_facing_up:",
@@ -68,7 +69,7 @@ class Icons:
             for permission in entry.all_permissions:
                 enabled = permission in entry.access
                 if enabled:
-                    permission_icons[permission] = PolicyRule.true_icons[entry.enforcement]
+                    permission_icons[permission] = Helper.true_icons[entry.enforcement]
                 else:
                     permission_icons[permission] = "-"
 
@@ -85,8 +86,9 @@ class Icons:
             }
 
             for mask in WindowsEntryType.access_masks.keys():
-                permission_icons[mask] = PolicyRule.true_icons[entry.enforcement_type]
+                permission_icons[mask] = Helper.true_icons[entry.enforcement_type]
 
+        return permission_icons
 class Inventory:
 
     
@@ -438,7 +440,7 @@ class Inventory:
                     groups[group.id] = group
                     paths.append(group.path)
                     intune_ux_support += IntuneUXFeature.get_support_for(group)
-                    windows_support.issues+= WindowsFeature.get_support_for(group)
+                    windows_support += WindowsFeature.get_support_for(group)
             
             for oma_uri_group in groups_for_rule["oma-uri"]:
                 oma_uri[oma_uri_group.get_oma_uri()] = IntuneCustomRow(oma_uri_group)
@@ -514,7 +516,7 @@ class Inventory:
              "description": description,
              "settings": settings,
              "env":os.environ,
-             "Icons":Icons,
+             "Helper":Helper,
              "title":title})
         
 

@@ -19,22 +19,22 @@
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
+                    <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
                 {%- endfor -%}
                 </ul>
             </td>
             <td rowspan="{{ value.entries | length }}" valign="top">.
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                    <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
                 {%- endfor -%}
                 </ul>
             </td>
             <td>{{ value.entries[0].enforcement }}</td>
-            {% for p,icon in Icons.get_permission_icons(value.entries[0]).items() -%}
+            {% for p,icon in Helper.get_permission_icons(value.entries[0]).items() -%}
             <td>{{ icon }}</td>
-            {% endfor %}
-            <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options_mask }})</td> 
+            {% endfor -%}
+            <td>{{ value.entries[0].notifications | string }}</td> 
         </tr>
         {%- for entry in value.entries[1:] -%}
         <tr>
@@ -42,7 +42,7 @@
             {% for permission,icon in entry.permission_icons -%}
             <td>{{ icon }}</td>
             {% endfor %}
-            <td>{{ entry.options_text }} ({{ entry.options_mask }})</td>
+            <td>{{ entry.notifications | string }}</td>
         </tr>
         {%- endfor -%}
     {%- endfor -%}

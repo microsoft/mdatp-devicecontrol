@@ -356,26 +356,29 @@ class GroupProperty:
 
     #Windows Device
     WindowsDeviceFriendlyName = "FriendlyNameId"
+    
+    WindowsRemovableMediaDevices = "RemovableMediaDevices"
+    WindowsCdRomDevices = "CdRomDevices"
+    WindowsPortableDevices = "WpdDevices"
+    WindowsPrinterDevices = "PrinterDevices"
+
     WindowsDeviceVendorProduct = "VID_PID"
     WindowsDeviceVendor = "VID"
     WindowsDeviceProduct = "PID"
     WindowsDeviceInstancePath = "InstancePathId"
     WindowsDeviceId = "DeviceId"
-    WindowsDeviceHardware = "HardwareId"
+    WindowsDeviceHardwareId = "HardwareId"
     WindowsDeviceBus = "BusId"
     WindowsDeviceSerialNumber = "SerialNumberId"
     WindowsDeviceFamily = "PrimaryId"
 
-    WindowsRemovableMediaDevices = "RemovableMediaDevices"
-    WindowsCdRomDevicesDevices = "CdRomDevices"
-    WindowsWpdDevicesDevices = "WpdDevices"
-    WindowsPrinterDevices = "PrinterDevices"
 
     #Network
     NetworkCategory = "NetworkCategoryId"
     NetworkCategoryPublic = "Public"
     NetworkCategoryPrivate = "Private"
     NetworkCategoryDomainAuthenticated = "DomainAuthenticated"
+    
     NetworkName = "NameId"
 
     NetworkDomain = "NetworkDomainId"
@@ -392,7 +395,7 @@ class GroupProperty:
     VPNConnectionName = "NameId"
 
     #PrinterConnection
-    PrinterConnection = "PrinterConnectionId"
+    WindowsPrinterConnection = "PrinterConnectionId"
     USBPrinterConnection = "USB"
     CorporatePrinterConnection = "Corporate"
     NetworkPrinterConnection = "Network"
@@ -404,8 +407,9 @@ class GroupProperty:
     #File
     FilePath = "PathId"
 
-
-
+    #PrintJob
+    PrintOutputFileName = "PrintOutputFileNameId"
+    PrintDocumentName = "PrintDocumentNameId"
 
     def __init__(self,name,label,description,allowed_values = None):
         self.name = name
@@ -415,12 +419,253 @@ class GroupProperty:
 
 class GroupType:
 
-    def __init__(self,name):
-        self.name = name
+    WindowsDeviceGroupType = "Device"
+    WindowsPrinterGroupType = "Device"
+    
+    FileGroupType = "File"
+    NetworkGroupType = "Network"
+    VPNConnectionGroupType = "VPNConnection"
 
+    PrintJobType = "PrintJob"
+
+
+    def __init__(self,name, group_properties):
+        self.name = name
+        self.group_properties = group_properties
+
+    
 
 
 class Group:
+
+    WindowsDeviceFamilyProperty = GroupProperty(
+        GroupProperty.WindowsDeviceFamily,
+        "Windows Device Family",
+        "The Primary ID includes RemovableMediaDevices, CdRomDevices, WpdDevices, PrinterDevices.",
+        [
+            GroupProperty.WindowsCdRomDevices,
+            GroupProperty.WindowsRemovableMediaDevices,
+            GroupProperty.WindowsPrinterDevices,
+            GroupProperty.WindowsPortableDevices
+        ]
+    )
+
+    WindowsDeviceFriendlyNameProperty = GroupProperty(
+        GroupProperty.WindowsDeviceFriendlyName,
+        "Windows Device Friendly Name",
+        "It's a string attached to the device, for example, Generic Flash Disk USB Device. It's the Friendly name in the Device Manager."
+    )
+
+    WindowsDeviceVendorProductProperty = GroupProperty(
+        GroupProperty.WindowsDeviceVendorProduct,
+        "Vendor Product Id (VID/PID)",
+        "Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard."
+    )
+
+    WindowsDeviceVendorProperty = GroupProperty(
+        GroupProperty.WindowsDeviceVendor,
+        "Vendor Id (VID)",
+        "Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor"
+    )
+
+    WindowsDeviceProductProperty = GroupProperty(
+        GroupProperty.WindowsDeviceProduct,
+        "Product Id (PID)",
+        "Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard."
+    )
+
+    WindowsDeviceInstancePathProperty = GroupProperty(
+        GroupProperty.WindowsDeviceInstancePath,
+        "Windows Device Instance Path",
+        "InstancePathId is a string that uniquely identifies the device in the system, for example, USBSTOR\\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\\8735B611&0. It's the Device instance path in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*"
+    )
+
+    WindowsDeviceIdProperty = GroupProperty(
+        GroupProperty.WindowsDeviceId,
+        "Windows Device Id",
+        "To transform Device instance path to Device ID format, see Standard USB Identifiers, for example, USBSTOR\\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07",
+    )
+
+    WindowsDeviceHardwareIdProperty = GroupProperty(
+        GroupProperty.WindowsDeviceHardwareId,
+        "Windows Device Hardware",
+        "A string that identifies the device in the system, for example, USBSTOR\\DiskGeneric_Flash_Disk___8.07. It's Hardware Ids in the Device Manager."
+    )
+
+    WindowsDeviceBusProperty = GroupProperty(
+        GroupProperty.WindowsDeviceBus,
+        "Windows Device Bus",
+        "For example, USB, SCSI"
+    )
+
+    WindowsDeviceSerialNumberProperty = GroupProperty(
+        GroupProperty.WindowsDeviceSerialNumber,
+        "Windows Device Serial Number",
+        "You can find SerialNumberId from Device instance path in the Device Manager, for example, 03003324080520232521 is SerialNumberId in USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0"
+    )
+
+    WinodwsPrinterConnectionProperty = GroupProperty(
+        GroupProperty.WindowsPrinterConnection,
+        "Windows Printer Connection",
+        [
+            GroupProperty.USBPrinterConnection,
+            GroupProperty.CorporatePrinterConnection,
+            GroupProperty.NetworkPrinterConnection,
+            GroupProperty.UniversalPrinterConnection,
+            GroupProperty.FilePrinterConnection,
+            GroupProperty.CustomPrinterConnection,
+            GroupProperty.LocalPrinterConnection
+        ]
+
+    )
+
+
+    WindowsPrinterGroupProperties = [
+        WindowsDeviceFamilyProperty,
+        WindowsDeviceFriendlyNameProperty,
+        WindowsDeviceVendorProductProperty,   
+        WinodwsPrinterConnectionProperty
+    ]
+
+    WindowsDeviceGroupProperties = [
+        WindowsDeviceFamilyProperty,
+        WindowsDeviceFriendlyNameProperty,
+        WindowsDeviceVendorProductProperty,
+        WindowsDeviceVendorProperty,
+        WindowsDeviceProductProperty,
+        WindowsDeviceInstancePathProperty,
+        WindowsDeviceIdProperty,
+        WindowsDeviceHardwareIdProperty,
+        WindowsDeviceBusProperty,
+        WindowsDeviceSerialNumberProperty
+    ]
+
+    WindowsDeviceGroupType = GroupType(
+        GroupType.WindowsDeviceGroupType,
+        WindowsDeviceGroupProperties
+    )
+
+    WindowsPrinterGroupType = GroupType(
+        GroupType.WindowsPrinterGroupType,
+        WindowsPrinterGroupProperties
+    )
+
+    NetworkNameProperty = GroupProperty(
+        GroupProperty.NetworkName,
+        "Network Name",
+        "The name of the network"
+    )
+
+    NetworkCategoryProperty = GroupProperty(
+        GroupProperty.NetworkCategory,
+        "Network Category",
+        "Only applicable for Network type Group",
+        [
+            GroupProperty.NetworkCategoryDomainAuthenticated,
+            GroupProperty.NetworkCategoryPrivate,
+            GroupProperty.NetworkCategoryPublic
+        ]
+    )
+
+    NetworkDomainProperty = GroupProperty(
+        GroupProperty.NetworkDomain,
+        "Network Domain",
+        "Domain property of the network",
+        [
+            GroupProperty.NonDomain,
+            GroupProperty.DomainAuthenticated,
+            GroupProperty.Domain
+        ]
+    )
+
+    NetworkGroupProperties = [
+        NetworkNameProperty,
+        NetworkDomainProperty,
+        NetworkCategoryProperty
+    ]
+
+    NetworkGroupType = GroupType(
+        GroupType.NetworkGroupType,
+        NetworkGroupProperties
+    )
+
+    VPNConnectionNameProperty = GroupProperty(
+        GroupProperty.VPNConnectionName,
+        "VPN Connection Name",
+        "The name of the VPN Connection, supports wildcards"
+    )
+
+    VPNDnsSuffixProperty = GroupProperty (
+        GroupProperty.VPNDnsSuffix,
+        "VPN Connection DNS Suffix",
+        "The value of VPN DNS Suffix, supports wildcards"
+    )
+
+    VPNServerAddressProperty = GroupProperty(
+        GroupProperty.VPNServerAddress,
+        "VPN Connection Server Address",
+        "The value of the VPN server address, supports wildcards"
+    )
+
+    VPNConnectionStatusProperty = GroupProperty(
+        GroupProperty.VPNConnectionStatus,
+        "VPN Connection Status",
+        "The status of the VPN Connection",
+        [
+            GroupProperty.VPNConnectionStatusConnected,
+            GroupProperty.VPNConnectionStatusDisconnected
+        ]
+    )
+
+    VPNConnectionProperties = [
+        VPNConnectionNameProperty,
+        VPNConnectionStatusProperty,
+        VPNDnsSuffixProperty,
+        VPNServerAddressProperty
+    ]
+
+    VPNConnectionGroupType = GroupType(
+        GroupType.VPNConnectionGroupType,
+        VPNConnectionProperties
+    )
+
+    FilePathProperty = GroupProperty(
+        GroupProperty.FilePath,
+        "File Path",
+        "value of file path or name, supports wildcard"
+    )
+
+    FileGroupProperties = [
+        FilePathProperty
+    ]
+
+    FileGroupType = GroupType(
+        GroupType.FileGroupType,
+        FileGroupProperties
+    )
+
+    PrintOutputFileNameProperty = GroupProperty(
+        GroupProperty.PrintOutputFileName,
+        "Print Job File Name",
+        "The output destination file path for print to file. Wildcards are supported. For example, C:\\*\\Test.pdf"
+    )
+
+    PrintDocumentNameProperty = GroupProperty(
+        GroupProperty.PrintDocumentName,
+        "Print Job Document Name",
+        "The source file path. Wildcards are supported. This path might not exist. For example, add text to a new file in Notepad, and then print without saving the file."
+    )
+
+    PrintJobGroupProperties = [
+        PrintDocumentNameProperty,
+        PrintOutputFileNameProperty
+    ]
+
+    PrintJobGroupType = GroupType(
+        GroupType.PrintJobType,
+        PrintJobGroupProperties
+    )
+    
 
     supported_match_types = [
         "MatchAny",
@@ -792,9 +1037,9 @@ class Notifications:
         if len(self.notifications) == 0:
             out = "None"
         elif len(self.notifications) == 1:
-            out = self.notifications[0]
+            out = str(self.notifications[0])
         else:
-            out = self.notifications[0]+" and "+self.notifications[1]
+            out = str(self.notifications[0])+" and "+str(self.notifications[1])
 
         return out
     
@@ -1041,7 +1286,7 @@ class Entry:
     def __init__(self,entry,format = "gpo"):
 
         self.entry_type = None
-        
+        self.format = format
 
         self.parameters = None
         self.sid = "All Users"
@@ -1423,6 +1668,17 @@ class Feature:
 
 WindowsFeature = Feature(
         {
+            "group": {
+               "supported_types": [
+                    Group.WindowsDeviceGroupType,
+                    Group.WindowsPrinterGroupType,
+                    Group.FileGroupType,
+                    Group.NetworkGroupType,
+                    Group.VPNConnectionGroupType,
+                    Group.PrintJobGroupType
+               ],
+                "match_types": ["MatchAll","MatchAny"]
+            },   
             "entry":{
                 "supported_types":{
                     "windows_printer": Entry.WindowsPrinter,
@@ -1462,38 +1718,10 @@ WindowsFeature = Feature(
 IntuneUXFeature = Feature(
     {
         "group": {
-            "supported_types": {
-                "Device":{
-                    "properties":{
-                        "BusId":{},
-                        "DeviceId":{},
-                        "FriendlyNameId":{},
-                        "HardwareId":{},
-                        "InstancePathId":{},
-                        "VID_PID":{},
-                        "VID":{},
-                        "PID":{},
-                        "PrimaryId":{
-                            "values":["RemovableMediaDevices", 
-                                      "CdRomDevices",
-                                       "WpdDevices",
-                                       "PrinterDevices"]
-                        },
-                        "SerialNumberId":{},
-                        "PrinterConnectionId":{
-                            "values":[
-                                "USB",
-                                "Corporate",
-                                "Network",
-                                "Universal",
-                                "File",
-                                "Custom",
-                                "Local"
-                            ]
-                        }
-                    }
-                }
-            },
+            "supported_types": [
+                Group.WindowsDeviceGroupType,
+                Group.WindowsPrinterGroupType
+            ],
             "match_types": ["MatchAll","MatchAny"]
         },
         "entry":{
