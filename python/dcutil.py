@@ -542,7 +542,8 @@ class Inventory:
         if result["mac_policy"] is not None:
             result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
 
-        templatePath = pathlib.Path(__file__).parent.resolve()
+        templatePath = pathlib.Path(__file__ ).parent.resolve() 
+        templatePath = pathlib.Path(str(templatePath)+ os.sep + "templates").resolve()
         templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = args.template
