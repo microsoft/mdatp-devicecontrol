@@ -1,5 +1,7 @@
 # Device Control
 
+This repository contains [tools](python/README.md) and examples for [Microsoft Defender for Endpoint Device Control for Windows](windows/README.md) and [Microsoft Defender for Endpoint Device Control for Mac](macOS/README.md)
+
 
 ## Contributing
 
