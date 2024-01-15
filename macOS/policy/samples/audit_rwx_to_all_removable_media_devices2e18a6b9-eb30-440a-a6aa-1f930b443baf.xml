@@ -1,0 +1,19 @@
+<PolicyRule Id="2e18a6b9-eb30-440a-a6aa-1f930b443baf" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/2e18a6b9-eb30-440a-a6aa-1f930b443baf/RuleData -->
+	<Name>Audit RWX to all Removable Media Devices</Name>
+	<IncludedIdList>
+		<GroupId>94b5df10-bd2f-4b19-8a9f-539520b9d6ff</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="2566d326-d8e9-49be-9b8e-2fd0853e6641">
+		<Type>Allow</Type>
+		<AccessMask>63</AccessMask>
+		<Options>0</Options>
+	</Entry>
+	<Entry Id="ea3ccfe9-ec04-4fa2-a6bb-06941c7b051a">
+		<Type>AuditAllowed</Type>
+		<AccessMask>63</AccessMask>
+		<Options>2</Options>
+	</Entry>
+</PolicyRule>

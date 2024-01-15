@@ -1,0 +1,378 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "fb4ad01e-f41a-46c6-9ac1-268efa0ea083",
+            "name": "Group for all mass storage devices groups",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    },
+                    {
+                        "$type": "primaryId",
+                        "value": "portable_devices"
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "0951"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "169D"
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "2009"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "16AF"
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "1908"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "0226"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "7f191817-c305-451d-812a-1c4b03ebcec8",
+            "name": "Group for authorized dictaphones",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "07B4"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "0232"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "0279"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "0244"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "0264"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "0236"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "0245"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "0911"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "1F40"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "251C"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "1D54"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "1072"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "1070"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "1080"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "054C"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "0B6F"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "1653593b-5b92-47e6-975a-c43ffa9cd28d",
+            "name": "Group for authorized image devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "046D"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "0837"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "085B"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "0825"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "03F0"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "5705"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "5D05"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "040A"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "6030"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "601D"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "1083"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "1646"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "1647"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "04CA"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "7053"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "7054"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "04F2"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "B51C"
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "05C8"
+                            },
+                            {
+                                "$type": "or",
+                                "clauses": [
+                                    {
+                                        "$type": "productId",
+                                        "value": "0383"
+                                    },
+                                    {
+                                        "$type": "productId",
+                                        "value": "034B"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "0461"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "4DFE"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "d2887bd4-a916-4011-a385-83c6b15df529",
+            "name": "Group for authorized immo devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "09CB"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "1007"
+                            }
+                        ]
+                    },
+                    {
+                        "$type": "and",
+                        "clauses": [
+                            {
+                                "$type": "vendorId",
+                                "value": "0F7E"
+                            },
+                            {
+                                "$type": "productId",
+                                "value": "900C"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

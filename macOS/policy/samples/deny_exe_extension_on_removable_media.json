@@ -1,0 +1,135 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
+            "name": "All Removable Media Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "file",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+            "name": "Some Executable Extensions",
+            "query": {
+                "$type": "any",
+                "clauses": [
+                    {
+                        "$type": "fileType",
+                        "value": ".exe"
+                    },
+                    {
+                        "$type": "fileType",
+                        "value": ".ps1"
+                    },
+                    {
+                        "$type": "fileType",
+                        "value": ".cmd"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "file",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e213",
+            "name": "Some Library Extensions",
+            "query": {
+                "$type": "any",
+                "clauses": [
+                    {
+                        "$type": "fileType",
+                        "value": ".dll"
+                    },
+                    {
+                        "$type": "fileType",
+                        "value": ".dylib"
+                    },
+                    {
+                        "$type": "fileType",
+                        "value": ".so"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "772cef80-229f-48b4-bd17-a69130092981",
+            "name": "Deny Execute on all Removable Media Devices",
+            "includeGroups": [
+                "3f082cd3-f701-4c21-9a6a-ed115c28e211"
+            ],
+            "excludeGroups": [],
+            "entries": [
+                {
+                    "$type": "removableMedia",
+                    "id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "read"
+                    ],
+                    "conditions": {
+                        "$type": "any",
+                        "values": [
+                            {
+                                "$type": "file",
+                                "groupId": "3f082cd3-f701-4c21-9a6a-ed115c28e212"
+                            },
+                            {
+                                "$type": "file",
+                                "groupId": "3f082cd3-f701-4c21-9a6a-ed115c28e213"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "18BA3DD5-4C9A-458B-A756-F1499FE94FB4",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "read",
+                        "execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "removableMedia": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
