@@ -76,17 +76,13 @@ class Helper:
         else:
 
             permission_icons = {
-                WindowsEntryType.DiskReadMask: "-",
-                WindowsEntryType.DiskWriteMask: "-",
-                WindowsEntryType.DiskExecuteMask: "-",
-                WindowsEntryType.FileReadMask: "-",
-                WindowsEntryType.FileWriteMask: "-",
-                WindowsEntryType.FileExecuteMask: "-",
-                WindowsEntryType.PrintMask: "-"
             }
 
-            for mask in WindowsEntryType.access_masks.keys():
-                permission_icons[mask] = Helper.true_icons[entry.enforcement_type]
+            for mask in entry.entry_type.access_masks:
+                if mask & int(entry.access_mask):
+                    permission_icons[mask] = Helper.true_icons[entry.enforcement]
+                else:
+                    permission_icons[mask] = "-"   
 
         return permission_icons
     
@@ -685,16 +681,19 @@ if __name__ == '__main__':
         for rule in scenarios["scenarios"]:
             policy_file = rule["file"]
             description = "A sample policy"
-            settings = Default_Settings
+            
             title = None
             if "description" in rule.keys():
                 description = rule["description"]
             if "title" in rule.keys():
                 title = rule["title"]
+            
+            query,default_title,default_outfile,default_settings = parse_in_file(policy_file)
             if "settings" in rule.keys():
                 settings = Settings(rule["settings"])
-
-            query,default_title,default_outfile = parse_in_file(policy_file)
+            else:
+                settings = default_settings
+            
             result = inventory.process_query(query)
             if args.format == "text":
                 if title is None:

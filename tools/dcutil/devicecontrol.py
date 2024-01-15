@@ -828,7 +828,7 @@ class Enforcement:
         self.variations = variations
 
     def __str__(self):
-        return self.label
+        return self.name
     
     def __eq__(self,other):
         return str(self) == str(other)
@@ -932,7 +932,7 @@ class PolicyRule:
             if self.entry_type is None:
                 self.entry_type = entry.entry_type
             elif self.entry_type is not entry.entry_type:
-                if self.format["mac"]:
+                if self.format == "mac":
                     self.entry_type = Entry.AppleGeneric
                 else:
                     self.entry_type = Entry.WindowsDevice
@@ -1017,7 +1017,7 @@ class Notifications:
     DontTriggerAudit = Option("disable","Disable",{
         "mac": "disable",
         "gpo": 4,
-        "oma_uri": 4
+        "oma-uri": 4
     })
 
     CreateFileEventWithFile = Option("fileEvidenceWithFile","Create file evidence with file",{
@@ -1059,7 +1059,7 @@ class Notifications:
             else:
                 #On windows the options are a bit mask
                 for notification in all_notifications:
-                    if notification.variations["format"] & options:
+                    if notification.variations[format] & options:
                         self.notifications.append(notification)
 
     def __str__(self):
@@ -1109,7 +1109,8 @@ class WindowsEntryType:
 
     allow_notification_masks = {
         0x04: "Disable",
-        0x08: "Create File Evidence"
+        0x08: "Create File Evidence",
+        0x10: "Create File Evidence withouy File"
     }
 
     deny_notification_masks = {
@@ -1181,25 +1182,13 @@ class Entry:
 
     
     WindowsPrinter = WindowsEntryType("windows_printer","Windows Printer",
-        {
-    
-            "access_masks": [0x40]
-                                              
-        }
+        [0x40]
     )
     WindowsDevice  = WindowsEntryType("windows_device","Windows Removable Device",
-        {
-    
-            "access_masks": [0x01,0x02,0x04,0x08,0x10,0x20]
-                                              
-        }
+        [0x01,0x02,0x04,0x08,0x10,0x20]
     )
     WindowsGeneric  = WindowsEntryType("windows_generic","Windows Generic Device",
-        {
-    
-            "access_masks": [0x01,0x02,0x04,0x08,0x10,0x20,0x04]
-                                              
-        }
+        [0x01,0x02,0x04,0x08,0x10,0x20,0x04]
     )
     AppleDevice = MacEntryType("appleDevice","Apple Device",
         {
@@ -1353,9 +1342,9 @@ class Entry:
             self.enforcement = Entry.get_enforcement(self.enforcement_type,format)
             
             
-            options_mask = entry.find("./Options").text
+            self.options_mask = entry.find("./Options").text
             
-            self.notifications = Notifications(int(options_mask),format)
+            self.notifications = Notifications(int(self.options_mask),format)
             self.options_text = str(self.notifications)
             
             self.access_mask = entry.find("./AccessMask").text
@@ -1375,10 +1364,11 @@ class Entry:
                     self.permissions[mask] = True
                     if mask in WindowsEntryType.access_mask_text_labels:
                         self.access_mask_text = self.access_mask_text+", "+WindowsEntryType.access_mask_text_labels[mask]
-                        if self.entry_type is None:
-                            self.entry_type = Entry.WindowsDevice
-                        elif self.entry_type is not Entry.WindowsDevice:
-                            has_mixed_entry_type = True
+
+                    if self.entry_type is None:
+                        self.entry_type = Entry.WindowsDevice
+                    elif self.entry_type is not Entry.WindowsDevice:
+                        has_mixed_entry_type = True
                             
                     if mask == 64:
                         if self.entry_type is None:
@@ -1395,10 +1385,10 @@ class Entry:
             self.access_mask_text = Util.rreplace(self.access_mask_text,","," and",1)
 
 
-            notification_masks = WindowsEntryType.notification_masks[self.enforcement_type]
-            for mask in notification_masks:
-                if int(self.options_mask) & mask:
-                    self.notifications.append(notification_masks[mask])
+            #notification_masks = WindowsEntryType.notification_masks[self.enforcement_type]
+            #for mask in notification_masks:
+            #    if int(self.options_mask) & mask:
+            #        self.notifications.append(notification_masks[mask])
 
            
             sid = entry.find("./Sid")

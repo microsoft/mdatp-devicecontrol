@@ -1,12 +1,15 @@
 # Device control policy sample: Demo_2_Policies
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
@@ -27,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="7"><b>Authorized removable storage policy</b></td>
             <td rowspan="7 valign="top">
-                <ul><li>Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}"> (details)</a></ul>
+                <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a></ul>
             </td>
             <td rowspan="7" valign="top">.
                 <ul></ul>
@@ -38,7 +41,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:x:</td>
             <td>-</td>
-            <td>:x:</td><td>None (0)</td> 
+            <td>:x:</td>
+            <td>None (0)</td> 
             <td>
                 <details>
                 <summary>View</summary>
@@ -54,7 +58,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>:white_check_mark:</td>
-            <td>-</td><td>Create File Evidence (8)</td>
+            <td>-</td>
+            <td>Create file evidence with file (8)</td>
             <td> 
                 <details>
                 <summary>View</summary>
@@ -70,7 +75,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>None (0)</td>
+            <td>-</td>
+            <td>None (0)</td>
             <td> 
                 <details>
                 <summary>View</summary>
@@ -86,7 +92,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>-</td>
-            <td>:white_check_mark:</td><td>None (0)</td>
+            <td>:white_check_mark:</td>
+            <td>None (0)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -96,7 +103,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td><td>Send event (2)</td>
+            <td>:page_facing_up:</td>
+            <td>Send event (2)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -106,7 +114,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:x:</td>
             <td>:x:</td>
             <td>:x:</td>
-            <td>:x:</td><td>None (0)</td>
+            <td>:x:</td>
+            <td>None (0)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -116,7 +125,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>Show notification and Send event (3)</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -125,7 +135,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
             <td rowspan="5" valign="top">.
-                <ul><li>Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}"> (details)</a></ul>
+                <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>-</td>
@@ -133,7 +143,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>:x:</td>
             <td>-</td>
-            <td>:x:</td><td>None (0)</td> 
+            <td>:x:</td>
+            <td>None (0)</td> 
             <td>
                 <details>
                 <summary>View</summary>
@@ -149,7 +160,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:white_check_mark:</td>
             <td>:white_check_mark:</td>
             <td>-</td>
-            <td>:white_check_mark:</td><td>None (0)</td>
+            <td>:white_check_mark:</td>
+            <td>None (0)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -159,7 +171,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td><td>Send event (2)</td>
+            <td>:page_facing_up:</td>
+            <td>Send event (2)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -169,7 +182,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:x:</td>
             <td>:x:</td>
             <td>:x:</td>
-            <td>:x:</td><td>None (0)</td>
+            <td>:x:</td>
+            <td>None (0)</td>
             <td> 
                 <center>-</center></td>
         </tr><tr>
@@ -179,14 +193,48 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>Show notification and Send event (3)</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
             <td> 
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
 
-### Unauthorized File Group_0
+
+### Approved USBs Group_0
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&* |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+	<Name>Approved USBs Group_0</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Block Read and Write access to specific file _Groups_2
 
 
 
@@ -200,12 +248,6 @@ The match type for the group is *MatchAny*.
 | PathId | *.dll |
 
 
-#### Available properties for Unauthorized File Group_0
-
-**PathId**:  string, value of file path or name, support wildcard and only applicable for File type Group.      
-
-
-
 
 
 
@@ -215,58 +257,11 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-	<Name>Unauthorized File Group_0</Name>
+	<Name>Block Read and Write access to specific file _Groups_2</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PathId>*.exe</PathId>
 		<PathId>*.dll</PathId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Approved USBs Group_1
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&0 |
-
-
-#### Available properties for Approved USBs Group_1
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
-**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
-**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
-**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
-> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
-
-**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
-**BusId**: For example, USB, SCSI         
-**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
-**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
-
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-	<Name>Approved USBs Group_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -285,22 +280,6 @@ The match type for the group is *MatchAny*.
 | PrimaryId | RemovableMediaDevices |
 | PrimaryId | CdRomDevices |
 | PrimaryId | WpdDevices |
-
-
-#### Available properties for Any Removable Storage and CD-DVD and WPD Group_0
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
-**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
-**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
-**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
-> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
-
-**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
-**BusId**: For example, USB, SCSI         
-**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
-**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
-
 
 
 
@@ -334,31 +313,33 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
-- [Group Policy/Demo_2_Policies.xml](Group%20Policy/Demo_2_Policies.xml)
-- [Intune OMA-URI/Unauthorized File Group.xml](Intune%20OMA-URI/Unauthorized%20File%20Group.xml)
+- [Group Policy/Block Read and Write access to specific file _Groups.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
 - [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Approved USBs Group.xml](Intune%20OMA-URI/Approved%20USBs%20Group.xml)
+- [Group Policy/Demo_2_Policies.xml](Group%20Policy/Demo_2_Policies.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
+- Device groups not supported.
+- Send event (2) is an unsupported notification.
 - Create File Evidence (8) is an unsupported notification.
-- File Execute (32) is an unsupported access mask
-- File Read (8) is an unsupported access mask
-- File Write (16) is an unsupported access mask
+- Show notification (1) is an unsupported notification.
 - Parameters are not supported
 - File groups not supported.
 
@@ -373,21 +354,21 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Approved USBs Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-		<Name>Unauthorized File Group_0</Name>
+		<Name>Block Read and Write access to specific file _Groups_2</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PathId>*.exe</PathId>
 			<PathId>*.dll</PathId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-		<Name>Approved USBs Group_1</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
@@ -626,10 +607,4 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported Descriptor ID PathId
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

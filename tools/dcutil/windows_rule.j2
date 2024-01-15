@@ -1,3 +1,4 @@
+{% set has_printing =  "Printer" in entry_type.name %}
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
@@ -31,28 +32,21 @@
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
                 {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
+                    <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
                 {%- endfor -%}
                 </ul>
             </td>
             <td rowspan="{{ value.entries | length }}" valign="top">.
                 <ul>
                 {%- for id in value.excluded_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                    <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
                 {%- endfor -%}
                 </ul>
             </td>
-            <td>{{ value.entries[0].enforcement }}</td>
-            {% if not has_printing -%}
-            <td>{{ value.entries[0].permission_icons[1] }}</td>
-            <td>{{ value.entries[0].permission_icons[2] }}</td>
-            <td>{{ value.entries[0].permission_icons[4] }}</td>
-            <td>{{ value.entries[0].permission_icons[8] }}</td>
-            <td>{{ value.entries[0].permission_icons[16] }}</td>
-            <td>{{ value.entries[0].permission_icons[32] }}</td>
-            {%- else -%}
-            <td>{{ value.entries[0].permission_icons[64] }}</td>
-            {% endif -%}
+            <td>{{ value.entries[0].enforcement.label }}</td>
+            {% for p,icon in Helper.get_permission_icons(value.entries[0]).items() -%}
+            <td>{{ icon }}</td>
+            {% endfor -%}
             <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options_mask }})</td> 
             <td>
                 {% if value.entries[0].sid == "All Users"  and  value.entries[0].parameters is none -%}
@@ -78,17 +72,10 @@
         </tr>
         {%- for entry in value.entries[1:] -%}
         <tr>
-            <td>{{ entry.enforcement }}</td>
-            {% if not has_printing -%}
-            <td>{{ entry.permission_icons[1] }}</td>
-            <td>{{ entry.permission_icons[2] }}</td>
-            <td>{{ entry.permission_icons[4] }}</td>
-            <td>{{ entry.permission_icons[8] }}</td>
-            <td>{{ entry.permission_icons[16] }}</td>
-            <td>{{ entry.permission_icons[32] }}</td>
-            {%- else -%}
-            <td>{{ entry.permission_icons[64] }}</td>
-            {% endif -%}
+            <td>{{ entry.enforcement.label }}</td>
+            {% for p,icon in Helper.get_permission_icons(entry).items() -%}
+            <td>{{ icon }}</td>
+            {% endfor -%}
             <td>{{ entry.options_text }} ({{ entry.options_mask }})</td>
             <td> 
                 {% if entry.sid == "All Users"  and  entry.parameters is none -%}

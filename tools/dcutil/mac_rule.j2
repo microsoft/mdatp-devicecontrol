@@ -30,7 +30,7 @@
                 {%- endfor -%}
                 </ul>
             </td>
-            <td>{{ value.entries[0].enforcement }}</td>
+            <td>{{ value.entries[0].enforcement.label }}</td>
             {% for p,icon in Helper.get_permission_icons(value.entries[0]).items() -%}
             <td>{{ icon }}</td>
             {% endfor -%}
@@ -38,7 +38,7 @@
         </tr>
         {%- for entry in value.entries[1:] -%}
         <tr>
-            <td>{{ entry.enforcement }}</td>
+            <td>{{ entry.enforcement.label }}</td>
             {% for permission,icon in Helper.get_permission_icons(entry).items() -%}
             <td>{{ icon }}</td>
             {% endfor -%}
