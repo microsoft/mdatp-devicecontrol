@@ -121,9 +121,12 @@ class Helper:
 class Inventory:
 
     
-    def __init__(self,source_path,generate_oma_uri=False,dest="."):
+    def __init__(self,source_path,generated_files_locations_by_format={},dest="."):
         self.paths = source_path
-        self.generate_oma_uri = generate_oma_uri
+        self.generated_files_locations_by_format = generated_files_locations_by_format
+        if self.generated_files_locations_by_format is None:
+            self.generated_files_locations_by_format = {}
+       
         self.dest_dir = dest
 
         group_columns = {
@@ -398,9 +401,9 @@ class Inventory:
         oma_uri_object.format = "oma-uri"
 
 
-        if self.generate_oma_uri:
-            current_object_dir = os.path.dirname(object.path)
-            path = current_object_dir + os.sep + clean_up_name(oma_uri_object.name,"_")+oma_uri_object.id + ".xml"
+        if "oma-uri" in self.generated_files_locations_by_format.keys():
+            
+            path = self.generated_files_locations_by_format["oma-uri"] + os.sep + clean_up_name(oma_uri_object.name,"_")+oma_uri_object.id + ".xml"
             oma_uri_object.path = path
             with open(path,"w") as generated_file:
                 generated_file.write(oma_uri_object.toXML(""))
@@ -603,6 +606,28 @@ def format(string):
         case other:
             raise argparse.ArgumentError("Invalid format "+string)
 
+def generate_files_format(format_strings):
+
+    generated_files_locations_by_format = {}
+    format_string = format_strings.split(",")
+    for format_string in format_string:
+        
+        format_string_values = format_string.split(":")
+        format = format_string_values[0]
+        location = ":".join(format_string_values[1:])
+
+        if format in ["oma-uri","mac","gpo"]:
+            if os.path.isdir(location):
+                generated_files_locations_by_format[format] = location
+                continue
+            else:
+                raise argparse.ArgumentError("Invalid location to save generated files"+location)
+
+        else:
+            raise argparse.ArgumentError("Invalid format "+format)
+
+    return generated_files_locations_by_format
+
 def parse_in_file(in_file):
     query = "path.str.contains('"+in_file+"',regex=False)"
     title = str(in_file.split(os.sep)[-1]).split(".")[0]
@@ -629,6 +654,7 @@ def load_scenarios(scenarios_file):
      
 def generate_readme(results,dest,title):
     templatePath = pathlib.Path(__file__).parent.resolve()
+    templatePath = pathlib.Path(str(templatePath)+ os.sep + "templates").resolve()
     templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
     templateEnv = jinja2.Environment(loader=templateLoader)
     TEMPLATE_FILE = "readme.j2"
@@ -662,12 +688,12 @@ if __name__ == '__main__':
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
     arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
     arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory",default=".")
-    arg_parser.add_argument('-g','--generate',dest="generate_oma_uri",action="store_true",help='Generates XML for oma-uri')
+    arg_parser.add_argument('-g','--generate',dest="generated_files_locations", type=generate_files_format, help='Generates files for other formats')
     arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.j2")
 
     args = arg_parser.parse_args()
 
-    inventory = Inventory(args.source_path,args.generate_oma_uri,args.dest)
+    inventory = Inventory(args.source_path,args.generated_files_locations,args.dest)
 
     query = args.query
     title = None

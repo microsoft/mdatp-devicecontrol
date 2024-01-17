@@ -129,9 +129,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Send event (2) is an unsupported notification.
-- Device groups not supported.
 - Show notification (1) is an unsupported notification.
+- Device groups not supported.
+- Send event (2) is an unsupported notification.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 

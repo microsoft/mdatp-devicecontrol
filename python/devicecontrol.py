@@ -342,8 +342,12 @@ class IntuneCustomRow:
 
 class Property:
 
-    def __init__(self, property_name, property_value):
-        self.name = property_name
+    def __init__(self, group_property, property_value):
+        self.name = group_property.name
+
+        allowed_values = group_property.allowed_values
+        if allowed_values is not None and property_value not in allowed_values:
+            raise Exception("Invalid value "+property_value+" for group property "+group_property.name)
         self.value = property_value
 
 class Clause:
@@ -456,11 +460,23 @@ class GroupType:
     def __init__(self,name, group_properties):
         self.name = name
         self.group_properties = group_properties
+        self.name_map = {}
 
-    
+        for group_property in group_properties:
+            self.name_map[group_property.name] = group_property
+
+    def get_property_by_name(self, property_name):
+        if property_name in self.name_map.keys():
+            return self.name_map[property_name]
+        else:
+            return None
 
 
 class Group:
+
+    Types = {
+        
+    }
 
     WindowsDeviceFamilyProperty = GroupProperty(
         GroupProperty.WindowsDeviceFamily,
@@ -574,6 +590,8 @@ class Group:
         WindowsPrinterGroupProperties
     )
 
+    Types[GroupType.WindowsDeviceGroupType] = WindowsDeviceGroupType
+    
     NetworkNameProperty = GroupProperty(
         GroupProperty.NetworkName,
         "Network Name",
@@ -612,6 +630,8 @@ class Group:
         GroupType.NetworkGroupType,
         NetworkGroupProperties
     )
+
+    Types[GroupType.NetworkGroupType] = NetworkGroupType
 
     VPNConnectionNameProperty = GroupProperty(
         GroupProperty.VPNConnectionName,
@@ -653,6 +673,8 @@ class Group:
         VPNConnectionProperties
     )
 
+    Types[GroupType.VPNConnectionGroupType] = VPNConnectionGroupType
+
     FilePathProperty = GroupProperty(
         GroupProperty.FilePath,
         "File Path",
@@ -663,10 +685,14 @@ class Group:
         FilePathProperty
     ]
 
+    
+
     FileGroupType = GroupType(
         GroupType.FileGroupType,
         FileGroupProperties
     )
+
+    Types[GroupType.FileGroupType] = FileGroupType
 
     PrintOutputFileNameProperty = GroupProperty(
         GroupProperty.PrintOutputFileName,
@@ -690,11 +716,14 @@ class Group:
         PrintJobGroupProperties
     )
     
+    Types[GroupType.PrintJobType] = PrintJobGroupType
 
     supported_match_types = [
         "MatchAny",
         "MatchAll"
     ]
+
+    
 
     def __init__(self,root,format,path):
 
@@ -705,6 +734,9 @@ class Group:
         self.root = root
         self.conditions = {}
 
+        self.group_type = None
+        self.group_properties = {}
+
         if format == "gpo" or format =="oma-uri":
 
             self.id = root.attrib["Id"]
@@ -712,6 +744,8 @@ class Group:
                 self.type = root.attrib["Type"]
             else:
                 self.type = "Device"
+
+            self.group_type = Group.Types[self.type]
 
             name_node = root.find(".//Name")
             if name_node is None:
@@ -730,8 +764,24 @@ class Group:
             
             descriptors = root.findall("./DescriptorIdList//")
             for descriptor in descriptors:
-                self._properties.append(Property(descriptor.tag, descriptor.text))
+                group_property = self.group_type.get_property_by_name(descriptor.tag)
+                if group_property is None:
+                    #This is the special case where they have the same group type (device),
+                    #but different properties
+                    if self.group_type.name == GroupType.WindowsDeviceGroupType and descriptor.tag == GroupProperty.WindowsPrinterConnection:
+                        self.group_type = Group.WindowsPrinterGroupType
+                        group_property = self.group_type.get_property_by_name(descriptor.tag)
+                
+                    else:
+                        raise Exception("Unknown group property for "+self.group_type.label)
+                
+
+                self._properties.append(Property(group_property, descriptor.text))
                 self.conditions[descriptor.tag] = descriptor.text
+
+
+            
+            
 
         elif format == "mac":
             if "id" in root.keys():
@@ -1366,15 +1416,15 @@ class Entry:
                         self.access_mask_text = self.access_mask_text+", "+WindowsEntryType.access_mask_text_labels[mask]
 
                     if self.entry_type is None:
-                        self.entry_type = Entry.WindowsDevice
-                    elif self.entry_type is not Entry.WindowsDevice:
+                        if mask == 64:
+                            self.entry_type = Entry.WindowsPrinter
+                        else:
+                            self.entry_type = Entry.WindowsDevice
+
+                    elif mask ==64:
                         has_mixed_entry_type = True
                             
-                    if mask == 64:
-                        if self.entry_type is None:
-                            self.entry_type = Entry.WindowsPrinter
-                        elif self.entry_type is not Entry.WindowsPrinter:
-                            has_mixed_entry_type = True
+
 
             # The entry type determins the layout of the report
             if has_mixed_entry_type:
@@ -1672,19 +1722,9 @@ class Feature:
             case "Group":
                 group_support = self.feature_data["group"]
                 supported_group_types = group_support["supported_types"]
-                if object.type not in supported_group_types:
-                    support.issues.append(object.type+" groups not supported.")
-                else:
-                    supported_properties = supported_group_types[object.type]["properties"]
-                    for property in object._properties:
-                        propertyId = property.name
-                        value = property.value
-                        if propertyId not in supported_properties:
-                            support.issues.append(propertyId+" not supported for "+object.type+" group.")
-                        else: 
-                            if "values" in supported_properties[propertyId].keys() and value not in supported_properties[propertyId]["values"]:
-                                support.issues.append(value+" not supported for "+propertyId+" of "+object.type+" group.")
-
+                if object.group_type not in supported_group_types:
+                    support.issues.append(object.group_type.label+" groups not supported.")
+             
                 supported_match_types = group_support["match_types"]
                 if object.match_type not in supported_match_types:
                     support.issues.append(object.match_type+" not supported.")

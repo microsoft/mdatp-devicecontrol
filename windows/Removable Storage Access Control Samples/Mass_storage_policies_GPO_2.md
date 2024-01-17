@@ -493,53 +493,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Mass_storage_groups_GPO_2_1
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| PrimaryId | CdRomDevices |
-| PrimaryId | WpdDevices |
-| FriendlyNameId | SDHC* |
-| FriendlyNameId | SDXC* |
-| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
-| VID_PID | 0951_169D |
-| VID_PID | 2009_16AF |
-| VID_PID | 1908_0226 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
-		<FriendlyNameId>SDHC*</FriendlyNameId>
-		<FriendlyNameId>SDXC*</FriendlyNameId>
-		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-		<VID_PID>0951_169D</VID_PID>
-		<VID_PID>2009_16AF</VID_PID>
-		<VID_PID>1908_0226</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Mass_storage_groups_GPO_2_2
 
 
@@ -588,6 +541,53 @@ The match type for the group is *MatchAny*.
 		<VID_PID>1D54_1070</VID_PID>
 		<VID_PID>1D54_1080</VID_PID>
 		<VID_PID>054C_0B6F</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Mass_storage_groups_GPO_2_1
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
+| FriendlyNameId | SDHC* |
+| FriendlyNameId | SDXC* |
+| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
+| VID_PID | 0951_169D |
+| VID_PID | 2009_16AF |
+| VID_PID | 1908_0226 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_1</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
+		<FriendlyNameId>SDHC*</FriendlyNameId>
+		<FriendlyNameId>SDXC*</FriendlyNameId>
+		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+		<VID_PID>0951_169D</VID_PID>
+		<VID_PID>2009_16AF</VID_PID>
+		<VID_PID>1908_0226</VID_PID>
 	</DescriptorIdList>
 </Group>
 ```
@@ -663,10 +663,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml](Group%20Policy/mass_storage_groups_gpo_2_4%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D.xml)
-- [Group Policy/Mass_storage_groups_GPO_2.xml](Group%20Policy/Mass_storage_groups_GPO_2.xml)
 - [Group Policy/Mass_storage_policies_GPO_2.xml](Group%20Policy/Mass_storage_policies_GPO_2.xml)
-- [Group Policy/mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml](Group%20Policy/mass_storage_groups_gpo_2_1%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D.xml)
+- [Group Policy/Mass_storage_groups_GPO_2.xml](Group%20Policy/Mass_storage_groups_GPO_2.xml)
 
 
 # Deployment Instructions
@@ -686,9 +684,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Show notification (1) is an unsupported notification.
 - Send event (2) is an unsupported notification.
 - Device groups not supported.
+- Show notification (1) is an unsupported notification.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -710,22 +708,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VID_PID>0F7E_900C</VID_PID>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_1</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<PrimaryId>CdRomDevices</PrimaryId>
-			<PrimaryId>WpdDevices</PrimaryId>
-			<FriendlyNameId>SDHC*</FriendlyNameId>
-			<FriendlyNameId>SDXC*</FriendlyNameId>
-			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-			<VID_PID>0951_169D</VID_PID>
-			<VID_PID>2009_16AF</VID_PID>
-			<VID_PID>1908_0226</VID_PID>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
 		<Name>Mass_storage_groups_GPO_2_2</Name>
@@ -743,6 +725,22 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VID_PID>1D54_1070</VID_PID>
 			<VID_PID>1D54_1080</VID_PID>
 			<VID_PID>054C_0B6F</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
@@ -989,7 +987,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\gestion_des_pã©riphã©riques_externes{466faba8-dddf-4ae5-9871-dabbb600d4f3}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\gestion_des_pã©riphã©riques_externes{466faba8-dddf-4ae5-9871-dabbb600d4f3}.xml*
          
    
    7. Click "Save"
@@ -1004,7 +1002,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\gestion_des_dictaphones{540efb7f-1836-4956-8888-5d41d981d6ba}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\gestion_des_dictaphones{540efb7f-1836-4956-8888-5d41d981d6ba}.xml*
          
    
    7. Click "Save"
@@ -1019,7 +1017,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\gestion_des_appareils_immobiliers{505e2563-1de8-40aa-b8f9-472a37b2f6ee}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\gestion_des_appareils_immobiliers{505e2563-1de8-40aa-b8f9-472a37b2f6ee}.xml*
          
    
    7. Click "Save"
@@ -1034,7 +1032,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml*
          
    
    7. Click "Save"
@@ -1049,7 +1047,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml*
          
    
    7. Click "Save"
@@ -1064,7 +1062,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\mass_storage_groups_gpo_2_3{1653593b-5b92-47e6-975a-c43ffa9cd28d}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_3{1653593b-5b92-47e6-975a-c43ffa9cd28d}.xml*
          
    
    7. Click "Save"
@@ -1079,7 +1077,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml*
          
    
    7. Click "Save"

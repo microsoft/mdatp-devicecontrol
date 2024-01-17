@@ -68,15 +68,6 @@
         },
         {
             "file": "Group Policy\\Mass_storage_policies_GPO_2.xml"
-        },
-        {
-            "file": "macOS\\policy\\examples\\deny_removable_media_except_kingston.json"
-        },
-        {
-            "file": "macOS\\policy\\examples\\audit_all_apple_devices.json"
-        },
-        {
-            "file": "macOS\\policy\\examples\\audit_all_removable_media.json"
         }
     ]
     

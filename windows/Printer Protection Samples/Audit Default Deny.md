@@ -1,12 +1,15 @@
 # Device control policy sample: Audit Default Deny
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
@@ -24,7 +27,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td rowspan="1 valign="top">
                 <ul></ul>
             </td>
-            <td rowspan="1" valign="top">
+            <td rowspan="1" valign="top">.
                 <ul></ul>
             </td>
             <td>Audit Denied</td>
@@ -34,7 +37,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 
 ## Settings
@@ -54,48 +59,23 @@ This policy is based on information in the following files:
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
-<details>
-<summary>Create a Device Control Rules configuration profile</summary>  
+Intune UX is not supported for this policy because:
+- Send event (2) is an unsupported notification.
+- Show notification (1) is an unsupported notification.
 
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on "Create Policy"
-   3. Under Platform, select "Windows 10 and later"
-   4. Under Profile, select "Device Control Rules"
-   5. Click "Create"
-   6. Under Name, enter **
-   7. Optionally, enter a description
-   8. Click "Next"
-</details>
-
-
-<details>
-<summary>Add a rule for Default Deny to the policy</summary>
-
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Default Deny* for the name
-
-
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification and Send event* from "Options"
-   1. Select *Print* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
 
 ## Group Policy (GPO)
@@ -194,10 +174,4 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported entry type [AuditDenied]
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

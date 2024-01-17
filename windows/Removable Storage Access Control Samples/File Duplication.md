@@ -118,8 +118,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Create File Evidence (8) is an unsupported notification.
 - Device groups not supported.
+- Create File Evidence (8) is an unsupported notification.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -198,7 +198,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\data_duplication_filesystem_demo{7988d6d0-8854-4cad-98de-e4e22e65e058}.xml*
+   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\data_duplication_filesystem_demo{7988d6d0-8854-4cad-98de-e4e22e65e058}.xml*
          
    
    7. Click "Save"

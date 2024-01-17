@@ -108,8 +108,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Scenario 8 Audit Read_Intune.xml](Intune%20OMA-URI/Scenario%208%20Audit%20Read_Intune.xml)
 - [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Scenario 8 Audit Read_Intune.xml](Intune%20OMA-URI/Scenario%208%20Audit%20Read_Intune.xml)
 
 
 # Deployment Instructions
@@ -129,8 +129,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Device groups not supported.
 - Send event (2) is an unsupported notification.
+- Device groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
