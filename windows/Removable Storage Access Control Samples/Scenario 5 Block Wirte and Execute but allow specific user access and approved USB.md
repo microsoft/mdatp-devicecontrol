@@ -30,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="4"><b>Block Wirte and Execute but allow specific user and approved USB</b></td>
             <td rowspan="4 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
+                <ul><li>Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
             <td rowspan="4" valign="top">.
                 <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a></ul>
@@ -96,6 +96,41 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### Any Removable Storage and CD-DVD and WPD Group_0
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Approved USBs Group_0
 
 
@@ -127,41 +162,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Any Removable Storage and CD-DVD and WPD Group_1
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| PrimaryId | CdRomDevices |
-| PrimaryId | WpdDevices |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -173,9 +173,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
+- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 - [Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml](Intune%20OMA-URI/Scenario%205%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20and%20approved%20USB.xml)
 - [Intune OMA-URI/Approved USBs Group.xml](Intune%20OMA-URI/Approved%20USBs%20Group.xml)
-- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -194,11 +194,109 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- Show notification (1) is an unsupported notification.
-- Send event (2) is an unsupported notification.
+<details>
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Approved USBs Group_0</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Approved USBs Group_0 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+
+<details>
+<summary>Add a rule for Block Wirte and Execute but allow specific user and approved USB to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_0*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Set reusable settings" under Excluded Id
+
+   1. Click on *Approved USBs Group_0*
+
+   1. Click on "Select"
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Block Wirte and Execute but allow specific user and approved USB* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+   1. Enter *xxxxxxxx* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+   1. Enter *xxxxxxxx* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)
@@ -209,22 +307,22 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
 		<Name>Approved USBs Group_0</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<PrimaryId>CdRomDevices</PrimaryId>
-			<PrimaryId>WpdDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>

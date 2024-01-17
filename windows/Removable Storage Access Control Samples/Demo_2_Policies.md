@@ -132,7 +132,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="5"><b>Authorized removable storage policy</b></td>
             <td rowspan="5 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
+                <ul><li>Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
             <td rowspan="5" valign="top">.
                 <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a></ul>
@@ -203,7 +203,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Block Read and Write access to specific file _Groups_2
+### Unauthorized File Group_0
 
 
 
@@ -226,7 +226,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-	<Name>Block Read and Write access to specific file _Groups_2</Name>
+	<Name>Unauthorized File Group_0</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PathId>*.exe</PathId>
@@ -267,7 +267,7 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Any Removable Storage and CD-DVD and WPD Group_1
+### Any Removable Storage and CD-DVD and WPD Group_0
 
 
 
@@ -291,7 +291,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -313,10 +313,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
+- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Unauthorized File Group.xml](Intune%20OMA-URI/Unauthorized%20File%20Group.xml)
 - [Group Policy/Demo_2_Policies.xml](Group%20Policy/Demo_2_Policies.xml)
-- [Group Policy/Block Read and Write access to specific file _Groups.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
 - [Intune OMA-URI/Approved USBs Group.xml](Intune%20OMA-URI/Approved%20USBs%20Group.xml)
-- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -336,11 +336,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Parameters are not supported
-- Send event (2) is an unsupported notification.
-- Show notification (1) is an unsupported notification.
+- Create file evidence with file is an unsupported notification.
 - Windows File groups not supported.
-- Create File Evidence (8) is an unsupported notification.
+- Parameters are not supported
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -355,7 +353,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 <Groups>
 	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-		<Name>Block Read and Write access to specific file _Groups_2</Name>
+		<Name>Unauthorized File Group_0</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PathId>*.exe</PathId>
@@ -372,7 +370,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>

@@ -493,53 +493,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Mass_storage_groups_GPO_2_1
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| PrimaryId | CdRomDevices |
-| PrimaryId | WpdDevices |
-| FriendlyNameId | SDHC* |
-| FriendlyNameId | SDXC* |
-| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
-| VID_PID | 0951_169D |
-| VID_PID | 2009_16AF |
-| VID_PID | 1908_0226 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
-		<FriendlyNameId>SDHC*</FriendlyNameId>
-		<FriendlyNameId>SDXC*</FriendlyNameId>
-		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-		<VID_PID>0951_169D</VID_PID>
-		<VID_PID>2009_16AF</VID_PID>
-		<VID_PID>1908_0226</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Mass_storage_groups_GPO_2_2
 
 
@@ -652,6 +605,53 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Mass_storage_groups_GPO_2_1
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
+| FriendlyNameId | SDHC* |
+| FriendlyNameId | SDXC* |
+| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
+| VID_PID | 0951_169D |
+| VID_PID | 2009_16AF |
+| VID_PID | 1908_0226 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_1</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
+		<FriendlyNameId>SDHC*</FriendlyNameId>
+		<FriendlyNameId>SDXC*</FriendlyNameId>
+		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+		<VID_PID>0951_169D</VID_PID>
+		<VID_PID>2009_16AF</VID_PID>
+		<VID_PID>1908_0226</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -664,7 +664,6 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 This policy is based on information in the following files:
 
 - [Group Policy/Mass_storage_groups_GPO_2.xml](Group%20Policy/Mass_storage_groups_GPO_2.xml)
-- [Intune OMA-URI/mass_storage_groups_gpo_2_3{1653593b-5b92-47e6-975a-c43ffa9cd28d}.xml](Intune%20OMA-URI/mass_storage_groups_gpo_2_3%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D.xml)
 - [Group Policy/Mass_storage_policies_GPO_2.xml](Group%20Policy/Mass_storage_policies_GPO_2.xml)
 
 
@@ -684,11 +683,415 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- Show notification (1) is an unsupported notification.
-- Send event (2) is an unsupported notification.
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_2</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_2 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_3</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_3 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_1</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_1 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+> [!IMPORTANT]
+> This policy has more than 1 rule.  
+> Policy ordering is not guaranteed by Intune.
+> Make sure that policy is not dependent on order to achieve desired result.
+> Consider using ```default deny```.   
+
+
+<details>
+<summary>Add a rule for Gestion des périphériques externes to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Mass_storage_groups_GPO_2_1*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Set reusable settings" under Excluded Id
+
+   1. Click on *Mass_storage_groups_GPO_2_2*
+
+   1. Click on *Mass_storage_groups_GPO_2_3*
+
+   1. Click on *Mass_storage_groups_GPO_2_4*
+
+   1. Click on "Select"
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Gestion des périphériques externes* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
+<details>
+<summary>Add a rule for Gestion des dictaphones to the policy</summary>
+
+   1. Add another rule.  Click on "+ Add"
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Mass_storage_groups_GPO_2_2*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Gestion des dictaphones* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
+<details>
+<summary>Add a rule for Gestion des appareils immobiliers to the policy</summary>
+
+   1. Add another rule.  Click on "+ Add"
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Mass_storage_groups_GPO_2_4*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Gestion des appareils immobiliers* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+   1. Enter *XXXXXX* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)
@@ -706,22 +1109,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<VID_PID>09CB_1007</VID_PID>
 			<VID_PID>0F7E_900C</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_1</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<PrimaryId>CdRomDevices</PrimaryId>
-			<PrimaryId>WpdDevices</PrimaryId>
-			<FriendlyNameId>SDHC*</FriendlyNameId>
-			<FriendlyNameId>SDXC*</FriendlyNameId>
-			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-			<VID_PID>0951_169D</VID_PID>
-			<VID_PID>2009_16AF</VID_PID>
-			<VID_PID>1908_0226</VID_PID>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
@@ -763,6 +1150,22 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VID_PID>05C8_0383</VID_PID>
 			<VID_PID>05C8_034B</VID_PID>
 			<VID_PID>0461_4DFE</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
 		</DescriptorIdList>
 	</Group>
 </Groups>
