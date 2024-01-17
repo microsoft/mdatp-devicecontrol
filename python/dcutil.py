@@ -9,7 +9,7 @@ import pathlib
 import copy
 import json
 
-from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, WindowsEntryType, IntuneUXFeature, WindowsFeature
+from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature
 import convert_dc_policy as mac 
 
 Default_Settings = Settings(

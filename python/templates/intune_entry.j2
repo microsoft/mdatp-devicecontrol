@@ -1,7 +1,7 @@
 {% if i != 0 %}
    1. Add another entry.  Click on "+ Add"
 {% endif %}
-   1. Select *{{ entry.type_text }}* from "Type"
+   1. Select *{{ entry.enforcement.label }}* from "Type"
    1. Select *{{ entry.options_text }}* from "Options"
    1. Select *{{ entry.access_mask_text }}* from "Access mask"
 {% if entry.sid != 'All Users' %}

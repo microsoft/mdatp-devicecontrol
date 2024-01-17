@@ -71,11 +71,38 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- Send event (2) is an unsupported notification.
-- Show notification (1) is an unsupported notification.
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+
+<details>
+<summary>Add a rule for Default Deny to the policy</summary>
+
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Default Deny* for the name
+
+
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Print* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)

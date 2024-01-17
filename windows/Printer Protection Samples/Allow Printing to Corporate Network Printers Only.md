@@ -173,10 +173,8 @@ SecuredDevicesConfiguration | PrinterDevices | [documentation](https://learn.mic
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Corporate Network.xml](Intune%20OMA-URI/Corporate%20Network.xml)
-- [Group Policy/Allow Printing to Corporate Network Printers Only.xml](Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
-- [Intune OMA-URI/Any printer group.xml](Intune%20OMA-URI/Any%20printer%20group.xml)
+- [Group Policy/Allow Printing to Corporate Network Printers Only.xml](Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
 
 
 # Deployment Instructions
@@ -196,11 +194,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Show notification (1) is an unsupported notification.
-- Device groups not supported.
-- Send event (2) is an unsupported notification.
-- Network groups not supported.
 - Parameters are not supported
+- Windows Network groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 

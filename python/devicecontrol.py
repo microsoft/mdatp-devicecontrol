@@ -261,8 +261,8 @@ class Settings:
                 ux_json = settings_json["ux"]
                 settings_dict[Setting.UXNavigationTarget] = ux_json["navigationTarget"]
 
-        if len(settings_dict) > 0:
-            settings = Settings(settings_dict)
+            if len(settings_dict) > 0:
+                settings = Settings(settings_dict)
 
         return settings
 
@@ -457,10 +457,11 @@ class GroupType:
     PrintJobType = "PrintJob"
 
 
-    def __init__(self,name, group_properties):
+    def __init__(self,name, label, group_properties):
         self.name = name
         self.group_properties = group_properties
         self.name_map = {}
+        self.label = label
 
         for group_property in group_properties:
             self.name_map[group_property.name] = group_property
@@ -582,11 +583,13 @@ class Group:
 
     WindowsDeviceGroupType = GroupType(
         GroupType.WindowsDeviceGroupType,
+        "Windows Devices",
         WindowsDeviceGroupProperties
     )
 
     WindowsPrinterGroupType = GroupType(
         GroupType.WindowsPrinterGroupType,
+        "Windows Printers",
         WindowsPrinterGroupProperties
     )
 
@@ -628,6 +631,7 @@ class Group:
 
     NetworkGroupType = GroupType(
         GroupType.NetworkGroupType,
+        "Windows Network",
         NetworkGroupProperties
     )
 
@@ -670,6 +674,7 @@ class Group:
 
     VPNConnectionGroupType = GroupType(
         GroupType.VPNConnectionGroupType,
+        "Windows VPN Connection",
         VPNConnectionProperties
     )
 
@@ -689,6 +694,7 @@ class Group:
 
     FileGroupType = GroupType(
         GroupType.FileGroupType,
+        "Windows File",
         FileGroupProperties
     )
 
@@ -713,6 +719,7 @@ class Group:
 
     PrintJobGroupType = GroupType(
         GroupType.PrintJobType,
+        "Windows Print Job",
         PrintJobGroupProperties
     )
     
@@ -1129,6 +1136,13 @@ class Notifications:
             out = out + notification.variations["gpo"]
 
         return out
+
+
+    def __iter__(self):
+        return self.notifications.__iter__()
+    
+    def __next__(self):
+        return self.notifications.__next__()
 
 class WindowsEntryType:
 
@@ -1591,12 +1605,12 @@ class Entry:
         if self.enforcement not in feature_data["supported_notifications"]:
             support.issues.append("Unsupported type of entry "+self.enforcement)
         else:
-            unsupported_notifications = feature_data["supported_notifications"][self.enforcement]["unsupported_notifications"]
-            notification_masks_for_type = WindowsEntryType.notification_masks[self.enforcement]
-            for mask in notification_masks_for_type:
-                if int(self.notifications) & mask:
-                    if unsupported_notifications[mask]:
-                        support.issues.append(notification_masks_for_type[mask]+" ("+str(mask)+") is an unsupported notification.")
+            supported_notifications = feature_data["supported_notifications"][self.enforcement]["notifications"]
+            #notification_masks_for_type = WindowsEntryType.notification_masks[self.enforcement]
+            
+            for notification in self.notifications:
+                if notification not in supported_notifications:
+                    support.issues.append(notification.label+" is an unsupported notification.")
 
         if self.parameters is not None:
             if "parameters" not in feature_data.keys():
@@ -1706,7 +1720,7 @@ class Feature:
 
         for type in entry_data["supported_notifications"]:
             notifications = entry_data["supported_notifications"][type]["notifications"]
-            entry_data["supported_notifications"][type]["unsupported_notifications"] = Feature.get_unsupported_dictionary(notifications)
+            #entry_data["supported_notifications"][type]["unsupported_notifications"] = Feature.get_unsupported_dictionary(notifications)
 
 
 

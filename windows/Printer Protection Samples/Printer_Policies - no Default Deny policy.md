@@ -279,10 +279,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/PDF_XPS Printer.xml](Intune%20OMA-URI/PDF_XPS%20Printer.xml)
-- [Group Policy/Printer_Policies - no Default Deny policy.xml](Group%20Policy/Printer_Policies%20-%20no%20Default%20Deny%20policy.xml)
 - [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
-- [Intune OMA-URI/Any printer group.xml](Intune%20OMA-URI/Any%20printer%20group.xml)
+- [Group Policy/Printer_Policies - no Default Deny policy.xml](Group%20Policy/Printer_Policies%20-%20no%20Default%20Deny%20policy.xml)
+- [Intune OMA-URI/Corporate Network.xml](Intune%20OMA-URI/Corporate%20Network.xml)
+- [Intune OMA-URI/PDF_XPS Printer.xml](Intune%20OMA-URI/PDF_XPS%20Printer.xml)
 - [Intune OMA-URI/Authorized USB Printer.xml](Intune%20OMA-URI/Authorized%20USB%20Printer.xml)
 
 
@@ -303,12 +303,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Show notification (1) is an unsupported notification.
-- VPNConnection groups not supported.
-- Device groups not supported.
-- Send event (2) is an unsupported notification.
-- Network groups not supported.
 - Parameters are not supported
+- Windows Network groups not supported.
+- Windows VPN Connection groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
