@@ -18,7 +18,7 @@
             "title": "Step 4 - Allow different access to different devices for different users"
         },
         {
-            "file": ".Step 5\\restrict_files_and_capture_file_evidece_rules.xml",
+            "file": "Step 5\\restrict_files_and_capture_file_evidence_rules.xml",
             "title": "Step 5 - Restrict files and capture file evidence"
         }
     ]

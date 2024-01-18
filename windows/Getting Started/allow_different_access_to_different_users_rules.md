@@ -215,9 +215,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 This policy is based on information in the following files:
 
 - [windows/Getting Started/Step 4/allow_different_access_to_different_users_rules.xml](/windows/Getting%20Started/Step%204/allow_different_access_to_different_users_rules.xml)
-- [windows/Getting Started/Step 3/allow_different_access_to_different_groups.xml](/windows/Getting%20Started/Step%203/allow_different_access_to_different_groups.xml)
-- [windows/Getting Started/Step 1/deny_all_groups.xml](/windows/Getting%20Started/Step%201/deny_all_groups.xml)
 - [windows/Getting Started/Intune OMA-URI/authorized_usbs{368a2c82-17be-4137-bffa-370bbdff9672}.xml](/windows/Getting%20Started/Intune%20OMA-URI/authorized_usbs%7B368a2c82-17be-4137-bffa-370bbdff9672%7D.xml)
+- [windows/Getting Started/Step 3/allow_different_access_to_different_groups.xml](/windows/Getting%20Started/Step%203/allow_different_access_to_different_groups.xml)
+- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
 
 
 # Deployment Instructions
@@ -237,8 +237,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Execute (32) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- File Execute (32) is an unsupported access mask
 - File Read (8) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.

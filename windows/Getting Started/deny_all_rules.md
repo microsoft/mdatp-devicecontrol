@@ -104,8 +104,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Getting Started/Step 1/deny_all_groups.xml](/windows/Getting%20Started/Step%201/deny_all_groups.xml)
 - [windows/Getting Started/Step 1/deny_all_rules.xml](/windows/Getting%20Started/Step%201/deny_all_rules.xml)
+- [windows/Getting Started/Step 1/deny_all_groups.xml](/windows/Getting%20Started/Step%201/deny_all_groups.xml)
 
 
 # Deployment Instructions
