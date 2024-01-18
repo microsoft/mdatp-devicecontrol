@@ -174,10 +174,10 @@ SecuredDevicesConfiguration | PrinterDevices | [documentation](https://learn.mic
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Intune OMA-URI/network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/network_printers%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/Corporate Network.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Corporate%20Network.xml)
-- [windows/Printer Protection Samples/Group Policy/Allow Printing to Corporate Network Printers Only.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
+- [windows/printer/Intune OMA-URI/Any printer group.xml](/windows/printer/Intune%20OMA-URI/Any%20printer%20group.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Group Policy/Allow Printing to Corporate Network Printers Only.xml](/windows/printer/Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
+- [windows/printer/Intune OMA-URI/Corporate Network.xml](/windows/printer/Intune%20OMA-URI/Corporate%20Network.xml)
 
 
 # Deployment Instructions
@@ -317,7 +317,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Group Policy\Allow Printing to Corporate Network Printers Only.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml*
          
    
    7. Click "Save"
@@ -332,7 +332,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Group Policy\Allow Printing to Corporate Network Printers Only.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml*
          
    
    7. Click "Save"
@@ -347,7 +347,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml*
          
    
    7. Click "Save"
@@ -362,7 +362,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate Network.xml*
          
    
    7. Click "Save"
@@ -377,7 +377,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
          
    
    7. Click "Save"

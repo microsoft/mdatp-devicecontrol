@@ -1,7 +1,7 @@
-# Device control policy sample: Scenario 7
+# Device control policy sample: Audit Default Deny
 
 Description: A sample policy              
-Device Type: Windows Removable Device
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -15,46 +15,25 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="6" valign="top"><center>Access</center></th>
-        <th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Disk Read</th>
-		<th>Disk Write</th>
-		<th>Disk Execute</th>
-		<th>File Read</th>
-		<th>File Write</th>
-		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Deny Wpd Write</b></td>
-            <td rowspan="2 valign="top">
-                <ul></ul>
-            </td>
-            <td rowspan="2" valign="top">.
-                <ul></ul>
-            </td>
-            <td>Deny</td>
-            <td>-</td>
-            <td>:x:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>
-                <center>-</center></td>
+        <th>Print</th>
         </tr><tr>
+            <td rowspan="1"><b>Default Deny</b></td>
+            <td rowspan="1 valign="top">
+                <ul></ul>
+            </td>
+            <td rowspan="1" valign="top">.
+                <ul></ul>
+            </td>
             <td>Audit Denied</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Show notification and Send event (3)</td>
-            <td> 
+            <td>Show notification and Send event (3)</td> 
+            <td>
                 <center>-</center></td>
         </tr></table>
 
@@ -73,7 +52,7 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
+- [windows/printer/Intune OMA-URI/Audit Default Deny.xml](/windows/printer/Intune%20OMA-URI/Audit%20Default%20Deny.xml)
 
 
 # Deployment Instructions
@@ -107,27 +86,18 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 <details>
-<summary>Add a rule for Deny Wpd Write to the policy</summary>
+<summary>Add a rule for Default Deny to the policy</summary>
 
 
 
    1. Click on "+ Edit Entry"
-   1. Enter *Deny Wpd Write* for the name
+   1. Enter *Default Deny* for the name
 
 
-
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Write* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
 
    1. Select *Audit Denied* from "Type"
    1. Select *Show notification and Send event* from "Options"
-   1. Select *Write* from "Access mask"
+   1. Select *Print* from "Access mask"
 
 
    1. Click "OK"
@@ -155,21 +125,16 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
-		<Name>Deny Wpd Write</Name>
+	<PolicyRule Id="{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
+		<Name>Default Deny</Name>
 		<IncludedIdList>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
-			<Type>Deny</Type>
-			<AccessMask>2</AccessMask>
-			<Options>0</Options>
-		</Entry>
-		<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
+		<Entry Id="{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc}">
 			<Type>AuditDenied</Type>
-			<AccessMask>2</AccessMask>
+			<AccessMask>64</AccessMask>
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>
@@ -194,16 +159,16 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Deny Wpd Write</summary>  
+<summary>Add a row for Default Deny</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Deny Wpd Write*
+   2. For Name, enter *Default Deny*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Audit Default Deny.xml*
          
    
    7. Click "Save"

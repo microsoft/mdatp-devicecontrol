@@ -1,4 +1,4 @@
-# Device control policy sample: Scenario 8
+# Device control policy sample: Scenario 5
 
 Description: A sample policy              
 Device Type: Windows Removable Device
@@ -28,32 +28,66 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Audit Read Activity</b></td>
-            <td rowspan="2 valign="top">
+            <td rowspan="4"><b>Block Wirte and Execute but allow specific user and approved USB</b></td>
+            <td rowspan="4 valign="top">
                 <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul></ul>
+            <td rowspan="4" valign="top">.
+                <ul><li>Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}"> (details)</a></ul>
             </td>
             <td>Allow</td>
+            <td>-</td>
             <td>:white_check_mark:</td>
-            <td>-</td>
-            <td>-</td>
+            <td>:white_check_mark:</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>None (0)</td> 
             <td>
-                <center>-</center></td>
+                <details>
+                <summary>View</summary>
+                User condition: xxxxxxxx<br>
+                Parameters: 
+                <ul>
+                </ul>
+                </details></td>
         </tr><tr>
             <td>Audit Allowed</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
-            <td>-</td>
             <td>Send event (2)</td>
+            <td> 
+                <details>
+                <summary>View</summary>
+                User Condition: xxxxxxxx<br>
+                Parameters: 
+                <ul>
+                </ul>
+                </details></td>
+        </tr><tr>
+            <td>Deny</td>
+            <td>-</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>None (0)</td>
+            <td> 
+                <center>-</center></td>
+        </tr><tr>
+            <td>Audit Denied</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
             <td> 
                 <center>-</center></td>
         </tr></table>
@@ -61,6 +95,37 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+
+### Approved USBs Group_1
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&0 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+	<Name>Approved USBs Group_1</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
 
 ### Any Removable Storage and CD-DVD and WPD Group_1
 
@@ -108,8 +173,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Removable Storage Access Control Samples/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Scenario 8 Audit Read_Intune.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Scenario%208%20Audit%20Read_Intune.xml)
+- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/device/Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml](/windows/device/Intune%20OMA-URI/Scenario%205%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20and%20approved%20USB.xml)
+- [windows/device/Group Policy/Approved USBs Group.xml](/windows/device/Group%20Policy/Approved%20USBs%20Group.xml)
 
 
 # Deployment Instructions
@@ -128,6 +194,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
+<details>
+<summary>Create a reusable setting for Approved USBs Group_1</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Approved USBs Group_1 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
 <details>
 <summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
 
@@ -157,7 +237,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 <details>
-<summary>Add a rule for Audit Read Activity to the policy</summary>
+<summary>Add a rule for Block Wirte and Execute but allow specific user and approved USB to the policy</summary>
 
 
    1. Click on "+ Set reusable settings" under Included Id
@@ -167,14 +247,22 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click on "Select"
 
 
+   1. Click on "+ Set reusable settings" under Excluded Id
+
+   1. Click on *Approved USBs Group_1*
+
+   1. Click on "Select"
+
    1. Click on "+ Edit Entry"
-   1. Enter *Audit Read Activity* for the name
+   1. Enter *Block Wirte and Execute but allow specific user and approved USB* for the name
 
 
 
    1. Select *Allow* from "Type"
    1. Select *None* from "Options"
-   1. Select *Read* from "Access mask"
+   1. Select *Write and Execute* from "Access mask"
+
+   1. Enter *xxxxxxxx* for "Sid"
 
 
 
@@ -183,7 +271,27 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Select *Audit Allowed* from "Type"
    1. Select *Send event* from "Options"
-   1. Select *Read* from "Access mask"
+   1. Select *Write and Execute* from "Access mask"
+
+   1. Enter *xxxxxxxx* for "Sid"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Write and Execute* from "Access mask"
 
 
    1. Click "OK"
@@ -199,6 +307,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Approved USBs Group_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
 		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
@@ -221,23 +337,36 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c%7D/RuleData -->
-		<Name>Audit Read Activity</Name>
+	<PolicyRule Id="{83c390b6-b01e-4d83-8834-c8015a2316f2}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData -->
+		<Name>Block Wirte and Execute but allow specific user and approved USB</Name>
 		<IncludedIdList>
 			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
+			<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+		<Entry Id="{5d660ff3-a19f-47ae-8779-ca6a989d9780}">
 			<Type>Allow</Type>
-			<AccessMask>1</AccessMask>
+			<AccessMask>6</AccessMask>
+			<Options>0</Options>
+			<Sid>xxxxxxxx</Sid>
+		</Entry>
+		<Entry Id="{f9f6d219-1332-4c64-b6cb-2e14c65cd243}">
+			<Type>AuditAllowed</Type>
+			<AccessMask>6</AccessMask>
+			<Options>2</Options>
+			<Sid>xxxxxxxx</Sid>
+		</Entry>
+		<Entry Id="{07234f5c-304f-4073-a332-2434cd269816}">
+			<Type>Deny</Type>
+			<AccessMask>6</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{684abbdd-000d-4565-b44c-550bc3d71034}">
-			<Type>AuditAllowed</Type>
-			<AccessMask>1</AccessMask>
-			<Options>2</Options>
+		<Entry Id="{b2827dd5-db81-48d8-8cde-fb2c84a8367f}">
+			<Type>AuditDenied</Type>
+			<AccessMask>6</AccessMask>
+			<Options>3</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -261,16 +390,16 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Audit Read Activity</summary>  
+<summary>Add a row for Block Wirte and Execute but allow specific user and approved USB</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Audit Read Activity*
+   2. For Name, enter *Block Wirte and Execute but allow specific user and approved USB*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Scenario 8 Audit Read_Intune.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml*
          
    
    7. Click "Save"
@@ -285,7 +414,22 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+         
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for Approved USBs Group_0</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *Approved USBs Group_0*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData*
+   5. For Data type, select *String (XML File)*
+   
+        
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Approved USBs Group.xml*
          
    
    7. Click "Save"

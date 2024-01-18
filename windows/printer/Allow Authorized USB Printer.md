@@ -55,6 +55,43 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### Corporate VPN
+
+
+
+This is a group of type *VPNConnection*. 
+The match type for the group is *MatchAll*.
+
+
+|  Property | Value |
+|-----------|-------|
+| NameId | MSFTVPN |
+| VPNServerAddressId | msftvpn.*.microsoft.com |
+| VPNDnsSuffixId | corp.microsoft.com |
+| VPNConnectionStatusId | Connected |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
+	<Name>Corporate VPN</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<NameId>MSFTVPN</NameId>
+		<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+		<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+		<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Authorized USB Printer
 
 
@@ -121,43 +158,6 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
-### Corporate VPN
-
-
-
-This is a group of type *VPNConnection*. 
-The match type for the group is *MatchAll*.
-
-
-|  Property | Value |
-|-----------|-------|
-| NameId | MSFTVPN |
-| VPNServerAddressId | msftvpn.*.microsoft.com |
-| VPNDnsSuffixId | corp.microsoft.com |
-| VPNConnectionStatusId | Connected |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
-	<Name>Corporate VPN</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<NameId>MSFTVPN</NameId>
-		<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
-		<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
-		<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -169,9 +169,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Intune OMA-URI/Allow Authorized USB Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/Corporate Network.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Corporate%20Network.xml)
-- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Intune OMA-URI/Corporate Network.xml](/windows/printer/Intune%20OMA-URI/Corporate%20Network.xml)
+- [windows/printer/Intune OMA-URI/Allow Authorized USB Printer.xml](/windows/printer/Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Intune OMA-URI/Authorized USB Printer.xml](/windows/printer/Intune%20OMA-URI/Authorized%20USB%20Printer.xml)
 
 
 # Deployment Instructions
@@ -192,8 +193,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 Intune UX is not supported for this policy because:
 - Parameters are not supported
-- Windows Network groups not supported.
 - Windows VPN Connection groups not supported.
+- Windows Network groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -206,6 +207,17 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
+		<Name>Corporate VPN</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>MSFTVPN</NameId>
+			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
 		<Name>Authorized USB Printer</Name>
@@ -222,17 +234,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<NameId>corp.microsoft.com</NameId>
 			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{d633d17d-d1d1-4c73-aa27-c545c343b6d7}" Type="VPNConnection">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
-		<Name>Corporate VPN</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<NameId>MSFTVPN</NameId>
-			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
-			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
-			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -304,7 +305,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Allow Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Allow Authorized USB Printer.xml*
          
    
    7. Click "Save"
@@ -319,7 +320,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Authorized USB Printer.xml*
          
    
    7. Click "Save"
@@ -334,7 +335,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate Network.xml*
          
    
    7. Click "Save"
@@ -349,7 +350,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Corporate VPN.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate VPN.xml*
          
    
    7. Click "Save"

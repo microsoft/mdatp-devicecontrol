@@ -1,7 +1,7 @@
-# Device control policy sample: Allow PDF_XPS Printer - File Evidence
+# Device control policy sample: Scenario 8
 
 Description: A sample policy              
-Device Type: Windows Printer
+Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -15,29 +15,44 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="6" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
-        </tr><tr>
-            <td rowspan="2"><b>Allow PDF and XPS Printing</b></td>
+        <th>Disk Read</th>
+		<th>Disk Write</th>
+		<th>Disk Execute</th>
+		<th>File Read</th>
+		<th>File Write</th>
+		<th>File Execute</th></tr><tr>
+            <td rowspan="2"><b>Audit Read Activity</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny {'PrinterConnectionId': 'File'}"> (details)</a></ul>
+                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">.
                 <ul></ul>
             </td>
             <td>Allow</td>
             <td>:white_check_mark:</td>
-            <td>Create file evidence with file (8)</td> 
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
             <td>Audit Allowed</td>
             <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
             <td>Send event (2)</td>
             <td> 
                 <center>-</center></td>
@@ -47,7 +62,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### PDF_XPS Printer
+### Any Removable Storage and CD-DVD and WPD Group_1
 
 
 
@@ -57,7 +72,9 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| PrinterConnectionId | File |
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
 
 
 
@@ -67,12 +84,14 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-	<Name>PDF_XPS Printer</Name>
+<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<PrinterConnectionId>File</PrinterConnectionId>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -89,8 +108,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Intune OMA-URI/Allow PDF_XPS Printer - File Evidence.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Allow%20PDF_XPS%20Printer%20-%20File%20Evidence.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/PDF_XPS Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/PDF_XPS%20Printer.xml)
+- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/device/Intune OMA-URI/Scenario 8 Audit Read_Intune.xml](/windows/device/Intune%20OMA-URI/Scenario%208%20Audit%20Read_Intune.xml)
 
 
 # Deployment Instructions
@@ -109,10 +128,67 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- Create file evidence with file is an unsupported notification.
+<details>
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+
+<details>
+<summary>Add a rule for Audit Read Activity to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Audit Read Activity* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)
@@ -123,12 +199,14 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-		<Name>PDF_XPS Printer</Name>
+	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<PrinterConnectionId>File</PrinterConnectionId>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -143,22 +221,22 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B07fb98fd-f25b-4aec-bb99-69d4abd4ec4d%7D/RuleData -->
-		<Name>Allow PDF and XPS Printing</Name>
+	<PolicyRule Id="{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c%7D/RuleData -->
+		<Name>Audit Read Activity</Name>
 		<IncludedIdList>
-			<GroupId>{e5170dfb-19a9-4466-8109-d36c9c912b4e}</GroupId>
+			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{e8cc55ec-17a8-4900-8df5-1af801342e9d}">
+		<Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
 			<Type>Allow</Type>
-			<AccessMask>64</AccessMask>
-			<Options>8</Options>
+			<AccessMask>1</AccessMask>
+			<Options>0</Options>
 		</Entry>
-		<Entry Id="{2b410b9c-c940-42ec-be1c-1fcb8cc32bc4}">
+		<Entry Id="{684abbdd-000d-4565-b44c-550bc3d71034}">
 			<Type>AuditAllowed</Type>
-			<AccessMask>64</AccessMask>
+			<AccessMask>1</AccessMask>
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>
@@ -183,31 +261,31 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Allow PDF and XPS Printing</summary>  
+<summary>Add a row for Audit Read Activity</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Allow PDF and XPS Printing*
+   2. For Name, enter *Audit Read Activity*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B07fb98fd-f25b-4aec-bb99-69d4abd4ec4d%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Allow PDF_XPS Printer - File Evidence.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 8 Audit Read_Intune.xml*
          
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for PDF_XPS Printer</summary>  
+<summary>Add a row for Any Removable Storage and CD-DVD and WPD Group_0</summary>  
    
    1. Click "Add"
-   2. For Name, enter *PDF_XPS Printer*
+   2. For Name, enter *Any Removable Storage and CD-DVD and WPD Group_0*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

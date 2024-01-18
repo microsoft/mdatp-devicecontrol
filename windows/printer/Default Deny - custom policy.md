@@ -153,10 +153,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Intune OMA-URI/Default Deny - custom policy.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/PDF_XPS Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/PDF_XPS%20Printer.xml)
-- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Intune OMA-URI/Default Deny - custom policy.xml](/windows/printer/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -370,7 +368,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Default Deny - custom policy.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Default Deny - custom policy.xml*
          
    
    7. Click "Save"
@@ -385,7 +383,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
          
    
    7. Click "Save"
@@ -400,7 +398,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
    7. Click "Save"
@@ -415,7 +413,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Authorized USB Printer.xml*
          
    
    7. Click "Save"

@@ -460,6 +460,118 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### Mass_storage_groups_GPO_2_3
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 046D_0837 |
+| VID_PID | 046D_085B |
+| VID_PID | 046D_0825 |
+| VID_PID | 03F0_5705 |
+| VID_PID | 03F0_5D05 |
+| VID_PID | 040A_6030 |
+| VID_PID | 040A_601D |
+| VID_PID | 1083_1646 |
+| VID_PID | 1083_1647 |
+| VID_PID | 04CA_7053 |
+| VID_PID | 04CA_7054 |
+| VID_PID | 04F2_B51C |
+| VID_PID | 05C8_0383 |
+| VID_PID | 05C8_034B |
+| VID_PID | 0461_4DFE |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_3</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>046D_0837</VID_PID>
+		<VID_PID>046D_085B</VID_PID>
+		<VID_PID>046D_0825</VID_PID>
+		<VID_PID>03F0_5705</VID_PID>
+		<VID_PID>03F0_5D05</VID_PID>
+		<VID_PID>040A_6030</VID_PID>
+		<VID_PID>040A_601D</VID_PID>
+		<VID_PID>1083_1646</VID_PID>
+		<VID_PID>1083_1647</VID_PID>
+		<VID_PID>04CA_7053</VID_PID>
+		<VID_PID>04CA_7054</VID_PID>
+		<VID_PID>04F2_B51C</VID_PID>
+		<VID_PID>05C8_0383</VID_PID>
+		<VID_PID>05C8_034B</VID_PID>
+		<VID_PID>0461_4DFE</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Mass_storage_groups_GPO_2_2
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 07B4_0232 |
+| VID_PID | 07B4_0279 |
+| VID_PID | 07B4_0244 |
+| VID_PID | 07B4_0264 |
+| VID_PID | 07B4_0236 |
+| VID_PID | 07B4_0245 |
+| VID_PID | 0911_1F40 |
+| VID_PID | 0911_251C |
+| VID_PID | 1D54_1072 |
+| VID_PID | 1D54_1070 |
+| VID_PID | 1D54_1080 |
+| VID_PID | 054C_0B6F |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_2</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>07B4_0232</VID_PID>
+		<VID_PID>07B4_0279</VID_PID>
+		<VID_PID>07B4_0244</VID_PID>
+		<VID_PID>07B4_0264</VID_PID>
+		<VID_PID>07B4_0236</VID_PID>
+		<VID_PID>07B4_0245</VID_PID>
+		<VID_PID>0911_1F40</VID_PID>
+		<VID_PID>0911_251C</VID_PID>
+		<VID_PID>1D54_1072</VID_PID>
+		<VID_PID>1D54_1070</VID_PID>
+		<VID_PID>1D54_1080</VID_PID>
+		<VID_PID>054C_0B6F</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Mass_storage_groups_GPO_2_1
 
 
@@ -540,118 +652,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Mass_storage_groups_GPO_2_2
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 07B4_0232 |
-| VID_PID | 07B4_0279 |
-| VID_PID | 07B4_0244 |
-| VID_PID | 07B4_0264 |
-| VID_PID | 07B4_0236 |
-| VID_PID | 07B4_0245 |
-| VID_PID | 0911_1F40 |
-| VID_PID | 0911_251C |
-| VID_PID | 1D54_1072 |
-| VID_PID | 1D54_1070 |
-| VID_PID | 1D54_1080 |
-| VID_PID | 054C_0B6F |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_2</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>07B4_0232</VID_PID>
-		<VID_PID>07B4_0279</VID_PID>
-		<VID_PID>07B4_0244</VID_PID>
-		<VID_PID>07B4_0264</VID_PID>
-		<VID_PID>07B4_0236</VID_PID>
-		<VID_PID>07B4_0245</VID_PID>
-		<VID_PID>0911_1F40</VID_PID>
-		<VID_PID>0911_251C</VID_PID>
-		<VID_PID>1D54_1072</VID_PID>
-		<VID_PID>1D54_1070</VID_PID>
-		<VID_PID>1D54_1080</VID_PID>
-		<VID_PID>054C_0B6F</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Mass_storage_groups_GPO_2_3
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 046D_0837 |
-| VID_PID | 046D_085B |
-| VID_PID | 046D_0825 |
-| VID_PID | 03F0_5705 |
-| VID_PID | 03F0_5D05 |
-| VID_PID | 040A_6030 |
-| VID_PID | 040A_601D |
-| VID_PID | 1083_1646 |
-| VID_PID | 1083_1647 |
-| VID_PID | 04CA_7053 |
-| VID_PID | 04CA_7054 |
-| VID_PID | 04F2_B51C |
-| VID_PID | 05C8_0383 |
-| VID_PID | 05C8_034B |
-| VID_PID | 0461_4DFE |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_3</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>046D_0837</VID_PID>
-		<VID_PID>046D_085B</VID_PID>
-		<VID_PID>046D_0825</VID_PID>
-		<VID_PID>03F0_5705</VID_PID>
-		<VID_PID>03F0_5D05</VID_PID>
-		<VID_PID>040A_6030</VID_PID>
-		<VID_PID>040A_601D</VID_PID>
-		<VID_PID>1083_1646</VID_PID>
-		<VID_PID>1083_1647</VID_PID>
-		<VID_PID>04CA_7053</VID_PID>
-		<VID_PID>04CA_7054</VID_PID>
-		<VID_PID>04F2_B51C</VID_PID>
-		<VID_PID>05C8_0383</VID_PID>
-		<VID_PID>05C8_034B</VID_PID>
-		<VID_PID>0461_4DFE</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -663,10 +663,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/mass_storage_groups_gpo_2_4%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D.xml)
-- [windows/Removable Storage Access Control Samples/Group Policy/Mass_storage_groups_GPO_2.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Mass_storage_groups_GPO_2.xml)
-- [windows/Removable Storage Access Control Samples/Group Policy/Mass_storage_policies_GPO_2.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Mass_storage_policies_GPO_2.xml)
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/mass_storage_groups_gpo_2_1%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D.xml)
+- [windows/device/Group Policy/Mass_storage_policies_GPO_2.xml](/windows/device/Group%20Policy/Mass_storage_policies_GPO_2.xml)
+- [windows/device/Intune OMA-URI/mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml](/windows/device/Intune%20OMA-URI/mass_storage_groups_gpo_2_1%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D.xml)
+- [windows/device/Group Policy/Mass_storage_groups_GPO_2.xml](/windows/device/Group%20Policy/Mass_storage_groups_GPO_2.xml)
 
 
 # Deployment Instructions
@@ -686,26 +685,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_1</summary> 
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_3</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_1 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
+   4. Enter the Mass_storage_groups_GPO_2_3 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -728,12 +713,26 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_3</summary> 
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_1</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_3 for the name.  
+   4. Enter the Mass_storage_groups_GPO_2_1 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -1104,6 +1103,47 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_3</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>046D_0837</VID_PID>
+			<VID_PID>046D_085B</VID_PID>
+			<VID_PID>046D_0825</VID_PID>
+			<VID_PID>03F0_5705</VID_PID>
+			<VID_PID>03F0_5D05</VID_PID>
+			<VID_PID>040A_6030</VID_PID>
+			<VID_PID>040A_601D</VID_PID>
+			<VID_PID>1083_1646</VID_PID>
+			<VID_PID>1083_1647</VID_PID>
+			<VID_PID>04CA_7053</VID_PID>
+			<VID_PID>04CA_7054</VID_PID>
+			<VID_PID>04F2_B51C</VID_PID>
+			<VID_PID>05C8_0383</VID_PID>
+			<VID_PID>05C8_034B</VID_PID>
+			<VID_PID>0461_4DFE</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>07B4_0232</VID_PID>
+			<VID_PID>07B4_0279</VID_PID>
+			<VID_PID>07B4_0244</VID_PID>
+			<VID_PID>07B4_0264</VID_PID>
+			<VID_PID>07B4_0236</VID_PID>
+			<VID_PID>07B4_0245</VID_PID>
+			<VID_PID>0911_1F40</VID_PID>
+			<VID_PID>0911_251C</VID_PID>
+			<VID_PID>1D54_1072</VID_PID>
+			<VID_PID>1D54_1070</VID_PID>
+			<VID_PID>1D54_1080</VID_PID>
+			<VID_PID>054C_0B6F</VID_PID>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
 		<Name>Mass_storage_groups_GPO_2_1</Name>
@@ -1127,47 +1167,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<DescriptorIdList>
 			<VID_PID>09CB_1007</VID_PID>
 			<VID_PID>0F7E_900C</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_2</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>07B4_0232</VID_PID>
-			<VID_PID>07B4_0279</VID_PID>
-			<VID_PID>07B4_0244</VID_PID>
-			<VID_PID>07B4_0264</VID_PID>
-			<VID_PID>07B4_0236</VID_PID>
-			<VID_PID>07B4_0245</VID_PID>
-			<VID_PID>0911_1F40</VID_PID>
-			<VID_PID>0911_251C</VID_PID>
-			<VID_PID>1D54_1072</VID_PID>
-			<VID_PID>1D54_1070</VID_PID>
-			<VID_PID>1D54_1080</VID_PID>
-			<VID_PID>054C_0B6F</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_3</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>046D_0837</VID_PID>
-			<VID_PID>046D_085B</VID_PID>
-			<VID_PID>046D_0825</VID_PID>
-			<VID_PID>03F0_5705</VID_PID>
-			<VID_PID>03F0_5D05</VID_PID>
-			<VID_PID>040A_6030</VID_PID>
-			<VID_PID>040A_601D</VID_PID>
-			<VID_PID>1083_1646</VID_PID>
-			<VID_PID>1083_1647</VID_PID>
-			<VID_PID>04CA_7053</VID_PID>
-			<VID_PID>04CA_7054</VID_PID>
-			<VID_PID>04F2_B51C</VID_PID>
-			<VID_PID>05C8_0383</VID_PID>
-			<VID_PID>05C8_034B</VID_PID>
-			<VID_PID>0461_4DFE</VID_PID>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -1392,7 +1391,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Group Policy\Mass_storage_policies_GPO_2.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\gestion_des_pã©riphã©riques_externes{466faba8-dddf-4ae5-9871-dabbb600d4f3}.xml*
          
    
    7. Click "Save"
@@ -1407,7 +1406,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Group Policy\Mass_storage_policies_GPO_2.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\gestion_des_dictaphones{540efb7f-1836-4956-8888-5d41d981d6ba}.xml*
          
    
    7. Click "Save"
@@ -1422,7 +1421,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Group Policy\Mass_storage_policies_GPO_2.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\gestion_des_appareils_immobiliers{505e2563-1de8-40aa-b8f9-472a37b2f6ee}.xml*
          
    
    7. Click "Save"
@@ -1437,7 +1436,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml*
          
    
    7. Click "Save"
@@ -1452,7 +1451,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml*
          
    
    7. Click "Save"
@@ -1467,7 +1466,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_3{1653593b-5b92-47e6-975a-c43ffa9cd28d}.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_3{1653593b-5b92-47e6-975a-c43ffa9cd28d}.xml*
          
    
    7. Click "Save"
@@ -1482,7 +1481,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml*
          
    
    7. Click "Save"

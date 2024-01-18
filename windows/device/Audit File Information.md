@@ -1,4 +1,4 @@
-# Device control policy sample: Block Read and Write access to specific file _Policy
+# Device control policy sample: File Evidence
 
 Description: A sample policy              
 Device Type: Windows Removable Device
@@ -28,40 +28,22 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Block Read and Write access to specific file</b></td>
-            <td rowspan="2 valign="top">
+            <td rowspan="1"><b>Audit File Information</b></td>
+            <td rowspan="1 valign="top">
                 <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
-            <td rowspan="2" valign="top">.
+            <td rowspan="1" valign="top">.
                 <ul></ul>
             </td>
-            <td>Deny</td>
+            <td>Allow</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>:x:</td>
             <td>-</td>
-            <td>:x:</td>
-            <td>None (0)</td> 
+            <td>:white_check_mark:</td>
+            <td>-</td>
+            <td>Create file evidence without file (16)</td> 
             <td>
-                <details>
-                <summary>View</summary>
-                User condition: All Users<br>
-                Parameters: MatchAll
-                <ul><li> MatchAny 
-                        <ul><li>Unauthorized File Group_0<a href="#unauthorized-file-group_0" title="MatchAny {'PathId': '*.dll'}"> (details)</a></ul>
-                </ul>
-                </details></td>
-        </tr><tr>
-            <td>Audit Denied</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>Show notification and Send event (3)</td>
-            <td> 
                 <center>-</center></td>
         </tr></table>
 
@@ -104,53 +86,20 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Unauthorized File Group_0
-
-
-
-This is a group of type *File*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PathId | *.exe |
-| PathId | *.dll |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-	<Name>Unauthorized File Group_0</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PathId>*.exe</PathId>
-		<PathId>*.dll</PathId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
 |--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
 DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+DefaultEnforcement | Allow | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DataDuplicationDirectory | Enter the directory to store files locally | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationdirectory) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Removable Storage Access Control Samples/Group Policy/Block Read and Write access to specific file _Policy.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Policy.xml)
-- [windows/Removable Storage Access Control Samples/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Unauthorized File Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Unauthorized%20File%20Group.xml)
+- [windows/device/Group Policy/Audit File Information.xml](/windows/device/Group%20Policy/Audit%20File%20Information.xml)
+- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -169,14 +118,58 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- File Execute (32) is an unsupported access mask
-- File Read (8) is an unsupported access mask
-- File Write (16) is an unsupported access mask
-- Parameters are not supported
-- Windows File groups not supported.
+<details>
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+
+<details>
+<summary>Add a rule for Audit File Information to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Audit File Information* for the name
+
+
+
+   1. Select *Allow* from "Type"
+   1. Select *Create file evidence without file* from "Options"
+   1. Select ** from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)
@@ -197,15 +190,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<PrimaryId>WpdDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-		<Name>Unauthorized File Group_0</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PathId>*.exe</PathId>
-			<PathId>*.dll</PathId>
-		</DescriptorIdList>
-	</Group>
 </Groups>
 ```
    3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
@@ -218,28 +202,18 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{5038638c-9352-47bb-88df-8a659f0c02a7}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData -->
-		<Name>Block Read and Write access to specific file</Name>
+	<PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
+		<Name>Audit File Information</Name>
 		<IncludedIdList>
 			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d}">
-			<Type>Deny</Type>
-			<AccessMask>40</AccessMask>
-			<Options>0</Options>
-			<Parameters MatchType="MatchAll">
-				<File MatchType="MatchAny">
-					<GroupId>{e5f619a7-5c58-4927-90cd-75da2348a30f}</GroupId>
-				</File>
-			</Parameters>
-		</Entry>
-		<Entry Id="{2925ecd8-40dc-42bb-a972-da0de839dd4f}">
-			<Type>AuditDenied</Type>
-			<AccessMask>63</AccessMask>
-			<Options>3</Options>
+		<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
+			<Type>Allow</Type>
+			<AccessMask>16</AccessMask>
+			<Options>16</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -263,16 +237,16 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Block Read and Write access to specific file</summary>  
+<summary>Add a row for Audit File Information</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Block Read and Write access to specific file*
+   2. For Name, enter *Audit File Information*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Group Policy\Block Read and Write access to specific file _Policy.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\audit_file_information{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}.xml*
          
    
    7. Click "Save"
@@ -287,36 +261,8 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
-   
-   7. Click "Save"
-</details>
-<details>
-<summary>Add a row for Unauthorized File Group_0</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *Unauthorized File Group_0*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Unauthorized File Group.xml*
-         
-   
-   7. Click "Save"
-</details>
-<details>
-<summary>Add a row for DefaultEnforcement</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *DefaultEnforcement*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
-   5. For Data type, select *Integer*
-   
-   7. For Value, enter *2*
    
    7. Click "Save"
 </details>
@@ -330,6 +276,32 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *Integer*
    
    7. For Value, enter *1*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DefaultEnforcement</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DefaultEnforcement*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *1*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DataDuplicationDirectory</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DataDuplicationDirectory*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory*
+   5. For Data type, select *String*
+   
+   7. For Value, enter *Enter the directory to store files locally*
    
    7. Click "Save"
 </details>

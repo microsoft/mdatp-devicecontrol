@@ -1,7 +1,7 @@
-# Device control policy sample: Scenario 4
+# Device control policy sample: Allow any printer
 
 Description: A sample policy              
-Device Type: Windows Removable Device
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -15,46 +15,25 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="6" valign="top"><center>Access</center></th>
-        <th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Disk Read</th>
-		<th>Disk Write</th>
-		<th>Disk Execute</th>
-		<th>File Read</th>
-		<th>File Write</th>
-		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>ReadOnly to Any Removable Storage and CdRom</b></td>
-            <td rowspan="2 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
+        <th>Print</th>
+        </tr><tr>
+            <td rowspan="1"><b>Default Printer Allow</b></td>
+            <td rowspan="1 valign="top">
+                <ul><li>Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a></ul>
             </td>
-            <td rowspan="2" valign="top">.
+            <td rowspan="1" valign="top">.
                 <ul></ul>
             </td>
-            <td>Deny</td>
-            <td>-</td>
-            <td>:x:</td>
-            <td>:x:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
+            <td>Allow</td>
+            <td>:white_check_mark:</td>
+            <td>Disable (4)</td> 
             <td>
-                <center>-</center></td>
-        </tr><tr>
-            <td>Audit Denied</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Show notification and Send event (3)</td>
-            <td> 
                 <center>-</center></td>
         </tr></table>
 
@@ -62,7 +41,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Any Removable Storage and CD-DVD and WPD Group_1
+### Any Printer
 
 
 
@@ -72,9 +51,7 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| PrimaryId | CdRomDevices |
-| PrimaryId | WpdDevices |
+| PrimaryId | PrinterDevices |
 
 
 
@@ -84,14 +61,12 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+	<Name>Any Printer</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
+		<PrimaryId>PrinterDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -108,8 +83,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Scenario%204%20ReadOnly%20to%20Any%20Removable%20Storage%20and%20CD-DVD.xml)
-- [windows/Removable Storage Access Control Samples/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/printer/Intune OMA-URI/Any printer group.xml](/windows/printer/Intune%20OMA-URI/Any%20printer%20group.xml)
+- [windows/printer/Intune OMA-URI/Allow any printer.xml](/windows/printer/Intune%20OMA-URI/Allow%20any%20printer.xml)
 
 
 # Deployment Instructions
@@ -129,12 +104,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
+<summary>Create a reusable setting for Any Printer</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
+   4. Enter the Any Printer for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -157,33 +132,24 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 <details>
-<summary>Add a rule for ReadOnly to Any Removable Storage and CdRom to the policy</summary>
+<summary>Add a rule for Default Printer Allow to the policy</summary>
 
 
    1. Click on "+ Set reusable settings" under Included Id
 
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
+   1. Click on *Any Printer*
 
    1. Click on "Select"
 
 
    1. Click on "+ Edit Entry"
-   1. Enter *ReadOnly to Any Removable Storage and CdRom* for the name
+   1. Enter *Default Printer Allow* for the name
 
 
 
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Write and Execute* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification and Send event* from "Options"
-   1. Select *Write and Execute* from "Access mask"
+   1. Select *Allow* from "Type"
+   1. Select *Disable* from "Options"
+   1. Select *Print* from "Access mask"
 
 
    1. Click "OK"
@@ -199,14 +165,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+		<Name>Any Printer</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<PrimaryId>CdRomDevices</PrimaryId>
-			<PrimaryId>WpdDevices</PrimaryId>
+			<PrimaryId>PrinterDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -221,23 +185,18 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{d2193a7f-ceec-4729-a72a-fe949639db55}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->
-		<Name>ReadOnly to Any Removable Storage and CdRom</Name>
+	<PolicyRule Id="{2f746a4d-4ae1-4bc0-aaef-136d12518fd4}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData -->
+		<Name>Default Printer Allow</Name>
 		<IncludedIdList>
-			<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+			<GroupId>{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{c1adfc3e-0347-4096-88c3-6e0777b2a15b}">
-			<Type>Deny</Type>
-			<AccessMask>6</AccessMask>
-			<Options>0</Options>
-		</Entry>
-		<Entry Id="{fee5f127-951b-4ece-9196-fa1c9ff21678}">
-			<Type>AuditDenied</Type>
-			<AccessMask>6</AccessMask>
-			<Options>3</Options>
+		<Entry Id="{ddcac8c7-e492-4cb9-ac46-28813e195d56}">
+			<Type>Allow</Type>
+			<AccessMask>64</AccessMask>
+			<Options>4</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -261,31 +220,31 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for ReadOnly to Any Removable Storage and CdRom</summary>  
+<summary>Add a row for Default Printer Allow</summary>  
    
    1. Click "Add"
-   2. For Name, enter *ReadOnly to Any Removable Storage and CdRom*
+   2. For Name, enter *Default Printer Allow*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Allow any printer.xml*
          
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for Any Removable Storage and CD-DVD and WPD Group_0</summary>  
+<summary>Add a row for Any Printer</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Any Removable Storage and CD-DVD and WPD Group_0*
+   2. For Name, enter *Any Printer*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
          
    
    7. Click "Save"
