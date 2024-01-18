@@ -57,11 +57,11 @@
                 User condition: {{ value.entries[0].sid }}<br>
                 Parameters: {{ value.entries[0].parameters.match_type }}
                 <ul> 
-                {%- for condition in value.entries[0].parameters.properties -%}
+                {%- for condition in value.entries[0].parameters.conditions -%}
                     <li> {{ condition.match_type }} 
                         <ul>
                         {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                            <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
@@ -86,11 +86,11 @@
                 User Condition: {{ entry.sid }}<br>
                 Parameters: {{ entry.parameters.match_type }}
                 <ul> 
-                {%- for condition in entry.parameters.properties -%}
+                {%- for condition in entry.parameters.conditions -%}
                     <li> {{ condition.match_type }} 
                         <ul>
                         {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }}<a href="#{{ groups[id].get_section_title() }}" title="{{ groups[id].match_type }} {{ groups[id].properties }}"> (details)</a>
+                            <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
