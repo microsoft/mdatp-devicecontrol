@@ -1,0 +1,74 @@
+# Device control policy sample: {{ title }}
+
+Description: {{ description }}              
+Device Type: {{ entry_type }}
+
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
+This sample is based on the [sample files](#files).  
+To configure the sample, follow the [deployment instructions](#deployment-instructions).  
+
+## Policy Rules
+{% if "Apple" in entry_type | string %}
+{% include "mac_rule.j2" %}
+{% else %}
+{% include "windows_rule.j2" %}
+{% endif %}
+
+## Groups
+{% if "Apple" in entry_type | string %}
+{% include "mac_groups.j2" %}
+{% else %}
+{% include "groups.j2" %}
+{% endif %}
+## Settings
+{% include "settings.j2" %}
+
+## Files
+This policy is based on information in the following files:
+
+{% for path in paths -%}
+- [{{ path }}](/{{ path | urlencode }})
+{% endfor %}
+
+# Deployment Instructions
+
+Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
+
+{% if not "Apple" in entry_type | string %}
+## Windows
+- [Intune UX](#intune-ux)
+- [Intune Custom Settings](#intune-custom-settings)
+- [Group Policy (GPO)](#group-policy-gpo)
+{% endif %}
+
+{% if "Apple" in entry_type | string or macPolicy is not none %}
+## Mac
+- [Mac Deployment with Intune](#mac-deployment-with-intune)
+- [Mac Deployment with JAMF](#mac-deployment-with-jamf)
+- [Manual Mac Deployment](#manual-mac-deployment)
+{% endif %}
+
+{% if not "Apple" in entry_type | string %}
+## Intune UX
+{%  if intune_ux_support.isValid()   %}
+{% include "intune_ux.j2" %}
+{% else %}
+Intune UX is not supported for this policy because:
+{% for issue in intune_ux_support.issues -%}
+- {{ issue }}
+{% endfor %}
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+{% endif %}
+
+## Group Policy (GPO)
+{% include "gpo.j2" %}
+
+## Intune Custom Settings
+
+{% include "intune_custom_settings.j2" %}
+{% endif %}
+
+{% if "Apple" in entry_type | string or macPolicy is not none %}
+## Mac Policy
+{% include "mac_policy.j2" %}
+{% endif %}

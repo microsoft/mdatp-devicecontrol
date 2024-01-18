@@ -1,0 +1,26 @@
+{% for group_id in groups %}
+### {{ groups[group_id].name }}
+
+{% set group_type = groups[group_id].type %}
+
+This is a group of type *{{ groups[group_id].type }}*. 
+The match type for the group is *{{ groups[group_id].match_type }}*.
+
+
+|  Property | Value |
+|-----------|-------|
+{% for property in groups[group_id]._properties -%} 
+| {{ property.name }} | {{ property.value }} |
+{% endfor %}
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+{{ groups[group_id].toXML('') }}
+```
+</details>
+{% endfor %}

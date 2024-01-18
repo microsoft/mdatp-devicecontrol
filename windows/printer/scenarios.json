@@ -1,0 +1,52 @@
+{
+    "title": "Printers",
+    "scenarios":[
+        {
+            "file": "Group Policy\\Printer_Policies.xml",
+            "description": "An example showing how device control can restrict access to printers based on device properties, network, and VPN connection.",
+            "title": "Printer Policies"
+        }
+        ,
+        {
+            "file": "Group Policy\\Printer_Policies - no Default Deny policy.xml"
+        },
+        {
+            "file": "Group Policy\\Allow Printing to Corporate Network Printers Only.xml",
+            "description": "This policy allows printing only for network printers on the corporate network, and denies everything else.",
+            "title": "Printer Example - Restrict Acccess by Network",
+            "settings":{
+                "DeviceControlEnabled": true,
+                "DefaultEnforcement": "Allow",
+                "SecuredDevicesConfiguration": "PrinterDevices"
+            }
+        }
+        ,
+        {
+            "file": "Intune OMA-URI\\Allow any printer.xml"
+        }
+        ,
+        {
+            "file": "Intune OMA-URI\\Allow Authorized USB Printer.xml"
+        },
+        {
+            "file": "Intune OMA-URI\\Default Deny - custom policy2.xml"
+        
+        },
+        {
+            "file": "Intune OMA-URI\\Default Deny - custom policy.xml"
+        },
+        {
+            "file": "Intune OMA-URI\\Allow PDF_XPS Printer - File Evidence.xml"
+        },
+        {
+            "file": "Intune OMA-URI\\Allow PDF_XPS Printer.xml"
+        },
+        {
+            "file": "Intune OMA-URI\\Audit Default Deny.xml"
+        }
+        
+        
+        
+    ]
+    
+}

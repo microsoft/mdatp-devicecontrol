@@ -1,0 +1,21 @@
+<details>
+<summary>Define device control policy groups</summary>
+
+   1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy groups.
+   2. Save the XML below to a network share.
+```xml
+{{ groupsXML }}
+```
+   3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
+</details>
+
+<details>
+<summary>Define device control policy rules</summary>
+ 
+  1. Go to Computer Configuration > Administrative Templates > Windows Components > Microsoft Defender Antivirus > Device Control > Define device control policy rules.
+  2. Save the XML below to a network share.
+```xml
+{{ rulesXML }}
+```
+  3. In the Define device control policy rules window, select *Enabled*, and enter the network share file path containing the XML rules data.
+</details>

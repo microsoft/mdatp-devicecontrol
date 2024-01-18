@@ -1,0 +1,1193 @@
+	type	path	format	name	id	match_type	object
+0	Device	windows\device\Group Policy\Any Removable Storage and CD-DVD and WPD Group.xml	gpo	Any Removable Storage and CD-DVD and WPD Group_1	{9b28fae8-72f7-4267-a1a5-685f747a7146}	MatchAny	"	<Group Id=""{9b28fae8-72f7-4267-a1a5-685f747a7146}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+1	Device	windows\device\Group Policy\Approved USBs Group.xml	gpo	Approved USBs Group_1	{65fa649a-a111-4912-9294-fb6337a25038}	MatchAny	"	<Group Id=""{65fa649a-a111-4912-9294-fb6337a25038}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Approved USBs Group_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+2	Device	windows\device\Group Policy\Block Read and Write access to specific file _Groups.xml	gpo	Block Read and Write access to specific file _Groups_1	{9b28fae8-72f7-4267-a1a5-685f747a7146}	MatchAny	"	<Group Id=""{9b28fae8-72f7-4267-a1a5-685f747a7146}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Block Read and Write access to specific file _Groups_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+3	File	windows\device\Group Policy\Block Read and Write access to specific file _Groups.xml	gpo	Block Read and Write access to specific file _Groups_2	{e5f619a7-5c58-4927-90cd-75da2348a30f}	MatchAny	"	<Group Id=""{e5f619a7-5c58-4927-90cd-75da2348a30f}"" Type=""File"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
+		<Name>Block Read and Write access to specific file _Groups_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.exe</PathId>
+			<PathId>*.dll</PathId>
+		</DescriptorIdList>
+	</Group>"
+4	Device	windows\device\Group Policy\Demo_2_Groups.xml	gpo	Demo_2_Groups_1	{9b28fae8-72f7-4267-a1a5-685f747a7146}	MatchAny	"	<Group Id=""{9b28fae8-72f7-4267-a1a5-685f747a7146}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Demo_2_Groups_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+5	Device	windows\device\Group Policy\Demo_2_Groups.xml	gpo	Demo_2_Groups_2	{65fa649a-a111-4912-9294-fb6337a25038}	MatchAny	"	<Group Id=""{65fa649a-a111-4912-9294-fb6337a25038}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Demo_2_Groups_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+6	File	windows\device\Group Policy\Demo_2_Groups.xml	gpo	Demo_2_Groups_3	{e5f619a7-5c58-4927-90cd-75da2348a30f}	MatchAny	"	<Group Id=""{e5f619a7-5c58-4927-90cd-75da2348a30f}"" Type=""File"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
+		<Name>Demo_2_Groups_3</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.exe</PathId>
+			<PathId>*.dll</PathId>
+		</DescriptorIdList>
+	</Group>"
+7	Device	windows\device\Group Policy\Demo_Groups.xml	gpo	Demo_Groups_1	{65fa649a-a111-4912-9294-fb6337a25038}	MatchAny	"	<Group Id=""{65fa649a-a111-4912-9294-fb6337a25038}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Demo_Groups_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+8	Device	windows\device\Group Policy\Demo_Groups.xml	gpo	Demo_Groups_2	{9b28fae8-72f7-4267-a1a5-685f747a7146}	MatchAny	"	<Group Id=""{9b28fae8-72f7-4267-a1a5-685f747a7146}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Demo_Groups_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+9	Device	windows\device\Group Policy\Mass_storage_groups_GPO_2.xml	gpo	Mass_storage_groups_GPO_2_1	{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}	MatchAny	"	<Group Id=""{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+10	Device	windows\device\Group Policy\Mass_storage_groups_GPO_2.xml	gpo	Mass_storage_groups_GPO_2_2	{7f191817-c305-451d-812a-1c4b03ebcec8}	MatchAny	"	<Group Id=""{7f191817-c305-451d-812a-1c4b03ebcec8}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>07B4_0232</VID_PID>
+			<VID_PID>07B4_0279</VID_PID>
+			<VID_PID>07B4_0244</VID_PID>
+			<VID_PID>07B4_0264</VID_PID>
+			<VID_PID>07B4_0236</VID_PID>
+			<VID_PID>07B4_0245</VID_PID>
+			<VID_PID>0911_1F40</VID_PID>
+			<VID_PID>0911_251C</VID_PID>
+			<VID_PID>1D54_1072</VID_PID>
+			<VID_PID>1D54_1070</VID_PID>
+			<VID_PID>1D54_1080</VID_PID>
+			<VID_PID>054C_0B6F</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+11	Device	windows\device\Group Policy\Mass_storage_groups_GPO_2.xml	gpo	Mass_storage_groups_GPO_2_3	{1653593b-5b92-47e6-975a-c43ffa9cd28d}	MatchAny	"	<Group Id=""{1653593b-5b92-47e6-975a-c43ffa9cd28d}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_3</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>046D_0837</VID_PID>
+			<VID_PID>046D_085B</VID_PID>
+			<VID_PID>046D_0825</VID_PID>
+			<VID_PID>03F0_5705</VID_PID>
+			<VID_PID>03F0_5D05</VID_PID>
+			<VID_PID>040A_6030</VID_PID>
+			<VID_PID>040A_601D</VID_PID>
+			<VID_PID>1083_1646</VID_PID>
+			<VID_PID>1083_1647</VID_PID>
+			<VID_PID>04CA_7053</VID_PID>
+			<VID_PID>04CA_7054</VID_PID>
+			<VID_PID>04F2_B51C</VID_PID>
+			<VID_PID>05C8_0383</VID_PID>
+			<VID_PID>05C8_034B</VID_PID>
+			<VID_PID>0461_4DFE</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+12	Device	windows\device\Group Policy\Mass_storage_groups_GPO_2.xml	gpo	Mass_storage_groups_GPO_2_4	{d2887bd4-a916-4011-a385-83c6b15df529}	MatchAny	"	<Group Id=""{d2887bd4-a916-4011-a385-83c6b15df529}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_4</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>09CB_1007</VID_PID>
+			<VID_PID>0F7E_900C</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+13	Device	windows\device\Group Policy\Scenario 2 GPO Removable Storage Group.xml	gpo	Scenario 2 GPO Removable Storage Group_1	{9b28fae8-72f7-4267-a1a5-685f747a7146}	MatchAny	"	<Group Id=""{9b28fae8-72f7-4267-a1a5-685f747a7146}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Scenario 2 GPO Removable Storage Group_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+14	Device	windows\device\Group Policy\Scenario 2 GPO Removable Storage Group.xml	gpo	Scenario 2 GPO Removable Storage Group_2	{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}	MatchAny	"	<Group Id=""{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfa78280d-2d8e-4027-b0bb-62ab5c2bba7f%7D/GroupData -->
+		<Name>Scenario 2 GPO Removable Storage Group_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<FriendlyNameId>Generic Flash Disk USB Device</FriendlyNameId>
+			<VID_PID>0781_</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+15	Device	windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml	oma-uri	Any Removable Storage and CD-DVD and WPD Group_0	{9b28fae8-72f7-4267-a1a5-685f747a7146}	MatchAny	"	<Group Id=""{9b28fae8-72f7-4267-a1a5-685f747a7146}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
+		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+16	Device	windows\device\Intune OMA-URI\Approved USBs Group.xml	oma-uri	Approved USBs Group_0	{65fa649a-a111-4912-9294-fb6337a25038}	MatchAny	"	<Group Id=""{65fa649a-a111-4912-9294-fb6337a25038}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Approved USBs Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+17	Device	windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml	oma-uri	Mass_storage_groups_GPO_2_1	{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}	MatchAny	"	<Group Id=""{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+18	Device	windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml	oma-uri	Mass_storage_groups_GPO_2_2	{7f191817-c305-451d-812a-1c4b03ebcec8}	MatchAny	"	<Group Id=""{7f191817-c305-451d-812a-1c4b03ebcec8}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_2</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>07B4_0232</VID_PID>
+			<VID_PID>07B4_0279</VID_PID>
+			<VID_PID>07B4_0244</VID_PID>
+			<VID_PID>07B4_0264</VID_PID>
+			<VID_PID>07B4_0236</VID_PID>
+			<VID_PID>07B4_0245</VID_PID>
+			<VID_PID>0911_1F40</VID_PID>
+			<VID_PID>0911_251C</VID_PID>
+			<VID_PID>1D54_1072</VID_PID>
+			<VID_PID>1D54_1070</VID_PID>
+			<VID_PID>1D54_1080</VID_PID>
+			<VID_PID>054C_0B6F</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+19	Device	windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_3{1653593b-5b92-47e6-975a-c43ffa9cd28d}.xml	oma-uri	Mass_storage_groups_GPO_2_3	{1653593b-5b92-47e6-975a-c43ffa9cd28d}	MatchAny	"	<Group Id=""{1653593b-5b92-47e6-975a-c43ffa9cd28d}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_3</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>046D_0837</VID_PID>
+			<VID_PID>046D_085B</VID_PID>
+			<VID_PID>046D_0825</VID_PID>
+			<VID_PID>03F0_5705</VID_PID>
+			<VID_PID>03F0_5D05</VID_PID>
+			<VID_PID>040A_6030</VID_PID>
+			<VID_PID>040A_601D</VID_PID>
+			<VID_PID>1083_1646</VID_PID>
+			<VID_PID>1083_1647</VID_PID>
+			<VID_PID>04CA_7053</VID_PID>
+			<VID_PID>04CA_7054</VID_PID>
+			<VID_PID>04F2_B51C</VID_PID>
+			<VID_PID>05C8_0383</VID_PID>
+			<VID_PID>05C8_034B</VID_PID>
+			<VID_PID>0461_4DFE</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+20	Device	windows\device\Intune OMA-URI\mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml	oma-uri	Mass_storage_groups_GPO_2_4	{d2887bd4-a916-4011-a385-83c6b15df529}	MatchAny	"	<Group Id=""{d2887bd4-a916-4011-a385-83c6b15df529}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_4</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>09CB_1007</VID_PID>
+			<VID_PID>0F7E_900C</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+21	Device	windows\device\Intune OMA-URI\Unapproved USBs Group.xml	oma-uri	Unapproved USBs Group_0	{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}	MatchAny	"	<Group Id=""{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfa78280d-2d8e-4027-b0bb-62ab5c2bba7f%7D/GroupData -->
+		<Name>Unapproved USBs Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<FriendlyNameId>Generic Flash Disk USB Device</FriendlyNameId>
+			<VID_PID>0781_</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+22	File	windows\device\Intune OMA-URI\Unauthorized File Group.xml	oma-uri	Unauthorized File Group_0	{e5f619a7-5c58-4927-90cd-75da2348a30f}	MatchAny	"	<Group Id=""{e5f619a7-5c58-4927-90cd-75da2348a30f}"" Type=""File"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
+		<Name>Unauthorized File Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.exe</PathId>
+			<PathId>*.dll</PathId>
+		</DescriptorIdList>
+	</Group>"
+23	Device	windows\Getting Started\Intune OMA-URI\all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml	oma-uri	All removable media devices	{d8819053-24f4-444a-a0fb-9ce5a9e97862}	MatchAny	"	<Group Id=""{d8819053-24f4-444a-a0fb-9ce5a9e97862}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+24	Device	windows\Getting Started\Intune OMA-URI\authorized_usbs{368a2c82-17be-4137-bffa-370bbdff9672}.xml	oma-uri	Authorized USBs	{368a2c82-17be-4137-bffa-370bbdff9672}	MatchAny	"	<Group Id=""{368a2c82-17be-4137-bffa-370bbdff9672}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+		<Name>Authorized USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+25	File	windows\Getting Started\Intune OMA-URI\non_restricted_file_types{940973b7-dacd-4d2f-88f9-1141e20a3b7c}.xml	oma-uri	Non Restricted File Types	{940973b7-dacd-4d2f-88f9-1141e20a3b7c}	MatchExcludeAny	"	<Group Id=""{940973b7-dacd-4d2f-88f9-1141e20a3b7c}"" Type=""File"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B940973b7-dacd-4d2f-88f9-1141e20a3b7c%7D/GroupData -->
+		<Name>Non Restricted File Types</Name>
+		<MatchType>MatchExcludeAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.pdf</PathId>
+			<PathId>*.xslx</PathId>
+			<PathId>*.docx</PathId>
+		</DescriptorIdList>
+	</Group>"
+26	Device	windows\Getting Started\Intune OMA-URI\readonly_usbs{23c24566-98a5-4218-8802-59614513b97e}.xml	oma-uri	Readonly USBs	{23c24566-98a5-4218-8802-59614513b97e}	MatchAny	"	<Group Id=""{23c24566-98a5-4218-8802-59614513b97e}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
+		<Name>Readonly USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>090C_1000</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+27	Device	windows\Getting Started\Step 1\deny_all_groups.xml	gpo	All removable media devices	{d8819053-24f4-444a-a0fb-9ce5a9e97862}	MatchAny	"	<Group Id=""{d8819053-24f4-444a-a0fb-9ce5a9e97862}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+28	Device	windows\Getting Started\Step 2\allow_authorized_usbs_groups.xml	gpo	All removable media devices	{d8819053-24f4-444a-a0fb-9ce5a9e97862}	MatchAny	"	<Group Id=""{d8819053-24f4-444a-a0fb-9ce5a9e97862}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+29	Device	windows\Getting Started\Step 2\allow_authorized_usbs_groups.xml	gpo	Authorized USBs	{368a2c82-17be-4137-bffa-370bbdff9672}	MatchAny	"	<Group Id=""{368a2c82-17be-4137-bffa-370bbdff9672}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+		<Name>Authorized USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+30	Device	windows\Getting Started\Step 3\allow_different_access_to_different_groups.xml	gpo	All removable media devices	{d8819053-24f4-444a-a0fb-9ce5a9e97862}	MatchAny	"	<Group Id=""{d8819053-24f4-444a-a0fb-9ce5a9e97862}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+31	Device	windows\Getting Started\Step 3\allow_different_access_to_different_groups.xml	gpo	Writeable USBs	{368a2c82-17be-4137-bffa-370bbdff9672}	MatchAny	"	<Group Id=""{368a2c82-17be-4137-bffa-370bbdff9672}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+		<Name>Writeable USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+32	Device	windows\Getting Started\Step 3\allow_different_access_to_different_groups.xml	gpo	Readonly USBs	{23c24566-98a5-4218-8802-59614513b97e}	MatchAny	"	<Group Id=""{23c24566-98a5-4218-8802-59614513b97e}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
+		<Name>Readonly USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>090C_1000</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+33	Device	windows\Getting Started\Step 4\allow_different_access_to_different_user_groups.xml	gpo	All removable media devices	{d8819053-24f4-444a-a0fb-9ce5a9e97862}	MatchAny	"	<Group Id=""{d8819053-24f4-444a-a0fb-9ce5a9e97862}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+34	Device	windows\Getting Started\Step 4\allow_different_access_to_different_user_groups.xml	gpo	Writeable USBs	{368a2c82-17be-4137-bffa-370bbdff9672}	MatchAny	"	<Group Id=""{368a2c82-17be-4137-bffa-370bbdff9672}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+		<Name>Writeable USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+35	Device	windows\Getting Started\Step 4\allow_different_access_to_different_user_groups.xml	gpo	Readonly USBs	{23c24566-98a5-4218-8802-59614513b97e}	MatchAny	"	<Group Id=""{23c24566-98a5-4218-8802-59614513b97e}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
+		<Name>Readonly USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>090C_1000</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+36	Device	windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_groups.xml	gpo	All removable media devices	{d8819053-24f4-444a-a0fb-9ce5a9e97862}	MatchAny	"	<Group Id=""{d8819053-24f4-444a-a0fb-9ce5a9e97862}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+37	Device	windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_groups.xml	gpo	Writeable USBs	{368a2c82-17be-4137-bffa-370bbdff9672}	MatchAny	"	<Group Id=""{368a2c82-17be-4137-bffa-370bbdff9672}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
+		<Name>Writeable USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>"
+38	Device	windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_groups.xml	gpo	Readonly USBs	{23c24566-98a5-4218-8802-59614513b97e}	MatchAny	"	<Group Id=""{23c24566-98a5-4218-8802-59614513b97e}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
+		<Name>Readonly USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>090C_1000</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+39	File	windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_groups.xml	gpo	Non Restricted File Types	{940973b7-dacd-4d2f-88f9-1141e20a3b7c}	MatchExcludeAny	"	<Group Id=""{940973b7-dacd-4d2f-88f9-1141e20a3b7c}"" Type=""File"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B940973b7-dacd-4d2f-88f9-1141e20a3b7c%7D/GroupData -->
+		<Name>Non Restricted File Types</Name>
+		<MatchType>MatchExcludeAny</MatchType>
+		<DescriptorIdList>
+			<PathId>*.pdf</PathId>
+			<PathId>*.xslx</PathId>
+			<PathId>*.docx</PathId>
+		</DescriptorIdList>
+	</Group>"
+40	Device	windows\printer\Group Policy\Printer_Groups.xml	gpo	PDF_XPS Printer	{e5170dfb-19a9-4466-8109-d36c9c912b4e}	MatchAny	"	<Group Id=""{e5170dfb-19a9-4466-8109-d36c9c912b4e}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+		<Name>PDF_XPS Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>"
+41	Device	windows\printer\Group Policy\Printer_Groups.xml	gpo	Network Printers	{257e3e1e-790c-4e29-ae2c-45a5f3363201}	MatchAny	"	<Group Id=""{257e3e1e-790c-4e29-ae2c-45a5f3363201}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+		<Name>Network Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>Network</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>"
+42	Device	windows\printer\Group Policy\Printer_Groups.xml	gpo	Authorized USB Printer	{05b56e90-e682-48ff-a6c0-5602c9638182}	MatchAny	"	<Group Id=""{05b56e90-e682-48ff-a6c0-5602c9638182}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+43	Device	windows\printer\Group Policy\Printer_Groups.xml	gpo	Any Printer	{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}	MatchAny	"	<Group Id=""{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+		<Name>Any Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>PrinterDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+44	Network	windows\printer\Group Policy\Printer_Groups.xml	gpo	Corporate Network	{83d4b74a-af7c-4399-812c-fb9037e2c2b7}	MatchAll	"	<Group Id=""{83d4b74a-af7c-4399-812c-fb9037e2c2b7}"" Type=""Network"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>corp.microsoft.com</NameId>
+			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>"
+45	VPNConnection	windows\printer\Group Policy\Printer_Groups.xml	gpo	Corporate VPN	{d633d17d-d1d1-4c73-aa27-c545c343b6d7}	MatchAll	"	<Group Id=""{d633d17d-d1d1-4c73-aa27-c545c343b6d7}"" Type=""VPNConnection"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
+		<Name>Corporate VPN</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>MSFTVPN</NameId>
+			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+		</DescriptorIdList>
+	</Group>"
+46	Device	windows\printer\Intune OMA-URI\Any printer group.xml	oma-uri	Any Printer	{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}	MatchAny	"	<Group Id=""{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
+		<Name>Any Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>PrinterDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>"
+47	Device	windows\printer\Intune OMA-URI\Authorized USB Printer.xml	oma-uri	Authorized USB Printer	{05b56e90-e682-48ff-a6c0-5602c9638182}	MatchAny	"	<Group Id=""{05b56e90-e682-48ff-a6c0-5602c9638182}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>"
+48	Network	windows\printer\Intune OMA-URI\Corporate Network.xml	oma-uri	Corporate Network	{83d4b74a-af7c-4399-812c-fb9037e2c2b7}	MatchAll	"	<Group Id=""{83d4b74a-af7c-4399-812c-fb9037e2c2b7}"" Type=""Network"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Corporate Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>corp.microsoft.com</NameId>
+			<NetworkCategoryId>DomainAuthenticated</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>"
+49	VPNConnection	windows\printer\Intune OMA-URI\Corporate VPN.xml	oma-uri	Corporate VPN	{d633d17d-d1d1-4c73-aa27-c545c343b6d7}	MatchAll	"	<Group Id=""{d633d17d-d1d1-4c73-aa27-c545c343b6d7}"" Type=""VPNConnection"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd633d17d-d1d1-4c73-aa27-c545c343b6d7%7D/GroupData -->
+		<Name>Corporate VPN</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>MSFTVPN</NameId>
+			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
+			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
+			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
+		</DescriptorIdList>
+	</Group>"
+50	Device	windows\printer\Intune OMA-URI\network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml	oma-uri	Network Printers	{257e3e1e-790c-4e29-ae2c-45a5f3363201}	MatchAny	"	<Group Id=""{257e3e1e-790c-4e29-ae2c-45a5f3363201}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+		<Name>Network Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>Network</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>"
+51	Device	windows\printer\Intune OMA-URI\PDF_XPS Printer.xml	oma-uri	PDF_XPS Printer	{e5170dfb-19a9-4466-8109-d36c9c912b4e}	MatchAny	"	<Group Id=""{e5170dfb-19a9-4466-8109-d36c9c912b4e}"" Type=""Device"">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+		<Name>PDF_XPS Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>"
+52	device	macOS\policy\groups\any_removable_storage_and_portable_device_group.json	mac	Any Removable Storage and Portable Device	9b28fae8-72f7-4267-a1a5-685f747a7146	or	"{
+ ""$type"": ""device"",
+ ""id"": ""9b28fae8-72f7-4267-a1a5-685f747a7146"",
+ ""name"": ""Any Removable Storage and Portable Device"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   },
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""portable_devices""
+   }
+  ]
+ }
+}"
+53	device	macOS\policy\groups\approved_usbs_group.json	mac	Approved USBs	65fa649a-a111-4912-9294-fb6337a25038	and	"{
+ ""$type"": ""device"",
+ ""id"": ""65fa649a-a111-4912-9294-fb6337a25038"",
+ ""name"": ""Approved USBs"",
+ ""query"": {
+  ""$type"": ""and"",
+  ""clauses"": [
+   {
+    ""$type"": ""vendorId"",
+    ""value"": ""0781""
+   },
+   {
+    ""$type"": ""productId"",
+    ""value"": ""7102""
+   },
+   {
+    ""$type"": ""serialNumber"",
+    ""value"": ""03003324080520232521""
+   }
+  ]
+ }
+}"
+54	device	macOS\policy\groups\demo_groups.json	mac	Approved USBs	65fa649a-a111-4912-9294-fb6337a25038	and	"{
+ ""$type"": ""device"",
+ ""id"": ""65fa649a-a111-4912-9294-fb6337a25038"",
+ ""name"": ""Approved USBs"",
+ ""query"": {
+  ""$type"": ""and"",
+  ""clauses"": [
+   {
+    ""$type"": ""vendorId"",
+    ""value"": ""0781""
+   },
+   {
+    ""$type"": ""productId"",
+    ""value"": ""7102""
+   },
+   {
+    ""$type"": ""serialNumber"",
+    ""value"": ""03003324080520232521""
+   }
+  ]
+ }
+}"
+55	device	macOS\policy\groups\demo_groups.json	mac	Any Removable Storage and Portable Device	9b28fae8-72f7-4267-a1a5-685f747a7146	or	"{
+ ""$type"": ""device"",
+ ""id"": ""9b28fae8-72f7-4267-a1a5-685f747a7146"",
+ ""name"": ""Any Removable Storage and Portable Device"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   },
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""portable_devices""
+   }
+  ]
+ }
+}"
+56	device	macOS\policy\groups\mass_storage_groups_gpo_2.json	mac	Group for all mass storage devices groups	fb4ad01e-f41a-46c6-9ac1-268efa0ea083	or	"{
+ ""$type"": ""device"",
+ ""id"": ""fb4ad01e-f41a-46c6-9ac1-268efa0ea083"",
+ ""name"": ""Group for all mass storage devices groups"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   },
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""portable_devices""
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""0951""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""169D""
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""2009""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""16AF""
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""1908""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""0226""
+     }
+    ]
+   }
+  ]
+ }
+}"
+57	device	macOS\policy\groups\mass_storage_groups_gpo_2.json	mac	Group for authorized dictaphones	7f191817-c305-451d-812a-1c4b03ebcec8	or	"{
+ ""$type"": ""device"",
+ ""id"": ""7f191817-c305-451d-812a-1c4b03ebcec8"",
+ ""name"": ""Group for authorized dictaphones"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""07B4""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0232""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0279""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0244""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0264""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0236""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0245""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""0911""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""1F40""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""251C""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""1D54""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""1072""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""1070""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""1080""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""054C""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""0B6F""
+     }
+    ]
+   }
+  ]
+ }
+}"
+58	device	macOS\policy\groups\mass_storage_groups_gpo_2.json	mac	Group for authorized image devices	1653593b-5b92-47e6-975a-c43ffa9cd28d	or	"{
+ ""$type"": ""device"",
+ ""id"": ""1653593b-5b92-47e6-975a-c43ffa9cd28d"",
+ ""name"": ""Group for authorized image devices"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""046D""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0837""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""085B""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0825""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""03F0""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""5705""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""5D05""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""040A""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""6030""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""601D""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""1083""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""1646""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""1647""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""04CA""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""7053""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""7054""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""04F2""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""B51C""
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""05C8""
+     },
+     {
+      ""$type"": ""or"",
+      ""clauses"": [
+       {
+        ""$type"": ""productId"",
+        ""value"": ""0383""
+       },
+       {
+        ""$type"": ""productId"",
+        ""value"": ""034B""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""0461""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""4DFE""
+     }
+    ]
+   }
+  ]
+ }
+}"
+59	device	macOS\policy\groups\mass_storage_groups_gpo_2.json	mac	Group for authorized immo devices	d2887bd4-a916-4011-a385-83c6b15df529	or	"{
+ ""$type"": ""device"",
+ ""id"": ""d2887bd4-a916-4011-a385-83c6b15df529"",
+ ""name"": ""Group for authorized immo devices"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""09CB""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""1007""
+     }
+    ]
+   },
+   {
+    ""$type"": ""and"",
+    ""clauses"": [
+     {
+      ""$type"": ""vendorId"",
+      ""value"": ""0F7E""
+     },
+     {
+      ""$type"": ""productId"",
+      ""value"": ""900C""
+     }
+    ]
+   }
+  ]
+ }
+}"
+60	device	macOS\policy\samples\audit_all_apple_devices.json	mac	All Apple Devices	3f082cd3-f701-4c21-9a6a-ed115c28e217	all	"{
+ ""$type"": ""device"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e217"",
+ ""name"": ""All Apple Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""apple_devices""
+   }
+  ]
+ }
+}"
+61	device	macOS\policy\samples\audit_all_removable_media.json	mac	All Removable Media Devices	94b5df10-bd2f-4b19-8a9f-539520b9d6ff	all	"{
+ ""$type"": ""device"",
+ ""id"": ""94b5df10-bd2f-4b19-8a9f-539520b9d6ff"",
+ ""name"": ""All Removable Media Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   }
+  ]
+ }
+}"
+62	device	macOS\policy\samples\audit_mobile_devices.json	mac	All Mobile Devices	3778B4FD-A98B-4374-9EFE-859B98446E7D	or	"{
+ ""$type"": ""device"",
+ ""id"": ""3778B4FD-A98B-4374-9EFE-859B98446E7D"",
+ ""name"": ""All Mobile Devices"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""portable_devices""
+   },
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""apple_devices""
+   }
+  ]
+ }
+}"
+63	device	macOS\policy\samples\deny_all_bluetooth_devices_except_samsung.json	mac	All Bluetooth Devices	3f082cd3-f701-4c21-9a6a-ed115c28e417	or	"{
+ ""$type"": ""device"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e417"",
+ ""name"": ""All Bluetooth Devices"",
+ ""query"": {
+  ""$type"": ""or"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""bluetooth_devices""
+   }
+  ]
+ }
+}"
+64	device	macOS\policy\samples\deny_all_bluetooth_devices_except_samsung.json	mac	Samsung Galaxy S21	1A783D32-C6A3-4F5F-9D47-271B12130DFD	and	"{
+ ""$type"": ""device"",
+ ""id"": ""1A783D32-C6A3-4F5F-9D47-271B12130DFD"",
+ ""name"": ""Samsung Galaxy S21"",
+ ""query"": {
+  ""$type"": ""and"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""bluetooth_devices""
+   },
+   {
+    ""$type"": ""vendorId"",
+    ""value"": ""0075""
+   },
+   {
+    ""$type"": ""productId"",
+    ""value"": ""0100""
+   }
+  ]
+ }
+}"
+65	device	macOS\policy\samples\deny_all_removable_media.json	mac	All Removable Media Devices	519a2e50-3bb7-49b7-9ae0-6feb415d58ca	all	"{
+ ""$type"": ""device"",
+ ""id"": ""519a2e50-3bb7-49b7-9ae0-6feb415d58ca"",
+ ""name"": ""All Removable Media Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   }
+  ]
+ }
+}"
+66	device	macOS\policy\samples\deny_debug_on_android.json	mac	All Android Devices	3f082cd3-f701-4c21-9a6a-ed115c28e41D	all	"{
+ ""$type"": ""device"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e41D"",
+ ""name"": ""All Android Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""portable_devices""
+   }
+  ]
+ }
+}"
+67	device	macOS\policy\samples\deny_exe_extension_on_removable_media.json	mac	All Removable Media Devices	3f082cd3-f701-4c21-9a6a-ed115c28e211	all	"{
+ ""$type"": ""device"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e211"",
+ ""name"": ""All Removable Media Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   }
+  ]
+ }
+}"
+68	file	macOS\policy\samples\deny_exe_extension_on_removable_media.json	mac	Some Executable Extensions	3f082cd3-f701-4c21-9a6a-ed115c28e212	any	"{
+ ""$type"": ""file"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e212"",
+ ""name"": ""Some Executable Extensions"",
+ ""query"": {
+  ""$type"": ""any"",
+  ""clauses"": [
+   {
+    ""$type"": ""fileType"",
+    ""value"": "".exe""
+   },
+   {
+    ""$type"": ""fileType"",
+    ""value"": "".ps1""
+   },
+   {
+    ""$type"": ""fileType"",
+    ""value"": "".cmd""
+   }
+  ]
+ }
+}"
+69	file	macOS\policy\samples\deny_exe_extension_on_removable_media.json	mac	Some Library Extensions	3f082cd3-f701-4c21-9a6a-ed115c28e213	any	"{
+ ""$type"": ""file"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e213"",
+ ""name"": ""Some Library Extensions"",
+ ""query"": {
+  ""$type"": ""any"",
+  ""clauses"": [
+   {
+    ""$type"": ""fileType"",
+    ""value"": "".dll""
+   },
+   {
+    ""$type"": ""fileType"",
+    ""value"": "".dylib""
+   },
+   {
+    ""$type"": ""fileType"",
+    ""value"": "".so""
+   }
+  ]
+ }
+}"
+70	device	macOS\policy\samples\deny_mobile_devices.json	mac	All Portable Devices	0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9	and	"{
+ ""$type"": ""device"",
+ ""id"": ""0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9"",
+ ""name"": ""All Portable Devices"",
+ ""query"": {
+  ""$type"": ""and"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""portable_devices""
+   }
+  ]
+ }
+}"
+71	device	macOS\policy\samples\deny_mobile_devices.json	mac	All Apple Devices	3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4	and	"{
+ ""$type"": ""device"",
+ ""id"": ""3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4"",
+ ""name"": ""All Apple Devices"",
+ ""query"": {
+  ""$type"": ""and"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""apple_devices""
+   }
+  ]
+ }
+}"
+72	device	macOS\policy\samples\deny_removable_media_except_kingston.json	mac	All Removable Media Devices	3f082cd3-f701-4c21-9a6a-ed115c28e211	all	"{
+ ""$type"": ""device"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e211"",
+ ""name"": ""All Removable Media Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""primaryId"",
+    ""value"": ""removable_media_devices""
+   }
+  ]
+ }
+}"
+73	device	macOS\policy\samples\deny_removable_media_except_kingston.json	mac	Kingston Devices	3f082cd3-f701-4c21-9a6a-ed115c28e212	all	"{
+ ""$type"": ""device"",
+ ""id"": ""3f082cd3-f701-4c21-9a6a-ed115c28e212"",
+ ""name"": ""Kingston Devices"",
+ ""query"": {
+  ""$type"": ""all"",
+  ""clauses"": [
+   {
+    ""$type"": ""vendorId"",
+    ""value"": ""0951""
+   }
+  ]
+ }
+}"
