@@ -704,10 +704,18 @@ if __name__ == '__main__':
     out_file = args.out_file
 
     if args.scenarios is not None:
+
+        scenarios_dir = os.path.dirname(args.scenarios)
+
         results = {}
         scenarios = load_scenarios(args.scenarios)
         for rule in scenarios["scenarios"]:
             policy_file = rule["file"]
+
+            policy_path = pathlib.PurePath(os.path.join(scenarios_dir,policy_file))
+            policy_path = policy_path.relative_to(os.getcwd())
+            policy_file = str(policy_path)
+
             description = "A sample policy"
             
             title = None

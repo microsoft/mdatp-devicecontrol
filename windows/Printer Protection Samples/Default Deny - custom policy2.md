@@ -89,8 +89,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
 - [windows/Printer Protection Samples/Intune OMA-URI/Default Deny - custom policy2.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
 
 
 # Deployment Instructions

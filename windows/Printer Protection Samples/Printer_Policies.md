@@ -57,7 +57,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <summary>View</summary>
                 User condition: All Users<br>
                 Parameters: MatchAny
-                <ul>
+                <ul><li> MatchAny 
+                        <ul><li>Corporate Network<a href="#corporate-network" title="MatchAll {'NameId': 'corp.microsoft.com', 'NetworkCategoryId': 'DomainAuthenticated'}"> (details)</a></ul><li> MatchAny 
+                        <ul><li>Corporate VPN<a href="#corporate-vpn" title="MatchAll {'NameId': 'MSFTVPN', 'VPNServerAddressId': 'msftvpn.*.microsoft.com', 'VPNDnsSuffixId': 'corp.microsoft.com', 'VPNConnectionStatusId': 'Connected'}"> (details)</a></ul>
                 </ul>
                 </details></td>
         </tr><tr>
@@ -230,9 +232,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/Corporate Network.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Corporate%20Network.xml)
 - [windows/Printer Protection Samples/Group Policy/Printer_Policies.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Policies.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/Corporate Network.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Corporate%20Network.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/PDF_XPS Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/PDF_XPS%20Printer.xml)
+- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -252,9 +255,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Windows VPN Connection groups not supported.
 - Parameters are not supported
 - Windows Network groups not supported.
+- Windows VPN Connection groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -405,7 +408,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\allow_pdf_and_xps_printing{f5877f47-78ab-4f33-94e4-c44f18ec6dca}.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Group Policy\Printer_Policies.xml*
          
    
    7. Click "Save"
@@ -420,7 +423,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Group Policy\Printer_Policies.xml*
          
    
    7. Click "Save"
@@ -435,7 +438,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\default_deny{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Group Policy\Printer_Policies.xml*
          
    
    7. Click "Save"

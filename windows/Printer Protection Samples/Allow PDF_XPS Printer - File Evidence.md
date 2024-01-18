@@ -90,7 +90,7 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 This policy is based on information in the following files:
 
 - [windows/Printer Protection Samples/Intune OMA-URI/Allow PDF_XPS Printer - File Evidence.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Allow%20PDF_XPS%20Printer%20-%20File%20Evidence.xml)
-- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/PDF_XPS Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/PDF_XPS%20Printer.xml)
 
 
 # Deployment Instructions

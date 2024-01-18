@@ -2,7 +2,7 @@
     "title":"Mac OS Examples",
     "scenarios":[
         {
-            "file": "\\audit_all_apple_devices.json"
+            "file": "audit_all_apple_devices.json"
         },
         {
             "file": "deny_all_bluetooth_devices_except_samsung.json"

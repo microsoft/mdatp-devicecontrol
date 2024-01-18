@@ -80,37 +80,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### PDF_XPS Printer
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrinterConnectionId | File |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-	<Name>PDF_XPS Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>File</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Any Printer
 
 
@@ -142,6 +111,37 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### PDF_XPS Printer
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrinterConnectionId | File |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+	<Name>PDF_XPS Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrinterConnectionId>File</PrinterConnectionId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -153,9 +153,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
-- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
 - [windows/Printer Protection Samples/Intune OMA-URI/Default Deny - custom policy.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/PDF_XPS Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/PDF_XPS%20Printer.xml)
+- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -189,12 +190,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for PDF_XPS Printer</summary> 
+<summary>Create a reusable setting for Any Printer</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the PDF_XPS Printer for the name.  
+   4. Enter the Any Printer for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -203,12 +204,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for Any Printer</summary> 
+<summary>Create a reusable setting for PDF_XPS Printer</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Any Printer for the name.  
+   4. Enter the PDF_XPS Printer for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -290,20 +291,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<VID_PID>035E_0872</VID_PID>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
-		<Name>PDF_XPS Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrinterConnectionId>File</PrinterConnectionId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
 		<Name>Any Printer</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>PrinterDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5170dfb-19a9-4466-8109-d36c9c912b4e%7D/GroupData -->
+		<Name>PDF_XPS Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
 </Groups>

@@ -38,7 +38,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <summary>View</summary>
                 User condition: All Users<br>
                 Parameters: MatchAny
-                <ul>
+                <ul><li> MatchAny 
+                        <ul><li>Corporate Network<a href="#corporate-network" title="MatchAll {'NameId': 'corp.microsoft.com', 'NetworkCategoryId': 'DomainAuthenticated'}"> (details)</a></ul><li> MatchAny 
+                        <ul><li>Corporate VPN<a href="#corporate-vpn" title="MatchAll {'NameId': 'MSFTVPN', 'VPNServerAddressId': 'msftvpn.*.microsoft.com', 'VPNDnsSuffixId': 'corp.microsoft.com', 'VPNConnectionStatusId': 'Connected'}"> (details)</a></ul>
                 </ul>
                 </details></td>
         </tr><tr>
@@ -167,9 +169,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
 - [windows/Printer Protection Samples/Intune OMA-URI/Allow Authorized USB Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
 - [windows/Printer Protection Samples/Intune OMA-URI/Corporate Network.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Corporate%20Network.xml)
+- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -189,9 +191,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Windows VPN Connection groups not supported.
-- Windows Network groups not supported.
 - Parameters are not supported
+- Windows Network groups not supported.
+- Windows VPN Connection groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
