@@ -105,7 +105,7 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 This policy is based on information in the following files:
 
 - [windows/Getting Started/Step 1/deny_all_rules.xml](/windows/Getting%20Started/Step%201/deny_all_rules.xml)
-- [windows/Getting Started/Step 1/deny_all_groups.xml](/windows/Getting%20Started/Step%201/deny_all_groups.xml)
+- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
 
 
 # Deployment Instructions
@@ -264,7 +264,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml*
+   6. For Custom XML, select  *windows\Getting Started\Step 1\deny_all_rules.xml*
          
    
    7. Click "Save"

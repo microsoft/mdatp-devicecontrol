@@ -110,37 +110,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### All removable media devices
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>All removable media devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Readonly USBs
 
 
@@ -167,6 +136,37 @@ The match type for the group is *MatchAny*.
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<VID_PID>090C_1000</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### All removable media devices
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+	<Name>All removable media devices</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -214,10 +214,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Getting Started/Step 4/allow_different_access_to_different_users_rules.xml](/windows/Getting%20Started/Step%204/allow_different_access_to_different_users_rules.xml)
-- [windows/Getting Started/Intune OMA-URI/authorized_usbs{368a2c82-17be-4137-bffa-370bbdff9672}.xml](/windows/Getting%20Started/Intune%20OMA-URI/authorized_usbs%7B368a2c82-17be-4137-bffa-370bbdff9672%7D.xml)
-- [windows/Getting Started/Step 3/allow_different_access_to_different_groups.xml](/windows/Getting%20Started/Step%203/allow_different_access_to_different_groups.xml)
 - [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
+- [windows/Getting Started/Step 2/allow_authorized_usbs_groups.xml](/windows/Getting%20Started/Step%202/allow_authorized_usbs_groups.xml)
+- [windows/Getting Started/Step 3/allow_different_access_to_different_groups.xml](/windows/Getting%20Started/Step%203/allow_different_access_to_different_groups.xml)
+- [windows/Getting Started/Step 4/allow_different_access_to_different_users_rules.xml](/windows/Getting%20Started/Step%204/allow_different_access_to_different_users_rules.xml)
 
 
 # Deployment Instructions
@@ -238,8 +238,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 Intune UX is not supported for this policy because:
 - File Write (16) is an unsupported access mask
-- File Execute (32) is an unsupported access mask
 - File Read (8) is an unsupported access mask
+- File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -252,20 +252,20 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-		<Name>All removable media devices</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{23c24566-98a5-4218-8802-59614513b97e}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
 		<Name>Readonly USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<VID_PID>090C_1000</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">
@@ -369,7 +369,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_4_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml*
+   6. For Custom XML, select  *windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml*
          
    
    7. Click "Save"
@@ -384,7 +384,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_4_-_allow_access_to_writeable_usbs_for_some_users{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml*
+   6. For Custom XML, select  *windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml*
          
    
    7. Click "Save"
@@ -399,7 +399,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_4_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml*
+   6. For Custom XML, select  *windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml*
          
    
    7. Click "Save"

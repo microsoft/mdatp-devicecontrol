@@ -1,7 +1,0 @@
-<Group Id="3f082cd3-f701-4c21-9a6a-ed115c28e211" Type="device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/3f082cd3-f701-4c21-9a6a-ed115c28e211/GroupData -->
-	<Name>All Removable Media Devices</Name>
-	<MatchType>all</MatchType>
-	<DescriptorIdList>
-	</DescriptorIdList>
-</Group>

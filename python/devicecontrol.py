@@ -354,8 +354,9 @@ class Property:
 
 class Clause:
 
-    def __init__(self,clause, clause_type = None):
+    def __init__(self,clause, group_type, clause_type = None):
         self._properties = []
+        self.group_type = group_type
         self.clause_type = clause_type
         self.sub_clauses = []
         self.sub_clause_type = None
@@ -370,14 +371,15 @@ class Clause:
                     self.has_sub_clauses = True
                     clauses = clause.get("clauses")
                     for subclause in clauses:
-                        sc = Clause(subclause,self.sub_clause_type)
+                        sc = Clause(subclause,self.group_type,self.sub_clause_type)
                         self.sub_clauses.append(sc)
 
             if "value" in clause:
                 value = clause.get("value")
 
             if property is not None and value is not None:
-                self._properties.append(Property(property, value))
+                group_property = self.group_type.get_property_by_name(property)
+                self._properties.append(Property(group_property, value))
             elif self.sub_clause_type is None:
                 print("Unknown Clause")
                 return
@@ -441,6 +443,28 @@ class GroupProperty:
     PrintOutputFileName = "PrintOutputFileNameId"
     PrintDocumentName = "PrintDocumentNameId"
 
+    #AppleDevice
+    MacDeviceFamily = "primaryId"
+
+    MacAppleDevices = "apple_devices"
+    MacRemovableMediaDevices = "removable_media_devices"
+    MacPortableDevices = "portable_devices"
+    MacBluetoothDevices = "bluetooth_devices"
+
+    MacVendorId = "vendorId"
+    MacProductId = "productId"
+    MacSerialNumber = "serialNumber"
+
+    MacEncryption = "encryption"
+    MacEncryptionAPFS = "apfs"
+    MacOtherGroupId = "groupId"
+
+    #MacFile
+    MacFileType = "fileType"
+
+
+
+
     def __init__(self,name,label,description,allowed_values = None):
         self.name = name
         self.label = label
@@ -457,6 +481,9 @@ class GroupType:
     VPNConnectionGroupType = "VPNConnection"
 
     PrintJobType = "PrintJob"
+
+    MacDeviceGroupType = "device"
+    MacFileGroupType = "file"
 
 
     def __init__(self,name, label, group_properties):
@@ -480,6 +507,68 @@ class Group:
     Types = {
         
     }
+
+    MacDeviceFamilyProperty = GroupProperty(
+        GroupProperty.MacDeviceFamily,
+        "Mac Device Family",
+        "One of apple_devices, removable_media_devices, portable_devices, bluetooth_devices",
+        [
+            GroupProperty.MacAppleDevices,
+            GroupProperty.MacBluetoothDevices,
+            GroupProperty.MacRemovableMediaDevices,
+            GroupProperty.MacPortableDevices
+        ]
+    )
+
+    MacDeviceVendorProperty = GroupProperty(
+        GroupProperty.MacVendorId,
+        "Vendor Id (VID)",
+        "Matches a device's vendor ID"
+    )
+
+    MacDeviceProductProperty = GroupProperty(
+        GroupProperty.MacProductId,
+        "Product Id (PID)",
+        "Matches a device's product ID"
+    )
+
+    MacDeviceSerialNumber = GroupProperty(
+        GroupProperty.MacSerialNumber,
+        "Mac Device Serial Number",
+        "Matches a device's serial number"
+    )
+
+    MacDeviceEncryptedProperty = GroupProperty(
+        GroupProperty.MacEncryption,
+        "Mac Encrypted",
+        "Match if a device is apfs-encrypted.",
+        [
+            GroupProperty.MacEncryptionAPFS
+        ]
+    )
+
+    MacGroupProperty = GroupProperty(
+        GroupProperty.MacOtherGroupId,
+        "Other Device Control Group",
+        "Match if a device is a member of another group. The value represents the UUID of the group to match against."
+    )
+
+    AppleDeviceGroupProperties = [
+        MacDeviceFamilyProperty,
+        MacDeviceVendorProperty,
+        MacDeviceProductProperty,
+        MacDeviceSerialNumber,
+        MacDeviceEncryptedProperty,
+        MacGroupProperty
+    ]
+
+    AppleDeviceGroupType = GroupType(
+        GroupType.MacDeviceGroupType,
+        "Apple Devices",
+        AppleDeviceGroupProperties
+    )
+
+    Types[GroupType.MacDeviceGroupType] = AppleDeviceGroupType
 
     WindowsDeviceFamilyProperty = GroupProperty(
         GroupProperty.WindowsDeviceFamily,
@@ -688,8 +777,18 @@ class Group:
         "value of file path or name, supports wildcard"
     )
 
+    MacFileTypeProperty = GroupProperty(
+        GroupProperty.MacFileType,
+        "File Type",
+        "The type of file on Mac"
+    )
+
     FileGroupProperties = [
         FilePathProperty
+    ]
+
+    MacFileGroupProperties = [
+        MacFileTypeProperty
     ]
 
     
@@ -701,6 +800,14 @@ class Group:
     )
 
     Types[GroupType.FileGroupType] = FileGroupType
+
+    MacFileGroupType = GroupType(
+        GroupType.MacFileGroupType,
+        "Mac File",
+        MacFileGroupProperties
+    )
+
+    Types[GroupType.MacFileGroupType] = MacFileGroupType
 
     PrintOutputFileNameProperty = GroupProperty(
         GroupProperty.PrintOutputFileName,
@@ -801,6 +908,7 @@ class Group:
 
             if "$type" in root.keys():
                 self.type = root["$type"]
+                self.group_type = Group.Types[self.type]
 
             if "query" in root.keys():
                 query = root["query"]
@@ -811,7 +919,7 @@ class Group:
                 if "clauses" in query.keys():
                     clauses = query["clauses"]
                     for clause in clauses:
-                        self.clauses.append(Clause(clause, self.match_type))
+                        self.clauses.append(Clause(clause, self.group_type, self.match_type))
 
                 self.conditions = clauses
 

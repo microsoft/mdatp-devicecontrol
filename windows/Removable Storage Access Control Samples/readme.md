@@ -2,8 +2,8 @@
 
 | Policy | Device Type | Intune UX Support |
 |--------|-----------|-------|
-| [ Scenario 1 ]( Scenario%201%20GPO%20Policy%20-%20Prevent%20Write%20and%20Execute%20access%20to%20all%20but%20allow%20specific%20approved%20USBs.md) | Windows Removable Device | True
-| [ Scenario 2 ]( Scenario%202%20GPO%20Policy%20-%20Audit%20Write%20and%20Execute%20access%20to%20all%20but%20block%20specific%20unapproved%20USBs.md) | Windows Removable Device | True
+| [ Scenario 1 ]( Scenario%201%20GPO%20Policy%20-%20Prevent%20Write%20and%20Execute%20access%20to%20all%20but%20allow%20specific%20approved%20USBs.md) | Windows Removable Device | False
+| [ Scenario 2 ]( Scenario%202%20GPO%20Policy%20-%20Audit%20Write%20and%20Execute%20access%20to%20all%20but%20block%20specific%20unapproved%20USBs.md) | Windows Removable Device | False
 | [ Scenario 3 ]( Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.md) | Windows Removable Device | True
 | [ Scenario 4 ]( Scenario%204%20ReadOnly%20to%20Any%20Removable%20Storage%20and%20CD-DVD.md) | Windows Removable Device | True
 | [ Scenario 5 ]( Scenario%205%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20and%20approved%20USB.md) | Windows Removable Device | True

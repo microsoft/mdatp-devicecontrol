@@ -1,0 +1,19 @@
+{
+    "title":"Mac OS Examples",
+    "scenarios":[
+        {
+            "file": "\\audit_all_apple_devices.json"
+        },
+        {
+            "file": "deny_all_bluetooth_devices_except_samsung.json"
+        },
+        {
+            "file": "deny_debug_on_android.json"
+        },
+        {
+            "file":"deny_removable_media_except_kingston.json"
+        }
+    ]
+    
+}
+    

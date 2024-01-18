@@ -59,7 +59,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="1"><b>Audit Write and Execute access to others</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
+                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
             </td>
             <td rowspan="1" valign="top">.
                 <ul><li>Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a></ul>
@@ -111,7 +111,7 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Any Removable Storage and CD-DVD and WPD Group_0
+### Any Removable Storage and CD-DVD and WPD Group_1
 
 
 
@@ -135,7 +135,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -157,9 +157,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Approved USBs Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Approved%20USBs%20Group.xml)
+- [windows/Removable Storage Access Control Samples/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 - [windows/Removable Storage Access Control Samples/Group Policy/Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Scenario%202%20GPO%20Policy%20-%20Audit%20Write%20and%20Execute%20access%20to%20all%20but%20block%20specific%20unapproved%20USBs.xml)
-- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Approved USBs Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Approved%20USBs%20Group.xml)
 
 
 # Deployment Instructions
@@ -178,119 +178,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for Approved USBs Group_0</summary> 
+Intune UX is not supported for this policy because:
+- File Execute (32) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Approved USBs Group_0 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
-<summary>Create a Device Control Rules configuration profile</summary>  
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on "Create Policy"
-   3. Under Platform, select "Windows 10 and later"
-   4. Under Profile, select "Device Control Rules"
-   5. Click "Create"
-   6. Under Name, enter **
-   7. Optionally, enter a description
-   8. Click "Next"
-</details>
-
-> [!IMPORTANT]
-> This policy has more than 1 rule.  
-> Policy ordering is not guaranteed by Intune.
-> Make sure that policy is not dependent on order to achieve desired result.
-> Consider using ```default deny```.   
-
-
-<details>
-<summary>Add a rule for Block Write and Execute access to all but block specific unapproved USBs to the policy</summary>
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Approved USBs Group_0*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Block Write and Execute access to all but block specific unapproved USBs* for the name
-
-
-
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Write and Execute* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification and Send event* from "Options"
-   1. Select *Write and Execute* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
-<details>
-<summary>Add a rule for Audit Write and Execute access to others to the policy</summary>
-
-   1. Add another rule.  Click on "+ Add"
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_0*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Set reusable settings" under Excluded Id
-
-   1. Click on *Approved USBs Group_0*
-
-   1. Click on "Select"
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Audit Write and Execute access to others* for the name
-
-
-
-   1. Select *Audit Allowed* from "Type"
-   1. Select *Send event* from "Options"
-   1. Select *Write and Execute* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
+Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
 
 ## Group Policy (GPO)
@@ -311,7 +203,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -395,7 +287,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\block_write_and_execute_access_to_all_but_block_specific_unapproved_usbs{23b8e437-66ac-4b32-b3d7-24044637fc98}.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Group Policy\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml*
          
    
    7. Click "Save"
@@ -410,7 +302,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\audit_write_and_execute_access_to_others{b58ab853-9a6f-405c-a194-740e69422b48}.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Group Policy\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml*
          
    
    7. Click "Save"

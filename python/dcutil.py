@@ -636,6 +636,7 @@ def parse_in_file(in_file):
 
     #check the settings for the file
     if in_file.endswith(".json"):
+         p = pathlib.PurePath(in_file)
          with open(in_file,"r") as json_file:
             mac_policy = json.loads(json_file.read())
             mac_settings = Settings.generate_settings_from_mac_policy(mac_policy)

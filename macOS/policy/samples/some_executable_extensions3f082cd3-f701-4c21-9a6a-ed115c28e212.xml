@@ -1,7 +1,0 @@
-<Group Id="3f082cd3-f701-4c21-9a6a-ed115c28e212" Type="file">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/3f082cd3-f701-4c21-9a6a-ed115c28e212/GroupData -->
-	<Name>Some Executable Extensions</Name>
-	<MatchType>any</MatchType>
-	<DescriptorIdList>
-	</DescriptorIdList>
-</Group>
