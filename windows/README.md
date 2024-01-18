@@ -1,5 +1,17 @@
 # Device Control for Windows
 
+## Getting Started
+
+Step-by-step instructions for [getting started](Getting%20Started/readme.md) with device control.
+
+## devices
+
+Step-by-step examples on how to configure device control to restrict access to [devices](device/readme.md) like USBs, CD/DVD drivers, and Windows Portable Devices
+
+## printers
+
+Step-by-step examples on how configure device control to restrict access to [printers](printer/readme.md)
+
 ## Group Policy (GPO) adminisrative templates
 
 If you don't see some settings in the device control, group policy, you need to insatll the templates to the central store for Group Policy.

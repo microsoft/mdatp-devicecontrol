@@ -676,7 +676,7 @@ def generate_readme(results,dest,title):
 if __name__ == '__main__':
 
     arg_parser = argparse.ArgumentParser(
-        description='Utility for importing/exporting device control policies.')
+        description='Utility for generating documentation for device control policies.')
 
     
     input_group =arg_parser.add_mutually_exclusive_group()
@@ -690,7 +690,7 @@ if __name__ == '__main__':
     arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
     arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory",default=".")
     arg_parser.add_argument('-g','--generate',dest="generated_files_locations", type=generate_files_format, help='Generates files for other formats')
-    arg_parser.add_argument('-t','--template',dest="template",help="Jinja template to use to generate output",default="dcutil.j2")
+    arg_parser.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output",default="dcutil.j2")
 
     args = arg_parser.parse_args()
 
