@@ -1,12 +1,15 @@
 # Device control policy sample: Step 1 - Deny all access
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Removable Device
 
-A device control policy is a combination of [policy rules](#policy-rules) and [groups](#groups).  
+A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
@@ -27,9 +30,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="2"><b>Audit Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny [{'PrimaryId': 'RemovableMediaDevices'}]"> (details)</a></ul>
+                <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a></ul>
             </td>
-            <td rowspan="2" valign="top">
+            <td rowspan="2" valign="top">.
                 <ul></ul>
             </td>
             <td>Deny</td>
@@ -38,7 +41,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:x:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>None (0)</td> 
+            <td>-</td>
+            <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
@@ -48,22 +52,31 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>Show notification and Send event (3)</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
             <td> 
                 <center>-</center></td>
         </tr></table>
+
 
 ## Groups
 
 
 ### All removable media devices
 
+
+
 This is a group of type *Device*. 
 The match type for the group is *MatchAny*.
+
 
 |  Property | Value |
 |-----------|-------|
 | PrimaryId | RemovableMediaDevices |
+
+
+
+
 
 <details>
 <summary>View XML</summary>
@@ -81,24 +94,33 @@ The match type for the group is *MatchAny*.
 </details>
 
 
+## Settings
+| Setting Name |  Setting Value | Documentation |
+|--------------|----------------|---------------|
+DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
 ## Files
 This policy is based on information in the following files:
 
-- [Step 1/deny_all_groups.xml](Step%201/deny_all_groups.xml)
-- [Step 1/deny_all_rules.xml](Step%201/deny_all_rules.xml)
+- [windows/Getting Started/Step 1/deny_all_groups.xml](/windows/Getting%20Started/Step%201/deny_all_groups.xml)
+- [windows/Getting Started/Step 1/deny_all_rules.xml](/windows/Getting%20Started/Step%201/deny_all_rules.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
@@ -112,16 +134,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *RemovableMediaDevices* for PrimaryId
-        6. Click "Save"
-    
    
    8. Click "Next"
    9. Click "Add"
@@ -252,9 +264,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Step 1\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml*
          
-   
    
    7. Click "Save"
 </details>
@@ -268,18 +279,37 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Step 1\all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml*
          
    
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DefaultEnforcement</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DefaultEnforcement*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *2*
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for DeviceControlEnabled</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *DeviceControlEnabled*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled*
+   5. For Data type, select *Integer*
+   
+   7. For Value, enter *1*
    
    7. Click "Save"
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported entry type [AuditDenied]
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

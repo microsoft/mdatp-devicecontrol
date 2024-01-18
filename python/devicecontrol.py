@@ -1610,7 +1610,7 @@ class Entry:
         for mask in self.permissions.keys():
             enabled = self.permissions[mask]
             if enabled: 
-                if mask not in unsupported_access_masks:
+                if unsupported_access_masks[mask]:
                     if mask not in WindowsEntryType.access_masks:
                         support.issues.append(mask+" is an unsupported access mask")
                     else:
@@ -1709,7 +1709,19 @@ class Support:
     
 class Feature:
 
-    def get_unsupported_dictionary(supported_values):
+    def get_unsupported_dictionary(supported_values=None):
+
+        if supported_values is None:
+            return {
+                1: False,
+                2: False,
+                4: False,
+                8: False,
+                16:False,
+                32:False,
+                64: False
+            }
+        
         unsupported_access_masks = {
             1: True,
             2: True,
@@ -1732,7 +1744,7 @@ class Feature:
         if "access_masks" in entry_data.keys():
             entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary(entry_data["access_masks"])
         else:
-            entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary([])
+            entry_data["unsupported_access_masks"] = Feature.get_unsupported_dictionary()
 
         for type in entry_data["supported_notifications"]:
             notifications = entry_data["supported_notifications"][type]["notifications"]
