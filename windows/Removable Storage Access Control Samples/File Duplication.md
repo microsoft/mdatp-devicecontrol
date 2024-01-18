@@ -97,8 +97,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/File Duplication.xml](Group%20Policy/File%20Duplication.xml)
-- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/Removable Storage Access Control Samples/Group Policy/File Duplication.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/File%20Duplication.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -197,7 +197,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\data_duplication_filesystem_demo{7988d6d0-8854-4cad-98de-e4e22e65e058}.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\data_duplication_filesystem_demo{7988d6d0-8854-4cad-98de-e4e22e65e058}.xml*
          
    
    7. Click "Save"
@@ -212,7 +212,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

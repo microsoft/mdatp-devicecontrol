@@ -404,13 +404,13 @@ class Inventory:
         if "oma-uri" in self.generated_files_locations_by_format.keys():
             
             path = self.generated_files_locations_by_format["oma-uri"] + os.sep + clean_up_name(oma_uri_object.name,"_")+oma_uri_object.id + ".xml"
-            oma_uri_object.path = path
+            oma_uri_object.set_path(path)
             with open(path,"w") as generated_file:
                 generated_file.write(oma_uri_object.toXML(""))
                 generated_file.close()
 
         else:
-            oma_uri_object.path = None
+            oma_uri_object.set_path(None)
 
         return oma_uri_object
     

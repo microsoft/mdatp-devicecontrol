@@ -1,7 +1,9 @@
 
 import json
 import copy
+import os
 import urllib.parse
+import pathlib
 import xml.etree.ElementTree as ET
 
 class Util:
@@ -518,7 +520,7 @@ class Group:
     WindowsDeviceInstancePathProperty = GroupProperty(
         GroupProperty.WindowsDeviceInstancePath,
         "Windows Device Instance Path",
-        "InstancePathId is a string that uniquely identifies the device in the system, for example, USBSTOR\\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\\8735B611&0. It's the Device instance path in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*"
+        "InstancePathId is a string that uniquely identifies the device in the system, for example, USBSTOR\\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\\8735B611&0. It's the Device instance path in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, USBSTOR\\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\\8735B611*"
     )
 
     WindowsDeviceIdProperty = GroupProperty(
@@ -735,7 +737,7 @@ class Group:
     def __init__(self,root,format,path):
 
         self.format = format
-        self.path = path
+        self.set_path(path)
         self._properties = []
         self.clauses = []
         self.root = root
@@ -812,6 +814,13 @@ class Group:
                         self.clauses.append(Clause(clause, self.match_type))
 
                 self.conditions = clauses
+
+    
+    def set_path(self,path):
+        if path is not None:
+            p = pathlib.PurePath(path)
+            p = p.relative_to(os.getcwd())
+            self.path = str(p)
 
     def get_oma_uri(self):
         return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote_plus(self.id)+"/GroupData"
@@ -930,7 +939,8 @@ class PolicyRule:
         self.root = root
 
         self.format = format
-        self.path = path        
+        self.set_path(path)
+
         self.rule_index = rule_index
         self.id = None
         self.name = None
@@ -996,6 +1006,12 @@ class PolicyRule:
                 break
         
 
+    def set_path(self,path):
+        if path is not None:
+            p = pathlib.PurePath(path)
+            p = p.relative_to(os.getcwd())
+            self.path = str(p)
+        
     def get_oma_uri(self):
         return "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote_plus(self.id)+"/RuleData"
     

@@ -119,8 +119,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml](Intune%20OMA-URI/Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -295,7 +295,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Scenario 3 Block any Removable Storage and CD-DVD.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Scenario 3 Block any Removable Storage and CD-DVD.xml*
          
    
    7. Click "Save"
@@ -310,7 +310,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

@@ -103,7 +103,7 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Unauthorized File Group_0
+### Block Read and Write access to specific file _Groups_2
 
 
 
@@ -126,7 +126,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-	<Name>Unauthorized File Group_0</Name>
+	<Name>Block Read and Write access to specific file _Groups_2</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PathId>*.exe</PathId>
@@ -147,9 +147,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Block Read and Write access to specific file _Policy.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Policy.xml)
-- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [Intune OMA-URI/Unauthorized File Group.xml](Intune%20OMA-URI/Unauthorized%20File%20Group.xml)
+- [windows/Removable Storage Access Control Samples/Group Policy/Block Read and Write access to specific file _Policy.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Policy.xml)
+- [windows/Removable Storage Access Control Samples/Group Policy/Block Read and Write access to specific file _Groups.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -195,7 +195,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 	</Group>
 	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-		<Name>Unauthorized File Group_0</Name>
+		<Name>Block Read and Write access to specific file _Groups_2</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PathId>*.exe</PathId>
@@ -268,7 +268,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\block_read_and_write_access_to_specific_file{5038638c-9352-47bb-88df-8a659f0c02a7}.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\block_read_and_write_access_to_specific_file{5038638c-9352-47bb-88df-8a659f0c02a7}.xml*
          
    
    7. Click "Save"
@@ -283,7 +283,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"
@@ -298,7 +298,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Unauthorized File Group.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Unauthorized File Group.xml*
          
    
    7. Click "Save"

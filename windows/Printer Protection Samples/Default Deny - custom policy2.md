@@ -89,8 +89,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Any printer group.xml](Intune%20OMA-URI/Any%20printer%20group.xml)
-- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/Any printer group.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Any%20printer%20group.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/Default Deny - custom policy2.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 
 
 # Deployment Instructions
@@ -249,7 +249,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Default Deny - custom policy2.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Default Deny - custom policy2.xml*
          
    
    7. Click "Save"
@@ -264,7 +264,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Any printer group.xml*
          
    
    7. Click "Save"

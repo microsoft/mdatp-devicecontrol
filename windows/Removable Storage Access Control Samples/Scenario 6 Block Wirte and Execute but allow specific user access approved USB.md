@@ -97,6 +97,37 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### Approved USBs Group_0
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&* |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+	<Name>Approved USBs Group_0</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Any Removable Storage and CD-DVD and WPD Group_0
 
 
@@ -132,37 +163,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Approved USBs Group_0
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&* |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-	<Name>Approved USBs Group_0</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -174,9 +174,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [Group Policy/Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml](Group%20Policy/Scenario%206%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20approved%20USB.xml)
-- [Intune OMA-URI/Approved USBs Group.xml](Intune%20OMA-URI/Approved%20USBs%20Group.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Approved USBs Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Approved%20USBs%20Group.xml)
+- [windows/Removable Storage Access Control Samples/Group Policy/Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Group%20Policy/Scenario%206%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20approved%20USB.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -196,12 +196,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
+<summary>Create a reusable setting for Approved USBs Group_0</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
+   4. Enter the Approved USBs Group_0 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -210,12 +210,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for Approved USBs Group_0</summary> 
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Approved USBs Group_0 for the name.  
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -329,6 +329,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Approved USBs Group_0</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
 		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
@@ -337,14 +345,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
 			<PrimaryId>CdRomDevices</PrimaryId>
 			<PrimaryId>WpdDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-		<Name>Approved USBs Group_0</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -429,7 +429,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\block_write_and_execute_but_allow_specific_user_access_approved_usb{83c390b6-b01e-4d83-8834-c8015a2316f2}.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\block_write_and_execute_but_allow_specific_user_access_approved_usb{83c390b6-b01e-4d83-8834-c8015a2316f2}.xml*
          
    
    7. Click "Save"
@@ -444,7 +444,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *C:\Users\joshbregman\mdatp-devicecontrol\windows\Removable Storage Access Control Samples\Intune OMA-URI\block_removable_storage_and_cdrom{d2193a7f-ceec-4729-a72a-fe949639db55}.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\block_removable_storage_and_cdrom{d2193a7f-ceec-4729-a72a-fe949639db55}.xml*
          
    
    7. Click "Save"
@@ -459,7 +459,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"
@@ -474,7 +474,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Approved USBs Group.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Approved USBs Group.xml*
          
    
    7. Click "Save"

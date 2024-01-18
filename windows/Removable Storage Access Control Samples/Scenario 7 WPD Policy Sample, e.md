@@ -73,7 +73,7 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
+- [windows/Removable Storage Access Control Samples/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](/windows/Removable%20Storage%20Access%20Control%20Samples/Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
 
 
 # Deployment Instructions
@@ -203,7 +203,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
+   6. For Custom XML, select  *windows\Removable Storage Access Control Samples\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
          
    
    7. Click "Save"

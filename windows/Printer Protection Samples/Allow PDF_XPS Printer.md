@@ -89,8 +89,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Allow PDF_XPS Printer.xml](Intune%20OMA-URI/Allow%20PDF_XPS%20Printer.xml)
-- [Intune OMA-URI/PDF_XPS Printer.xml](Intune%20OMA-URI/PDF_XPS%20Printer.xml)
+- [windows/Printer Protection Samples/Group Policy/Printer_Groups.xml](/windows/Printer%20Protection%20Samples/Group%20Policy/Printer_Groups.xml)
+- [windows/Printer Protection Samples/Intune OMA-URI/Allow PDF_XPS Printer.xml](/windows/Printer%20Protection%20Samples/Intune%20OMA-URI/Allow%20PDF_XPS%20Printer.xml)
 
 
 # Deployment Instructions
@@ -249,7 +249,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Allow PDF_XPS Printer.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\Allow PDF_XPS Printer.xml*
          
    
    7. Click "Save"
@@ -264,7 +264,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *windows\Printer Protection Samples\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
    7. Click "Save"
