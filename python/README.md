@@ -108,16 +108,28 @@ options:
 
 It then selects files from that inventory for processing. 
 -  Select a single file  ```IN_FILE```.
--  Select files defined in a scenario file ```SCENARIOS```.
+-  Select files defined in a scenario file ```SCENARIOS```.  
+   - See [Windows Device Scenarios](/windows/device/scenarios.json), [Windows Printer Scenarios](/windows/printer/scenarios.json), [Windows Getting Started](/windows/Getting%20Started/scenarios.json) or [Mac Scenarios](/macOS/policy/samples/scenarios.json) for examples
 -  Select files from the inventory using a query ```QUERY```.  The query uses the [pandas query](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html) syntax.  
 
 The query is run.  As part of running the query, ```dcdoc``` will attempt to generate files in other formats.  The ```GENERATED_FILES_LOCATION``` controls which format of files are generated and where they are saved.  This parameter is a comma delimited list of ```format```:```path``` values (e.g ```oma-uri:c:\dcdoc\output```)
 
-The result of the query is coverted to a ```FORMAT``` - either ```csv``` or ```txt```.  The ```csv``` option generates a ```dc_rules.csv``` and ```dc_groups.csv``` with the contents of the queries inventory.  The  ```txt``` option uses the ```TEMPLATE``` in the [templates](templates/) directory to format the content.  If the files were defined using ```SCENARIOS```, then a [readme.md](templates/readme.j2) is generated as well.
+The result of the query is coverted to a ```FORMAT``` - either ```csv``` or ```txt```.  
+
+The ```csv``` option generates a ```dc_rules.csv``` and ```dc_groups.csv``` with the contents of the queries inventory.  
+
+- See the [rules for the examples in this repo](/dc_rules.csv) and [groups for the examples in this repo](/dc_rules.csv) for the format of the files
+
+The  ```txt``` option uses the ```TEMPLATE``` in the [templates](templates/) directory to format the content.  
+
+If the files were defined using ```SCENARIOS```, then a [readme.md](templates/readme.j2) is generated as well.
+- See [Windows Device Examples README](/windows/device/readme.md), [Windows Printer Examples README](/windows/printer/readme.md), [Windows Getting Started README](/windows/Getting%20Started/readme.md) or [Mac Samples README](/macOS/policy/samples/README.md) for examples
 
 The output is stored in the ```DEST``` directory.  The name of the file created can be changed from the default using the ```OUT_FILE``` parameter.
 
 ### Example Visual Studio Code configurations
+
+The example are [VS Code Python configurations](https://code.visualstudio.com/docs/python/debugging#_additional-configurations).  They can be added to ```launch.json```
 
 <details>
 <summary>Generate documentation for a single file</summary>
@@ -140,8 +152,49 @@ The output is stored in the ```DEST``` directory.  The name of the file created 
 ```
 </details>
 
+<details>
+<summary>Generate documentation based on scenarios</summary>
 
+```json
+{
+"name": "Python: dcdoc with scenarios",
+    "type": "python",
+    "request": "launch",
+    "program": "${workspaceFolder}\\python\\dcdoc.py",
+    "args": [
+        "--path=${fileDirname}",
+        "--template=dcutil.j2",
+        "--scenarios=${file}",
+        "--generate=oma-uri:${fileDirname}\\Intune OMA-URI",
+        "--dest=${fileDirname}"
+    ],
+    "console": "integratedTerminal",
+    "justMyCode": true,
+}
+```
+</details>
+
+<details>
+<summary>Generate csv report on files</summary>
+
+```json
+{
+    "name": "Python: dcdoc csv report",
+    "type": "python",
+    "request": "launch",
+    "program": "${workspaceFolder}\\python\\dcdoc.py",
+    "args": [
+        "--path=${workspaceFolder}\\windows;${workspaceFolder}\\macOS",
+        "--format=csv",
+        "--dest=${workspaceFolder}"
+    ],
+    "console": "integratedTerminal",
+    "justMyCode": true,
+}
+```
         
+</details>
+
 
 ## devicecontrol.py
 

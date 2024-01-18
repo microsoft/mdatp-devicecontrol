@@ -1162,6 +1162,12 @@ class PolicyRule:
             return hash(self.toJSON(1))
         else:
             return hash(self.toXML())
+        
+    def __str__(self):
+        if self.format == "mac":
+            return self.toJSON(4)
+        else:
+            return self.toXML()
 
 
 class Option:
