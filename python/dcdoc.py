@@ -150,8 +150,15 @@ class Inventory:
             "rule_index":[]
         }
 
+        group_rule_columns = {
+            "groupId":[],
+            "ruleId": [],
+            "type":[]
+        }
+
         self.groups = pd.DataFrame(group_columns)
         self.policy_rules = pd.DataFrame(rule_columns)
+        self.group_rules = pd.DataFrame(group_rule_columns)
 
        
         self.load_inventory()
@@ -280,7 +287,10 @@ class Inventory:
         groups_for_rule = {
             "gpo":[],
             "oma-uri":[],
-            "mac":[]
+            "mac":[],
+            "included":[],
+            "excluded":[],
+            "entries":[]
         }
         for included_group in rule.included_groups:
             g = self.get_group_by_id(included_group)
@@ -288,6 +298,7 @@ class Inventory:
                 groups_for_rule["gpo"] += g["gpo"] 
                 groups_for_rule["mac"] += g["mac"]
                 groups_for_rule["oma-uri"] += g["oma-uri"]
+                groups_for_rule["included"]+= g[rule.format]
 
         for excluded_group in rule.excluded_groups:
             g = self.get_group_by_id(excluded_group)
@@ -295,6 +306,7 @@ class Inventory:
                 groups_for_rule["gpo"] += g["gpo"]
                 groups_for_rule["oma-uri"] += g["oma-uri"]
                 groups_for_rule["mac"] += g["mac"]
+                groups_for_rule["excluded"]+= g[rule.format]
 
         for entry in rule.entries:
             groups = entry.get_group_ids()
@@ -303,6 +315,7 @@ class Inventory:
                 if g is not None:
                     groups_for_rule["gpo"] += g["gpo"]
                     groups_for_rule["oma-uri"] += g["oma-uri"]
+                    groups_for_rule["entries"]+= g[rule.format]
                     #Groups in entries not supported on mac
                     #groups_for_rule["mac"] += g["mac"]
         
@@ -320,6 +333,7 @@ class Inventory:
                 "oma-uri":[],
                 "mac":[]
             }
+            
             for i in range(0,group_frame.index.size):
                 group = group_frame.iloc[i]["object"]
                 format = group_frame.iloc[i]["format"]
@@ -525,8 +539,29 @@ class Inventory:
         return result    
 
     def generate_csv(self,dest):
-        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep="\t")
-        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep="\t")
+        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",")
+        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",")
+
+        #create the list of group-rule-mappings
+        for i in range(0,self.policy_rules.index.size):
+            rule = self.policy_rules.iloc[i]["object"]
+            groups = self.get_groups_for_rule(rule)
+            
+            for group_rule_type in ["included","excluded","entries"]:
+                if group_rule_type in groups.keys():
+                    for included_group in groups[group_rule_type]:
+                        new_row = pd.DataFrame([{
+                            "type":group_rule_type,
+                            "groupId": included_group.id,
+                            "ruleId": rule.id
+                        }])
+
+                        self.group_rules = pd.concat([self.group_rules,new_row],ignore_index=True)
+            
+            
+            
+
+        self.group_rules.to_csv(dest+os.sep+"dc_group_rules.csv",sep=",")
 
 
     def generate_text(self,result,dest,file,title, description="A sample policy", settings = None ):

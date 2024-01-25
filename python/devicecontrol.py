@@ -1146,7 +1146,9 @@ class PolicyRule:
 
         out += indent +"</PolicyRule>"
 
-        return out
+        #This should clean out any strange encodings
+        encoded_btyes = str(out).encode(errors="ignore")
+        return encoded_btyes.decode("utf-8")
     
     def toJSON(self,i=0):
         if i==0:
