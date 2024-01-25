@@ -86,13 +86,17 @@ class Helper:
 
         return permission_icons
     
-    def generate_clause_table(group):
+    def generate_clause_table(group, return_objects = False):
 
-        clauses = group.clauses
-        clause_table = Helper.generate_table_for_clauses(clauses)
+        if type(group) == list:
+            clauses = group
+        else:
+            clauses = group.clauses
+            
+        clause_table = Helper.generate_table_for_clauses(clauses, 1, return_objects)
         return clause_table
 
-    def generate_table_for_clauses(clauses,offset=1):
+    def generate_table_for_clauses(clauses,offset=1,return_objects = False):
         table = []
         for clause in clauses:
             if len(clause.sub_clauses) > 0:
@@ -108,7 +112,11 @@ class Helper:
                     else:
                         operator = ""
 
-                    row = ["-"]*offset + [property.name,property.value]
+                    if not return_objects:
+                        row = ["-"]*offset + [property.name,property.value]
+                    else:
+                        row = ["-"]*offset + [property]
+
                     row[offset-1] = operator
 
                     table.append(row)
@@ -542,6 +550,28 @@ class Inventory:
         self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",")
         self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",")
 
+        
+        group_property_data_frames = {}
+
+        #Create the group properties tables
+        for group_type in Group.AllGroupTypes:
+
+            group_property_columns = {
+               "groupId":[]
+            }
+
+            if not group_type.isWindows(): 
+                group_property_columns["op"] = []
+                group_property_columns["op2"] = []
+                group_property_columns["op3"] = []
+            
+
+            group_properties = group_type.group_properties
+            for group_property in group_properties:
+                group_property_columns[group_property.label] = []
+
+            group_property_data_frames[group_type.label]= pd.DataFrame(group_property_columns)
+
         #create the list of group-rule-mappings
         for i in range(0,self.policy_rules.index.size):
             rule = self.policy_rules.iloc[i]["object"]
@@ -562,6 +592,53 @@ class Inventory:
             
 
         self.group_rules.to_csv(dest+os.sep+"dc_group_rules.csv",sep=",")
+
+        #Add the group values to the dataframe
+        for i in range(0,self.groups.index.size):
+            new_row = {
+
+            }
+            group = self.groups.iloc[i]["object"]
+            new_row["groupId"] = group.id
+            if group.format != "mac":
+                for property in group._properties:
+                    new_row[property.label] = property.value
+            else:
+                clause_table = Helper.generate_clause_table(group,True)
+                for clause_row in clause_table:
+                    match len(clause_row):
+                        case 2:
+                            new_row["op"] = clause_row[0]
+                        case 3:
+                            new_row["op"] = clause_row[0]
+                            new_row["op2"] = clause_row[1]
+                        case 4:
+                            new_row["op"] = clause_row[0]
+                            new_row["op2"] = clause_row[1]
+                            new_row["op3"] = clause_row[2]
+
+                    clause_property = clause_row[-1]
+                    new_row[clause_property.label] = clause_property.value
+                    
+                    
+                            
+                            
+                    print(clause_row)
+
+            group_property_data_frames[group.group_type.label] = pd.concat([
+                group_property_data_frames[group.group_type.label],
+                pd.DataFrame([new_row])
+            ],ignore_index=True)
+
+        #save the csvs
+        for group_type_label in group_property_data_frames:
+            group_type_frame = group_property_data_frames[group_type_label]
+            group_type_file_name_part = str(group_type_label).lower().replace(" ","_")
+            group_type_frame.to_csv(dest+os.sep+"dc_"+group_type_file_name_part+".csv",sep=",")
+
+            
+        
+
 
 
     def generate_text(self,result,dest,file,title, description="A sample policy", settings = None ):

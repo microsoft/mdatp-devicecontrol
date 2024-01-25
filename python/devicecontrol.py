@@ -28,6 +28,12 @@ class Util:
         return new.join(li)
 
     
+class Format:
+
+    Mac = "mac"
+    OMA_URI = "oma-uri"
+    GPO = "gpo"
+
 class Setting: 
 
     
@@ -347,10 +353,11 @@ class Property:
     def __init__(self, group_property, property_value):
         self.name = group_property.name
 
-        allowed_values = group_property.allowed_values
-        if allowed_values is not None and property_value not in allowed_values:
+        self.allowed_values = group_property.allowed_values
+        if self.allowed_values is not None and property_value not in self.allowed_values:
             raise Exception("Invalid value "+property_value+" for group property "+group_property.name)
         self.value = property_value
+        self.label = group_property.label
 
 class Clause:
 
@@ -473,6 +480,8 @@ class GroupProperty:
 
 class GroupType:
 
+    
+
     WindowsDeviceGroupType = "Device"
     WindowsPrinterGroupType = "Device"
     
@@ -485,16 +494,22 @@ class GroupType:
     MacDeviceGroupType = "device"
     MacFileGroupType = "file"
 
+    
 
-    def __init__(self,name, label, group_properties):
+
+    def __init__(self,name, label, group_properties, format = Format.OMA_URI):
         self.name = name
         self.group_properties = group_properties
         self.name_map = {}
         self.label = label
+        self.format = format
 
         for group_property in group_properties:
             self.name_map[group_property.name] = group_property
 
+    def isWindows(self):
+        return self.format is not Format.Mac
+    
     def get_property_by_name(self, property_name):
         if property_name in self.name_map.keys():
             return self.name_map[property_name]
@@ -507,6 +522,8 @@ class Group:
     Types = {
         
     }
+
+    
 
     MacDeviceFamilyProperty = GroupProperty(
         GroupProperty.MacDeviceFamily,
@@ -565,7 +582,8 @@ class Group:
     AppleDeviceGroupType = GroupType(
         GroupType.MacDeviceGroupType,
         "Apple Devices",
-        AppleDeviceGroupProperties
+        AppleDeviceGroupProperties,
+        Format.Mac
     )
 
     Types[GroupType.MacDeviceGroupType] = AppleDeviceGroupType
@@ -804,7 +822,8 @@ class Group:
     MacFileGroupType = GroupType(
         GroupType.MacFileGroupType,
         "Mac File",
-        MacFileGroupProperties
+        MacFileGroupProperties,
+        Format.Mac
     )
 
     Types[GroupType.MacFileGroupType] = MacFileGroupType
@@ -837,6 +856,17 @@ class Group:
     supported_match_types = [
         "MatchAny",
         "MatchAll"
+    ]
+
+    AllGroupTypes = [
+        WindowsDeviceGroupType,
+        WindowsPrinterGroupType,
+        NetworkGroupType,
+        VPNConnectionGroupType,
+        FileGroupType,
+        MacFileGroupType,
+        PrintJobGroupType,
+        AppleDeviceGroupType
     ]
 
     
