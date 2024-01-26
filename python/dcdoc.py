@@ -92,7 +92,7 @@ class Helper:
             clauses = group
         else:
             clauses = group.clauses
-            
+
         clause_table = Helper.generate_table_for_clauses(clauses, 1, return_objects)
         return clause_table
 
@@ -144,7 +144,8 @@ class Inventory:
             "name":[],
             "id":[],
             "match_type":[],
-            "object":[]
+            "object":[],
+            "type_label":[]
         }
 
         rule_columns = {
@@ -263,7 +264,8 @@ class Inventory:
             "name":group.name,
             "id":group.id,
             "match_type":group.match_type,
-            "object": group
+            "object": group,
+            "type_label": group.group_type.label
         }])
 
         self.groups = pd.concat([self.groups,new_row],ignore_index=True)
