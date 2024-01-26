@@ -244,7 +244,8 @@ class Inventory:
         for entry_type in Entry.AllEntryTypes:
 
             entry_type_columns = {
-                "entryId":[]
+                "entryId":[],
+                "ruleId":[]
             }
 
             for access_type in entry_type.access_types:
@@ -389,6 +390,7 @@ class Inventory:
 
             new_entry_permissions = {
                 "entryId": entry.id,
+                "ruleId": rule.id,
                 "conditionMatchType": entry.get_condition_match_type()
             }
 
@@ -417,6 +419,30 @@ class Inventory:
                   }])
 
                   self.directory_object_conditions = pd.concat([self.directory_object_conditions,new_condition],ignore_index=True)
+
+            if entry.has_computer_condition():
+                  
+                  new_condition = pd.DataFrame([{
+                    "ruleId": rule.id,
+                    "entryId": entry.id,
+                    "objectType": "Computer",
+                    "objectValue": entry.computersid
+                  }])
+
+                  self.directory_object_conditions = pd.concat([self.directory_object_conditions,new_condition],ignore_index=True)
+
+            if entry.parameters is not None:
+                for condition in entry.parameters.conditions:
+                    for group in condition.groups:
+
+                        new_condition = pd.DataFrame([{
+                            "ruleId": rule.id,
+                            "entryId": entry.id,
+                            "conditionType": condition.condition_type,
+                            "conditionValue": group
+                        }])
+
+                        self.parameter_conditions = pd.concat([self.parameter_conditions,new_condition],ignore_index=True)
 
 
     
@@ -680,7 +706,7 @@ class Inventory:
         self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",")
         self.rule_entries.to_csv(dest+os.sep+"dc_entries.csv",sep=",")
         self.directory_object_conditions.to_csv(dest+os.sep+"dc_directory_object_conditions.csv",sep=",")
-
+        self.parameter_conditions.to_csv(dest+os.sep+"dc_parameter_conditions.csv",sep=",")
         
         #create the list of group-rule-mappings
         for i in range(0,self.policy_rules.index.size):

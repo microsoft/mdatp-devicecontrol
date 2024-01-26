@@ -1,4 +1,4 @@
-,entryId,Backup device,Update device,Download photos,Download files,Synch device,conditionMatchType
-0,2E75C9DE-5C96-40C1-8333-A52A9409DEB1,1.0,1.0,1.0,1.0,1.0,
-1,03420B37-4F71-4AF3-AAE8-82D16817A194,True,True,True,True,True,
-2,8C66DF38-A4A2-4C98-B69C-BF5D13F32044,True,True,True,True,True,
+,entryId,ruleId,Backup device,Update device,Download photos,Download files,Synch device,conditionMatchType
+0,2E75C9DE-5C96-40C1-8333-A52A9409DEB1,772cef80-229f-48b4-bd17-a6913009298e,1.0,1.0,1.0,1.0,1.0,
+1,03420B37-4F71-4AF3-AAE8-82D16817A194,D861EEB3-9201-45F4-AC63-F823D4957D59,True,True,True,True,True,
+2,8C66DF38-A4A2-4C98-B69C-BF5D13F32044,D861EEB3-9201-45F4-AC63-F823D4957D59,True,True,True,True,True,
