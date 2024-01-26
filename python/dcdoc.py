@@ -9,7 +9,7 @@ import pathlib
 import copy
 import json
 
-from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature
+from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
 import convert_dc_policy as mac 
 
 Default_Settings = Settings(
@@ -61,7 +61,7 @@ class Helper:
         PolicyRule.AuditDenied:":page_facing_up:"
     }
 
-    def get_permission_icons(entry):
+    def get_permission_icons(entry, return_objects = False):
 
         if entry.format == "mac":
 
@@ -70,21 +70,34 @@ class Helper:
                 enabled = permission in entry.access
                 if enabled:
                     permission_icons[permission] = Helper.true_icons[entry.enforcement]
+                    
                 else:
                     permission_icons[permission] = "-"
-
+                    
         else:
 
             permission_icons = {
             }
 
             for mask in entry.entry_type.access_masks:
-                if mask & int(entry.access_mask):
+                    
+                if mask & int(entry.access_mask):    
                     permission_icons[mask] = Helper.true_icons[entry.enforcement]
                 else:
-                    permission_icons[mask] = "-"   
+                    permission_icons[mask] = "-" 
 
-        return permission_icons
+                
+
+        if not return_objects:
+            return permission_icons
+        else:
+            for permission in permission_icons:
+                if permission_icons[permission] != "-":
+                    permission_icons[permission] = True
+                else:
+                    permission_icons[permission] = False
+
+            return permission_icons
     
     def generate_clause_table(group, return_objects = False):
 
@@ -180,6 +193,20 @@ class Inventory:
             "match_type":[]
         }
 
+        directory_object_condition_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "objectType":[],
+            "objectValue":[]
+        }
+
+        parameter_condition_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "conditionType":[],
+            "conditionValue":[]
+        }
+
 
         self.groups = pd.DataFrame(group_columns)
         self.policy_rules = pd.DataFrame(rule_columns)
@@ -187,6 +214,8 @@ class Inventory:
 
         self.rule_entries = pd.DataFrame(rule_entry_columns)
         self.entry_parameters = pd.DataFrame(entry_parameters_columns)
+        self.directory_object_conditions = pd.DataFrame(directory_object_condition_columns)
+        self.parameter_conditions = pd.DataFrame(parameter_condition_columns)
 
         self.group_property_data_frames = {}
         
@@ -211,6 +240,19 @@ class Inventory:
             self.group_property_data_frames[group_type.label]= pd.DataFrame(group_property_columns)
 
        
+        self.entry_type_data_frames = {}
+        for entry_type in Entry.AllEntryTypes:
+
+            entry_type_columns = {
+                "entryId":[]
+            }
+
+            for access_type in entry_type.access_types:
+                label = entry_type.access_types[access_type]["label"]
+                entry_type_columns[label] = []
+
+            self.entry_type_data_frames[entry_type.label] = pd.DataFrame(entry_type_columns)
+
         self.load_inventory()
 
         
@@ -345,11 +387,38 @@ class Inventory:
 
             self.rule_entries = pd.concat([self.rule_entries,new_entry],ignore_index=True)
 
-            if entry.has_conditions():
-                  new_conditions = pd.DataFrame([{
+            new_entry_permissions = {
+                "entryId": entry.id,
+                "conditionMatchType": entry.get_condition_match_type()
+            }
+
+            permissions = Helper.get_permission_icons(entry,True)
+            for permission in permissions:
+                if type(permission) == int:
+                    column = WindowsEntryType.access_masks[permission]
+                else:
+                    column = entry.entry_type.access_types[permission]["label"]
+
+                new_entry_permissions[column] = permissions[permission]
+
+            new_entry_permissions = pd.DataFrame([
+                new_entry_permissions
+            ])
+
+            self.entry_type_data_frames[entry.entry_type.label] = pd.concat([self.entry_type_data_frames[entry.entry_type.label],new_entry_permissions],ignore_index=True)
+
+            if entry.has_user_condition():
+                  
+                  new_condition = pd.DataFrame([{
                     "ruleId": rule.id,
-                    "entryId": entry.id
+                    "entryId": entry.id,
+                    "objectType": "User",
+                    "objectValue": entry.sid
                   }])
+
+                  self.directory_object_conditions = pd.concat([self.directory_object_conditions,new_condition],ignore_index=True)
+
+
     
     def get_groups_for_rule(self,rule):
         groups_for_rule = {
@@ -610,7 +679,7 @@ class Inventory:
         self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",")
         self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",")
         self.rule_entries.to_csv(dest+os.sep+"dc_entries.csv",sep=",")
-        
+        self.directory_object_conditions.to_csv(dest+os.sep+"dc_directory_object_conditions.csv",sep=",")
 
         
         #create the list of group-rule-mappings
@@ -672,6 +741,12 @@ class Inventory:
             group_type_frame = self.group_property_data_frames[group_type_label]
             group_type_file_name_part = str(group_type_label).lower().replace(" ","_")
             group_type_frame.to_csv(dest+os.sep+"dc_"+group_type_file_name_part+".csv",sep=",")
+
+        for entry_type_label in self.entry_type_data_frames:
+            entry_type_frame = self.entry_type_data_frames[entry_type_label]
+            entry_type_file_name_part = str(entry_type_label).lower().replace(" ","_")
+           
+            entry_type_frame.to_csv(dest+os.sep+"dc_"+entry_type_file_name_part+"_access.csv",sep=",")
 
             
         

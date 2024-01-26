@@ -1367,6 +1367,17 @@ class WindowsEntryType:
     def __init__(self,name, label,access_masks):
         self.name = name
         self.access_masks = access_masks
+
+        self.access_types = {
+
+        }
+
+        for mask in self.access_masks:
+            self.access_types[WindowsEntryType.access_masks[mask]] = {
+                "label":WindowsEntryType.access_masks[mask]
+            }
+            
+
         self.label = label
 
 
@@ -1525,6 +1536,17 @@ class Entry:
     ]
 
     MacEntryTypes = [
+        AppleBluetoothDevice,
+        AppleDevice,
+        AppleGeneric,
+        ApplePortableDevice,
+        AppleRemovableMedia
+    ]
+
+    AllEntryTypes = [
+        WindowsPrinter,
+        WindowsDevice,
+        WindowsGeneric,
         AppleBluetoothDevice,
         AppleDevice,
         AppleGeneric,
@@ -1733,6 +1755,23 @@ class Entry:
     def has_conditions(self):
         return self.parameters is not None or self.sid != "All Users" or self.computersid != "All Computers"
 
+    def has_user_condition(self):
+        return self.sid != "All Users"
+    
+    def has_computer_condition(self):
+        return self.computersid != "All Computers"
+    
+    def get_condition_match_type(self):
+        condition_match_type = None
+
+        if self.has_conditions():
+            if self.parameters is not None:
+                condition_match_type = self.parameters.match_type
+            else:
+                #This is if there is a user or computer condition
+                condition_match_type = "MatchAll"
+        
+        return condition_match_type
     
     def get_group_ids(self):
         if self.parameters is not None:
