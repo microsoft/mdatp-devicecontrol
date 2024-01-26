@@ -165,9 +165,50 @@ class Inventory:
             "type":[]
         }
 
+        rule_entry_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "enforcement":[],
+            "notifications":[]
+        }
+
+        entry_parameters_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "sid":[],
+            "computersid":[],
+            "match_type":[]
+        }
+
+
         self.groups = pd.DataFrame(group_columns)
         self.policy_rules = pd.DataFrame(rule_columns)
         self.group_rules = pd.DataFrame(group_rule_columns)
+
+        self.rule_entries = pd.DataFrame(rule_entry_columns)
+        self.entry_parameters = pd.DataFrame(entry_parameters_columns)
+
+        self.group_property_data_frames = {}
+        
+
+        #Create the group properties tables
+        for group_type in Group.AllGroupTypes:
+
+            group_property_columns = {
+               "groupId":[]
+            }
+
+            if not group_type.isWindows(): 
+                group_property_columns["op"] = []
+                group_property_columns["op2"] = []
+                group_property_columns["op3"] = []
+            
+
+            group_properties = group_type.group_properties
+            for group_property in group_properties:
+                group_property_columns[group_property.label] = []
+
+            self.group_property_data_frames[group_type.label]= pd.DataFrame(group_property_columns)
 
        
         self.load_inventory()
@@ -292,6 +333,23 @@ class Inventory:
 
         self.policy_rules = pd.concat([self.policy_rules,new_row],ignore_index=True)
 
+        for entry in rule.entries:
+
+            new_entry = pd.DataFrame([{
+                "ruleId": rule.id,
+                "entryId": entry.id,
+                "entry_type": entry.entry_type.label,
+                "enforcement": entry.enforcement.label,
+                "notifications": str(entry.notifications)
+            }])
+
+            self.rule_entries = pd.concat([self.rule_entries,new_entry],ignore_index=True)
+
+            if entry.has_conditions():
+                  new_conditions = pd.DataFrame([{
+                    "ruleId": rule.id,
+                    "entryId": entry.id
+                  }])
     
     def get_groups_for_rule(self,rule):
         groups_for_rule = {
@@ -551,29 +609,10 @@ class Inventory:
     def generate_csv(self,dest):
         self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",")
         self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",")
+        self.rule_entries.to_csv(dest+os.sep+"dc_entries.csv",sep=",")
+        
 
         
-        group_property_data_frames = {}
-
-        #Create the group properties tables
-        for group_type in Group.AllGroupTypes:
-
-            group_property_columns = {
-               "groupId":[]
-            }
-
-            if not group_type.isWindows(): 
-                group_property_columns["op"] = []
-                group_property_columns["op2"] = []
-                group_property_columns["op3"] = []
-            
-
-            group_properties = group_type.group_properties
-            for group_property in group_properties:
-                group_property_columns[group_property.label] = []
-
-            group_property_data_frames[group_type.label]= pd.DataFrame(group_property_columns)
-
         #create the list of group-rule-mappings
         for i in range(0,self.policy_rules.index.size):
             rule = self.policy_rules.iloc[i]["object"]
@@ -622,19 +661,15 @@ class Inventory:
                     clause_property = clause_row[-1]
                     new_row[clause_property.label] = clause_property.value
                     
-                    
-                            
-                            
-                    print(clause_row)
 
-            group_property_data_frames[group.group_type.label] = pd.concat([
-                group_property_data_frames[group.group_type.label],
+            self.group_property_data_frames[group.group_type.label] = pd.concat([
+                self.group_property_data_frames[group.group_type.label],
                 pd.DataFrame([new_row])
             ],ignore_index=True)
 
         #save the csvs
-        for group_type_label in group_property_data_frames:
-            group_type_frame = group_property_data_frames[group_type_label]
+        for group_type_label in self.group_property_data_frames:
+            group_type_frame = self.group_property_data_frames[group_type_label]
             group_type_file_name_part = str(group_type_label).lower().replace(" ","_")
             group_type_frame.to_csv(dest+os.sep+"dc_"+group_type_file_name_part+".csv",sep=",")
 

@@ -1548,6 +1548,7 @@ class Entry:
 
         self.parameters = None
         self.sid = "All Users"
+        self.computersid = "All Computers"
 
         if format == "gpo" or format == "oma-uri":
 
@@ -1622,6 +1623,12 @@ class Entry:
                 self.sid = sid.text
             else:
                 self.sid = "All Users"
+
+            computersid = entry.find("./ComputerSid")
+            if computersid is not None:
+                self.computersid = computersid
+            else:
+                self.computersid = "All Computers"
 
             parameters = entry.find("./Parameters")
             if parameters is not None:
@@ -1723,6 +1730,8 @@ class Entry:
                             
 
 
+    def has_conditions(self):
+        return self.parameters is not None or self.sid != "All Users" or self.computersid != "All Computers"
 
     
     def get_group_ids(self):
