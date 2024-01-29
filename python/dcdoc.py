@@ -51,6 +51,11 @@ def clean_up_name(name, new_space = "-"):
 
 class Helper:
 
+    helper_entry_type = None
+
+    def set_entry_type(t):
+        Helper.helper_entry_type = t
+
     def get_section_title_for_object(object):
         return clean_up_name(object.name)
     
@@ -79,8 +84,12 @@ class Helper:
             permission_icons = {
             }
 
-            for mask in entry.entry_type.access_masks:
-                    
+            masks_to_check = entry.entry_type.access_masks
+            if Helper.helper_entry_type is not None:
+                masks_to_check = Helper.helper_entry_type.access_masks
+
+            for mask in masks_to_check:
+
                 if mask & int(entry.access_mask):    
                     permission_icons[mask] = Helper.true_icons[entry.enforcement]
                 else:
@@ -165,6 +174,7 @@ class Inventory:
             "path":[],
             "format":[],
             "name":[],
+            "entry_type":[],
             "id":[],
             "included_groups":[],
             "excluded_groups":[],
@@ -172,9 +182,10 @@ class Inventory:
             "rule_index":[]
         }
 
-        group_rule_columns = {
-            "groupId":[],
+        rule_property_columns = {
             "ruleId": [],
+            "propertyType":[],
+            "propertyValue":[],
             "type":[]
         }
 
@@ -204,13 +215,14 @@ class Inventory:
             "entryId":[],
             "ruleId":[],
             "conditionType":[],
+            "conditionProperty":[],
             "conditionValue":[]
         }
 
 
         self.groups = pd.DataFrame(group_columns)
         self.policy_rules = pd.DataFrame(rule_columns)
-        self.group_rules = pd.DataFrame(group_rule_columns)
+        self.rule_properties = pd.DataFrame(rule_property_columns)
 
         self.rule_entries = pd.DataFrame(rule_entry_columns)
         self.entry_parameters = pd.DataFrame(entry_parameters_columns)
@@ -367,8 +379,9 @@ class Inventory:
             "path":path,
             "format":format,
             "name":rule.name,
+            "entry_type": rule.entry_type.label,
             "id":rule.id,
-            "included_groups":rule.included_groups,
+            "included_groups":rule.included_device_properties,
             "excluded_groups":rule.excluded_groups,
             "object": rule,
             "rule_index": rule_index
@@ -433,13 +446,14 @@ class Inventory:
 
             if entry.parameters is not None:
                 for condition in entry.parameters.conditions:
-                    for group in condition.groups:
+                    for property in condition.properties:
 
                         new_condition = pd.DataFrame([{
                             "ruleId": rule.id,
                             "entryId": entry.id,
-                            "conditionType": condition.condition_type,
-                            "conditionValue": group
+                            "conditionType": condition.condition_type.label,
+                            "conditionProperty": property.label,
+                            "conditionValue": property.value
                         }])
 
                         self.parameter_conditions = pd.concat([self.parameter_conditions,new_condition],ignore_index=True)
@@ -702,32 +716,39 @@ class Inventory:
         return result    
 
     def generate_csv(self,dest):
-        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",")
-        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",")
-        self.rule_entries.to_csv(dest+os.sep+"dc_entries.csv",sep=",")
-        self.directory_object_conditions.to_csv(dest+os.sep+"dc_directory_object_conditions.csv",sep=",")
-        self.parameter_conditions.to_csv(dest+os.sep+"dc_parameter_conditions.csv",sep=",")
+        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",",index=False)
+        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",",index=False)
+        self.rule_entries.to_csv(dest+os.sep+"dc_entries.csv",sep=",",index=False)
+        self.directory_object_conditions.to_csv(dest+os.sep+"dc_directory_object_conditions.csv",sep=",",index=False)
+        self.parameter_conditions.to_csv(dest+os.sep+"dc_parameter_conditions.csv",sep=",",index=False)
         
         #create the list of group-rule-mappings
         for i in range(0,self.policy_rules.index.size):
             rule = self.policy_rules.iloc[i]["object"]
-            groups = self.get_groups_for_rule(rule)
-            
-            for group_rule_type in ["included","excluded","entries"]:
-                if group_rule_type in groups.keys():
-                    for included_group in groups[group_rule_type]:
-                        new_row = pd.DataFrame([{
-                            "type":group_rule_type,
-                            "groupId": included_group.id,
-                            "ruleId": rule.id
-                        }])
 
-                        self.group_rules = pd.concat([self.group_rules,new_row],ignore_index=True)
+            for property in rule.included_device_properties:
+                new_row = pd.DataFrame([{
+                    "type": "included",
+                    "ruleId": rule.id,
+                    "propertyType": property.name,
+                    "propertyValue": property.value
+                }])
+
+                self.rule_properties = pd.concat([self.rule_properties,new_row],ignore_index=True)
             
-            
+            for property in rule.excluded_device_properties:
+                new_row = pd.DataFrame([{
+                    "type": "excluded",
+                    "ruleId": rule.id,
+                    "propertyType": property.name,
+                    "propertyValue": property.value
+                }])
+
+                self.rule_properties = pd.concat([self.rule_properties,new_row],ignore_index=True)
             
 
-        self.group_rules.to_csv(dest+os.sep+"dc_group_rules.csv",sep=",")
+
+        self.rule_properties.to_csv(dest+os.sep+"dc_rule_properties.csv",sep=",",index=False)
 
         #Add the group values to the dataframe
         for i in range(0,self.groups.index.size):
@@ -766,13 +787,13 @@ class Inventory:
         for group_type_label in self.group_property_data_frames:
             group_type_frame = self.group_property_data_frames[group_type_label]
             group_type_file_name_part = str(group_type_label).lower().replace(" ","_")
-            group_type_frame.to_csv(dest+os.sep+"dc_"+group_type_file_name_part+".csv",sep=",")
+            group_type_frame.to_csv(dest+os.sep+"dc_"+group_type_file_name_part+".csv",sep=",",index=False)
 
         for entry_type_label in self.entry_type_data_frames:
             entry_type_frame = self.entry_type_data_frames[entry_type_label]
             entry_type_file_name_part = str(entry_type_label).lower().replace(" ","_")
            
-            entry_type_frame.to_csv(dest+os.sep+"dc_"+entry_type_file_name_part+"_access.csv",sep=",")
+            entry_type_frame.to_csv(dest+os.sep+"dc_"+entry_type_file_name_part+"_access.csv",sep=",",index=False)
 
             
         
@@ -801,6 +822,9 @@ class Inventory:
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
+
+        Helper.set_entry_type(result["entry_type"])
+
         out = template.render(
             {"intuneCustomSettings":result["oma_uri"],
              "paths":result["web_paths"],

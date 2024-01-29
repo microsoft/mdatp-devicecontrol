@@ -393,6 +393,9 @@ class Clause:
             
 class GroupProperty:
 
+    #Reference to group
+    WindowsGroupId = "GroupId"
+    
     #Windows Device
     WindowsDeviceFriendlyName = "FriendlyNameId"
     
@@ -410,6 +413,11 @@ class GroupProperty:
     WindowsDeviceBus = "BusId"
     WindowsDeviceSerialNumber = "SerialNumberId"
     WindowsDeviceFamily = "PrimaryId"
+
+    #Encryption state
+    WindowsDeviceEncryptedState = "DeviceEncryptionStateId"
+    WindowsDeviceBitlockerEncrypted = "BitlockerEncrypted"
+    WindowsDeviceNotEncrypted = "Plain"
 
 
     #Network
@@ -464,7 +472,7 @@ class GroupProperty:
 
     MacEncryption = "encryption"
     MacEncryptionAPFS = "apfs"
-    MacOtherGroupId = "groupId"
+    MacGroupId = "groupId"
 
     #MacFile
     MacFileType = "fileType"
@@ -565,9 +573,9 @@ class Group:
     )
 
     MacGroupProperty = GroupProperty(
-        GroupProperty.MacOtherGroupId,
-        "Other Device Control Group",
-        "Match if a device is a member of another group. The value represents the UUID of the group to match against."
+        GroupProperty.MacGroupId,
+        "Device Control Group",
+        "Match if a device is a member of a group. The value represents the UUID of the group to match against."
     )
 
     AppleDeviceGroupProperties = [
@@ -587,6 +595,13 @@ class Group:
     )
 
     Types[GroupType.MacDeviceGroupType] = AppleDeviceGroupType
+
+
+    WindowsGroupProperty = GroupProperty(
+        GroupProperty.WindowsGroupId,
+        "Device Control Group",
+        "Match if a device is a member of a group. The value represents the UUID of the group to match against."
+    )
 
     WindowsDeviceFamilyProperty = GroupProperty(
         GroupProperty.WindowsDeviceFamily,
@@ -654,6 +669,16 @@ class Group:
         "You can find SerialNumberId from Device instance path in the Device Manager, for example, 03003324080520232521 is SerialNumberId in USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0"
     )
 
+    WindowsDeviceEncryptionStateProperty = GroupProperty(
+        GroupProperty.WindowsDeviceEncryptedState,
+        "Windows Device Encryption State",
+        "Checks the encryption state (e.g. Bitlocker) of a device",
+        [
+            GroupProperty.WindowsDeviceBitlockerEncrypted,
+            GroupProperty.WindowsDeviceNotEncrypted
+        ]
+    )
+
     WinodwsPrinterConnectionProperty = GroupProperty(
         GroupProperty.WindowsPrinterConnection,
         "Windows Printer Connection",
@@ -674,7 +699,8 @@ class Group:
         WindowsDeviceFamilyProperty,
         WindowsDeviceFriendlyNameProperty,
         WindowsDeviceVendorProductProperty,   
-        WinodwsPrinterConnectionProperty
+        WinodwsPrinterConnectionProperty,
+        WindowsGroupProperty
     ]
 
     WindowsDeviceGroupProperties = [
@@ -687,7 +713,9 @@ class Group:
         WindowsDeviceIdProperty,
         WindowsDeviceHardwareIdProperty,
         WindowsDeviceBusProperty,
-        WindowsDeviceSerialNumberProperty
+        WindowsDeviceSerialNumberProperty,
+        WindowsDeviceEncryptionStateProperty,
+        WindowsGroupProperty
     ]
 
     WindowsDeviceGroupType = GroupType(
@@ -735,7 +763,8 @@ class Group:
     NetworkGroupProperties = [
         NetworkNameProperty,
         NetworkDomainProperty,
-        NetworkCategoryProperty
+        NetworkCategoryProperty,
+        WindowsGroupProperty
     ]
 
     NetworkGroupType = GroupType(
@@ -1042,6 +1071,27 @@ class Enforcement:
     
 class PolicyRule:
 
+    def read_device_properties(device_properties_node,device_properties_list,groups_list):
+        for device_property in device_properties_node:
+            device_property_name = device_property.tag
+            device_property_value = device_property.text
+            device_property_type = GroupType.get_property_by_name(
+                Group.WindowsDeviceGroupType,device_property_name)
+            
+            if device_property_type is None:
+                device_property_type = GroupType.get_property_by_name(
+                    Group.WindowsPrinterGroupType,device_property_name)
+                
+            if device_property_type is None:
+                raise Exception("Unknown Windows Device Property "+device_property_name)
+            
+            device_property =  Property(device_property_type,device_property_value)          
+
+            device_properties_list.append(device_property)
+
+            if device_property_type.name == GroupProperty.WindowsGroupId:
+                groups_list.append(device_property_value)
+
     Allow = Enforcement(Enforcement.Allow,"Allow",{
         "mac":"allow",
         "gpo":"Allow",
@@ -1082,8 +1132,12 @@ class PolicyRule:
         self.rule_index = rule_index
         self.id = None
         self.name = None
+        self.included_device_properties = []
         self.included_groups = []
+
         self.excluded_groups = []
+        self.excluded_device_properties = []
+
         self.entries = []
 
         self.entry_type = None
@@ -1097,20 +1151,24 @@ class PolicyRule:
             else:
                 self.name = name_node.text
 
-            included_groups_node = root.find(".//IncludedIdList")
-            if not included_groups_node is None:
-                groups = included_groups_node.findall(".//GroupId")
-                for group in groups:
-                    self.included_groups.append(group.text)
+            included_device_properties_node = root.find(".//IncludedIdList")
+            if not included_device_properties_node is None:
+                included_device_properties = included_device_properties_node.findall(".//")
+                PolicyRule.read_device_properties(
+                    included_device_properties,
+                    self.included_device_properties,
+                    self.included_groups)
 
-            excluded_groups_node = root.find(".//ExcludedIdList")
-            if not excluded_groups_node is None:
-                groups = excluded_groups_node.findall(".//GroupId")
-                for group in groups:
-                    self.excluded_groups.append(group.text)
+            excluded_device_properties_node = root.find(".//ExcludedIdList")
+            if not excluded_device_properties_node is None:
+                excluded_device_properties = excluded_device_properties_node.findall(".//")
+                PolicyRule.read_device_properties(
+                    excluded_device_properties,
+                    self.excluded_device_properties,
+                    self.excluded_groups)
 
             for entry in root.findall(".//Entry"):
-                self.entries.append(Entry(entry,self.format))     
+                self.add_entry(Entry(entry,self.format))     
 
         elif format == "mac":
             if "id" in root.keys():
@@ -1129,7 +1187,7 @@ class PolicyRule:
             if "entries" in root.keys():
                 entries = root["entries"]
                 for entry in entries:
-                    self.entries.append(Entry(entry,self.format))
+                    self.add_entry(Entry(entry,self.format))
 
         #set the entry_type for the rule
         # if there is more than 1 make it a generic device
@@ -1140,10 +1198,14 @@ class PolicyRule:
                 if self.format == "mac":
                     self.entry_type = Entry.AppleGeneric
                 else:
-                    self.entry_type = Entry.WindowsDevice
+                    self.entry_type = Entry.WindowsGeneric
                 break
         
 
+    def add_entry(self,entry):
+        entry.rule = self
+        self.entries.append(entry)
+    
     def set_path(self,path):
         if path is not None:
             p = pathlib.PurePath(path)
@@ -1160,13 +1222,15 @@ class PolicyRule:
         out +=indent + "\t<Name>"+Util.xml_safe_text(self.name)+"</Name>\n"
         
         out +=indent + "\t<IncludedIdList>\n"
-        for group in self.included_groups:
-            out += indent +"\t\t<GroupId>"+group+"</GroupId>\n"
+        for device_property in self.included_device_properties:
+            out += indent +"\t\t<"+device_property.name+">"+device_property.value+"</"+device_property.name+">\n"
+
         out +=indent + "\t</IncludedIdList>\n"
 
         out += indent +"\t<ExcludedIdList>\n"
-        for group in self.excluded_groups:
-            out += indent +"\t\t<GroupId>"+group+"</GroupId>\n"
+        for device_property in self.excluded_device_properties:
+            out += indent +"\t\t<"+device_property.name+">"+device_property.value+"</"+device_property.name+">\n"
+
         out += indent +"\t</ExcludedIdList>\n"
 
         for entry in self.entries:
@@ -1417,6 +1481,19 @@ class MacEntryType:
 
 class Entry:
 
+    #SID is case insensitive
+    def getSID(entry):
+        sid = entry.find("./Sid")
+        if sid is not None:
+            return sid.text
+        
+        sid = entry.find("./SID")
+        if sid is not None:
+            return sid.text
+        
+        return "All Users"
+        
+
     
     WindowsPrinter = WindowsEntryType("windows_printer","Windows Printer",
         [0x40]
@@ -1425,7 +1502,7 @@ class Entry:
         [0x01,0x02,0x04,0x08,0x10,0x20]
     )
     WindowsGeneric  = WindowsEntryType("windows_generic","Windows Generic Device",
-        [0x01,0x02,0x04,0x08,0x10,0x20,0x04]
+        [0x01,0x02,0x04,0x08,0x10,0x20,0x40]
     )
     AppleDevice = MacEntryType("appleDevice","Apple Device",
         {
@@ -1572,6 +1649,8 @@ class Entry:
         self.sid = "All Users"
         self.computersid = "All Computers"
 
+        self.rule = None
+
         if format == "gpo" or format == "oma-uri":
 
             self.permissions = {
@@ -1640,11 +1719,7 @@ class Entry:
             #        self.notifications.append(notification_masks[mask])
 
            
-            sid = entry.find("./Sid")
-            if sid is not None:
-                self.sid = sid.text
-            else:
-                self.sid = "All Users"
+            self.sid = Entry.getSID(entry)
 
             computersid = entry.find("./ComputerSid")
             if computersid is not None:
@@ -1761,6 +1836,9 @@ class Entry:
     def has_computer_condition(self):
         return self.computersid != "All Computers"
     
+    def has_parameters(self):
+        return self.parameters is not None
+    
     def get_condition_match_type(self):
         condition_match_type = None
 
@@ -1866,13 +1944,18 @@ class Parameters:
         return out
 
 class Condition:
+        
+    
     def __init__(self,condition):
         self.match_type = condition.attrib['MatchType']
+        
         self.groups = []
+        self.properties = []
+
         self.tag = condition.tag
         self.condition_type = condition.tag
-        for group in condition.findall(".//GroupId"):
-            self.groups.append(group.text)
+        self.read_condition_properties(condition.findall(".//"))
+
 
     def get_group_ids(self):
         return self.groups
@@ -1886,6 +1969,29 @@ class Condition:
         out += indent + "</"+self.tag+">\n"
 
         return out
+    
+    def read_condition_properties(self,condition_properties):
+        
+        for condition_property in condition_properties:
+
+            condition_property_name = condition_property.tag
+            condition_property_value = condition_property.text
+
+            self.condition_type = Group.Types[self.tag]
+
+            condition_property_type = GroupType.get_property_by_name(
+                self.condition_type,condition_property_name)
+                
+            if condition_property_type is None:
+                raise Exception("Unknown "+self.condition_type.label+" property "+condition_property_name)
+            
+            condition_property =  Property(condition_property_type,condition_property_value)          
+
+            self.properties.append(condition_property)
+
+            if condition_property_type.name == GroupProperty.WindowsGroupId:
+                self.groups.append(condition_property_value)
+
 
 class Support:
 

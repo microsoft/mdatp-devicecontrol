@@ -1,0 +1,5 @@
+{% if property.name == "GroupId" -%}
+<li>Group: {{ groups[property.value].name }}<a href="#{{ Helper.get_section_title_for_object(groups[property.value]) }}" title="{{ groups[property.value].match_type }} {{ groups[property.value].get_conditions() }}"> (details)</a>  
+{% else -%}
+<li>{{ property.name }}: {{ property.value }}
+{% endif -%}
