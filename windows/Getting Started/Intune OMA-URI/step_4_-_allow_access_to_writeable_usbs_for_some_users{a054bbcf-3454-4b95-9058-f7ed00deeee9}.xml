@@ -1,0 +1,15 @@
+<PolicyRule Id="{a054bbcf-3454-4b95-9058-f7ed00deeee9}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
+	<Name>Step 4 - Allow Access to Writeable USBs for some users</Name>
+	<IncludedIdList>
+		<GroupId>{368a2c82-17be-4137-bffa-370bbdff9672}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
+		<Type>Allow</Type>
+		<AccessMask>63</AccessMask>
+		<Options>0</Options>
+		<Sid>S-1-1-0</Sid>
+	</Entry>
+</PolicyRule>

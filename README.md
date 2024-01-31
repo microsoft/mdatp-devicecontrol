@@ -1,14 +1,10 @@
-# Project
+# Device Control
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This repository contains samples and resources for [Microsoft Defender for Endpoint Device Control for Windows](windows/README.md) and [Microsoft Defender for Endpoint Device Control for Mac](macOS/README.md)
 
-As the maintainer of this project, please make a few updates:
+Check the [groups inventory](/dc_groups.csv) and [rules inventory](/dc_rules.csv) for a complete list.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+The repository also contains [tools](python/README.md) for [converting](python/README.md#convert_dc_policypy), [upgrading](python/README.md#upgrade_dc_policypy) and [documenting](python/README.md#dcdocpy) device control policies.
 
 ## Contributing
 

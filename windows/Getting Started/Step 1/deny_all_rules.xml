@@ -1,0 +1,18 @@
+<PolicyRules>
+<PolicyRule Id="{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}">
+  <Name>Audit Deny</Name>
+  <IncludedIdList>
+    <GroupId>{d8819053-24f4-444a-a0fb-9ce5a9e97862}</GroupId>
+  </IncludedIdList>
+  <Entry Id="{ad059b6f-bc9d-44e4-8ab9-907d7d00fc97}">
+    <Type>Deny</Type>
+    <Options>0</Options>
+    <AccessMask>7</AccessMask>
+  </Entry>
+  <Entry Id="{4cf50b77-0152-4999-8d82-6f6afdf27b0b}">
+    <Type>AuditDenied</Type>
+    <Options>3</Options>
+    <AccessMask>7</AccessMask>
+  </Entry>
+</PolicyRule>
+</PolicyRules>

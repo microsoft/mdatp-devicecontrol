@@ -1,0 +1,10 @@
+<Group Id="{940973b7-dacd-4d2f-88f9-1141e20a3b7c}" Type="File">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B940973b7-dacd-4d2f-88f9-1141e20a3b7c%7D/GroupData -->
+	<Name>Non Restricted File Types</Name>
+	<MatchType>MatchExcludeAny</MatchType>
+	<DescriptorIdList>
+		<PathId>*.pdf</PathId>
+		<PathId>*.xslx</PathId>
+		<PathId>*.docx</PathId>
+	</DescriptorIdList>
+</Group>

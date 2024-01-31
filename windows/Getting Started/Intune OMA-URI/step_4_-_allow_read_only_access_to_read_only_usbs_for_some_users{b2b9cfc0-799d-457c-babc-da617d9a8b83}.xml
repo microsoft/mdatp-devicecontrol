@@ -1,0 +1,15 @@
+<PolicyRule Id="{b2b9cfc0-799d-457c-babc-da617d9a8b83}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
+	<Name>Step 4 - Allow Read Only Access to Read Only USBs for some users</Name>
+	<IncludedIdList>
+		<GroupId>{23c24566-98a5-4218-8802-59614513b97e}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{e78857e3-9e36-473b-a07c-fe1a1f356ec9}">
+		<Type>Allow</Type>
+		<AccessMask>9</AccessMask>
+		<Options>0</Options>
+		<Sid>S-1-1-0</Sid>
+	</Entry>
+</PolicyRule>

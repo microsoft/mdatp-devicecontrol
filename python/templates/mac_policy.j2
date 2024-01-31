@@ -1,0 +1,123 @@
+### Mac Deployment with Intune
+{% if macError is none %}
+1. Create the .mobileconfig file
+
+<details>
+    <summary>Copy the contents below into a file, and save it.</summary>       
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+    <dict>
+        <key>PayloadUUID</key>
+        <string>C4E6A782-0C8D-44AB-A025-EB893987A295</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadOrganization</key>
+        <string>Microsoft</string>
+        <key>PayloadIdentifier</key>
+        <string>com.microsoft.wdav</string>
+        <key>PayloadDisplayName</key>
+        <string>Microsoft Defender settings</string>
+        <key>PayloadDescription</key>
+        <string>Microsoft Defender configuration settings</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true/>
+        <key>PayloadRemovalDisallowed</key>
+        <true/>
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadUUID</key>
+                <string>99DBC2BC-3B3A-46A2-A413-C8F9BB9A7295</string>
+                <key>PayloadType</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadOrganization</key>
+                <string>Microsoft</string>
+                <key>PayloadIdentifier</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadDisplayName</key>
+                <string>Microsoft Defender configuration settings</string>
+                <key>PayloadDescription</key>
+                <string/>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadEnabled</key>
+                <true/>
+                <key>dlp</key>
+                <dict>
+                  <key>features</key>
+                    <array>
+                        <dict>
+                            <key>name</key>
+                            <string>DC_in_dlp</string>
+                            <key>state</key>
+                            <string>enabled</string>
+                        </dict>
+                    </array>
+                </dict>
+                <key>deviceControl</key>
+                <dict>
+                    <key>policy</key>
+                    <string>
+{{ macPolicy }}
+                    </string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
+```
+</details>
+
+
+
+2. Deploy the .mobileconfig file using Intune
+
+    1.   Navigate to https://endpoint.microsoft.com/ > **Devices** > **macOS** > ** Configuration profiles
+    2.   Click on create + New Policy
+    3.   Select Profile type Templates
+    4.   Select Custom profile
+    5.   Enter the name of the policy, optionally a description, and then click Next
+    6.   Select the device deployment channel
+    7.   Choose the .mobileconfig that you created
+    8.   Click "Next"
+    9.   Scope, assign and deploy the policy.
+
+{% else %}
+This policy is not supported on Mac because {{ macError }}
+{% endif %}
+
+### Manual Mac Deployment
+{% if macError is none %}
+
+1. Create the .json file
+
+<details>
+     <summary>Save the .json to a file</summary>
+
+```json
+{{ macPolicy }}
+```
+</details>
+
+
+2. Use ```mdatp config device-control policy set --path <full-path-to-policy.json>``` to apply the policy.
+
+{% else %}
+This policy is not supported on Mac because {{ macError }}
+{% endif %}
+
+### Mac Deployment with JAMF
+
+Instructions on how to deploy the policy with JAMF can be found [here](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-jamf?view=o365-worldwide#deploy-policy-by-using-jamf)
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
+
+
