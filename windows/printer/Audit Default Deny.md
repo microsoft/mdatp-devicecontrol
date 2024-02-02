@@ -13,21 +13,23 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="1"><b>Default Deny</b></td>
+            <td rowspan="1" valign="top"><b>Default Deny</b></td>
             <td rowspan="1 valign="top">
                 <ul></ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Audit Denied</td>

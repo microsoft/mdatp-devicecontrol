@@ -1,0 +1,21 @@
+{
+  "version": "0.1",
+  "connections": [
+    {
+      "details": {
+        "protocol": "http",
+        "address": {
+          "url": "https://api.securitycenter.microsoft.com/api/advancedqueries"
+        },
+        "authentication": null,
+        "query": null
+      },
+      "options": {
+        "Query": {
+          "key": "let selectedTimestamp = now();search in (DeviceEvents)\r\nTimestamp between ((selectedTimestamp -7d) .. (selectedTimestamp))\r\n| where ActionType == 'PnpDeviceConnected'\r\n| extend parsed=parse_json(AdditionalFields)\r\n| extend MediaBusType = tostring(parsed.BusType)\r\n| extend MediaClassGuid = tostring(parsed.ClassGuid)\r\n| extend MediaClassName = tostring(parsed.ClassName)\r\n| extend MediaDeviceId = tostring(parsed.DeviceId)\r\n| extend MediaInstanceId = tostring(parsed.DeviceInstanceId)\r\n| extend MediaName = tostring(parsed.MediaName)\r\n| extend MediaProductId = tostring(parsed.ProductId)\r\n| extend MediaVendorId = tostring(parsed.VendorId)\r\n| extend MediaSerialNumber = tostring(parsed.SerialNumber)\r\n| where MediaClassName == 'USB'\r\n| project DeviceId,DeviceName,MediaDeviceId"
+        }
+      },
+      "mode": null
+    }
+  ]
+}

@@ -13,7 +13,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -28,12 +28,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Deny Wpd Write</b></td>
+            <td rowspan="2" valign="top"><b>Deny Wpd Write</b></td>
             <td rowspan="2 valign="top">
-                <ul></ul>
+                <ul><li>PrimaryId: WpdDevices
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul></ul>
+            <td rowspan="2" valign="top">
+                <ul><li>DeviceId: USB\VID_04E8&PID_6860&MS_COMP_MTP&SAMSUNG_ANDROID
+</ul>
             </td>
             <td>Deny</td>
             <td>-</td>
@@ -159,8 +161,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
 		<Name>Deny Wpd Write</Name>
 		<IncludedIdList>
+			<PrimaryId>WpdDevices</PrimaryId>
 		</IncludedIdList>
 		<ExcludedIdList>
+			<DeviceId>USB\VID_04E8&PID_6860&MS_COMP_MTP&SAMSUNG_ANDROID</DeviceId>
 		</ExcludedIdList>
 		<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
 			<Type>Deny</Type>

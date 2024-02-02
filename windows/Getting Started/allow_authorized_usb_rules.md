@@ -13,7 +13,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -28,12 +28,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Step 2 - Deny all but authorized USBs</b></td>
+            <td rowspan="2" valign="top"><b>Step 2 - Deny all but authorized USBs</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a></ul>
+                <ul><li>Group: All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a></ul>
+            <td rowspan="2" valign="top">
+                <ul><li>Group: Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a>  
+</ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -57,11 +59,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td> 
                 <center>-</center></td>
         </tr><tr>
-            <td rowspan="1"><b>Step 2 - Allow Full Access to Authorized USBs</b></td>
+            <td rowspan="1" valign="top"><b>Step 2 - Allow Full Access to Authorized USBs</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a></ul>
+                <ul><li>Group: Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -153,9 +156,9 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
+- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
 - [windows/Getting Started/Step 2/allow_authorized_usbs_groups.xml](/windows/Getting%20Started/Step%202/allow_authorized_usbs_groups.xml)
 - [windows/Getting Started/Step 2/allow_authorized_usb_rules.xml](/windows/Getting%20Started/Step%202/allow_authorized_usb_rules.xml)
-- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
 
 
 # Deployment Instructions
@@ -175,9 +178,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
-- File Read (8) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
+- File Read (8) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -282,7 +285,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Step 2\allow_authorized_usb_rules.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_2_-_deny_all_but_authorized_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml*
          
    
    7. Click "Save"
@@ -297,7 +300,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Step 2\allow_authorized_usb_rules.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_2_-_allow_full_access_to_authorized_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml*
          
    
    7. Click "Save"

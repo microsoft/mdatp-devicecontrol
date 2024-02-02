@@ -1,0 +1,27 @@
+<PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
+	<Name>Allow approved USB Printer</Name>
+	<IncludedIdList>
+		<GroupId>{05b56e90-e682-48ff-a6c0-5602c9638182}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+		<Type>Allow</Type>
+		<AccessMask>64</AccessMask>
+		<Options>0</Options>
+		<Parameters MatchType="MatchAny">
+			<Network MatchType="MatchAny">
+				<GroupId>{83d4b74a-af7c-4399-812c-fb9037e2c2b7}</GroupId>
+			</Network>
+			<VPNConnection MatchType="MatchAny">
+				<GroupId>{d633d17d-d1d1-4c73-aa27-c545c343b6d7}</GroupId>
+			</VPNConnection>
+		</Parameters>
+	</Entry>
+	<Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
+		<Type>AuditAllowed</Type>
+		<AccessMask>64</AccessMask>
+		<Options>2</Options>
+	</Entry>
+</PolicyRule>

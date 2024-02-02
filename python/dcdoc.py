@@ -9,7 +9,7 @@ import pathlib
 import copy
 import json
 
-from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature
+from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
 import convert_dc_policy as mac 
 
 Default_Settings = Settings(
@@ -51,6 +51,11 @@ def clean_up_name(name, new_space = "-"):
 
 class Helper:
 
+    helper_entry_type = None
+
+    def set_entry_type(t):
+        Helper.helper_entry_type = t
+
     def get_section_title_for_object(object):
         return clean_up_name(object.name)
     
@@ -61,7 +66,7 @@ class Helper:
         PolicyRule.AuditDenied:":page_facing_up:"
     }
 
-    def get_permission_icons(entry):
+    def get_permission_icons(entry, return_objects = False):
 
         if entry.format == "mac":
 
@@ -70,29 +75,50 @@ class Helper:
                 enabled = permission in entry.access
                 if enabled:
                     permission_icons[permission] = Helper.true_icons[entry.enforcement]
+                    
                 else:
                     permission_icons[permission] = "-"
-
+                    
         else:
 
             permission_icons = {
             }
 
-            for mask in entry.entry_type.access_masks:
-                if mask & int(entry.access_mask):
+            masks_to_check = entry.entry_type.access_masks
+            if Helper.helper_entry_type is not None:
+                masks_to_check = Helper.helper_entry_type.access_masks
+
+            for mask in masks_to_check:
+
+                if mask & int(entry.access_mask):    
                     permission_icons[mask] = Helper.true_icons[entry.enforcement]
                 else:
-                    permission_icons[mask] = "-"   
+                    permission_icons[mask] = "-" 
 
-        return permission_icons
+                
+
+        if not return_objects:
+            return permission_icons
+        else:
+            for permission in permission_icons:
+                if permission_icons[permission] != "-":
+                    permission_icons[permission] = True
+                else:
+                    permission_icons[permission] = False
+
+            return permission_icons
     
-    def generate_clause_table(group):
+    def generate_clause_table(group, return_objects = False):
 
-        clauses = group.clauses
-        clause_table = Helper.generate_table_for_clauses(clauses)
+        if type(group) == list:
+            clauses = group
+        else:
+            clauses = group.clauses
+
+        clause_table = Helper.generate_table_for_clauses(clauses, 1, return_objects)
         return clause_table
 
-    def generate_table_for_clauses(clauses,offset=1):
+    def generate_table_for_clauses(clauses,offset=1,return_objects = False):
         table = []
         for clause in clauses:
             if len(clause.sub_clauses) > 0:
@@ -108,7 +134,11 @@ class Helper:
                     else:
                         operator = ""
 
-                    row = ["-"]*offset + [property.name,property.value]
+                    if not return_objects:
+                        row = ["-"]*offset + [property.name,property.value]
+                    else:
+                        row = ["-"]*offset + [property]
+
                     row[offset-1] = operator
 
                     table.append(row)
@@ -136,13 +166,15 @@ class Inventory:
             "name":[],
             "id":[],
             "match_type":[],
-            "object":[]
+            "object":[],
+            "type_label":[]
         }
 
         rule_columns = {
             "path":[],
             "format":[],
             "name":[],
+            "entry_type":[],
             "id":[],
             "included_groups":[],
             "excluded_groups":[],
@@ -150,10 +182,90 @@ class Inventory:
             "rule_index":[]
         }
 
+        rule_property_columns = {
+            "ruleId": [],
+            "propertyType":[],
+            "propertyValue":[],
+            "type":[]
+        }
+
+        rule_entry_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "enforcement":[],
+            "notifications":[]
+        }
+
+        entry_parameters_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "sid":[],
+            "computersid":[],
+            "match_type":[]
+        }
+
+        directory_object_condition_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "objectType":[],
+            "objectValue":[]
+        }
+
+        parameter_condition_columns = {
+            "entryId":[],
+            "ruleId":[],
+            "conditionType":[],
+            "conditionProperty":[],
+            "conditionValue":[]
+        }
+
+
         self.groups = pd.DataFrame(group_columns)
         self.policy_rules = pd.DataFrame(rule_columns)
+        self.rule_properties = pd.DataFrame(rule_property_columns)
+
+        self.rule_entries = pd.DataFrame(rule_entry_columns)
+        self.entry_parameters = pd.DataFrame(entry_parameters_columns)
+        self.directory_object_conditions = pd.DataFrame(directory_object_condition_columns)
+        self.parameter_conditions = pd.DataFrame(parameter_condition_columns)
+
+        self.group_property_data_frames = {}
+        
+
+        #Create the group properties tables
+        for group_type in Group.AllGroupTypes:
+
+            group_property_columns = {
+               "groupId":[]
+            }
+
+            if not group_type.isWindows(): 
+                group_property_columns["op"] = []
+                group_property_columns["op2"] = []
+                group_property_columns["op3"] = []
+            
+
+            group_properties = group_type.group_properties
+            for group_property in group_properties:
+                group_property_columns[group_property.label] = []
+
+            self.group_property_data_frames[group_type.label]= pd.DataFrame(group_property_columns)
 
        
+        self.entry_type_data_frames = {}
+        for entry_type in Entry.AllEntryTypes:
+
+            entry_type_columns = {
+                "entryId":[],
+                "ruleId":[]
+            }
+
+            for access_type in entry_type.access_types:
+                label = entry_type.access_types[access_type]["label"]
+                entry_type_columns[label] = []
+
+            self.entry_type_data_frames[entry_type.label] = pd.DataFrame(entry_type_columns)
+
         self.load_inventory()
 
         
@@ -248,7 +360,8 @@ class Inventory:
             "name":group.name,
             "id":group.id,
             "match_type":group.match_type,
-            "object": group
+            "object": group,
+            "type_label": group.group_type.label
         }])
 
         self.groups = pd.concat([self.groups,new_row],ignore_index=True)
@@ -266,8 +379,9 @@ class Inventory:
             "path":path,
             "format":format,
             "name":rule.name,
+            "entry_type": rule.entry_type.label,
             "id":rule.id,
-            "included_groups":rule.included_groups,
+            "included_groups":rule.included_device_properties,
             "excluded_groups":rule.excluded_groups,
             "object": rule,
             "rule_index": rule_index
@@ -275,12 +389,85 @@ class Inventory:
 
         self.policy_rules = pd.concat([self.policy_rules,new_row],ignore_index=True)
 
+        for entry in rule.entries:
+
+            new_entry = pd.DataFrame([{
+                "ruleId": rule.id,
+                "entryId": entry.id,
+                "entry_type": entry.entry_type.label,
+                "enforcement": entry.enforcement.label,
+                "notifications": str(entry.notifications)
+            }])
+
+            self.rule_entries = pd.concat([self.rule_entries,new_entry],ignore_index=True)
+
+            new_entry_permissions = {
+                "entryId": entry.id,
+                "ruleId": rule.id,
+                "conditionMatchType": entry.get_condition_match_type()
+            }
+
+            permissions = Helper.get_permission_icons(entry,True)
+            for permission in permissions:
+                if type(permission) == int:
+                    column = WindowsEntryType.access_masks[permission]
+                else:
+                    column = entry.entry_type.access_types[permission]["label"]
+
+                new_entry_permissions[column] = permissions[permission]
+
+            new_entry_permissions = pd.DataFrame([
+                new_entry_permissions
+            ])
+
+            self.entry_type_data_frames[entry.entry_type.label] = pd.concat([self.entry_type_data_frames[entry.entry_type.label],new_entry_permissions],ignore_index=True)
+
+            if entry.has_user_condition():
+                  
+                  new_condition = pd.DataFrame([{
+                    "ruleId": rule.id,
+                    "entryId": entry.id,
+                    "objectType": "User",
+                    "objectValue": entry.sid
+                  }])
+
+                  self.directory_object_conditions = pd.concat([self.directory_object_conditions,new_condition],ignore_index=True)
+
+            if entry.has_computer_condition():
+                  
+                  new_condition = pd.DataFrame([{
+                    "ruleId": rule.id,
+                    "entryId": entry.id,
+                    "objectType": "Computer",
+                    "objectValue": entry.computersid
+                  }])
+
+                  self.directory_object_conditions = pd.concat([self.directory_object_conditions,new_condition],ignore_index=True)
+
+            if entry.parameters is not None:
+                for condition in entry.parameters.conditions:
+                    for property in condition.properties:
+
+                        new_condition = pd.DataFrame([{
+                            "ruleId": rule.id,
+                            "entryId": entry.id,
+                            "conditionType": condition.condition_type.label,
+                            "conditionProperty": property.label,
+                            "conditionValue": property.value
+                        }])
+
+                        self.parameter_conditions = pd.concat([self.parameter_conditions,new_condition],ignore_index=True)
+
+
     
     def get_groups_for_rule(self,rule):
         groups_for_rule = {
             "gpo":[],
             "oma-uri":[],
-            "mac":[]
+            "mac":[],
+            "included":[],
+            "excluded":[],
+            "entries":[]
         }
         for included_group in rule.included_groups:
             g = self.get_group_by_id(included_group)
@@ -288,6 +475,7 @@ class Inventory:
                 groups_for_rule["gpo"] += g["gpo"] 
                 groups_for_rule["mac"] += g["mac"]
                 groups_for_rule["oma-uri"] += g["oma-uri"]
+                groups_for_rule["included"]+= g[rule.format]
 
         for excluded_group in rule.excluded_groups:
             g = self.get_group_by_id(excluded_group)
@@ -295,6 +483,7 @@ class Inventory:
                 groups_for_rule["gpo"] += g["gpo"]
                 groups_for_rule["oma-uri"] += g["oma-uri"]
                 groups_for_rule["mac"] += g["mac"]
+                groups_for_rule["excluded"]+= g[rule.format]
 
         for entry in rule.entries:
             groups = entry.get_group_ids()
@@ -303,6 +492,7 @@ class Inventory:
                 if g is not None:
                     groups_for_rule["gpo"] += g["gpo"]
                     groups_for_rule["oma-uri"] += g["oma-uri"]
+                    groups_for_rule["entries"]+= g[rule.format]
                     #Groups in entries not supported on mac
                     #groups_for_rule["mac"] += g["mac"]
         
@@ -320,6 +510,7 @@ class Inventory:
                 "oma-uri":[],
                 "mac":[]
             }
+            
             for i in range(0,group_frame.index.size):
                 group = group_frame.iloc[i]["object"]
                 format = group_frame.iloc[i]["format"]
@@ -525,8 +716,91 @@ class Inventory:
         return result    
 
     def generate_csv(self,dest):
-        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep="\t")
-        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep="\t")
+        self.groups.to_csv(dest+os.sep+"dc_groups.csv",sep=",",index=False)
+        self.policy_rules.to_csv(dest+os.sep+"dc_rules.csv",sep=",",index=False)
+        self.rule_entries.to_csv(dest+os.sep+"dc_entries.csv",sep=",",index=False)
+        self.directory_object_conditions.to_csv(dest+os.sep+"dc_directory_object_conditions.csv",sep=",",index=False)
+        self.parameter_conditions.to_csv(dest+os.sep+"dc_parameter_conditions.csv",sep=",",index=False)
+        
+        #create the list of group-rule-mappings
+        for i in range(0,self.policy_rules.index.size):
+            rule = self.policy_rules.iloc[i]["object"]
+
+            for property in rule.included_device_properties:
+                new_row = pd.DataFrame([{
+                    "type": "included",
+                    "ruleId": rule.id,
+                    "propertyType": property.name,
+                    "propertyValue": property.value
+                }])
+
+                self.rule_properties = pd.concat([self.rule_properties,new_row],ignore_index=True)
+            
+            for property in rule.excluded_device_properties:
+                new_row = pd.DataFrame([{
+                    "type": "excluded",
+                    "ruleId": rule.id,
+                    "propertyType": property.name,
+                    "propertyValue": property.value
+                }])
+
+                self.rule_properties = pd.concat([self.rule_properties,new_row],ignore_index=True)
+            
+
+
+        self.rule_properties.to_csv(dest+os.sep+"dc_rule_properties.csv",sep=",",index=False)
+
+        #Add the group values to the dataframe
+        for i in range(0,self.groups.index.size):
+            new_row = {
+
+            }
+            group = self.groups.iloc[i]["object"]
+            new_row["groupId"] = group.id
+            if group.format != "mac":
+                for property in group._properties:
+                    if property.label in new_row:
+                        new_row[property.label] = new_row[property.label]+", "+property.value
+                    else:
+                        new_row[property.label] = property.value
+            else:
+                clause_table = Helper.generate_clause_table(group,True)
+                for clause_row in clause_table:
+                    match len(clause_row):
+                        case 2:
+                            new_row["op"] = clause_row[0]
+                        case 3:
+                            new_row["op"] = clause_row[0]
+                            new_row["op2"] = clause_row[1]
+                        case 4:
+                            new_row["op"] = clause_row[0]
+                            new_row["op2"] = clause_row[1]
+                            new_row["op3"] = clause_row[2]
+
+                    clause_property = clause_row[-1]
+                    new_row[clause_property.label] = clause_property.value
+                    
+
+            self.group_property_data_frames[group.group_type.label] = pd.concat([
+                self.group_property_data_frames[group.group_type.label],
+                pd.DataFrame([new_row])
+            ],ignore_index=True)
+
+        #save the csvs
+        for group_type_label in self.group_property_data_frames:
+            group_type_frame = self.group_property_data_frames[group_type_label]
+            group_type_file_name_part = str(group_type_label).lower().replace(" ","_")
+            group_type_frame.to_csv(dest+os.sep+"dc_"+group_type_file_name_part+".csv",sep=",",index=False)
+
+        for entry_type_label in self.entry_type_data_frames:
+            entry_type_frame = self.entry_type_data_frames[entry_type_label]
+            entry_type_file_name_part = str(entry_type_label).lower().replace(" ","_")
+           
+            entry_type_frame.to_csv(dest+os.sep+"dc_"+entry_type_file_name_part+"_access.csv",sep=",",index=False)
+
+            
+        
+
 
 
     def generate_text(self,result,dest,file,title, description="A sample policy", settings = None ):
@@ -551,6 +825,9 @@ class Inventory:
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
+
+        Helper.set_entry_type(result["entry_type"])
+
         out = template.render(
             {"intuneCustomSettings":result["oma_uri"],
              "paths":result["web_paths"],

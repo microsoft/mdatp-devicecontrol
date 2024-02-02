@@ -13,7 +13,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -28,11 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Audit Read Activity</b></td>
+            <td rowspan="2" valign="top"><b>Audit Read Activity</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
+            <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>

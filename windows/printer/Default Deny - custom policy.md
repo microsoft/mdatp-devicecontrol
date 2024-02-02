@@ -13,22 +13,27 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="2"><b>Default Deny</b></td>
+            <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a></ul>
+                <ul><li>Group: Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny {'PrinterConnectionId': 'File'}"> (details)</a><li>Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny {'VID_PID': '035E_0872'}"> (details)</a></ul>
+            <td rowspan="2" valign="top">
+                <ul><li>Group: PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny {'PrinterConnectionId': 'File'}"> (details)</a>  
+<li>Group: Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny {'VID_PID': '035E_0872'}"> (details)</a>  
+</ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>

@@ -13,21 +13,24 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="2"><b>Default Deny</b></td>
+            <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a></ul>
+                <ul><li>Group: Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
+            <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
             <td>Deny</td>
@@ -89,7 +92,7 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Intune OMA-URI/Any printer group.xml](/windows/printer/Intune%20OMA-URI/Any%20printer%20group.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
 - [windows/printer/Intune OMA-URI/Default Deny - custom policy2.xml](/windows/printer/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 
 
