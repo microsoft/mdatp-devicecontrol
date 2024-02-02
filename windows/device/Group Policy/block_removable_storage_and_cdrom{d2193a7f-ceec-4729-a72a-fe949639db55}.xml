@@ -1,0 +1,24 @@
+<PolicyRule Id="{d2193a7f-ceec-4729-a72a-fe949639db55}" >
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->
+	<Name>Block removable storage and CdRom</Name>
+	<IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+	</IncludedIdList>
+	<ExcludedIdList>
+	</ExcludedIdList>
+	<Entry Id="{c1adfc3e-0347-4096-88c3-6e0777b2a15b}">
+		<Type>Deny</Type>
+		<AccessMask>7</AccessMask>
+		<Options>0</Options>
+	</Entry>
+	<Entry Id="{fee5f127-951b-4ece-9196-fa1c9ff21678}">
+		<Type>AuditDenied</Type>
+		<AccessMask>6</AccessMask>
+		<Options>3</Options>
+	</Entry>
+	<Entry Id="{ad04437c-e279-41a3-8a1a-b76b7e35bce5}">
+		<Type>AuditDenied</Type>
+		<AccessMask>1</AccessMask>
+		<Options>1</Options>
+	</Entry>
+</PolicyRule>
