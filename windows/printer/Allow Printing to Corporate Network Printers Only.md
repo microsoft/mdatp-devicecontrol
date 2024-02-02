@@ -13,21 +13,24 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="1"><b>Allow printing only on network printers on corporate network</b></td>
+            <td rowspan="1" valign="top"><b>Allow printing only on network printers on corporate network</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Network Printers<a href="#network-printers" title="MatchAny {'PrinterConnectionId': 'Network'}"> (details)</a></ul>
+                <ul><li>Group: Network Printers<a href="#network-printers" title="MatchAny {'PrinterConnectionId': 'Network'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -36,19 +39,21 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>
                 <details>
                 <summary>View</summary>
-                User condition: All Users<br>
-                Parameters: MatchAll
-                <ul><li> MatchAll 
-                        <ul><li>Corporate Network<a href="#corporate-network" title="MatchAll {'NameId': 'corp.microsoft.com', 'NetworkCategoryId': 'DomainAuthenticated'}"> (details)</a></ul>
+                MatchAll:
+                <ul><li> Windows Network: MatchAll 
+                        <ul><li>Group: Corporate Network<a href="#corporate-network" title="MatchAll {'NameId': 'corp.microsoft.com', 'NetworkCategoryId': 'DomainAuthenticated'}"> (details)</a>  
+</ul>
                 </ul>
                 </details></td>
         </tr><tr>
-            <td rowspan="2"><b>Deny all other printing</b></td>
+            <td rowspan="2" valign="top"><b>Deny all other printing</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a></ul>
+                <ul><li>Group: Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul><li>Network Printers<a href="#network-printers" title="MatchAny {'PrinterConnectionId': 'Network'}"> (details)</a></ul>
+            <td rowspan="2" valign="top">
+                <ul><li>Group: Network Printers<a href="#network-printers" title="MatchAny {'PrinterConnectionId': 'Network'}"> (details)</a>  
+</ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -174,10 +179,9 @@ SecuredDevicesConfiguration | PrinterDevices | [documentation](https://learn.mic
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Intune OMA-URI/Any printer group.xml](/windows/printer/Intune%20OMA-URI/Any%20printer%20group.xml)
-- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Intune OMA-URI/network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml](/windows/printer/Intune%20OMA-URI/network_printers%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D.xml)
 - [windows/printer/Group Policy/Allow Printing to Corporate Network Printers Only.xml](/windows/printer/Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
-- [windows/printer/Intune OMA-URI/Corporate Network.xml](/windows/printer/Intune%20OMA-URI/Corporate%20Network.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions

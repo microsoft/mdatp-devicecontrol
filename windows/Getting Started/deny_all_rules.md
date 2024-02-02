@@ -13,7 +13,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -28,11 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Audit Deny</b></td>
+            <td rowspan="2" valign="top"><b>Audit Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a></ul>
+                <ul><li>Group: All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
+            <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
             <td>Deny</td>
@@ -264,7 +265,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Step 1\deny_all_rules.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml*
          
    
    7. Click "Save"
