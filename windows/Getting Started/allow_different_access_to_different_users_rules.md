@@ -13,7 +13,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -28,12 +28,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Step 4 - Deny all other USBs</b></td>
+            <td rowspan="2" valign="top"><b>Step 4 - Deny all other USBs</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a></ul>
+                <ul><li>Group: All removable media devices<a href="#all-removable-media-devices" title="MatchAny {'PrimaryId': 'RemovableMediaDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny {'VID_PID': '090C_1000'}"> (details)</a></ul>
+            <td rowspan="2" valign="top">
+                <ul><li>Group: Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a>  
+<li>Group: Readonly USBs<a href="#readonly-usbs" title="MatchAny {'VID_PID': '090C_1000'}"> (details)</a>  
+</ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -57,11 +60,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td> 
                 <center>-</center></td>
         </tr><tr>
-            <td rowspan="1"><b>Step 4 - Allow Access to Writeable USBs for some users</b></td>
+            <td rowspan="1" valign="top"><b>Step 4 - Allow Access to Writeable USBs for some users</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a></ul>
+                <ul><li>Group: Authorized USBs<a href="#authorized-usbs" title="MatchAny {'InstancePathId': 'USB\\VID_154B&PID_0028\\6EA9150055800605'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -75,17 +79,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>
                 <details>
                 <summary>View</summary>
-                User condition: S-1-1-0<br>
-                Parameters: 
-                <ul>
-                </ul>
-                </details></td>
+                User: S-1-1-0<br>
+                </td>
         </tr><tr>
-            <td rowspan="1"><b>Step 4 - Allow Read Only Access to Read Only USBs for some users</b></td>
+            <td rowspan="1" valign="top"><b>Step 4 - Allow Read Only Access to Read Only USBs for some users</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Readonly USBs<a href="#readonly-usbs" title="MatchAny {'VID_PID': '090C_1000'}"> (details)</a></ul>
+                <ul><li>Group: Readonly USBs<a href="#readonly-usbs" title="MatchAny {'VID_PID': '090C_1000'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -99,11 +101,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>
                 <details>
                 <summary>View</summary>
-                User condition: S-1-1-0<br>
-                Parameters: 
-                <ul>
-                </ul>
-                </details></td>
+                User: S-1-1-0<br>
+                </td>
         </tr></table>
 
 
@@ -141,37 +140,6 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### All removable media devices
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-	<Name>All removable media devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Authorized USBs
 
 
@@ -203,6 +171,37 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### All removable media devices
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+	<Name>All removable media devices</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -214,10 +213,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
-- [windows/Getting Started/Step 2/allow_authorized_usbs_groups.xml](/windows/Getting%20Started/Step%202/allow_authorized_usbs_groups.xml)
 - [windows/Getting Started/Step 3/allow_different_access_to_different_groups.xml](/windows/Getting%20Started/Step%203/allow_different_access_to_different_groups.xml)
+- [windows/Getting Started/Step 2/allow_authorized_usbs_groups.xml](/windows/Getting%20Started/Step%202/allow_authorized_usbs_groups.xml)
 - [windows/Getting Started/Step 4/allow_different_access_to_different_users_rules.xml](/windows/Getting%20Started/Step%204/allow_different_access_to_different_users_rules.xml)
+- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
 
 
 # Deployment Instructions
@@ -237,9 +236,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
-- File Read (8) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
+- File Read (8) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -260,20 +259,20 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VID_PID>090C_1000</VID_PID>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
-		<Name>All removable media devices</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{368a2c82-17be-4137-bffa-370bbdff9672}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B368a2c82-17be-4137-bffa-370bbdff9672%7D/GroupData -->
 		<Name>Authorized USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<InstancePathId>USB\VID_154B&amp;PID_0028\6EA9150055800605</InstancePathId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{d8819053-24f4-444a-a0fb-9ce5a9e97862}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D/GroupData -->
+		<Name>All removable media devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -369,7 +368,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_4_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml*
          
    
    7. Click "Save"
@@ -384,7 +383,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_4_-_allow_access_to_writeable_usbs_for_some_users{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml*
          
    
    7. Click "Save"
@@ -399,7 +398,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml*
+   6. For Custom XML, select  *windows\Getting Started\Intune OMA-URI\step_4_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml*
          
    
    7. Click "Save"

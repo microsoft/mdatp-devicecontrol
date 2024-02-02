@@ -1,16 +1,19 @@
 # Device control policy sample: Scenario 7
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -25,12 +28,14 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2"><b>Deny Wpd Write</b></td>
+            <td rowspan="2" valign="top"><b>Deny Wpd Write</b></td>
             <td rowspan="2 valign="top">
-                <ul></ul>
+                <ul><li>PrimaryId: WpdDevices
+</ul>
             </td>
-            <td rowspan="2" valign="top">.
-                <ul></ul>
+            <td rowspan="2" valign="top">
+                <ul><li>DeviceId: USB\VID_04E8&PID_6860&MS_COMP_MTP&SAMSUNG_ANDROID
+</ul>
             </td>
             <td>Deny</td>
             <td>-</td>
@@ -38,7 +43,8 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>None (0)</td> 
+            <td>-</td>
+            <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
@@ -48,12 +54,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td><td>Show notification and Send event (3)</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
             <td> 
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 
 ## Settings
@@ -66,20 +75,22 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
+- [windows/device/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](/windows/device/Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
@@ -150,8 +161,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
 		<Name>Deny Wpd Write</Name>
 		<IncludedIdList>
+			<PrimaryId>WpdDevices</PrimaryId>
 		</IncludedIdList>
 		<ExcludedIdList>
+			<DeviceId>USB\VID_04E8&PID_6860&MS_COMP_MTP&SAMSUNG_ANDROID</DeviceId>
 		</ExcludedIdList>
 		<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">
 			<Type>Deny</Type>
@@ -194,7 +207,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
          
    
    7. Click "Save"
@@ -227,10 +240,4 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported entry type [AuditDenied]
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

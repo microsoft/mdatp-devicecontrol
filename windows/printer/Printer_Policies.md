@@ -1,28 +1,34 @@
 # Device control policy sample: Printer Policies
 
-Description: An example showing how device control can restrict access to printers based on device properties, network, and VPN connection.
+Description: An example showing how device control can restrict access to printers based on device properties, network, and VPN connection.              
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="2"><b>Allow PDF and XPS Printing</b></td>
+            <td rowspan="2" valign="top"><b>Allow PDF and XPS Printing</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny [{'PrinterConnectionId': 'File'}]"> (details)</a></ul>
+                <ul><li>Group: PDF_XPS Printer<a href="#pdf_xps-printer" title="MatchAny {'PrinterConnectionId': 'File'}"> (details)</a>  
+</ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
@@ -39,9 +45,10 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td> 
                 <center>-</center></td>
         </tr><tr>
-            <td rowspan="2"><b>Allow approved USB Printer</b></td>
+            <td rowspan="2" valign="top"><b>Allow approved USB Printer</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny [{'VID_PID': '03F0_'}, {'VID_PID': '035E_0872'}]"> (details)</a></ul>
+                <ul><li>Group: Authorized USB Printer<a href="#authorized-usb-printer" title="MatchAny {'VID_PID': '035E_0872'}"> (details)</a>  
+</ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
@@ -52,11 +59,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>
                 <details>
                 <summary>View</summary>
-                User condition: All Users<br>
-                Parameters: MatchAny
-                <ul><li> MatchAny 
-                        <ul><li>Corporate Network<a href="#corporate-network" title="MatchAll [{'NameId': 'corp.microsoft.com'}, {'NetworkCategoryId': 'DomainAuthenticated'}]"> (details)</a></ul><li> MatchAny 
-                        <ul><li>Corporate VPN<a href="#corporate-vpn" title="MatchAll [{'NameId': 'MSFTVPN'}, {'VPNServerAddressId': 'msftvpn.*.microsoft.com'}, {'VPNDnsSuffixId': 'corp.microsoft.com'}, {'VPNConnectionStatusId': 'Connected'}]"> (details)</a></ul>
+                MatchAny:
+                <ul><li> Windows Network: MatchAny 
+                        <ul><li>Group: Corporate Network<a href="#corporate-network" title="MatchAll {'NameId': 'corp.microsoft.com', 'NetworkCategoryId': 'DomainAuthenticated'}"> (details)</a>  
+</ul><li> Windows VPN Connection: MatchAny 
+                        <ul><li>Group: Corporate VPN<a href="#corporate-vpn" title="MatchAll {'NameId': 'MSFTVPN', 'VPNServerAddressId': 'msftvpn.*.microsoft.com', 'VPNDnsSuffixId': 'corp.microsoft.com', 'VPNConnectionStatusId': 'Connected'}"> (details)</a>  
+</ul>
                 </ul>
                 </details></td>
         </tr><tr>
@@ -66,7 +74,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td> 
                 <center>-</center></td>
         </tr><tr>
-            <td rowspan="1"><b>Default Deny</b></td>
+            <td rowspan="1" valign="top"><b>Default Deny</b></td>
             <td rowspan="1 valign="top">
                 <ul></ul>
             </td>
@@ -80,7 +88,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 ### PDF_XPS Printer
 
@@ -93,32 +103,6 @@ The match type for the group is *MatchAny*.
 |  Property | Value |
 |-----------|-------|
 | PrinterConnectionId | File |
-
-
-#### Available properties for PDF_XPS Printer
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
-**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
-**Device instance path (VID_PID)**:      
-- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
-- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
-To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
-For example:       
-  - `0751_55E0` matches that exact VID_PID pair value.
-  - `_55E0` matches any device with the PID value 55E0.
-  - `0751_` matches any device with the VID value 0751.     
-  
-**PrinterConnectionId**: Includes the following values: 
-- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
-- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
-- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
-- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
-- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
-- Custom: A printer that doesn't connect through a Microsoft print port.
-- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
-
-
 
 
 
@@ -139,6 +123,39 @@ For example:
 ```
 </details>
 
+### Authorized USB Printer
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 03F0_ |
+| VID_PID | 035E_0872 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+	<Name>Authorized USB Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>03F0_</VID_PID>
+		<VID_PID>035E_0872</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Corporate Network
 
 
@@ -151,15 +168,6 @@ The match type for the group is *MatchAll*.
 |-----------|-------|
 | NameId | corp.microsoft.com |
 | NetworkCategoryId | DomainAuthenticated |
-
-
-#### Available properties for Corporate Network
-
-
-**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.         
-**NetworkCategoryId**:  only applicable for Network type Group and includes `Public`, `Private`, `DomainAuthenticated`.         
-**NetworkDomainId**:  only applicable for Network type Group and includes `NonDomain`, `Domain`, `DomainAuthenticated`.              
-
 
 
 
@@ -197,15 +205,6 @@ The match type for the group is *MatchAll*.
 | VPNConnectionStatusId | Connected |
 
 
-#### Available properties for Corporate VPN
-
-**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.       
-**VPNConnectionStatusId**:  only applicable for VPN Connection type Group and includes `Connected`, `Disconnected`.           
-**VPNServerAddressId**:  string, value of VPNServerAddress, support wildcard and only applicable for VPN Connection type Group.           
-**VPNDnsSuffixId**:  string, value of VPNDnsSuffix, support wildcard and only applicable for VPN Connection type Group.          
-
-
-
 
 
 
@@ -227,65 +226,6 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
-### Authorized USB Printer
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 03F0_ |
-| VID_PID | 035E_0872 |
-
-
-#### Available properties for Authorized USB Printer
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
-**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
-**Device instance path (VID_PID)**:      
-- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
-- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
-To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
-For example:       
-  - `0751_55E0` matches that exact VID_PID pair value.
-  - `_55E0` matches any device with the PID value 55E0.
-  - `0751_` matches any device with the VID value 0751.     
-  
-**PrinterConnectionId**: Includes the following values: 
-- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
-- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
-- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
-- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
-- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
-- Custom: A printer that doesn't connect through a Microsoft print port.
-- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
-
-
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-	<Name>Authorized USB Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>03F0_</VID_PID>
-		<VID_PID>035E_0872</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -297,28 +237,32 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Policies.xml](Group%20Policy/Printer_Policies.xml)
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Intune OMA-URI/Authorized USB Printer.xml](/windows/printer/Intune%20OMA-URI/Authorized%20USB%20Printer.xml)
+- [windows/printer/Intune OMA-URI/Corporate VPN.xml](/windows/printer/Intune%20OMA-URI/Corporate%20VPN.xml)
+- [windows/printer/Group Policy/Printer_Policies.xml](/windows/printer/Group%20Policy/Printer_Policies.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Network groups not supported.
+- Windows VPN Connection groups not supported.
 - Parameters are not supported
-- VPNConnection groups not supported.
+- Windows Network groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -339,6 +283,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<PrinterConnectionId>File</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
+	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
 		<Name>Corporate Network</Name>
@@ -357,15 +310,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<VPNServerAddressId>msftvpn.*.microsoft.com</VPNServerAddressId>
 			<VPNDnsSuffixId>corp.microsoft.com</VPNDnsSuffixId>
 			<VPNConnectionStatusId>Connected</VPNConnectionStatusId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-		<Name>Authorized USB Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>03F0_</VID_PID>
-			<VID_PID>035E_0872</VID_PID>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -469,7 +413,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\allow_pdf_and_xps_printing{f5877f47-78ab-4f33-94e4-c44f18ec6dca}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\allow_pdf_and_xps_printing{f5877f47-78ab-4f33-94e4-c44f18ec6dca}.xml*
          
    
    7. Click "Save"
@@ -484,7 +428,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml*
          
    
    7. Click "Save"
@@ -499,7 +443,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\default_deny{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\default_deny{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}.xml*
          
    
    7. Click "Save"
@@ -514,7 +458,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\PDF_XPS Printer.xml*
          
    
    7. Click "Save"
@@ -529,7 +473,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Authorized USB Printer.xml*
          
    
    7. Click "Save"
@@ -544,7 +488,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate Network.xml*
          
    
    7. Click "Save"
@@ -559,7 +503,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Corporate VPN.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate VPN.xml*
          
    
    7. Click "Save"
@@ -592,10 +536,4 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported Descriptor ID PrinterConnectionId
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

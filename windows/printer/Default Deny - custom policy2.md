@@ -1,28 +1,34 @@
 # Device control policy sample: Default Deny - custom policy2
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="2"><b>Default Deny</b></td>
+            <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Printer<a href="#any-printer" title="MatchAny [{'PrimaryId': 'PrinterDevices'}]"> (details)</a></ul>
+                <ul><li>Group: Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
+</ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
@@ -40,7 +46,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 ### Any Printer
 
@@ -53,32 +61,6 @@ The match type for the group is *MatchAny*.
 |  Property | Value |
 |-----------|-------|
 | PrimaryId | PrinterDevices |
-
-
-#### Available properties for Any Printer
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
-**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
-**Device instance path (VID_PID)**:      
-- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
-- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
-To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
-For example:       
-  - `0751_55E0` matches that exact VID_PID pair value.
-  - `_55E0` matches any device with the PID value 55E0.
-  - `0751_` matches any device with the VID value 0751.     
-  
-**PrinterConnectionId**: Includes the following values: 
-- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
-- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
-- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
-- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
-- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
-- Custom: A printer that doesn't connect through a Microsoft print port.
-- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
-
-
 
 
 
@@ -110,21 +92,23 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
+- [windows/printer/Intune OMA-URI/Default Deny - custom policy2.xml](/windows/printer/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
@@ -138,16 +122,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
-   
-      
-   8. Add a Removable Storage object for PrimaryId
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Edit Instance"    
-        4. Enter *PrimaryId* for Name
-        5. Enter *PrinterDevices* for PrimaryId
-        6. Click "Save"
-    
    
    8. Click "Next"
    9. Click "Add"
@@ -278,7 +252,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Default Deny - custom policy2.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Default Deny - custom policy2.xml*
          
    
    7. Click "Save"
@@ -293,7 +267,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
          
    
    7. Click "Save"
@@ -326,10 +300,4 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Primary ID [PrinterDevices] is not supported on macOS.
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

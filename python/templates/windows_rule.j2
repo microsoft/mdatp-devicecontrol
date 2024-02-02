@@ -2,10 +2,12 @@
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         {% if has_printing -%}
         <th colspan="1" valign="top"><center>Access</center></th>
+        {% elif "Generic" in entry_type.label %}
+        <th colspan="7" valign="top"><center>Access</center></th> 
         {%- else -%}
         <th colspan="6" valign="top"><center>Access</center></th>
         {% endif -%}
@@ -22,24 +24,25 @@
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th>
-        {%- else -%}
+        {%- endif -%}
+        {% if has_printing or "Generic" in entry_type.label %}
 		<th>Print</th>
         {% endif -%}
 	</tr>
     {%- for key,value in rules.items() -%}
         <tr>
-            <td rowspan="{{ value.entries | length }}"><b>{{ value.name }}</b></td>
+            <td rowspan="{{ value.entries | length }}" valign="top"><b>{{ value.name }}</b></td>
             <td rowspan="{{ value.entries | length }} valign="top">
                 <ul>
-                {%- for id in value.included_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>  
+                {%- for property in value.included_device_properties  -%}
+                    {% include "windows_device_property.j2" %}
                 {%- endfor -%}
                 </ul>
             </td>
-            <td rowspan="{{ value.entries | length }}" valign="top">.
+            <td rowspan="{{ value.entries | length }}" valign="top">
                 <ul>
-                {%- for id in value.excluded_groups  -%}
-                    <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                {%- for property in value.excluded_device_properties  -%}
+                    {% include "windows_device_property.j2" %}
                 {%- endfor -%}
                 </ul>
             </td>
@@ -49,24 +52,28 @@
             {% endfor -%}
             <td>{{ value.entries[0].options_text }} ({{ value.entries[0].options_mask }})</td> 
             <td>
-                {% if value.entries[0].sid == "All Users"  and  value.entries[0].parameters is none -%}
+                {% if not value.entries[0].has_conditions() -%}
                 <center>-</center>
                 {%- else -%}
                 <details>
                 <summary>View</summary>
-                User condition: {{ value.entries[0].sid }}<br>
-                Parameters: {{ value.entries[0].parameters.match_type }}
+                {% if value.entries[0].has_user_condition() -%} 
+                User: {{ value.entries[0].sid }}<br>
+                {% endif -%}
+                {%- if value.entries[0].has_parameters() -%}
+                {{ value.entries[0].parameters.match_type }}:
                 <ul> 
                 {%- for condition in value.entries[0].parameters.conditions -%}
-                    <li> {{ condition.match_type }} 
+                    <li> {{ condition.condition_type.label }}: {{ condition.match_type }} 
                         <ul>
-                        {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                        {%- for property in condition.properties -%}
+                            {% include "windows_device_property.j2" %}
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
                 </ul>
                 </details>
+                {%- endif -%}
                 {%- endif -%}
             </td>
         </tr>
@@ -78,24 +85,28 @@
             {% endfor -%}
             <td>{{ entry.options_text }} ({{ entry.options_mask }})</td>
             <td> 
-                {% if entry.sid == "All Users"  and  entry.parameters is none -%}
+                {% if not entry.has_conditions() -%}
                 <center>-</center>
                 {%- else -%}
                 <details>
                 <summary>View</summary>
-                User Condition: {{ entry.sid }}<br>
-                Parameters: {{ entry.parameters.match_type }}
+                {% if entry.has_user_condition() -%}
+                User: {{ entry.sid }}<br>
+                {%- endif -%}
+                {%- if entry.has_parameters() -%}
+                {{ entry.parameters.match_type }}:
                 <ul> 
                 {%- for condition in entry.parameters.conditions -%}
-                    <li> {{ condition.match_type }} 
+                    <li> {{ condition.condition_type.label }}: {{ condition.match_type }} 
                         <ul>
-                        {%- for id in condition.groups -%}
-                            <li>{{ groups[id].name }}<a href="#{{ Helper.get_section_title_for_object(groups[id]) }}" title="{{ groups[id].match_type }} {{ groups[id].get_conditions() }}"> (details)</a>
+                        {%- for property in condition.properties -%}
+                            {% include "windows_device_property.j2" %}
                         {%- endfor -%}
                         </ul>
                 {%- endfor %}
                 </ul>
                 </details>
+                {% endif -%}
                 {%- endif -%}
             </td>
         </tr>

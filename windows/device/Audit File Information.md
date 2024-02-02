@@ -1,16 +1,19 @@
 # Device control policy sample: File Evidence
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
         <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
@@ -25,11 +28,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="1"><b>Audit File Information</b></td>
+            <td rowspan="1" valign="top"><b>Audit File Information</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a></ul>
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+</ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
             <td>Allow</td>
@@ -38,12 +42,15 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>-</td>
             <td>-</td>
             <td>:white_check_mark:</td>
-            <td>-</td><td>None (16)</td> 
+            <td>-</td>
+            <td>Create file evidence without file (16)</td> 
             <td>
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 ### Any Removable Storage and CD-DVD and WPD Group_1
 
@@ -58,22 +65,6 @@ The match type for the group is *MatchAny*.
 | PrimaryId | RemovableMediaDevices |
 | PrimaryId | CdRomDevices |
 | PrimaryId | WpdDevices |
-
-
-#### Available properties for Any Removable Storage and CD-DVD and WPD Group_1
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.      
-**InstancePathId**: InstancePathId is a string that uniquely identifies the device in the system, for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611&0`. It's the `Device instance path` in the Device Manager. The number at the end (for example &0) represents the available slot and may change from device to device. For best results, use a wildcard at the end. For example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07\8735B611*`.      
-**DeviceId**: To transform `Device instance path` to Device ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers), for example, `USBSTOR\DISK&VEN_GENERIC&PROD_FLASH_DISK&REV_8.07`       
-**HardwareId**: A string that identifies the device in the system, for example, `USBSTOR\DiskGeneric_Flash_Disk___8.07`. It's `Hardware Ids` in the Device Manager.       
-> **_Note_**: Hardware ID isn't unique; different devices might share the same value.   
-
-**FriendlyNameId**: It's a string attached to the device, for example, `Generic Flash Disk USB Device`. It's the `Friendly name` in the Device Manager.          
-**BusId**: For example, USB, SCSI         
-**SerialNumberId**: You can find SerialNumberId from `Device instance path` in the Device Manager, for example, `03003324080520232521` is SerialNumberId in USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\`03003324080520232521`&0          
-**VID_PID**: Vendor ID is the four-digit vendor code that the USB committee assigns to the vendor. Product ID is the four-digit product code that the vendor assigns to the device. It supports wildcard. To transform `Device instance path` to Vendor ID and Product ID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers). For example: <br>`0751_55E0`: match this exact VID/PID pair<br>`_55E0`: match any media with PID=55E0 <br>`0751_`: match any media with VID=0751        
-
 
 
 
@@ -108,21 +99,23 @@ DataDuplicationDirectory | Enter the directory to store files locally | [documen
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Audit File Information.xml](Group%20Policy/Audit%20File%20Information.xml)
-- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/device/Group Policy/Audit File Information.xml](/windows/device/Group%20Policy/Audit%20File%20Information.xml)
+- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
@@ -171,7 +164,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
    1. Select *Allow* from "Type"
-   1. Select *None* from "Options"
+   1. Select *Create file evidence without file* from "Options"
    1. Select ** from "Access mask"
 
 
@@ -254,7 +247,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\audit_file_information{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\audit_file_information{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}.xml*
          
    
    7. Click "Save"
@@ -269,7 +262,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"
@@ -315,10 +308,4 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Primary ID [CdRomDevices] is not supported on macOS.
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

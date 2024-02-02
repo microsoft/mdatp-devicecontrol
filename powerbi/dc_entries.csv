@@ -1,0 +1,267 @@
+entryId,ruleId,enforcement,notifications,entry_type
+{ae40741a-cc96-42b7-9dab-f5ba59adef8a},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Allow,Create file evidence without file,Windows Removable Device
+{ad2f69df-e6c5-4cd7-a2bf-bf7ef8c6c2b5},{f745aeec-3233-4ca5-961c-2e8b55510784},Audit Allowed,Send event,Windows Removable Device
+{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d},{5038638c-9352-47bb-88df-8a659f0c02a7},Deny,None,Windows Removable Device
+{2925ecd8-40dc-42bb-a972-da0de839dd4f},{5038638c-9352-47bb-88df-8a659f0c02a7},Audit Denied,Show notification and Send event,Windows Removable Device
+{9f421985-127d-4819-ae64-84b4d526e6d5},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Deny,None,Windows Removable Device
+{49eb971a-8ef5-4db0-a790-27163447d5c3},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,Create file evidence with file,Windows Removable Device
+{cf378fd0-ef21-4a17-b101-20ad0909e91a},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,None,Windows Removable Device
+{94325d58-0a7b-4ef6-868f-765a0673777e},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,None,Windows Removable Device
+{11ba2408-3ad9-4a8e-9d57-c069eff74d00},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Audit Allowed,Send event,Windows Removable Device
+{0ee3bb3f-7fe7-48fa-972d-6eefd85d66e9},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Deny,None,Windows Removable Device
+{bf1b0973-7ea6-4a31-a7c3-5022baa9ea1a},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Audit Denied,Show notification and Send event,Windows Removable Device
+{3d15f184-1f3b-4a32-b5b6-47b560b0c44b},{3984f1f4-7f66-4848-96de-491e2d038b07},Deny,None,Windows Removable Device
+{61e73502-ce08-4dab-80a3-d5847d21b651},{3984f1f4-7f66-4848-96de-491e2d038b07},Allow,None,Windows Removable Device
+{69ae539b-66f7-4b3a-aaec-53982d2b5254},{3984f1f4-7f66-4848-96de-491e2d038b07},Audit Allowed,Send event,Windows Removable Device
+{ac0c096f-f612-4c5d-a191-d39ea0093eea},{3984f1f4-7f66-4848-96de-491e2d038b07},Deny,None,Windows Removable Device
+{2c03a431-ac9a-4cdb-b260-7dac59550a37},{3984f1f4-7f66-4848-96de-491e2d038b07},Audit Denied,Show notification and Send event,Windows Removable Device
+{93cb364e-7a89-432b-8ec3-3c33096ca962},{7988d6d0-8854-4cad-98de-e4e22e65e058},Allow,Create file evidence with file,Windows Removable Device
+{f577a950-ce74-4153-90fd-c79d3bf0eb3d},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{428e439f-d8ee-4314-9a8a-92685c4d961c},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{a3886e5f-093f-4e9c-812f-d7334d5ee052},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{4565ab13-0d58-4a7c-8399-5b65f470ecae},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{f7cd79af-e330-4fea-9345-467d9bb51131},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{e8e9077f-5111-4a7d-ade6-723c08fd7797},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{a3421c37-ac07-4085-9bbd-ec9b4ebbd60e},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{e2f263f2-c597-406d-a5f7-9d91909a32c6},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{170070b1-b68d-4175-9cd4-753a76197496},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Deny,None,Windows Removable Device
+{ca86bec9-ba43-4849-a632-e59e5e5c207b},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Denied,Show notification and Send event,Windows Removable Device
+{bdd26ee1-4d28-487a-9931-6322ae9e3f91},{540efb7f-1836-4956-8888-5d41d981d6ba},Allow,None,Windows Removable Device
+{92237bd0-84bf-4d1a-81c0-2507d6274532},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Allowed,Send event,Windows Removable Device
+{cd7fb4ed-fe8d-4122-949e-3c8306152978},{540efb7f-1836-4956-8888-5d41d981d6ba},Allow,None,Windows Removable Device
+{84a53752-fbdc-4e39-b15c-8787130bc6d6},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Allowed,Send event,Windows Removable Device
+{873026a4-0c93-4061-b784-b1f7bb43b891},{540efb7f-1836-4956-8888-5d41d981d6ba},Allow,None,Windows Removable Device
+{77073a70-eacd-4008-b031-9bdce7cb65be},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Allowed,Send event,Windows Removable Device
+{d3255814-cacb-4a78-8cf7-5195db00b049},{540efb7f-1836-4956-8888-5d41d981d6ba},Deny,None,Windows Removable Device
+{5bdd9755-6e5a-4692-ba71-d597b709d2dd},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Denied,Show notification and Send event,Windows Removable Device
+{9ca73bfa-4ee9-4b2d-acfd-5a2106a83d05},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Allow,None,Windows Removable Device
+{927520b9-d12e-4d68-b7e0-d3c0e639a341},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Allowed,Send event,Windows Removable Device
+{125f91ef-0253-4846-8532-cc83fe9c3187},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Allow,None,Windows Removable Device
+{6597a4ba-f8e7-4cf2-a184-4e17cc7c3a62},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Allowed,Send event,Windows Removable Device
+{79fca045-f064-4d07-8b25-213687f3ee75},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Allow,None,Windows Removable Device
+{8db057be-a510-4efe-b8b4-d64e9c5848c3},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Allowed,Send event,Windows Removable Device
+{92d71792-5349-4c64-8a72-b9f35fbd4cab},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Deny,None,Windows Removable Device
+{d110deed-4386-4e50-816c-4584e2902de2},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Denied,Show notification and Send event,Windows Removable Device
+{a0bcff88-b8e4-4f48-92be-16c36adac930},{36ae1037-a639-4cff-946b-b36c53089a4c},Allow,None,Windows Removable Device
+{4a17df0b-d89d-430b-9cbe-8e0721192281},{36ae1037-a639-4cff-946b-b36c53089a4c},Audit Allowed,Send event,Windows Removable Device
+{f8ddbbc5-8855-4776-a9f4-ee58c3a21414},{c544a991-5786-4402-949e-a032cb790d0e},Deny,None,Windows Removable Device
+{07e22eac-8b01-4778-a567-a8fa6ce18a0c},{c544a991-5786-4402-949e-a032cb790d0e},Audit Denied,Show notification and Send event,Windows Removable Device
+{5fbf7a77-0e50-456a-bb25-1b60e1b9b288},{23b8e437-66ac-4b32-b3d7-24044637fc98},Deny,None,Windows Removable Device
+{e1caaa4e-7bd1-4812-bec0-5a5973cb88f4},{23b8e437-66ac-4b32-b3d7-24044637fc98},Audit Denied,Show notification and Send event,Windows Removable Device
+{979701d8-584a-4f27-8b68-2ecca59ccabd},{b58ab853-9a6f-405c-a194-740e69422b48},Audit Allowed,Send event,Windows Removable Device
+{5d660ff3-a19f-47ae-8779-ca6a989d9780},{83c390b6-b01e-4d83-8834-c8015a2316f2},Allow,None,Windows Removable Device
+{c1adfc3e-0347-4096-88c3-6e0777b2a15b},{d2193a7f-ceec-4729-a72a-fe949639db55},Deny,None,Windows Removable Device
+{fee5f127-951b-4ece-9196-fa1c9ff21678},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification and Send event,Windows Removable Device
+{ad04437c-e279-41a3-8a1a-b76b7e35bce5},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification,Windows Removable Device
+{80991b41-7116-4321-91dc-aa825976c490},{b11f0734-8029-4c90-aff0-95dfc0354584},Allow,Disable,Windows Removable Device
+{3d5a4360-e9b5-4da5-9214-d22f5ea0b893},{b2061588-029e-427d-8404-6dfec096a571},Allow,None,Windows Removable Device
+{0cee54be-b320-4194-9c28-c780d168e158},{b2061588-029e-427d-8404-6dfec096a571},Audit Allowed,Send event,Windows Removable Device
+{5b7657c7-a2f2-4264-9676-198d7bd35e56},{b2061588-029e-427d-8404-6dfec096a571},Allow,Create file evidence without file,Windows Removable Device
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Allow,None,Windows Removable Device
+{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Allowed,Send event,Windows Removable Device
+{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc},{f3520ea7-fd1b-4237-8ebc-96911db44f8e},Audit Denied,Show notification and Send event,Windows Removable Device
+{fcc786c6-6e5a-45bb-b11f-871497f05846},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Allow,None,Windows Removable Device
+{0a7adab1-0e51-4d17-8938-981ce4b953e0},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Allow,Create file evidence without file,Windows Removable Device
+{22974e5f-383b-4cd9-bc86-7bdf122134b0},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Audit Allowed,Send event,Windows Removable Device
+{ae40741a-cc96-42b7-9dab-f5ba59adef8a},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Allow,Create file evidence without file,Windows Removable Device
+{a0bcff88-b8e4-4f48-92be-16c36adac930},{36ae1037-a639-4cff-946b-b36c53089a4c},Allow,None,Windows Removable Device
+{4a17df0b-d89d-430b-9cbe-8e0721192281},{36ae1037-a639-4cff-946b-b36c53089a4c},Audit Allowed,Send event,Windows Removable Device
+{979701d8-584a-4f27-8b68-2ecca59ccabd},{b58ab853-9a6f-405c-a194-740e69422b48},Audit Allowed,Send event,Windows Removable Device
+{3d15f184-1f3b-4a32-b5b6-47b560b0c44b},{3984f1f4-7f66-4848-96de-491e2d038b07},Deny,None,Windows Removable Device
+{61e73502-ce08-4dab-80a3-d5847d21b651},{3984f1f4-7f66-4848-96de-491e2d038b07},Allow,None,Windows Removable Device
+{69ae539b-66f7-4b3a-aaec-53982d2b5254},{3984f1f4-7f66-4848-96de-491e2d038b07},Audit Allowed,Send event,Windows Removable Device
+{ac0c096f-f612-4c5d-a191-d39ea0093eea},{3984f1f4-7f66-4848-96de-491e2d038b07},Deny,None,Windows Removable Device
+{2c03a431-ac9a-4cdb-b260-7dac59550a37},{3984f1f4-7f66-4848-96de-491e2d038b07},Audit Denied,Show notification and Send event,Windows Removable Device
+{9f421985-127d-4819-ae64-84b4d526e6d5},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Deny,None,Windows Removable Device
+{49eb971a-8ef5-4db0-a790-27163447d5c3},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,Create file evidence with file,Windows Removable Device
+{cf378fd0-ef21-4a17-b101-20ad0909e91a},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,None,Windows Removable Device
+{94325d58-0a7b-4ef6-868f-765a0673777e},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,None,Windows Removable Device
+{11ba2408-3ad9-4a8e-9d57-c069eff74d00},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Audit Allowed,Send event,Windows Removable Device
+{0ee3bb3f-7fe7-48fa-972d-6eefd85d66e9},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Deny,None,Windows Removable Device
+{bf1b0973-7ea6-4a31-a7c3-5022baa9ea1a},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Audit Denied,Show notification and Send event,Windows Removable Device
+{b0cc6095-b14b-41dc-9e45-f0df60829f03},{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e},Deny,None,Windows Removable Device
+{6084471f-bd6d-4d7d-a8bc-6b878d22265e},{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e},Audit Denied,Show notification and Send event,Windows Removable Device
+{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d},{5038638c-9352-47bb-88df-8a659f0c02a7},Deny,None,Windows Removable Device
+{2925ecd8-40dc-42bb-a972-da0de839dd4f},{5038638c-9352-47bb-88df-8a659f0c02a7},Audit Denied,Show notification and Send event,Windows Removable Device
+{c1adfc3e-0347-4096-88c3-6e0777b2a15b},{d2193a7f-ceec-4729-a72a-fe949639db55},Deny,None,Windows Removable Device
+{fee5f127-951b-4ece-9196-fa1c9ff21678},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification and Send event,Windows Removable Device
+{ad04437c-e279-41a3-8a1a-b76b7e35bce5},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification,Windows Removable Device
+{5fbf7a77-0e50-456a-bb25-1b60e1b9b288},{23b8e437-66ac-4b32-b3d7-24044637fc98},Deny,None,Windows Removable Device
+{e1caaa4e-7bd1-4812-bec0-5a5973cb88f4},{23b8e437-66ac-4b32-b3d7-24044637fc98},Audit Denied,Show notification and Send event,Windows Removable Device
+{f8ddbbc5-8855-4776-a9f4-ee58c3a21414},{c544a991-5786-4402-949e-a032cb790d0e},Deny,None,Windows Removable Device
+{07e22eac-8b01-4778-a567-a8fa6ce18a0c},{c544a991-5786-4402-949e-a032cb790d0e},Audit Denied,Show notification and Send event,Windows Removable Device
+{5d660ff3-a19f-47ae-8779-ca6a989d9780},{83c390b6-b01e-4d83-8834-c8015a2316f2},Allow,None,Windows Removable Device
+{93cb364e-7a89-432b-8ec3-3c33096ca962},{7988d6d0-8854-4cad-98de-e4e22e65e058},Allow,Create file evidence with file,Windows Removable Device
+{9f421985-127d-4819-ae64-84b4d526e6d5},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Deny,None,Windows Removable Device
+{49eb971a-8ef5-4db0-a790-27163447d5c3},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,Create file evidence with file,Windows Removable Device
+{cf378fd0-ef21-4a17-b101-20ad0909e91a},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,None,Windows Removable Device
+{94325d58-0a7b-4ef6-868f-765a0673777e},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Allow,None,Windows Removable Device
+{11ba2408-3ad9-4a8e-9d57-c069eff74d00},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Audit Allowed,Send event,Windows Removable Device
+{0ee3bb3f-7fe7-48fa-972d-6eefd85d66e9},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Deny,None,Windows Removable Device
+{bf1b0973-7ea6-4a31-a7c3-5022baa9ea1a},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Audit Denied,Show notification and Send event,Windows Removable Device
+{3d15f184-1f3b-4a32-b5b6-47b560b0c44b},{3984f1f4-7f66-4848-96de-491e2d038b07},Deny,None,Windows Removable Device
+{61e73502-ce08-4dab-80a3-d5847d21b651},{3984f1f4-7f66-4848-96de-491e2d038b07},Allow,None,Windows Removable Device
+{69ae539b-66f7-4b3a-aaec-53982d2b5254},{3984f1f4-7f66-4848-96de-491e2d038b07},Audit Allowed,Send event,Windows Removable Device
+{ac0c096f-f612-4c5d-a191-d39ea0093eea},{3984f1f4-7f66-4848-96de-491e2d038b07},Deny,None,Windows Removable Device
+{2c03a431-ac9a-4cdb-b260-7dac59550a37},{3984f1f4-7f66-4848-96de-491e2d038b07},Audit Denied,Show notification and Send event,Windows Removable Device
+{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d},{5038638c-9352-47bb-88df-8a659f0c02a7},Deny,None,Windows Removable Device
+{2925ecd8-40dc-42bb-a972-da0de839dd4f},{5038638c-9352-47bb-88df-8a659f0c02a7},Audit Denied,Show notification and Send event,Windows Removable Device
+{93cb364e-7a89-432b-8ec3-3c33096ca962},{7988d6d0-8854-4cad-98de-e4e22e65e058},Allow,Create file evidence with file,Windows Removable Device
+{9ca73bfa-4ee9-4b2d-acfd-5a2106a83d05},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Allow,None,Windows Removable Device
+{927520b9-d12e-4d68-b7e0-d3c0e639a341},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Allowed,Send event,Windows Removable Device
+{125f91ef-0253-4846-8532-cc83fe9c3187},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Allow,None,Windows Removable Device
+{6597a4ba-f8e7-4cf2-a184-4e17cc7c3a62},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Allowed,Send event,Windows Removable Device
+{79fca045-f064-4d07-8b25-213687f3ee75},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Allow,None,Windows Removable Device
+{8db057be-a510-4efe-b8b4-d64e9c5848c3},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Allowed,Send event,Windows Removable Device
+{92d71792-5349-4c64-8a72-b9f35fbd4cab},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Deny,None,Windows Removable Device
+{d110deed-4386-4e50-816c-4584e2902de2},{505e2563-1de8-40aa-b8f9-472a37b2f6ee},Audit Denied,Show notification and Send event,Windows Removable Device
+{bdd26ee1-4d28-487a-9931-6322ae9e3f91},{540efb7f-1836-4956-8888-5d41d981d6ba},Allow,None,Windows Removable Device
+{92237bd0-84bf-4d1a-81c0-2507d6274532},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Allowed,Send event,Windows Removable Device
+{cd7fb4ed-fe8d-4122-949e-3c8306152978},{540efb7f-1836-4956-8888-5d41d981d6ba},Allow,None,Windows Removable Device
+{84a53752-fbdc-4e39-b15c-8787130bc6d6},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Allowed,Send event,Windows Removable Device
+{873026a4-0c93-4061-b784-b1f7bb43b891},{540efb7f-1836-4956-8888-5d41d981d6ba},Allow,None,Windows Removable Device
+{77073a70-eacd-4008-b031-9bdce7cb65be},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Allowed,Send event,Windows Removable Device
+{d3255814-cacb-4a78-8cf7-5195db00b049},{540efb7f-1836-4956-8888-5d41d981d6ba},Deny,None,Windows Removable Device
+{5bdd9755-6e5a-4692-ba71-d597b709d2dd},{540efb7f-1836-4956-8888-5d41d981d6ba},Audit Denied,Show notification and Send event,Windows Removable Device
+{f577a950-ce74-4153-90fd-c79d3bf0eb3d},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{428e439f-d8ee-4314-9a8a-92685c4d961c},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{a3886e5f-093f-4e9c-812f-d7334d5ee052},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{4565ab13-0d58-4a7c-8399-5b65f470ecae},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{f7cd79af-e330-4fea-9345-467d9bb51131},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{e8e9077f-5111-4a7d-ade6-723c08fd7797},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{a3421c37-ac07-4085-9bbd-ec9b4ebbd60e},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Allow,None,Windows Removable Device
+{e2f263f2-c597-406d-a5f7-9d91909a32c6},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Allowed,Send event,Windows Removable Device
+{170070b1-b68d-4175-9cd4-753a76197496},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Deny,None,Windows Removable Device
+{ca86bec9-ba43-4849-a632-e59e5e5c207b},{466faba8-dddf-4ae5-9871-dabbb600d4f3},Audit Denied,Show notification and Send event,Windows Removable Device
+{a0bcff88-b8e4-4f48-92be-16c36adac930},{36ae1037-a639-4cff-946b-b36c53089a4c},Allow,None,Windows Removable Device
+{4a17df0b-d89d-430b-9cbe-8e0721192281},{36ae1037-a639-4cff-946b-b36c53089a4c},Audit Allowed,Send event,Windows Removable Device
+{f8ddbbc5-8855-4776-a9f4-ee58c3a21414},{c544a991-5786-4402-949e-a032cb790d0e},Deny,None,Windows Removable Device
+{07e22eac-8b01-4778-a567-a8fa6ce18a0c},{c544a991-5786-4402-949e-a032cb790d0e},Audit Denied,Show notification and Send event,Windows Removable Device
+{63daa364-e3d9-4738-9b00-f0da5fa1ab28},{464157c1-2c89-4fe2-b596-ec4919828b2d},Allow,None,Windows Removable Device
+{24232147-4e0e-4b79-b395-382d56ec4242},{464157c1-2c89-4fe2-b596-ec4919828b2d},Audit Allowed,Send event,Windows Removable Device
+{5fbf7a77-0e50-456a-bb25-1b60e1b9b288},{23b8e437-66ac-4b32-b3d7-24044637fc98},Deny,None,Windows Removable Device
+{e1caaa4e-7bd1-4812-bec0-5a5973cb88f4},{23b8e437-66ac-4b32-b3d7-24044637fc98},Audit Denied,Show notification and Send event,Windows Removable Device
+{979701d8-584a-4f27-8b68-2ecca59ccabd},{b58ab853-9a6f-405c-a194-740e69422b48},Audit Allowed,Send event,Windows Removable Device
+{c1adfc3e-0347-4096-88c3-6e0777b2a15b},{d2193a7f-ceec-4729-a72a-fe949639db55},Deny,None,Windows Removable Device
+{fee5f127-951b-4ece-9196-fa1c9ff21678},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification and Send event,Windows Removable Device
+{ad04437c-e279-41a3-8a1a-b76b7e35bce5},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification,Windows Removable Device
+{c1adfc3e-0347-4096-88c3-6e0777b2a15b},{d2193a7f-ceec-4729-a72a-fe949639db55},Deny,None,Windows Removable Device
+{fee5f127-951b-4ece-9196-fa1c9ff21678},{d2193a7f-ceec-4729-a72a-fe949639db55},Audit Denied,Show notification and Send event,Windows Removable Device
+{5d660ff3-a19f-47ae-8779-ca6a989d9780},{83c390b6-b01e-4d83-8834-c8015a2316f2},Allow,None,Windows Removable Device
+{f9f6d219-1332-4c64-b6cb-2e14c65cd243},{83c390b6-b01e-4d83-8834-c8015a2316f2},Audit Allowed,Send event,Windows Removable Device
+{07234f5c-304f-4073-a332-2434cd269816},{83c390b6-b01e-4d83-8834-c8015a2316f2},Deny,None,Windows Removable Device
+{b2827dd5-db81-48d8-8cde-fb2c84a8367f},{83c390b6-b01e-4d83-8834-c8015a2316f2},Audit Denied,Show notification and Send event,Windows Removable Device
+{ae40741a-cc96-42b7-9dab-f5ba59adef8a},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Deny,None,Windows Removable Device
+{ae40741a-cc96-42b7-9dab-f5ba59adef8a},{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},Audit Denied,Show notification and Send event,Windows Removable Device
+{27c79875-25d2-4765-aec2-cb2d1000613f},{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c},Allow,None,Windows Removable Device
+{684abbdd-000d-4565-b44c-550bc3d71034},{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c},Audit Allowed,Send event,Windows Removable Device
+{358cb3ab-f3bb-4538-bf68-2d6ab720ca4f},{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543},Deny,None,Windows Removable Device
+{ce19b61b-8081-4f4a-914a-940b1643272e},{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543},Audit Denied,Show notification and Send event,Windows Removable Device
+{ad059b6f-bc9d-44e4-8ab9-907d7d00fc97},{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},Deny,None,Windows Removable Device
+{4cf50b77-0152-4999-8d82-6f6afdf27b0b},{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{b2b9cfc0-799d-457c-babc-da617d9a8b83},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{b2b9cfc0-799d-457c-babc-da617d9a8b83},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{c85c27ca-3988-40ea-b80a-48a5641ea862},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,Create file evidence with file,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{b2b9cfc0-799d-457c-babc-da617d9a8b83},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{ad059b6f-bc9d-44e4-8ab9-907d7d00fc97},{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},Deny,None,Windows Removable Device
+{4cf50b77-0152-4999-8d82-6f6afdf27b0b},{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},Audit Denied,Show notification and Send event,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{b2b9cfc0-799d-457c-babc-da617d9a8b83},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{b2b9cfc0-799d-457c-babc-da617d9a8b83},Allow,None,Windows Removable Device
+{c82cb32c-4c56-4c76-8897-b2cc99558299},{7beca8fe-313a-46f2-a090-399eb3d74318},Deny,None,Windows Removable Device
+{70582e83-ea91-4b14-8f6c-f3921dab9d7a},{7beca8fe-313a-46f2-a090-399eb3d74318},Audit Denied,Show notification and Send event,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,None,Windows Removable Device
+{c85c27ca-3988-40ea-b80a-48a5641ea862},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Allow,Create file evidence with file,Windows Removable Device
+{e78857e3-9e36-473b-a07c-fe1a1f356ec9},{b2b9cfc0-799d-457c-babc-da617d9a8b83},Allow,None,Windows Removable Device
+{93cdb2fb-9fcd-428e-a2e1-b4b0fab19782},{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},Allow,None,Windows Printer
+{7de4d368-761e-46eb-a216-1c0114bc98b6},{47420f70-ef17-467e-a982-ab4c3abde16e},Deny,None,Windows Printer
+{31d84dd3-7f09-494b-ab1c-71e190bf268c},{47420f70-ef17-467e-a982-ab4c3abde16e},Audit Denied,Show notification and Send event,Windows Printer
+{12bd5f8e-94e8-4205-a990-635c24e43c59},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Allow,None,Windows Printer
+{0fef09f8-7a68-4827-841b-d48afef6ba4c},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Audit Allowed,Send event,Windows Printer
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Allow,None,Windows Printer
+{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Allowed,Send event,Windows Printer
+{e1c591a1-c8b8-4cfa-986a-aa0a689097b6},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Deny,None,Windows Printer
+{c413f1f2-109f-43ca-a8a2-a40ab689fe86},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Denied,Show notification and Send event,Windows Printer
+{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Deny,None,Windows Printer
+{48fe1c20-83ef-4163-aa99-882f49f3ec1d},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Audit Denied,Show notification and Send event,Windows Printer
+{12bd5f8e-94e8-4205-a990-635c24e43c59},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Allow,None,Windows Printer
+{0fef09f8-7a68-4827-841b-d48afef6ba4c},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Audit Allowed,Send event,Windows Printer
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Allow,None,Windows Printer
+{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Allowed,Send event,Windows Printer
+{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Audit Denied,Show notification and Send event,Windows Printer
+{12bd5f8e-94e8-4205-a990-635c24e43c59},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Allow,None,Windows Printer
+{0fef09f8-7a68-4827-841b-d48afef6ba4c},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Audit Allowed,Send event,Windows Printer
+{ddcac8c7-e492-4cb9-ac46-28813e195d56},{2f746a4d-4ae1-4bc0-aaef-136d12518fd4},Allow,Disable,Windows Printer
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Allow,None,Windows Printer
+{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Allowed,Send event,Windows Printer
+{e8cc55ec-17a8-4900-8df5-1af801342e9d},{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d},Allow,Create file evidence with file,Windows Printer
+{2b410b9c-c940-42ec-be1c-1fcb8cc32bc4},{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d},Audit Allowed,Send event,Windows Printer
+{12bd5f8e-94e8-4205-a990-635c24e43c59},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Allow,None,Windows Printer
+{0fef09f8-7a68-4827-841b-d48afef6ba4c},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Audit Allowed,Send event,Windows Printer
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Allow,None,Windows Printer
+{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Allowed,Send event,Windows Printer
+{12bd5f8e-94e8-4205-a990-635c24e43c59},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Allow,None,Windows Printer
+{0fef09f8-7a68-4827-841b-d48afef6ba4c},{f5877f47-78ab-4f33-94e4-c44f18ec6dca},Audit Allowed,Send event,Windows Printer
+{93cdb2fb-9fcd-428e-a2e1-b4b0fab19782},{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},Allow,None,Windows Printer
+{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Audit Denied,Show notification and Send event,Windows Printer
+{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Deny,None,Windows Printer
+{48fe1c20-83ef-4163-aa99-882f49f3ec1d},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Audit Denied,Show notification and Send event,Windows Printer
+{195b178a-53ad-496e-aae0-282ce7234ae0},{2751c448-6e6b-4c2c-81c1-c8ae02911bd5},Deny,None,Windows Printer
+{4358ef97-578d-4e04-abb1-972e73721c4a},{2751c448-6e6b-4c2c-81c1-c8ae02911bd5},Audit Denied,Show notification and Send event,Windows Printer
+{6b9cf286-ec70-4463-bfaf-29f32bb5f0dc},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Deny,None,Windows Printer
+{48fe1c20-83ef-4163-aa99-882f49f3ec1d},{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},Audit Denied,Show notification and Send event,Windows Printer
+{7de4d368-761e-46eb-a216-1c0114bc98b6},{47420f70-ef17-467e-a982-ab4c3abde16e},Deny,None,Windows Printer
+{31d84dd3-7f09-494b-ab1c-71e190bf268c},{47420f70-ef17-467e-a982-ab4c3abde16e},Audit Denied,Show notification and Send event,Windows Printer
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Allow,None,Windows Printer
+{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Allowed,Send event,Windows Printer
+{e1c591a1-c8b8-4cfa-986a-aa0a689097b6},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Deny,None,Windows Printer
+{c413f1f2-109f-43ca-a8a2-a40ab689fe86},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Audit Denied,Show notification and Send event,Windows Printer
+ad2f69df-e6c5-4cd7-a2bf-bf7ef8c6c2b5,f745aeec-3233-4ca5-961c-2e8b55510784,Audit Allowed,Send event,Apple Removable Media
+27c79875-25d2-4765-aec2-cb2d1000613f,f7e75634-7eec-4e67-bec5-5e7750cb9e02,Allow,None,Apple Generic Device
+b280c2bf-ca5d-46a1-afc9-7e34d8098ca7,f7e75634-7eec-4e67-bec5-5e7750cb9e02,Audit Allowed,Send event,Apple Generic Device
+6b9cf286-ec70-4463-bfaf-29f32bb5f0dc,f3520ea7-fd1b-4237-8ebc-96911db44f8e,Audit Denied,Send event and Show notification,Apple Generic Device
+a0bcff88-b8e4-4f48-92be-16c36adac930,36ae1037-a639-4cff-946b-b36c53089a4c,Allow,None,Apple Removable Media
+4a17df0b-d89d-430b-9cbe-8e0721192281,36ae1037-a639-4cff-946b-b36c53089a4c,Audit Allowed,Send event,Apple Removable Media
+f8ddbbc5-8855-4776-a9f4-ee58c3a21414,c544a991-5786-4402-949e-a032cb790d0e,Deny,None,Apple Removable Media
+07e22eac-8b01-4778-a567-a8fa6ce18a0c,c544a991-5786-4402-949e-a032cb790d0e,Audit Denied,Send event and Show notification,Apple Removable Media
+2E75C9DE-5C96-40C1-8333-A52A9409DEB1,772cef80-229f-48b4-bd17-a6913009298e,Audit Allowed,Send event,Apple Device
+2566d326-d8e9-49be-9b8e-2fd0853e6641,2e18a6b9-eb30-440a-a6aa-1f930b443baf,Allow,None,Apple Removable Media
+ea3ccfe9-ec04-4fa2-a6bb-06941c7b051a,2e18a6b9-eb30-440a-a6aa-1f930b443baf,Audit Allowed,Send event,Apple Removable Media
+0B77527F-ED25-4136-93CC-F604E847DAC4,2275E5E3-44D4-429E-A8BF-F73B390CBF46,Audit Allowed,Send event,Apple Generic Device
+803B32D7-639A-4A05-BFFB-E8998AA3304B,772cef80-229f-48b4-bd17-a6913009248d,Deny,None,Apple Bluetooth Device
+5AC7FBBF-5D96-4440-A5C2-87AB9055B45F,772cef80-229f-48b4-bd17-a6913009248d,Audit Denied,Send event and Show notification,Apple Bluetooth Device
+477C626F-510E-4881-B475-592CF6E501AF,3C094B7B-DB94-4F17-86B8-3AA1D6547C58,Audit Allowed,Send event,Apple Bluetooth Device
+c7a13940-5c14-49f6-b0fb-b0978bf0f8cc,69a4a010-acb1-4573-8a58-50cf4ee7bc7f,Deny,None,Apple Removable Media
+ae5672a9-0746-41e7-8c21-63222f1aa304,69a4a010-acb1-4573-8a58-50cf4ee7bc7f,Audit Denied,Send event and Show notification,Apple Removable Media
+60D3AF56-A990-45D1-A67F-591B9E230E84,772cef80-229f-48b4-bd17-a6913009249d,Deny,None,Apple Portable Device
+3E611FD9-6CE0-4412-AA21-0FCC9F303BDE,772cef80-229f-48b4-bd17-a6913009249d,Audit Denied,Send event and Show notification,Apple Portable Device
+D23E59C8-B271-4500-8906-BDCEF9B31688,772cef80-229f-48b4-bd17-a6913009249d,Audit Allowed,Send event,Apple Portable Device
+A7CEE2F8-CE34-4B34-9CFE-4133F0361035,772cef80-229f-48b4-bd17-a69130092981,Deny,None,Apple Removable Media
+A7CEE2F8-CE34-4B34-9CFE-4133F0361035,772cef80-229f-48b4-bd17-a69130092981,Deny,None,Apple Removable Media
+18BA3DD5-4C9A-458B-A756-F1499FE94FB4,772cef80-229f-48b4-bd17-a69130092981,Audit Denied,Send event and Show notification,Apple Removable Media
+E0DB2A03-CAF8-48C6-9FC0-EB6A834166CA,350C4528-DE48-4E73-9298-0C9823CA1064,Deny,None,Apple Portable Device
+E8112895-D818-4CBE-B4CA-EE9FFE351A4C,350C4528-DE48-4E73-9298-0C9823CA1064,Audit Denied,Send event and Show notification,Apple Portable Device
+03420B37-4F71-4AF3-AAE8-82D16817A194,D861EEB3-9201-45F4-AC63-F823D4957D59,Deny,None,Apple Device
+8C66DF38-A4A2-4C98-B69C-BF5D13F32044,D861EEB3-9201-45F4-AC63-F823D4957D59,Audit Denied,Send event and Show notification,Apple Device
+A7CEE2F8-CE34-4B34-9CFE-4133F0361035,772cef80-229f-48b4-bd17-a69130092981,Deny,None,Apple Removable Media
+18BA3DD5-4C9A-458B-A756-F1499FE94FB4,772cef80-229f-48b4-bd17-a69130092981,Audit Denied,Send event and Show notification,Apple Removable Media

@@ -1,0 +1,24 @@
+entryId,ruleId,conditionType,conditionProperty,conditionValue
+{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d},{5038638c-9352-47bb-88df-8a659f0c02a7},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{9f421985-127d-4819-ae64-84b4d526e6d5},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{3d15f184-1f3b-4a32-b5b6-47b560b0c44b},{3984f1f4-7f66-4848-96de-491e2d038b07},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{3d15f184-1f3b-4a32-b5b6-47b560b0c44b},{3984f1f4-7f66-4848-96de-491e2d038b07},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{9f421985-127d-4819-ae64-84b4d526e6d5},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d},{5038638c-9352-47bb-88df-8a659f0c02a7},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{9f421985-127d-4819-ae64-84b4d526e6d5},{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{3d15f184-1f3b-4a32-b5b6-47b560b0c44b},{3984f1f4-7f66-4848-96de-491e2d038b07},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d},{5038638c-9352-47bb-88df-8a659f0c02a7},Windows File,Device Control Group,{e5f619a7-5c58-4927-90cd-75da2348a30f}
+{c85c27ca-3988-40ea-b80a-48a5641ea862},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Windows File,Device Control Group,{940973b7-dacd-4d2f-88f9-1141e20a3b7c}
+{c85c27ca-3988-40ea-b80a-48a5641ea862},{a054bbcf-3454-4b95-9058-f7ed00deeee9},Windows File,Device Control Group,{940973b7-dacd-4d2f-88f9-1141e20a3b7c}
+{93cdb2fb-9fcd-428e-a2e1-b4b0fab19782},{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows VPN Connection,Device Control Group,{d633d17d-d1d1-4c73-aa27-c545c343b6d7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows VPN Connection,Device Control Group,{d633d17d-d1d1-4c73-aa27-c545c343b6d7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows VPN Connection,Device Control Group,{d633d17d-d1d1-4c73-aa27-c545c343b6d7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows VPN Connection,Device Control Group,{d633d17d-d1d1-4c73-aa27-c545c343b6d7}
+{93cdb2fb-9fcd-428e-a2e1-b4b0fab19782},{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows Network,Device Control Group,{83d4b74a-af7c-4399-812c-fb9037e2c2b7}
+{27c79875-25d2-4765-aec2-cb2d1000613f},{f7e75634-7eec-4e67-bec5-5e7750cb9e02},Windows VPN Connection,Device Control Group,{d633d17d-d1d1-4c73-aa27-c545c343b6d7}

@@ -1,28 +1,34 @@
 # Device control policy sample: Printer Example - Restrict Acccess by Network
 
-Description: This policy allows printing only for network printers on the corporate network, and denies everything else.
+Description: This policy allows printing only for network printers on the corporate network, and denies everything else.              
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="1"><b>Allow printing only on network printers on corporate network</b></td>
+            <td rowspan="1" valign="top"><b>Allow printing only on network printers on corporate network</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Network Printers<a href="#network-printers" title="MatchAny [{'PrinterConnectionId': 'Network'}]"> (details)</a></ul>
+                <ul><li>Group: Network Printers<a href="#network-printers" title="MatchAny {'PrinterConnectionId': 'Network'}"> (details)</a>  
+</ul>
             </td>
             <td rowspan="1" valign="top">
                 <ul></ul>
@@ -33,19 +39,21 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>
                 <details>
                 <summary>View</summary>
-                User condition: All Users<br>
-                Parameters: MatchAll
-                <ul><li> MatchAll 
-                        <ul><li>Corporate Network<a href="#corporate-network" title="MatchAll [{'NameId': 'corp.microsoft.com'}, {'NetworkCategoryId': 'DomainAuthenticated'}]"> (details)</a></ul>
+                MatchAll:
+                <ul><li> Windows Network: MatchAll 
+                        <ul><li>Group: Corporate Network<a href="#corporate-network" title="MatchAll {'NameId': 'corp.microsoft.com', 'NetworkCategoryId': 'DomainAuthenticated'}"> (details)</a>  
+</ul>
                 </ul>
                 </details></td>
         </tr><tr>
-            <td rowspan="2"><b>Deny all other printing</b></td>
+            <td rowspan="2" valign="top"><b>Deny all other printing</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Any Printer<a href="#any-printer" title="MatchAny [{'PrimaryId': 'PrinterDevices'}]"> (details)</a></ul>
+                <ul><li>Group: Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
+</ul>
             </td>
             <td rowspan="2" valign="top">
-                <ul><li>Network Printers<a href="#network-printers" title="MatchAny [{'PrinterConnectionId': 'Network'}]"> (details)</a></ul>
+                <ul><li>Group: Network Printers<a href="#network-printers" title="MatchAny {'PrinterConnectionId': 'Network'}"> (details)</a>  
+</ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -60,7 +68,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 ### Corporate Network
 
@@ -74,15 +84,6 @@ The match type for the group is *MatchAll*.
 |-----------|-------|
 | NameId | corp.microsoft.com |
 | NetworkCategoryId | DomainAuthenticated |
-
-
-#### Available properties for Corporate Network
-
-
-**NameId**: The name of the Network or VPN Connection, support wildcard and only applicable for Network type or VPN Connection type Group.         
-**NetworkCategoryId**:  only applicable for Network type Group and includes `Public`, `Private`, `DomainAuthenticated`.         
-**NetworkDomainId**:  only applicable for Network type Group and includes `NonDomain`, `Domain`, `DomainAuthenticated`.              
-
 
 
 
@@ -117,32 +118,6 @@ The match type for the group is *MatchAny*.
 | PrinterConnectionId | Network |
 
 
-#### Available properties for Network Printers
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
-**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
-**Device instance path (VID_PID)**:      
-- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
-- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
-To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
-For example:       
-  - `0751_55E0` matches that exact VID_PID pair value.
-  - `_55E0` matches any device with the PID value 55E0.
-  - `0751_` matches any device with the VID value 0751.     
-  
-**PrinterConnectionId**: Includes the following values: 
-- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
-- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
-- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
-- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
-- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
-- Custom: A printer that doesn't connect through a Microsoft print port.
-- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
-
-
-
-
 
 
 
@@ -172,32 +147,6 @@ The match type for the group is *MatchAny*.
 |  Property | Value |
 |-----------|-------|
 | PrimaryId | PrinterDevices |
-
-
-#### Available properties for Any Printer
-
-
-**PrimaryId**: The Primary ID includes `RemovableMediaDevices`, `CdRomDevices`, `WpdDevices`, `PrinterDevices`.           
-**FriendlyNameId**: A string that's attached to the device (the same string as the Friendly name in Device Manager). For example, `Generic Flash Disk USB Device`.     
-**Device instance path (VID_PID)**:      
-- Vendor ID (VID): The four-digit vendor code that's assigned to the vendor by the USB committee.
-- Product ID (PID): The four-digit product code that's assigned to the device by the vendor. Wildcards are supported.      
-To transform the Device instance path to the VID_PID format, see [Standard USB Identifiers](/windows-hardware/drivers/install/standard-usb-identifiers).       
-For example:       
-  - `0751_55E0` matches that exact VID_PID pair value.
-  - `_55E0` matches any device with the PID value 55E0.
-  - `0751_` matches any device with the VID value 0751.     
-  
-**PrinterConnectionId**: Includes the following values: 
-- USB: A printer that's connected through USB port of a computer. You can use this value to enforce any USB printer. To define a specific USB printer, use the VID_PID.
-- Corporate: A print queue that's shared through a Windows print server in your on-premises domain. For example, `\print-server\contoso.com\legal_printer_001`.
-- Network: A printer that's accessible by network connection, making it usable by other computers that are connected to the network.
-- Universal: For more information about universal printers, see [Set up Universal Print](/universal-print/fundamentals/universal-print-getting-started).
-- File: Microsoft Print to PDF or Microsoft XPS Document Writer. To enforce Microsoft Print to PDF only, use the FriendlyNameId value 'Microsoft Print to PDF'.
-- Custom: A printer that doesn't connect through a Microsoft print port.
-- Local: A printer that connects through a Microsoft print port, but not any of the previously described types. For example, print through Remote Desktop or redirect printer.
-
-
 
 
 
@@ -230,27 +179,30 @@ SecuredDevicesConfiguration | PrinterDevices | [documentation](https://learn.mic
 ## Files
 This policy is based on information in the following files:
 
-- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
-- [Group Policy/Allow Printing to Corporate Network Printers Only.xml](Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
+- [windows/printer/Intune OMA-URI/network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml](/windows/printer/Intune%20OMA-URI/network_printers%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D.xml)
+- [windows/printer/Group Policy/Allow Printing to Corporate Network Printers Only.xml](/windows/printer/Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
+- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Network groups not supported.
 - Parameters are not supported
+- Windows Network groups not supported.
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -369,7 +321,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml*
          
    
    7. Click "Save"
@@ -384,7 +336,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml*
          
    
    7. Click "Save"
@@ -399,7 +351,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Group Policy\network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml*
          
    
    7. Click "Save"
@@ -414,7 +366,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate Network.xml*
          
    
    7. Click "Save"
@@ -429,7 +381,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
          
    
    7. Click "Save"
@@ -475,10 +427,4 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported Descriptor ID NameId
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

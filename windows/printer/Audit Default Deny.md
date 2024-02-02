@@ -1,26 +1,31 @@
 # Device control policy sample: Audit Default Deny
 
-Description: A sample policy
+Description: A sample policy              
+Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
 To configure the sample, follow the [deployment instructions](#deployment-instructions).  
 
 ## Policy Rules
+
+
 <table>
     <tr>
         <th rowspan="2" valign="top">Name</th>
-        <th colspan="2" valign="top">Devices</th>
+        <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th><th rowspan="2" valign="top">Notification</th>
+        <th colspan="1" valign="top"><center>Access</center></th>
+        <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        <th>Print</th>
+        
+		<th>Print</th>
         </tr><tr>
-            <td rowspan="1"><b>Default Deny</b></td>
+            <td rowspan="1" valign="top"><b>Default Deny</b></td>
             <td rowspan="1 valign="top">
                 <ul></ul>
             </td>
@@ -34,7 +39,9 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <center>-</center></td>
         </tr></table>
 
+
 ## Groups
+
 
 
 ## Settings
@@ -47,20 +54,22 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [Intune OMA-URI/Audit Default Deny.xml](Intune%20OMA-URI/Audit%20Default%20Deny.xml)
+- [windows/printer/Intune OMA-URI/Audit Default Deny.xml](/windows/printer/Intune%20OMA-URI/Audit%20Default%20Deny.xml)
 
 
 # Deployment Instructions
 
 Device control [policy rules](#policy-rules) and [groups](#groups) can be deployed through the following management tools:
 
+
 ## Windows
 - [Intune UX](#intune-ux)
 - [Intune Custom Settings](#intune-custom-settings)
 - [Group Policy (GPO)](#group-policy-gpo)
 
-## Mac
-- [Mac Policy](#mac-policy)
+
+
+
 
 ## Intune UX
 
@@ -161,7 +170,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *.\Intune OMA-URI\Audit Default Deny.xml*
+   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Audit Default Deny.xml*
          
    
    7. Click "Save"
@@ -194,10 +203,4 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 </details>
 
 
-## Mac Policy
-
-This policy is not supported on Mac because Unsupported entry type [AuditDenied]
-
-Learn more
-- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 

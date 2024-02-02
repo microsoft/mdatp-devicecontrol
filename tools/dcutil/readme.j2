@@ -1,8 +1,0 @@
-# {{ title }}
-
-| Policy | Intune UX |
-|--------|-----------|
-{% for policy_file in results -%}
-{% set result = results[policy_file] -%}
-| [ {{ result.title }} ]( {{ result.file | urlencode }}) | {{ result.result.intune_ux_support.isValid() }} |
-{% endfor %}

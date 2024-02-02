@@ -1,8 +1,0 @@
-<Group Id="{23c24566-98a5-4218-8802-59614513b97e}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B23c24566-98a5-4218-8802-59614513b97e%7D/GroupData -->
-	<Name>Readonly USBs</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>090C_1000</VID_PID>
-	</DescriptorIdList>
-</Group>
