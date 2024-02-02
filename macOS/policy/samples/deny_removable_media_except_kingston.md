@@ -44,58 +44,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### All Removable Media Devices
-
-
-
-This is a group of type *device*. 
-The match type for the group is *all*.
-
-
-<table>
-<tr>
-<th>Operator</th>
-<th>Property</th>
-<th>Value</th>
-</tr>
-
-<tr>
-
-<td></td>
-
-<td>primaryId</td>
-
-<td>removable_media_devices</td>
-
-</tr>
-
-</table>
-
-
-#### Available properties for All Removable Media Devices
-
-
-<details>
-<summary>View JSON</summary>
-
-```json
-{
-    "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
-    "name": "All Removable Media Devices",
-    "query": {
-        "$type": "all",
-        "clauses": [
-            {
-                "$type": "primaryId",
-                "value": "removable_media_devices"
-            }
-        ]
-    }
-}
-```
-</details>
-
 ### Some Executable Extensions
 
 
@@ -176,6 +124,58 @@ The match type for the group is *any*.
 ```
 </details>
 
+### All Removable Media Devices
+
+
+
+This is a group of type *device*. 
+The match type for the group is *all*.
+
+
+<table>
+<tr>
+<th>Operator</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+
+<tr>
+
+<td></td>
+
+<td>primaryId</td>
+
+<td>removable_media_devices</td>
+
+</tr>
+
+</table>
+
+
+#### Available properties for All Removable Media Devices
+
+
+<details>
+<summary>View JSON</summary>
+
+```json
+{
+    "$type": "device",
+    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
+    "name": "All Removable Media Devices",
+    "query": {
+        "$type": "all",
+        "clauses": [
+            {
+                "$type": "primaryId",
+                "value": "removable_media_devices"
+            }
+        ]
+    }
+}
+```
+</details>
+
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -188,8 +188,8 @@ UXNavigationTarget | http://www.microsoft.com | [documentation]() |
 ## Files
 This policy is based on information in the following files:
 
-- [macOS/policy/samples/deny_removable_media_except_kingston.json](/macOS/policy/samples/deny_removable_media_except_kingston.json)
 - [macOS/policy/samples/deny_exe_extension_on_removable_media.json](/macOS/policy/samples/deny_exe_extension_on_removable_media.json)
+- [macOS/policy/samples/deny_removable_media_except_kingston.json](/macOS/policy/samples/deny_removable_media_except_kingston.json)
 
 
 # Deployment Instructions
@@ -279,20 +279,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 {
     "groups": [
         {
-            "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
-            "name": "All Removable Media Devices",
-            "query": {
-                "$type": "all",
-                "clauses": [
-                    {
-                        "$type": "primaryId",
-                        "value": "removable_media_devices"
-                    }
-                ]
-            }
-        },
-        {
             "$type": "file",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
             "name": "Some Executable Extensions",
@@ -310,6 +296,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "fileType",
                         "value": ".cmd"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
+            "name": "All Removable Media Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
                     }
                 ]
             }
@@ -417,20 +417,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 {
     "groups": [
         {
-            "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
-            "name": "All Removable Media Devices",
-            "query": {
-                "$type": "all",
-                "clauses": [
-                    {
-                        "$type": "primaryId",
-                        "value": "removable_media_devices"
-                    }
-                ]
-            }
-        },
-        {
             "$type": "file",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
             "name": "Some Executable Extensions",
@@ -448,6 +434,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "fileType",
                         "value": ".cmd"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
+            "name": "All Removable Media Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
                     }
                 ]
             }
