@@ -1,5 +1,5 @@
-,groupId,Windows Device Family,Windows Device Friendly Name,Vendor Product Id (VID/PID),Windows Printer Connection
-0,{e5170dfb-19a9-4466-8109-d36c9c912b4e},,,,File
-1,{257e3e1e-790c-4e29-ae2c-45a5f3363201},,,,Network
-2,{257e3e1e-790c-4e29-ae2c-45a5f3363201},,,,Network
-3,{e5170dfb-19a9-4466-8109-d36c9c912b4e},,,,File
+groupId,Windows Device Family,Windows Device Friendly Name,Vendor Product Id (VID/PID),Windows Printer Connection,Device Control Group
+{e5170dfb-19a9-4466-8109-d36c9c912b4e},,,,File,
+{257e3e1e-790c-4e29-ae2c-45a5f3363201},,,,Network,
+{257e3e1e-790c-4e29-ae2c-45a5f3363201},,,,Network,
+{e5170dfb-19a9-4466-8109-d36c9c912b4e},,,,File,

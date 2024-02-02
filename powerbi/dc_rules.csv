@@ -1,5 +1,5 @@
-,path,format,name,id,included_groups,excluded_groups,object,rule_index
-0,windows\device\Group Policy\Audit File Information.xml,gpo,Audit File Information,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
+path,format,name,entry_type,id,included_groups,excluded_groups,object,rule_index
+windows\device\Group Policy\Audit File Information.xml,gpo,Audit File Information,Windows Removable Device,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},[<devicecontrol.Property object at 0x000001F08FD9AE40>],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
 		<Name>Audit File Information</Name>
 		<IncludedIdList>
@@ -13,7 +13,7 @@
 			<Options>16</Options>
 		</Entry>
 	</PolicyRule>",1.0
-1,windows\device\Group Policy\Audit Write access.xml,gpo,Audit Write to all removable storage,{f745aeec-3233-4ca5-961c-2e8b55510784},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{f745aeec-3233-4ca5-961c-2e8b55510784}"" >
+windows\device\Group Policy\Audit Write access.xml,gpo,Audit Write to all removable storage,Windows Removable Device,{f745aeec-3233-4ca5-961c-2e8b55510784},[<devicecontrol.Property object at 0x000001F08FD57C20>],[],"	<PolicyRule Id=""{f745aeec-3233-4ca5-961c-2e8b55510784}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf745aeec-3233-4ca5-961c-2e8b55510784%7D/RuleData -->
 		<Name>Audit Write to all removable storage</Name>
 		<IncludedIdList>
@@ -27,7 +27,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-2,windows\device\Group Policy\Block Read and Write access to specific file _Policy.xml,gpo,Block Read and Write access to specific file,{5038638c-9352-47bb-88df-8a659f0c02a7},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{5038638c-9352-47bb-88df-8a659f0c02a7}"" >
+windows\device\Group Policy\Block Read and Write access to specific file _Policy.xml,gpo,Block Read and Write access to specific file,Windows Removable Device,{5038638c-9352-47bb-88df-8a659f0c02a7},[<devicecontrol.Property object at 0x000001F08FD9AAB0>],[],"	<PolicyRule Id=""{5038638c-9352-47bb-88df-8a659f0c02a7}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData -->
 		<Name>Block Read and Write access to specific file</Name>
 		<IncludedIdList>
@@ -51,7 +51,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-3,windows\device\Group Policy\Demo_2_Policies.xml,gpo,Authorized removable storage policy,{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}"" >
+windows\device\Group Policy\Demo_2_Policies.xml,gpo,Authorized removable storage policy,Windows Removable Device,{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},[<devicecontrol.Property object at 0x000001F08FDC9B50>],[],"	<PolicyRule Id=""{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6f3f8bbb-607f-4ed5-96af-51e3428db8f7%7D/RuleData -->
 		<Name>Authorized removable storage policy</Name>
 		<IncludedIdList>
@@ -102,7 +102,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-4,windows\device\Group Policy\Demo_2_Policies.xml,gpo,Authorized removable storage policy,{3984f1f4-7f66-4848-96de-491e2d038b07},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{3984f1f4-7f66-4848-96de-491e2d038b07}"" >
+windows\device\Group Policy\Demo_2_Policies.xml,gpo,Authorized removable storage policy,Windows Removable Device,{3984f1f4-7f66-4848-96de-491e2d038b07},[<devicecontrol.Property object at 0x000001F08FD9BB30>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{3984f1f4-7f66-4848-96de-491e2d038b07}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B3984f1f4-7f66-4848-96de-491e2d038b07%7D/RuleData -->
 		<Name>Authorized removable storage policy</Name>
 		<IncludedIdList>
@@ -142,7 +142,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",2.0
-5,windows\device\Group Policy\File Duplication.xml,gpo,Data Duplication Filesystem Demo,{7988d6d0-8854-4cad-98de-e4e22e65e058},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{7988d6d0-8854-4cad-98de-e4e22e65e058}"" >
+windows\device\Group Policy\File Duplication.xml,gpo,Data Duplication Filesystem Demo,Windows Removable Device,{7988d6d0-8854-4cad-98de-e4e22e65e058},[<devicecontrol.Property object at 0x000001F08FD553A0>],[],"	<PolicyRule Id=""{7988d6d0-8854-4cad-98de-e4e22e65e058}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7988d6d0-8854-4cad-98de-e4e22e65e058%7D/RuleData -->
 		<Name>Data Duplication Filesystem Demo</Name>
 		<IncludedIdList>
@@ -156,7 +156,7 @@
 			<Options>8</Options>
 		</Entry>
 	</PolicyRule>",1.0
-6,windows\device\Group Policy\Mass_storage_policies_GPO_2.xml,gpo,Gestion des pÃ©riphÃ©riques externes,{466faba8-dddf-4ae5-9871-dabbb600d4f3},['{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}'],"['{7f191817-c305-451d-812a-1c4b03ebcec8}', '{1653593b-5b92-47e6-975a-c43ffa9cd28d}', '{d2887bd4-a916-4011-a385-83c6b15df529}']","	<PolicyRule Id=""{466faba8-dddf-4ae5-9871-dabbb600d4f3}"" >
+windows\device\Group Policy\Mass_storage_policies_GPO_2.xml,gpo,Gestion des pÃ©riphÃ©riques externes,Windows Removable Device,{466faba8-dddf-4ae5-9871-dabbb600d4f3},[<devicecontrol.Property object at 0x000001F08FDCE6F0>],"['{7f191817-c305-451d-812a-1c4b03ebcec8}', '{1653593b-5b92-47e6-975a-c43ffa9cd28d}', '{d2887bd4-a916-4011-a385-83c6b15df529}']","	<PolicyRule Id=""{466faba8-dddf-4ae5-9871-dabbb600d4f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B466faba8-dddf-4ae5-9871-dabbb600d4f3%7D/RuleData -->
 		<Name>Gestion des pÃ©riphÃ©riques externes</Name>
 		<IncludedIdList>
@@ -226,7 +226,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-7,windows\device\Group Policy\Mass_storage_policies_GPO_2.xml,gpo,Gestion des dictaphones,{540efb7f-1836-4956-8888-5d41d981d6ba},['{7f191817-c305-451d-812a-1c4b03ebcec8}'],[],"	<PolicyRule Id=""{540efb7f-1836-4956-8888-5d41d981d6ba}"" >
+windows\device\Group Policy\Mass_storage_policies_GPO_2.xml,gpo,Gestion des dictaphones,Windows Removable Device,{540efb7f-1836-4956-8888-5d41d981d6ba},[<devicecontrol.Property object at 0x000001F08FDC80E0>],[],"	<PolicyRule Id=""{540efb7f-1836-4956-8888-5d41d981d6ba}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B540efb7f-1836-4956-8888-5d41d981d6ba%7D/RuleData -->
 		<Name>Gestion des dictaphones</Name>
 		<IncludedIdList>
@@ -281,7 +281,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",2.0
-8,windows\device\Group Policy\Mass_storage_policies_GPO_2.xml,gpo,Gestion des appareils immobiliers,{505e2563-1de8-40aa-b8f9-472a37b2f6ee},['{d2887bd4-a916-4011-a385-83c6b15df529}'],[],"	<PolicyRule Id=""{505e2563-1de8-40aa-b8f9-472a37b2f6ee}"" >
+windows\device\Group Policy\Mass_storage_policies_GPO_2.xml,gpo,Gestion des appareils immobiliers,Windows Removable Device,{505e2563-1de8-40aa-b8f9-472a37b2f6ee},[<devicecontrol.Property object at 0x000001F08FDCFFB0>],[],"	<PolicyRule Id=""{505e2563-1de8-40aa-b8f9-472a37b2f6ee}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B505e2563-1de8-40aa-b8f9-472a37b2f6ee%7D/RuleData -->
 		<Name>Gestion des appareils immobiliers</Name>
 		<IncludedIdList>
@@ -336,7 +336,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",3.0
-9,windows\device\Group Policy\Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml,gpo,Audit Write and Execute access to aproved USBs,{36ae1037-a639-4cff-946b-b36c53089a4c},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{36ae1037-a639-4cff-946b-b36c53089a4c}"" >
+windows\device\Group Policy\Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml,gpo,Audit Write and Execute access to aproved USBs,Windows Removable Device,{36ae1037-a639-4cff-946b-b36c53089a4c},[<devicecontrol.Property object at 0x000001F08FDCFB90>],[],"	<PolicyRule Id=""{36ae1037-a639-4cff-946b-b36c53089a4c}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B36ae1037-a639-4cff-946b-b36c53089a4c%7D/RuleData -->
 		<Name>Audit Write and Execute access to aproved USBs</Name>
 		<IncludedIdList>
@@ -355,7 +355,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-10,windows\device\Group Policy\Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml,gpo,Block Write and Execute Access,{c544a991-5786-4402-949e-a032cb790d0e},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{c544a991-5786-4402-949e-a032cb790d0e}"" >
+windows\device\Group Policy\Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml,gpo,Block Write and Execute Access,Windows Removable Device,{c544a991-5786-4402-949e-a032cb790d0e},[<devicecontrol.Property object at 0x000001F08FDCF680>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{c544a991-5786-4402-949e-a032cb790d0e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bc544a991-5786-4402-949e-a032cb790d0e%7D/RuleData -->
 		<Name>Block Write and Execute Access</Name>
 		<IncludedIdList>
@@ -375,7 +375,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",2.0
-11,windows\device\Group Policy\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml,gpo,Block Write and Execute access to all but block specific unapproved USBs,{23b8e437-66ac-4b32-b3d7-24044637fc98},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{23b8e437-66ac-4b32-b3d7-24044637fc98}"" >
+windows\device\Group Policy\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml,gpo,Block Write and Execute access to all but block specific unapproved USBs,Windows Removable Device,{23b8e437-66ac-4b32-b3d7-24044637fc98},[<devicecontrol.Property object at 0x000001F08FE10B90>],[],"	<PolicyRule Id=""{23b8e437-66ac-4b32-b3d7-24044637fc98}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B23b8e437-66ac-4b32-b3d7-24044637fc98%7D/RuleData -->
 		<Name>Block Write and Execute access to all but block specific unapproved USBs</Name>
 		<IncludedIdList>
@@ -394,7 +394,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-12,windows\device\Group Policy\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml,gpo,Audit Write and Execute access to others,{b58ab853-9a6f-405c-a194-740e69422b48},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{b58ab853-9a6f-405c-a194-740e69422b48}"" >
+windows\device\Group Policy\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml,gpo,Audit Write and Execute access to others,Windows Removable Device,{b58ab853-9a6f-405c-a194-740e69422b48},[<devicecontrol.Property object at 0x000001F08FE10F80>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{b58ab853-9a6f-405c-a194-740e69422b48}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb58ab853-9a6f-405c-a194-740e69422b48%7D/RuleData -->
 		<Name>Audit Write and Execute access to others</Name>
 		<IncludedIdList>
@@ -409,7 +409,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",2.0
-13,windows\device\Group Policy\Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml,gpo,Block Write and Execute but allow specific user access approved USB,{83c390b6-b01e-4d83-8834-c8015a2316f2},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{83c390b6-b01e-4d83-8834-c8015a2316f2}"" >
+windows\device\Group Policy\Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml,gpo,Block Write and Execute but allow specific user access approved USB,Windows Removable Device,{83c390b6-b01e-4d83-8834-c8015a2316f2},[<devicecontrol.Property object at 0x000001F08FE12E40>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{83c390b6-b01e-4d83-8834-c8015a2316f2}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData -->
 		<Name>Block Write and Execute but allow specific user access approved USB</Name>
 		<IncludedIdList>
@@ -425,7 +425,7 @@
 			<Sid>xxxxxxxx</Sid>
 		</Entry>
 	</PolicyRule>",1.0
-14,windows\device\Group Policy\Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml,gpo,Block removable storage and CdRom,{d2193a7f-ceec-4729-a72a-fe949639db55},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
+windows\device\Group Policy\Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml,gpo,Block removable storage and CdRom,Windows Removable Device,{d2193a7f-ceec-4729-a72a-fe949639db55},[<devicecontrol.Property object at 0x000001F08FDCFCB0>],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->
 		<Name>Block removable storage and CdRom</Name>
 		<IncludedIdList>
@@ -449,7 +449,7 @@
 			<Options>1</Options>
 		</Entry>
 	</PolicyRule>",2.0
-15,windows\device\Intune OMA-URI\Allow any removable storage.xml,oma-uri,Default removable storage Allow,{b11f0734-8029-4c90-aff0-95dfc0354584},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{b11f0734-8029-4c90-aff0-95dfc0354584}"" >
+windows\device\Intune OMA-URI\Allow any removable storage.xml,oma-uri,Default removable storage Allow,Windows Removable Device,{b11f0734-8029-4c90-aff0-95dfc0354584},[<devicecontrol.Property object at 0x000001F08FE13BF0>],[],"	<PolicyRule Id=""{b11f0734-8029-4c90-aff0-95dfc0354584}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb11f0734-8029-4c90-aff0-95dfc0354584%7D/RuleData -->
 		<Name>Default removable storage Allow</Name>
 		<IncludedIdList>
@@ -463,7 +463,7 @@
 			<Options>4</Options>
 		</Entry>
 	</PolicyRule>",1.0
-16,windows\device\Intune OMA-URI\Allow full access and audit file.xml,oma-uri,Allow access and Audit file information,{b2061588-029e-427d-8404-6dfec096a571},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{b2061588-029e-427d-8404-6dfec096a571}"" >
+windows\device\Intune OMA-URI\Allow full access and audit file.xml,oma-uri,Allow access and Audit file information,Windows Removable Device,{b2061588-029e-427d-8404-6dfec096a571},[<devicecontrol.Property object at 0x000001F08FE12B10>],[],"	<PolicyRule Id=""{b2061588-029e-427d-8404-6dfec096a571}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2061588-029e-427d-8404-6dfec096a571%7D/RuleData -->
 		<Name>Allow access and Audit file information</Name>
 		<IncludedIdList>
@@ -487,7 +487,7 @@
 			<Options>16</Options>
 		</Entry>
 	</PolicyRule>",1.0
-17,windows\device\Intune OMA-URI\Allow Read.xml,oma-uri,Allow Read Activity,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
+windows\device\Intune OMA-URI\Allow Read.xml,oma-uri,Allow Read Activity,Windows Removable Device,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},[<devicecontrol.Property object at 0x000001F08FE129C0>],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Allow Read Activity</Name>
 		<IncludedIdList>
@@ -506,7 +506,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-18,windows\device\Intune OMA-URI\Audit Default Deny.xml,oma-uri,Default Deny,{f3520ea7-fd1b-4237-8ebc-96911db44f8e},[],[],"	<PolicyRule Id=""{f3520ea7-fd1b-4237-8ebc-96911db44f8e}"" >
+windows\device\Intune OMA-URI\Audit Default Deny.xml,oma-uri,Default Deny,Windows Removable Device,{f3520ea7-fd1b-4237-8ebc-96911db44f8e},[],[],"	<PolicyRule Id=""{f3520ea7-fd1b-4237-8ebc-96911db44f8e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf3520ea7-fd1b-4237-8ebc-96911db44f8e%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -519,7 +519,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-19,windows\device\Intune OMA-URI\Audit File Information.xml,oma-uri,Audit File Information,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
+windows\device\Intune OMA-URI\Audit File Information.xml,oma-uri,Audit File Information,Windows Removable Device,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},[<devicecontrol.Property object at 0x000001F08FE15250>],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
 		<Name>Audit File Information</Name>
 		<IncludedIdList>
@@ -543,7 +543,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-20,windows\device\Intune OMA-URI\audit_file_information{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}.xml,oma-uri,Audit File Information,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
+windows\device\Intune OMA-URI\audit_file_information{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}.xml,oma-uri,Audit File Information,Windows Removable Device,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},[<devicecontrol.Property object at 0x000001F08FE147D0>],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
 		<Name>Audit File Information</Name>
 		<IncludedIdList>
@@ -557,7 +557,7 @@
 			<Options>16</Options>
 		</Entry>
 	</PolicyRule>",1.0
-21,windows\device\Intune OMA-URI\audit_write_and_execute_access_to_aproved_usbs{36ae1037-a639-4cff-946b-b36c53089a4c}.xml,oma-uri,Audit Write and Execute access to aproved USBs,{36ae1037-a639-4cff-946b-b36c53089a4c},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{36ae1037-a639-4cff-946b-b36c53089a4c}"" >
+windows\device\Intune OMA-URI\audit_write_and_execute_access_to_aproved_usbs{36ae1037-a639-4cff-946b-b36c53089a4c}.xml,oma-uri,Audit Write and Execute access to aproved USBs,Windows Removable Device,{36ae1037-a639-4cff-946b-b36c53089a4c},[<devicecontrol.Property object at 0x000001F08FE16090>],[],"	<PolicyRule Id=""{36ae1037-a639-4cff-946b-b36c53089a4c}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B36ae1037-a639-4cff-946b-b36c53089a4c%7D/RuleData -->
 		<Name>Audit Write and Execute access to aproved USBs</Name>
 		<IncludedIdList>
@@ -576,7 +576,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-22,windows\device\Intune OMA-URI\audit_write_and_execute_access_to_others{b58ab853-9a6f-405c-a194-740e69422b48}.xml,oma-uri,Audit Write and Execute access to others,{b58ab853-9a6f-405c-a194-740e69422b48},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{b58ab853-9a6f-405c-a194-740e69422b48}"" >
+windows\device\Intune OMA-URI\audit_write_and_execute_access_to_others{b58ab853-9a6f-405c-a194-740e69422b48}.xml,oma-uri,Audit Write and Execute access to others,Windows Removable Device,{b58ab853-9a6f-405c-a194-740e69422b48},[<devicecontrol.Property object at 0x000001F08FE15F10>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{b58ab853-9a6f-405c-a194-740e69422b48}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb58ab853-9a6f-405c-a194-740e69422b48%7D/RuleData -->
 		<Name>Audit Write and Execute access to others</Name>
 		<IncludedIdList>
@@ -591,7 +591,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-23,windows\device\Intune OMA-URI\authorized_removable_storage_policy{3984f1f4-7f66-4848-96de-491e2d038b07}.xml,oma-uri,Authorized removable storage policy,{3984f1f4-7f66-4848-96de-491e2d038b07},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{3984f1f4-7f66-4848-96de-491e2d038b07}"" >
+windows\device\Intune OMA-URI\authorized_removable_storage_policy{3984f1f4-7f66-4848-96de-491e2d038b07}.xml,oma-uri,Authorized removable storage policy,Windows Removable Device,{3984f1f4-7f66-4848-96de-491e2d038b07},[<devicecontrol.Property object at 0x000001F08FE17200>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{3984f1f4-7f66-4848-96de-491e2d038b07}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B3984f1f4-7f66-4848-96de-491e2d038b07%7D/RuleData -->
 		<Name>Authorized removable storage policy</Name>
 		<IncludedIdList>
@@ -631,7 +631,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-24,windows\device\Intune OMA-URI\authorized_removable_storage_policy{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}.xml,oma-uri,Authorized removable storage policy,{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}"" >
+windows\device\Intune OMA-URI\authorized_removable_storage_policy{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}.xml,oma-uri,Authorized removable storage policy,Windows Removable Device,{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},[<devicecontrol.Property object at 0x000001F08FE17530>],[],"	<PolicyRule Id=""{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6f3f8bbb-607f-4ed5-96af-51e3428db8f7%7D/RuleData -->
 		<Name>Authorized removable storage policy</Name>
 		<IncludedIdList>
@@ -682,7 +682,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-25,windows\device\Intune OMA-URI\Block Rubber Ducky USB.xml,oma-uri,Block Rubber Ducky USBs,{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e},['{c75f14fb-70ab-49ba-988e-cfe80eb48304}'],[],"	<PolicyRule Id=""{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e}"" >
+windows\device\Intune OMA-URI\Block Rubber Ducky USB.xml,oma-uri,Block Rubber Ducky USBs,Windows Removable Device,{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e},[<devicecontrol.Property object at 0x000001F08FD9B9E0>],[],"	<PolicyRule Id=""{e08f02f2-6649-4b8e-bed0-eced2c7b1a2e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be08f02f2-6649-4b8e-bed0-eced2c7b1a2e%7D/RuleData -->
 		<Name>Block Rubber Ducky USBs</Name>
 		<IncludedIdList>
@@ -701,7 +701,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-26,windows\device\Intune OMA-URI\block_read_and_write_access_to_specific_file{5038638c-9352-47bb-88df-8a659f0c02a7}.xml,oma-uri,Block Read and Write access to specific file,{5038638c-9352-47bb-88df-8a659f0c02a7},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{5038638c-9352-47bb-88df-8a659f0c02a7}"" >
+windows\device\Intune OMA-URI\block_read_and_write_access_to_specific_file{5038638c-9352-47bb-88df-8a659f0c02a7}.xml,oma-uri,Block Read and Write access to specific file,Windows Removable Device,{5038638c-9352-47bb-88df-8a659f0c02a7},[<devicecontrol.Property object at 0x000001F08FE171A0>],[],"	<PolicyRule Id=""{5038638c-9352-47bb-88df-8a659f0c02a7}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData -->
 		<Name>Block Read and Write access to specific file</Name>
 		<IncludedIdList>
@@ -725,7 +725,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-27,windows\device\Intune OMA-URI\block_removable_storage_and_cdrom{d2193a7f-ceec-4729-a72a-fe949639db55}.xml,oma-uri,Block removable storage and CdRom,{d2193a7f-ceec-4729-a72a-fe949639db55},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
+windows\device\Intune OMA-URI\block_removable_storage_and_cdrom{d2193a7f-ceec-4729-a72a-fe949639db55}.xml,oma-uri,Block removable storage and CdRom,Windows Removable Device,{d2193a7f-ceec-4729-a72a-fe949639db55},[<devicecontrol.Property object at 0x000001F08FE185C0>],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->
 		<Name>Block removable storage and CdRom</Name>
 		<IncludedIdList>
@@ -749,7 +749,7 @@
 			<Options>1</Options>
 		</Entry>
 	</PolicyRule>",1.0
-28,windows\device\Intune OMA-URI\block_write_and_execute_access_to_all_but_block_specific_unapproved_usbs{23b8e437-66ac-4b32-b3d7-24044637fc98}.xml,oma-uri,Block Write and Execute access to all but block specific unapproved USBs,{23b8e437-66ac-4b32-b3d7-24044637fc98},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{23b8e437-66ac-4b32-b3d7-24044637fc98}"" >
+windows\device\Intune OMA-URI\block_write_and_execute_access_to_all_but_block_specific_unapproved_usbs{23b8e437-66ac-4b32-b3d7-24044637fc98}.xml,oma-uri,Block Write and Execute access to all but block specific unapproved USBs,Windows Removable Device,{23b8e437-66ac-4b32-b3d7-24044637fc98},[<devicecontrol.Property object at 0x000001F08FE19D00>],[],"	<PolicyRule Id=""{23b8e437-66ac-4b32-b3d7-24044637fc98}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B23b8e437-66ac-4b32-b3d7-24044637fc98%7D/RuleData -->
 		<Name>Block Write and Execute access to all but block specific unapproved USBs</Name>
 		<IncludedIdList>
@@ -768,7 +768,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-29,windows\device\Intune OMA-URI\block_write_and_execute_access{c544a991-5786-4402-949e-a032cb790d0e}.xml,oma-uri,Block Write and Execute Access,{c544a991-5786-4402-949e-a032cb790d0e},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{c544a991-5786-4402-949e-a032cb790d0e}"" >
+windows\device\Intune OMA-URI\block_write_and_execute_access{c544a991-5786-4402-949e-a032cb790d0e}.xml,oma-uri,Block Write and Execute Access,Windows Removable Device,{c544a991-5786-4402-949e-a032cb790d0e},[<devicecontrol.Property object at 0x000001F08FE18D40>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{c544a991-5786-4402-949e-a032cb790d0e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bc544a991-5786-4402-949e-a032cb790d0e%7D/RuleData -->
 		<Name>Block Write and Execute Access</Name>
 		<IncludedIdList>
@@ -788,7 +788,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-30,windows\device\Intune OMA-URI\block_write_and_execute_but_allow_specific_user_access_approved_usb{83c390b6-b01e-4d83-8834-c8015a2316f2}.xml,oma-uri,Block Write and Execute but allow specific user access approved USB,{83c390b6-b01e-4d83-8834-c8015a2316f2},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{83c390b6-b01e-4d83-8834-c8015a2316f2}"" >
+windows\device\Intune OMA-URI\block_write_and_execute_but_allow_specific_user_access_approved_usb{83c390b6-b01e-4d83-8834-c8015a2316f2}.xml,oma-uri,Block Write and Execute but allow specific user access approved USB,Windows Removable Device,{83c390b6-b01e-4d83-8834-c8015a2316f2},[<devicecontrol.Property object at 0x000001F08FE19FD0>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{83c390b6-b01e-4d83-8834-c8015a2316f2}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData -->
 		<Name>Block Write and Execute but allow specific user access approved USB</Name>
 		<IncludedIdList>
@@ -804,7 +804,7 @@
 			<Sid>xxxxxxxx</Sid>
 		</Entry>
 	</PolicyRule>",1.0
-31,windows\device\Intune OMA-URI\data_duplication_filesystem_demo{7988d6d0-8854-4cad-98de-e4e22e65e058}.xml,oma-uri,Data Duplication Filesystem Demo,{7988d6d0-8854-4cad-98de-e4e22e65e058},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{7988d6d0-8854-4cad-98de-e4e22e65e058}"" >
+windows\device\Intune OMA-URI\data_duplication_filesystem_demo{7988d6d0-8854-4cad-98de-e4e22e65e058}.xml,oma-uri,Data Duplication Filesystem Demo,Windows Removable Device,{7988d6d0-8854-4cad-98de-e4e22e65e058},[<devicecontrol.Property object at 0x000001F08FE1B5C0>],[],"	<PolicyRule Id=""{7988d6d0-8854-4cad-98de-e4e22e65e058}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7988d6d0-8854-4cad-98de-e4e22e65e058%7D/RuleData -->
 		<Name>Data Duplication Filesystem Demo</Name>
 		<IncludedIdList>
@@ -818,7 +818,7 @@
 			<Options>8</Options>
 		</Entry>
 	</PolicyRule>",1.0
-32,windows\device\Intune OMA-URI\Demo_2_Authorized removable storage group_policy.xml,oma-uri,Authorized removable storage policy,{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}"" >
+windows\device\Intune OMA-URI\Demo_2_Authorized removable storage group_policy.xml,oma-uri,Authorized removable storage policy,Windows Removable Device,{6f3f8bbb-607f-4ed5-96af-51e3428db8f7},[<devicecontrol.Property object at 0x000001F08FE1B6E0>],[],"	<PolicyRule Id=""{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6f3f8bbb-607f-4ed5-96af-51e3428db8f7%7D/RuleData -->
 		<Name>Authorized removable storage policy</Name>
 		<IncludedIdList>
@@ -869,7 +869,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-33,windows\device\Intune OMA-URI\Demo_2_Unauthorized removable storage group_policy.xml,oma-uri,Authorized removable storage policy,{3984f1f4-7f66-4848-96de-491e2d038b07},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{3984f1f4-7f66-4848-96de-491e2d038b07}"" >
+windows\device\Intune OMA-URI\Demo_2_Unauthorized removable storage group_policy.xml,oma-uri,Authorized removable storage policy,Windows Removable Device,{3984f1f4-7f66-4848-96de-491e2d038b07},[<devicecontrol.Property object at 0x000001F08FE1BAD0>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{3984f1f4-7f66-4848-96de-491e2d038b07}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B3984f1f4-7f66-4848-96de-491e2d038b07%7D/RuleData -->
 		<Name>Authorized removable storage policy</Name>
 		<IncludedIdList>
@@ -909,7 +909,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-34,windows\device\Intune OMA-URI\Deny Read and Write access to specific files.xml,oma-uri,Block Read and Write access to specific file,{5038638c-9352-47bb-88df-8a659f0c02a7},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{5038638c-9352-47bb-88df-8a659f0c02a7}"" >
+windows\device\Intune OMA-URI\Deny Read and Write access to specific files.xml,oma-uri,Block Read and Write access to specific file,Windows Removable Device,{5038638c-9352-47bb-88df-8a659f0c02a7},[<devicecontrol.Property object at 0x000001F08FE1B0E0>],[],"	<PolicyRule Id=""{5038638c-9352-47bb-88df-8a659f0c02a7}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData -->
 		<Name>Block Read and Write access to specific file</Name>
 		<IncludedIdList>
@@ -933,7 +933,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-35,windows\device\Intune OMA-URI\File Duplication.xml,oma-uri,Data Duplication Filesystem Demo,{7988d6d0-8854-4cad-98de-e4e22e65e058},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{7988d6d0-8854-4cad-98de-e4e22e65e058}"" >
+windows\device\Intune OMA-URI\File Duplication.xml,oma-uri,Data Duplication Filesystem Demo,Windows Removable Device,{7988d6d0-8854-4cad-98de-e4e22e65e058},[<devicecontrol.Property object at 0x000001F08FE20CB0>],[],"	<PolicyRule Id=""{7988d6d0-8854-4cad-98de-e4e22e65e058}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7988d6d0-8854-4cad-98de-e4e22e65e058%7D/RuleData -->
 		<Name>Data Duplication Filesystem Demo</Name>
 		<IncludedIdList>
@@ -947,7 +947,7 @@
 			<Options>8</Options>
 		</Entry>
 	</PolicyRule>",1.0
-36,windows\device\Intune OMA-URI\gestion_des_appareils_immobiliers{505e2563-1de8-40aa-b8f9-472a37b2f6ee}.xml,oma-uri,Gestion des appareils immobiliers,{505e2563-1de8-40aa-b8f9-472a37b2f6ee},['{d2887bd4-a916-4011-a385-83c6b15df529}'],[],"	<PolicyRule Id=""{505e2563-1de8-40aa-b8f9-472a37b2f6ee}"" >
+windows\device\Intune OMA-URI\gestion_des_appareils_immobiliers{505e2563-1de8-40aa-b8f9-472a37b2f6ee}.xml,oma-uri,Gestion des appareils immobiliers,Windows Removable Device,{505e2563-1de8-40aa-b8f9-472a37b2f6ee},[<devicecontrol.Property object at 0x000001F08FE21730>],[],"	<PolicyRule Id=""{505e2563-1de8-40aa-b8f9-472a37b2f6ee}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B505e2563-1de8-40aa-b8f9-472a37b2f6ee%7D/RuleData -->
 		<Name>Gestion des appareils immobiliers</Name>
 		<IncludedIdList>
@@ -1002,7 +1002,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-37,windows\device\Intune OMA-URI\gestion_des_dictaphones{540efb7f-1836-4956-8888-5d41d981d6ba}.xml,oma-uri,Gestion des dictaphones,{540efb7f-1836-4956-8888-5d41d981d6ba},['{7f191817-c305-451d-812a-1c4b03ebcec8}'],[],"	<PolicyRule Id=""{540efb7f-1836-4956-8888-5d41d981d6ba}"" >
+windows\device\Intune OMA-URI\gestion_des_dictaphones{540efb7f-1836-4956-8888-5d41d981d6ba}.xml,oma-uri,Gestion des dictaphones,Windows Removable Device,{540efb7f-1836-4956-8888-5d41d981d6ba},[<devicecontrol.Property object at 0x000001F08FE20D70>],[],"	<PolicyRule Id=""{540efb7f-1836-4956-8888-5d41d981d6ba}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B540efb7f-1836-4956-8888-5d41d981d6ba%7D/RuleData -->
 		<Name>Gestion des dictaphones</Name>
 		<IncludedIdList>
@@ -1057,7 +1057,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-38,windows\device\Intune OMA-URI\gestion_des_pã©riphã©riques_externes{466faba8-dddf-4ae5-9871-dabbb600d4f3}.xml,oma-uri,Gestion des pÃ©riphÃ©riques externes,{466faba8-dddf-4ae5-9871-dabbb600d4f3},['{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}'],"['{7f191817-c305-451d-812a-1c4b03ebcec8}', '{1653593b-5b92-47e6-975a-c43ffa9cd28d}', '{d2887bd4-a916-4011-a385-83c6b15df529}']","	<PolicyRule Id=""{466faba8-dddf-4ae5-9871-dabbb600d4f3}"" >
+windows\device\Intune OMA-URI\gestion_des_pã©riphã©riques_externes{466faba8-dddf-4ae5-9871-dabbb600d4f3}.xml,oma-uri,Gestion des pÃ©riphÃ©riques externes,Windows Removable Device,{466faba8-dddf-4ae5-9871-dabbb600d4f3},[<devicecontrol.Property object at 0x000001F08FE23D70>],"['{7f191817-c305-451d-812a-1c4b03ebcec8}', '{1653593b-5b92-47e6-975a-c43ffa9cd28d}', '{d2887bd4-a916-4011-a385-83c6b15df529}']","	<PolicyRule Id=""{466faba8-dddf-4ae5-9871-dabbb600d4f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B466faba8-dddf-4ae5-9871-dabbb600d4f3%7D/RuleData -->
 		<Name>Gestion des pÃ©riphÃ©riques externes</Name>
 		<IncludedIdList>
@@ -1127,7 +1127,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-39,windows\device\Intune OMA-URI\Scenario 1 Audit Write and Execute access to aproved USBs.xml,oma-uri,Audit Write and Execute access to aproved USBs,{36ae1037-a639-4cff-946b-b36c53089a4c},['{65fa649a-a111-4912-9294-fb6337a25038}'],[],"	<PolicyRule Id=""{36ae1037-a639-4cff-946b-b36c53089a4c}"" >
+windows\device\Intune OMA-URI\Scenario 1 Audit Write and Execute access to aproved USBs.xml,oma-uri,Audit Write and Execute access to aproved USBs,Windows Removable Device,{36ae1037-a639-4cff-946b-b36c53089a4c},[<devicecontrol.Property object at 0x000001F08FEB0B30>],[],"	<PolicyRule Id=""{36ae1037-a639-4cff-946b-b36c53089a4c}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B36ae1037-a639-4cff-946b-b36c53089a4c%7D/RuleData -->
 		<Name>Audit Write and Execute access to aproved USBs</Name>
 		<IncludedIdList>
@@ -1146,7 +1146,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-40,windows\device\Intune OMA-URI\Scenario 1 Block Write and Execute Access but allow approved USBs.xml,oma-uri,Block Write and Execute Access but allow approved USBs,{c544a991-5786-4402-949e-a032cb790d0e},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{c544a991-5786-4402-949e-a032cb790d0e}"" >
+windows\device\Intune OMA-URI\Scenario 1 Block Write and Execute Access but allow approved USBs.xml,oma-uri,Block Write and Execute Access but allow approved USBs,Windows Removable Device,{c544a991-5786-4402-949e-a032cb790d0e},[<devicecontrol.Property object at 0x000001F08FE269F0>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{c544a991-5786-4402-949e-a032cb790d0e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bc544a991-5786-4402-949e-a032cb790d0e%7D/RuleData -->
 		<Name>Block Write and Execute Access but allow approved USBs</Name>
 		<IncludedIdList>
@@ -1166,7 +1166,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-41,windows\device\Intune OMA-URI\Scenario 10 Audit Write_Intune.xml,oma-uri,Block Write Activity,{464157c1-2c89-4fe2-b596-ec4919828b2d},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{464157c1-2c89-4fe2-b596-ec4919828b2d}"" >
+windows\device\Intune OMA-URI\Scenario 10 Audit Write_Intune.xml,oma-uri,Block Write Activity,Windows Removable Device,{464157c1-2c89-4fe2-b596-ec4919828b2d},[<devicecontrol.Property object at 0x000001F08FE264E0>],[],"	<PolicyRule Id=""{464157c1-2c89-4fe2-b596-ec4919828b2d}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B464157c1-2c89-4fe2-b596-ec4919828b2d%7D/RuleData -->
 		<Name>Block Write Activity</Name>
 		<IncludedIdList>
@@ -1185,7 +1185,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-42,windows\device\Intune OMA-URI\Scenario 2 Audit Write and Execute access to all but block specific unapproved USBs.xml,oma-uri,Block Write and Execute access to all but block specific unapproved USBs,{23b8e437-66ac-4b32-b3d7-24044637fc98},['{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}'],[],"	<PolicyRule Id=""{23b8e437-66ac-4b32-b3d7-24044637fc98}"" >
+windows\device\Intune OMA-URI\Scenario 2 Audit Write and Execute access to all but block specific unapproved USBs.xml,oma-uri,Block Write and Execute access to all but block specific unapproved USBs,Windows Removable Device,{23b8e437-66ac-4b32-b3d7-24044637fc98},[<devicecontrol.Property object at 0x000001F08FEB3230>],[],"	<PolicyRule Id=""{23b8e437-66ac-4b32-b3d7-24044637fc98}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B23b8e437-66ac-4b32-b3d7-24044637fc98%7D/RuleData -->
 		<Name>Block Write and Execute access to all but block specific unapproved USBs</Name>
 		<IncludedIdList>
@@ -1204,7 +1204,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-43,windows\device\Intune OMA-URI\Scenario 2 Audit Write and Execute access to others.xml,oma-uri,Audit Write and Execute access to others,{b58ab853-9a6f-405c-a194-740e69422b48},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}'],"	<PolicyRule Id=""{b58ab853-9a6f-405c-a194-740e69422b48}"" >
+windows\device\Intune OMA-URI\Scenario 2 Audit Write and Execute access to others.xml,oma-uri,Audit Write and Execute access to others,Windows Removable Device,{b58ab853-9a6f-405c-a194-740e69422b48},[<devicecontrol.Property object at 0x000001F08FEB38C0>],['{fa78280d-2d8e-4027-b0bb-62ab5c2bba7f}'],"	<PolicyRule Id=""{b58ab853-9a6f-405c-a194-740e69422b48}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb58ab853-9a6f-405c-a194-740e69422b48%7D/RuleData -->
 		<Name>Audit Write and Execute access to others</Name>
 		<IncludedIdList>
@@ -1219,7 +1219,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-44,windows\device\Intune OMA-URI\Scenario 3 Block any Removable Storage and CD-DVD.xml,oma-uri,Block removable storage and CdRom,{d2193a7f-ceec-4729-a72a-fe949639db55},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
+windows\device\Intune OMA-URI\Scenario 3 Block any Removable Storage and CD-DVD.xml,oma-uri,Block removable storage and CdRom,Windows Removable Device,{d2193a7f-ceec-4729-a72a-fe949639db55},[<devicecontrol.Property object at 0x000001F08FEB3560>],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->
 		<Name>Block removable storage and CdRom</Name>
 		<IncludedIdList>
@@ -1243,7 +1243,7 @@
 			<Options>1</Options>
 		</Entry>
 	</PolicyRule>",1.0
-45,windows\device\Intune OMA-URI\Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml,oma-uri,ReadOnly to Any Removable Storage and CdRom,{d2193a7f-ceec-4729-a72a-fe949639db55},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
+windows\device\Intune OMA-URI\Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml,oma-uri,ReadOnly to Any Removable Storage and CdRom,Windows Removable Device,{d2193a7f-ceec-4729-a72a-fe949639db55},[<devicecontrol.Property object at 0x000001F08FEB3AA0>],[],"	<PolicyRule Id=""{d2193a7f-ceec-4729-a72a-fe949639db55}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->
 		<Name>ReadOnly to Any Removable Storage and CdRom</Name>
 		<IncludedIdList>
@@ -1262,7 +1262,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-46,windows\device\Intune OMA-URI\Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml,oma-uri,Block Wirte and Execute but allow specific user and approved USB,{83c390b6-b01e-4d83-8834-c8015a2316f2},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{83c390b6-b01e-4d83-8834-c8015a2316f2}"" >
+windows\device\Intune OMA-URI\Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml,oma-uri,Block Wirte and Execute but allow specific user and approved USB,Windows Removable Device,{83c390b6-b01e-4d83-8834-c8015a2316f2},[<devicecontrol.Property object at 0x000001F08FEB3920>],['{65fa649a-a111-4912-9294-fb6337a25038}'],"	<PolicyRule Id=""{83c390b6-b01e-4d83-8834-c8015a2316f2}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData -->
 		<Name>Block Wirte and Execute but allow specific user and approved USB</Name>
 		<IncludedIdList>
@@ -1294,12 +1294,14 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-47,"windows\device\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml",oma-uri,Deny Wpd Write,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},[],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
+"windows\device\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml",oma-uri,Deny Wpd Write,Windows Removable Device,{b8615f3d-a41e-4c70-a70a-88e7b7aa7768},[<devicecontrol.Property object at 0x000001F08FE24EF0>],[],"	<PolicyRule Id=""{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->
 		<Name>Deny Wpd Write</Name>
 		<IncludedIdList>
+			<PrimaryId>WpdDevices</PrimaryId>
 		</IncludedIdList>
 		<ExcludedIdList>
+			<DeviceId>USB\VID_04E8&PID_6860&MS_COMP_MTP&SAMSUNG_ANDROID</DeviceId>
 		</ExcludedIdList>
 		<Entry Id=""{ae40741a-cc96-42b7-9dab-f5ba59adef8a}"">
 			<Type>Deny</Type>
@@ -1312,7 +1314,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-48,windows\device\Intune OMA-URI\Scenario 8 Audit Read_Intune.xml,oma-uri,Audit Read Activity,{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c}"" >
+windows\device\Intune OMA-URI\Scenario 8 Audit Read_Intune.xml,oma-uri,Audit Read Activity,Windows Removable Device,{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c},[<devicecontrol.Property object at 0x000001F08FF05B50>],[],"	<PolicyRule Id=""{4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4dd8a057-9c58-4a86-8fc2-0d7989d7ce6c%7D/RuleData -->
 		<Name>Audit Read Activity</Name>
 		<IncludedIdList>
@@ -1331,7 +1333,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-49,windows\device\Intune OMA-URI\Scenario 9 Block Write_Intune.xml,oma-uri,Block Write Activity,{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543},['{9b28fae8-72f7-4267-a1a5-685f747a7146}'],[],"	<PolicyRule Id=""{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543}"" >
+windows\device\Intune OMA-URI\Scenario 9 Block Write_Intune.xml,oma-uri,Block Write Activity,Windows Removable Device,{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543},[<devicecontrol.Property object at 0x000001F08FF05910>],[],"	<PolicyRule Id=""{1ac9b9f0-8cae-4c37-bd55-0ac6537d8543}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B1ac9b9f0-8cae-4c37-bd55-0ac6537d8543%7D/RuleData -->
 		<Name>Block Write Activity</Name>
 		<IncludedIdList>
@@ -1350,7 +1352,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-50,windows\Getting Started\Intune OMA-URI\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml,oma-uri,Audit Deny,{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],[],"	<PolicyRule Id=""{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}"" >
+windows\Getting Started\Intune OMA-URI\audit_deny{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}.xml,oma-uri,Audit Deny,Windows Removable Device,{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},[<devicecontrol.Property object at 0x000001F08FF07230>],[],"	<PolicyRule Id=""{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd8e6f56c-f4c1-4875-ac45-51ad75d4580e%7D/RuleData -->
 		<Name>Audit Deny</Name>
 		<IncludedIdList>
@@ -1369,7 +1371,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-51,windows\Getting Started\Intune OMA-URI\step_2_-_allow_full_access_to_authorized_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 2 - Allow Full Access to Authorized USBs,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Intune OMA-URI\step_2_-_allow_full_access_to_authorized_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 2 - Allow Full Access to Authorized USBs,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF077A0>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 2 - Allow Full Access to Authorized USBs</Name>
 		<IncludedIdList>
@@ -1383,7 +1385,7 @@
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>",1.0
-52,windows\Getting Started\Intune OMA-URI\step_2_-_deny_all_but_authorized_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 2 - Deny all but authorized USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],['{368a2c82-17be-4137-bffa-370bbdff9672}'],"	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Intune OMA-URI\step_2_-_deny_all_but_authorized_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 2 - Deny all but authorized USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF07590>],['{368a2c82-17be-4137-bffa-370bbdff9672}'],"	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 2 - Deny all but authorized USBs</Name>
 		<IncludedIdList>
@@ -1403,7 +1405,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-53,windows\Getting Started\Intune OMA-URI\step_3_-_allow_full_access_to_writeable_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 3 - Allow Full Access to Writeable USBs,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Intune OMA-URI\step_3_-_allow_full_access_to_writeable_usbs{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 3 - Allow Full Access to Writeable USBs,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF07EF0>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 3 - Allow Full Access to Writeable USBs</Name>
 		<IncludedIdList>
@@ -1417,7 +1419,7 @@
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>",1.0
-54,windows\Getting Started\Intune OMA-URI\step_3_-_allow_read_only_access_to_read_only_usbs{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml,oma-uri,Step 3 - Allow Read Only Access to Read Only USBs,{b2b9cfc0-799d-457c-babc-da617d9a8b83},['{23c24566-98a5-4218-8802-59614513b97e}'],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
+windows\Getting Started\Intune OMA-URI\step_3_-_allow_read_only_access_to_read_only_usbs{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml,oma-uri,Step 3 - Allow Read Only Access to Read Only USBs,Windows Removable Device,{b2b9cfc0-799d-457c-babc-da617d9a8b83},[<devicecontrol.Property object at 0x000001F08FF147A0>],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
 		<Name>Step 3 - Allow Read Only Access to Read Only USBs</Name>
 		<IncludedIdList>
@@ -1431,7 +1433,7 @@
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>",1.0
-55,windows\Getting Started\Intune OMA-URI\step_3_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 3 - Deny all other USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Intune OMA-URI\step_3_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 3 - Deny all other USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF14860>],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 3 - Deny all other USBs</Name>
 		<IncludedIdList>
@@ -1452,7 +1454,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-56,windows\Getting Started\Intune OMA-URI\step_4_-_allow_access_to_writeable_usbs_for_some_users{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 4 - Allow Access to Writeable USBs for some users,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Intune OMA-URI\step_4_-_allow_access_to_writeable_usbs_for_some_users{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 4 - Allow Access to Writeable USBs for some users,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF15430>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 4 - Allow Access to Writeable USBs for some users</Name>
 		<IncludedIdList>
@@ -1467,7 +1469,7 @@
 			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>",1.0
-57,windows\Getting Started\Intune OMA-URI\step_4_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml,oma-uri,Step 4 - Allow Read Only Access to Read Only USBs for some users,{b2b9cfc0-799d-457c-babc-da617d9a8b83},['{23c24566-98a5-4218-8802-59614513b97e}'],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
+windows\Getting Started\Intune OMA-URI\step_4_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml,oma-uri,Step 4 - Allow Read Only Access to Read Only USBs for some users,Windows Removable Device,{b2b9cfc0-799d-457c-babc-da617d9a8b83},[<devicecontrol.Property object at 0x000001F08FF152B0>],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
 		<Name>Step 4 - Allow Read Only Access to Read Only USBs for some users</Name>
 		<IncludedIdList>
@@ -1482,7 +1484,7 @@
 			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>",1.0
-58,windows\Getting Started\Intune OMA-URI\step_4_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 4 - Deny all other USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Intune OMA-URI\step_4_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 4 - Deny all other USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF15E20>],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 4 - Deny all other USBs</Name>
 		<IncludedIdList>
@@ -1503,7 +1505,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-59,windows\Getting Started\Intune OMA-URI\step_5_-_allow_access_to_writeable_usbs_for_some_users_and_files_and_capture_file_evidence{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Intune OMA-URI\step_5_-_allow_access_to_writeable_usbs_for_some_users_and_files_and_capture_file_evidence{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml,oma-uri,Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF16B70>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</Name>
 		<IncludedIdList>
@@ -1529,7 +1531,7 @@
 			</Parameters>
 		</Entry>
 	</PolicyRule>",1.0
-60,windows\Getting Started\Intune OMA-URI\step_5_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml,oma-uri,Step 5 - Allow Read Only Access to Read Only USBs for some users,{b2b9cfc0-799d-457c-babc-da617d9a8b83},['{23c24566-98a5-4218-8802-59614513b97e}'],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
+windows\Getting Started\Intune OMA-URI\step_5_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml,oma-uri,Step 5 - Allow Read Only Access to Read Only USBs for some users,Windows Removable Device,{b2b9cfc0-799d-457c-babc-da617d9a8b83},[<devicecontrol.Property object at 0x000001F08FE22B40>],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
 		<Name>Step 5 - Allow Read Only Access to Read Only USBs for some users</Name>
 		<IncludedIdList>
@@ -1544,7 +1546,7 @@
 			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>",1.0
-61,windows\Getting Started\Intune OMA-URI\step_5_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 5 - Deny all other USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Intune OMA-URI\step_5_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml,oma-uri,Step 5 - Deny all other USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF17170>],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 5 - Deny all other USBs</Name>
 		<IncludedIdList>
@@ -1565,7 +1567,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-62,windows\Getting Started\Step 1\deny_all_rules.xml,gpo,Audit Deny,{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],[],"	<PolicyRule Id=""{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}"" >
+windows\Getting Started\Step 1\deny_all_rules.xml,gpo,Audit Deny,Windows Removable Device,{d8e6f56c-f4c1-4875-ac45-51ad75d4580e},[<devicecontrol.Property object at 0x000001F08FF16E10>],[],"	<PolicyRule Id=""{d8e6f56c-f4c1-4875-ac45-51ad75d4580e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd8e6f56c-f4c1-4875-ac45-51ad75d4580e%7D/RuleData -->
 		<Name>Audit Deny</Name>
 		<IncludedIdList>
@@ -1584,7 +1586,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-63,windows\Getting Started\Step 2\allow_authorized_usb_rules.xml,gpo,Step 2 - Deny all but authorized USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],['{368a2c82-17be-4137-bffa-370bbdff9672}'],"	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Step 2\allow_authorized_usb_rules.xml,gpo,Step 2 - Deny all but authorized USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF17DD0>],['{368a2c82-17be-4137-bffa-370bbdff9672}'],"	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 2 - Deny all but authorized USBs</Name>
 		<IncludedIdList>
@@ -1604,7 +1606,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-64,windows\Getting Started\Step 2\allow_authorized_usb_rules.xml,gpo,Step 2 - Allow Full Access to Authorized USBs,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Step 2\allow_authorized_usb_rules.xml,gpo,Step 2 - Allow Full Access to Authorized USBs,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FEB3A10>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 2 - Allow Full Access to Authorized USBs</Name>
 		<IncludedIdList>
@@ -1618,7 +1620,7 @@
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>",2.0
-65,windows\Getting Started\Step 3\allow_different_access_to_different_rules.xml,gpo,Step 3 - Deny all other USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Step 3\allow_different_access_to_different_rules.xml,gpo,Step 3 - Deny all other USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF35D60>],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 3 - Deny all other USBs</Name>
 		<IncludedIdList>
@@ -1639,7 +1641,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-66,windows\Getting Started\Step 3\allow_different_access_to_different_rules.xml,gpo,Step 3 - Allow Full Access to Writeable USBs,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Step 3\allow_different_access_to_different_rules.xml,gpo,Step 3 - Allow Full Access to Writeable USBs,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF34770>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 3 - Allow Full Access to Writeable USBs</Name>
 		<IncludedIdList>
@@ -1653,7 +1655,7 @@
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>",2.0
-67,windows\Getting Started\Step 3\allow_different_access_to_different_rules.xml,gpo,Step 3 - Allow Read Only Access to Read Only USBs,{b2b9cfc0-799d-457c-babc-da617d9a8b83},['{23c24566-98a5-4218-8802-59614513b97e}'],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
+windows\Getting Started\Step 3\allow_different_access_to_different_rules.xml,gpo,Step 3 - Allow Read Only Access to Read Only USBs,Windows Removable Device,{b2b9cfc0-799d-457c-babc-da617d9a8b83},[<devicecontrol.Property object at 0x000001F08FF35E20>],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
 		<Name>Step 3 - Allow Read Only Access to Read Only USBs</Name>
 		<IncludedIdList>
@@ -1667,7 +1669,7 @@
 			<Options>0</Options>
 		</Entry>
 	</PolicyRule>",3.0
-68,windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml,gpo,Step 4 - Deny all other USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml,gpo,Step 4 - Deny all other USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF36A80>],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 4 - Deny all other USBs</Name>
 		<IncludedIdList>
@@ -1688,7 +1690,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-69,windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml,gpo,Step 4 - Allow Access to Writeable USBs for some users,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml,gpo,Step 4 - Allow Access to Writeable USBs for some users,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF36990>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 4 - Allow Access to Writeable USBs for some users</Name>
 		<IncludedIdList>
@@ -1703,7 +1705,7 @@
 			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>",2.0
-70,windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml,gpo,Step 4 - Allow Read Only Access to Read Only USBs for some users,{b2b9cfc0-799d-457c-babc-da617d9a8b83},['{23c24566-98a5-4218-8802-59614513b97e}'],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
+windows\Getting Started\Step 4\allow_different_access_to_different_users_rules.xml,gpo,Step 4 - Allow Read Only Access to Read Only USBs for some users,Windows Removable Device,{b2b9cfc0-799d-457c-babc-da617d9a8b83},[<devicecontrol.Property object at 0x000001F08FF168A0>],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
 		<Name>Step 4 - Allow Read Only Access to Read Only USBs for some users</Name>
 		<IncludedIdList>
@@ -1718,7 +1720,7 @@
 			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>",3.0
-71,windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_rules.xml,gpo,Step 5 - Deny all other USBs,{7beca8fe-313a-46f2-a090-399eb3d74318},['{d8819053-24f4-444a-a0fb-9ce5a9e97862}'],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
+windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_rules.xml,gpo,Step 5 - Deny all other USBs,Windows Removable Device,{7beca8fe-313a-46f2-a090-399eb3d74318},[<devicecontrol.Property object at 0x000001F08FF49280>],"['{368a2c82-17be-4137-bffa-370bbdff9672}', '{23c24566-98a5-4218-8802-59614513b97e}']","	<PolicyRule Id=""{7beca8fe-313a-46f2-a090-399eb3d74318}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D/RuleData -->
 		<Name>Step 5 - Deny all other USBs</Name>
 		<IncludedIdList>
@@ -1739,7 +1741,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-72,windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_rules.xml,gpo,Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence,{a054bbcf-3454-4b95-9058-f7ed00deeee9},['{368a2c82-17be-4137-bffa-370bbdff9672}'],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
+windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_rules.xml,gpo,Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence,Windows Removable Device,{a054bbcf-3454-4b95-9058-f7ed00deeee9},[<devicecontrol.Property object at 0x000001F08FF37B30>],[],"	<PolicyRule Id=""{a054bbcf-3454-4b95-9058-f7ed00deeee9}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D/RuleData -->
 		<Name>Step 5 - Allow Access to Writeable USBs for some users and files and capture file evidence</Name>
 		<IncludedIdList>
@@ -1765,7 +1767,7 @@
 			</Parameters>
 		</Entry>
 	</PolicyRule>",2.0
-73,windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_rules.xml,gpo,Step 5 - Allow Read Only Access to Read Only USBs for some users,{b2b9cfc0-799d-457c-babc-da617d9a8b83},['{23c24566-98a5-4218-8802-59614513b97e}'],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
+windows\Getting Started\Step 5\restrict_files_and_capture_file_evidence_rules.xml,gpo,Step 5 - Allow Read Only Access to Read Only USBs for some users,Windows Removable Device,{b2b9cfc0-799d-457c-babc-da617d9a8b83},[<devicecontrol.Property object at 0x000001F08FF37B60>],[],"	<PolicyRule Id=""{b2b9cfc0-799d-457c-babc-da617d9a8b83}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D/RuleData -->
 		<Name>Step 5 - Allow Read Only Access to Read Only USBs for some users</Name>
 		<IncludedIdList>
@@ -1780,7 +1782,7 @@
 			<Sid>S-1-1-0</Sid>
 		</Entry>
 	</PolicyRule>",3.0
-74,windows\printer\Group Policy\Allow Printing to Corporate Network Printers Only.xml,gpo,Allow printing only on network printers on corporate network,{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},['{257e3e1e-790c-4e29-ae2c-45a5f3363201}'],[],"	<PolicyRule Id=""{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}"" >
+windows\printer\Group Policy\Allow Printing to Corporate Network Printers Only.xml,gpo,Allow printing only on network printers on corporate network,Windows Printer,{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},[<devicecontrol.Property object at 0x000001F08FF355E0>],[],"	<PolicyRule Id=""{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb4bf3ecb-cea9-450d-a3fa-fec9a73edc08%7D/RuleData -->
 		<Name>Allow printing only on network printers on corporate network</Name>
 		<IncludedIdList>
@@ -1799,7 +1801,7 @@
 			</Parameters>
 		</Entry>
 	</PolicyRule>",1.0
-75,windows\printer\Group Policy\Allow Printing to Corporate Network Printers Only.xml,gpo,Deny all other printing,{47420f70-ef17-467e-a982-ab4c3abde16e},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],['{257e3e1e-790c-4e29-ae2c-45a5f3363201}'],"	<PolicyRule Id=""{47420f70-ef17-467e-a982-ab4c3abde16e}"" >
+windows\printer\Group Policy\Allow Printing to Corporate Network Printers Only.xml,gpo,Deny all other printing,Windows Printer,{47420f70-ef17-467e-a982-ab4c3abde16e},[<devicecontrol.Property object at 0x000001F08FF17530>],['{257e3e1e-790c-4e29-ae2c-45a5f3363201}'],"	<PolicyRule Id=""{47420f70-ef17-467e-a982-ab4c3abde16e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B47420f70-ef17-467e-a982-ab4c3abde16e%7D/RuleData -->
 		<Name>Deny all other printing</Name>
 		<IncludedIdList>
@@ -1819,7 +1821,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",2.0
-76,windows\printer\Group Policy\Printer_Policies - no Default Deny policy.xml,gpo,Allow PDF and XPS Printing,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},['{e5170dfb-19a9-4466-8109-d36c9c912b4e}'],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
+windows\printer\Group Policy\Printer_Policies - no Default Deny policy.xml,gpo,Allow PDF and XPS Printing,Windows Printer,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},[<devicecontrol.Property object at 0x000001F08FF4B740>],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
 		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
@@ -1838,7 +1840,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-77,windows\printer\Group Policy\Printer_Policies - no Default Deny policy.xml,gpo,Only allow approved USB Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},['{05b56e90-e682-48ff-a6c0-5602c9638182}'],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
+windows\printer\Group Policy\Printer_Policies - no Default Deny policy.xml,gpo,Only allow approved USB Printer,Windows Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},[<devicecontrol.Property object at 0x000001F08FF49AF0>],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Only allow approved USB Printer</Name>
 		<IncludedIdList>
@@ -1875,7 +1877,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",2.0
-78,windows\printer\Group Policy\Printer_Policies - no Default Deny policy.xml,gpo,Default Deny,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],"['{e5170dfb-19a9-4466-8109-d36c9c912b4e}', '{05b56e90-e682-48ff-a6c0-5602c9638182}']","	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
+windows\printer\Group Policy\Printer_Policies - no Default Deny policy.xml,gpo,Default Deny,Windows Printer,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[<devicecontrol.Property object at 0x000001F08FF4A8D0>],"['{e5170dfb-19a9-4466-8109-d36c9c912b4e}', '{05b56e90-e682-48ff-a6c0-5602c9638182}']","	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -1896,7 +1898,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",3.0
-79,windows\printer\Group Policy\Printer_Policies.xml,gpo,Allow PDF and XPS Printing,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},['{e5170dfb-19a9-4466-8109-d36c9c912b4e}'],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
+windows\printer\Group Policy\Printer_Policies.xml,gpo,Allow PDF and XPS Printing,Windows Printer,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},[<devicecontrol.Property object at 0x000001F08FF49AC0>],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
 		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
@@ -1915,7 +1917,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-80,windows\printer\Group Policy\Printer_Policies.xml,gpo,Allow approved USB Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},['{05b56e90-e682-48ff-a6c0-5602c9638182}'],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
+windows\printer\Group Policy\Printer_Policies.xml,gpo,Allow approved USB Printer,Windows Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},[<devicecontrol.Property object at 0x000001F08FF4B980>],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Allow approved USB Printer</Name>
 		<IncludedIdList>
@@ -1942,7 +1944,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",2.0
-81,windows\printer\Group Policy\Printer_Policies.xml,gpo,Default Deny,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[],[],"	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
+windows\printer\Group Policy\Printer_Policies.xml,gpo,Default Deny,Windows Printer,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[],[],"	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -1955,7 +1957,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",3.0
-82,windows\printer\Intune OMA-URI\.txt.xml,oma-uri,Allow PDF and XPS Printing,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},['{70dfbe51-19a9-8109-4466-912b4ed36c9c}'],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
+windows\printer\Intune OMA-URI\.txt.xml,oma-uri,Allow PDF and XPS Printing,Windows Printer,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},[<devicecontrol.Property object at 0x000001F08FF5A8D0>],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
 		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
@@ -1974,7 +1976,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-83,windows\printer\Intune OMA-URI\Allow any printer.xml,oma-uri,Default Printer Allow,{2f746a4d-4ae1-4bc0-aaef-136d12518fd4},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],[],"	<PolicyRule Id=""{2f746a4d-4ae1-4bc0-aaef-136d12518fd4}"" >
+windows\printer\Intune OMA-URI\Allow any printer.xml,oma-uri,Default Printer Allow,Windows Printer,{2f746a4d-4ae1-4bc0-aaef-136d12518fd4},[<devicecontrol.Property object at 0x000001F08FF5A7E0>],[],"	<PolicyRule Id=""{2f746a4d-4ae1-4bc0-aaef-136d12518fd4}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData -->
 		<Name>Default Printer Allow</Name>
 		<IncludedIdList>
@@ -1988,7 +1990,7 @@
 			<Options>4</Options>
 		</Entry>
 	</PolicyRule>",1.0
-84,windows\printer\Intune OMA-URI\Allow Authorized USB Printer.xml,oma-uri,Allow approved USB Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},['{05b56e90-e682-48ff-a6c0-5602c9638182}'],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
+windows\printer\Intune OMA-URI\Allow Authorized USB Printer.xml,oma-uri,Allow approved USB Printer,Windows Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},[<devicecontrol.Property object at 0x000001F08FF58A70>],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Allow approved USB Printer</Name>
 		<IncludedIdList>
@@ -2015,7 +2017,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-85,windows\printer\Intune OMA-URI\Allow PDF_XPS Printer - File Evidence.xml,oma-uri,Allow PDF and XPS Printing,{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d},['{e5170dfb-19a9-4466-8109-d36c9c912b4e}'],[],"	<PolicyRule Id=""{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d}"" >
+windows\printer\Intune OMA-URI\Allow PDF_XPS Printer - File Evidence.xml,oma-uri,Allow PDF and XPS Printing,Windows Printer,{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d},[<devicecontrol.Property object at 0x000001F08FF5AA80>],[],"	<PolicyRule Id=""{07fb98fd-f25b-4aec-bb99-69d4abd4ec4d}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B07fb98fd-f25b-4aec-bb99-69d4abd4ec4d%7D/RuleData -->
 		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
@@ -2034,7 +2036,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-86,windows\printer\Intune OMA-URI\Allow PDF_XPS Printer.xml,oma-uri,Allow PDF and XPS Printing,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},['{e5170dfb-19a9-4466-8109-d36c9c912b4e}'],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
+windows\printer\Intune OMA-URI\Allow PDF_XPS Printer.xml,oma-uri,Allow PDF and XPS Printing,Windows Printer,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},[<devicecontrol.Property object at 0x000001F08FF5BF50>],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
 		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
@@ -2053,7 +2055,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-87,windows\printer\Intune OMA-URI\allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml,oma-uri,Allow approved USB Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},['{05b56e90-e682-48ff-a6c0-5602c9638182}'],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
+windows\printer\Intune OMA-URI\allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml,oma-uri,Allow approved USB Printer,Windows Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},[<devicecontrol.Property object at 0x000001F08FF5B020>],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Allow approved USB Printer</Name>
 		<IncludedIdList>
@@ -2080,7 +2082,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-88,windows\printer\Intune OMA-URI\allow_pdf_and_xps_printing{f5877f47-78ab-4f33-94e4-c44f18ec6dca}.xml,oma-uri,Allow PDF and XPS Printing,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},['{e5170dfb-19a9-4466-8109-d36c9c912b4e}'],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
+windows\printer\Intune OMA-URI\allow_pdf_and_xps_printing{f5877f47-78ab-4f33-94e4-c44f18ec6dca}.xml,oma-uri,Allow PDF and XPS Printing,Windows Printer,{f5877f47-78ab-4f33-94e4-c44f18ec6dca},[<devicecontrol.Property object at 0x000001F08FF5BEC0>],[],"	<PolicyRule Id=""{f5877f47-78ab-4f33-94e4-c44f18ec6dca}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf5877f47-78ab-4f33-94e4-c44f18ec6dca%7D/RuleData -->
 		<Name>Allow PDF and XPS Printing</Name>
 		<IncludedIdList>
@@ -2099,7 +2101,7 @@
 			<Options>2</Options>
 		</Entry>
 	</PolicyRule>",1.0
-89,windows\printer\Intune OMA-URI\allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml,oma-uri,Allow printing only on network printers on corporate network,{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},['{257e3e1e-790c-4e29-ae2c-45a5f3363201}'],[],"	<PolicyRule Id=""{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}"" >
+windows\printer\Intune OMA-URI\allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml,oma-uri,Allow printing only on network printers on corporate network,Windows Printer,{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08},[<devicecontrol.Property object at 0x000001F08E0C2C00>],[],"	<PolicyRule Id=""{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb4bf3ecb-cea9-450d-a3fa-fec9a73edc08%7D/RuleData -->
 		<Name>Allow printing only on network printers on corporate network</Name>
 		<IncludedIdList>
@@ -2118,7 +2120,7 @@
 			</Parameters>
 		</Entry>
 	</PolicyRule>",1.0
-90,windows\printer\Intune OMA-URI\Audit Default Deny.xml,oma-uri,Default Deny,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[],[],"	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
+windows\printer\Intune OMA-URI\Audit Default Deny.xml,oma-uri,Default Deny,Windows Printer,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[],[],"	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -2131,7 +2133,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-91,windows\printer\Intune OMA-URI\Default Deny - custom policy.xml,oma-uri,Default Deny,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],"['{e5170dfb-19a9-4466-8109-d36c9c912b4e}', '{05b56e90-e682-48ff-a6c0-5602c9638182}']","	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
+windows\printer\Intune OMA-URI\Default Deny - custom policy.xml,oma-uri,Default Deny,Windows Printer,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[<devicecontrol.Property object at 0x000001F08FF6F230>],"['{e5170dfb-19a9-4466-8109-d36c9c912b4e}', '{05b56e90-e682-48ff-a6c0-5602c9638182}']","	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -2152,7 +2154,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-92,windows\printer\Intune OMA-URI\Default Deny - custom policy2.xml,oma-uri,Default Deny,{2751c448-6e6b-4c2c-81c1-c8ae02911bd5},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],[],"	<PolicyRule Id=""{2751c448-6e6b-4c2c-81c1-c8ae02911bd5}"" >
+windows\printer\Intune OMA-URI\Default Deny - custom policy2.xml,oma-uri,Default Deny,Windows Printer,{2751c448-6e6b-4c2c-81c1-c8ae02911bd5},[<devicecontrol.Property object at 0x000001F08FF6F470>],[],"	<PolicyRule Id=""{2751c448-6e6b-4c2c-81c1-c8ae02911bd5}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2751c448-6e6b-4c2c-81c1-c8ae02911bd5%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -2171,7 +2173,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-93,windows\printer\Intune OMA-URI\default_deny{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}.xml,oma-uri,Default Deny,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],"['{e5170dfb-19a9-4466-8109-d36c9c912b4e}', '{05b56e90-e682-48ff-a6c0-5602c9638182}']","	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
+windows\printer\Intune OMA-URI\default_deny{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}.xml,oma-uri,Default Deny,Windows Printer,{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3},[<devicecontrol.Property object at 0x000001F08FF6F8F0>],"['{e5170dfb-19a9-4466-8109-d36c9c912b4e}', '{05b56e90-e682-48ff-a6c0-5602c9638182}']","	<PolicyRule Id=""{e6ccf2cb-20d6-4478-bf2d-66f247ced6f3}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be6ccf2cb-20d6-4478-bf2d-66f247ced6f3%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
@@ -2192,7 +2194,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-94,windows\printer\Intune OMA-URI\deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml,oma-uri,Deny all other printing,{47420f70-ef17-467e-a982-ab4c3abde16e},['{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}'],['{257e3e1e-790c-4e29-ae2c-45a5f3363201}'],"	<PolicyRule Id=""{47420f70-ef17-467e-a982-ab4c3abde16e}"" >
+windows\printer\Intune OMA-URI\deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml,oma-uri,Deny all other printing,Windows Printer,{47420f70-ef17-467e-a982-ab4c3abde16e},[<devicecontrol.Property object at 0x000001F08FF6FDD0>],['{257e3e1e-790c-4e29-ae2c-45a5f3363201}'],"	<PolicyRule Id=""{47420f70-ef17-467e-a982-ab4c3abde16e}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B47420f70-ef17-467e-a982-ab4c3abde16e%7D/RuleData -->
 		<Name>Deny all other printing</Name>
 		<IncludedIdList>
@@ -2212,7 +2214,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-95,windows\printer\Intune OMA-URI\only_allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml,oma-uri,Only allow approved USB Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},['{05b56e90-e682-48ff-a6c0-5602c9638182}'],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
+windows\printer\Intune OMA-URI\only_allow_approved_usb_printer{f7e75634-7eec-4e67-bec5-5e7750cb9e02}.xml,oma-uri,Only allow approved USB Printer,Windows Printer,{f7e75634-7eec-4e67-bec5-5e7750cb9e02},[<devicecontrol.Property object at 0x000001F08FF6F020>],[],"	<PolicyRule Id=""{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"" >
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7D/RuleData -->
 		<Name>Only allow approved USB Printer</Name>
 		<IncludedIdList>
@@ -2249,7 +2251,7 @@
 			<Options>3</Options>
 		</Entry>
 	</PolicyRule>",1.0
-96,macOS\policy\rules\audit_write_access.json,mac,Audit Write to all removable storage,f745aeec-3233-4ca5-961c-2e8b55510784,['9b28fae8-72f7-4267-a1a5-685f747a7146'],[],"{
+macOS\policy\rules\audit_write_access.json,mac,Audit Write to all removable storage,Apple Removable Media,f745aeec-3233-4ca5-961c-2e8b55510784,[<devicecontrol.Property object at 0x000001F08E376D80>],[],"{
     ""id"": ""f745aeec-3233-4ca5-961c-2e8b55510784"",
     ""name"": ""Audit Write to all removable storage"",
     ""includeGroups"": [
@@ -2272,7 +2274,7 @@
         }
     ]
 }",1.0
-97,macOS\policy\rules\demo_policies.json,mac,Allow Read Activity,f7e75634-7eec-4e67-bec5-5e7750cb9e02,['9b28fae8-72f7-4267-a1a5-685f747a7146'],[],"{
+macOS\policy\rules\demo_policies.json,mac,Allow Read Activity,Apple Generic Device,f7e75634-7eec-4e67-bec5-5e7750cb9e02,[<devicecontrol.Property object at 0x000001F08FF7D910>],[],"{
     ""id"": ""f7e75634-7eec-4e67-bec5-5e7750cb9e02"",
     ""name"": ""Allow Read Activity"",
     ""includeGroups"": [
@@ -2305,7 +2307,7 @@
         }
     ]
 }",1.0
-98,macOS\policy\rules\demo_policies.json,mac,Default Deny,f3520ea7-fd1b-4237-8ebc-96911db44f8e,[],[],"{
+macOS\policy\rules\demo_policies.json,mac,Default Deny,Apple Generic Device,f3520ea7-fd1b-4237-8ebc-96911db44f8e,[],[],"{
     ""id"": ""f3520ea7-fd1b-4237-8ebc-96911db44f8e"",
     ""name"": ""Default Deny"",
     ""includeGroups"": [],
@@ -2329,7 +2331,7 @@
         }
     ]
 }",1.0
-99,macOS\policy\rules\scenario_1_gpo_policy_-_prevent_write_and_execute_access_to_all_but_allow_specific_approved_usbs.json,mac,Audit Write and Execute access to aproved USBs,36ae1037-a639-4cff-946b-b36c53089a4c,['65fa649a-a111-4912-9294-fb6337a25038'],[],"{
+macOS\policy\rules\scenario_1_gpo_policy_-_prevent_write_and_execute_access_to_all_but_allow_specific_approved_usbs.json,mac,Audit Write and Execute access to aproved USBs,Apple Removable Media,36ae1037-a639-4cff-946b-b36c53089a4c,[<devicecontrol.Property object at 0x000001F08FF7D880>],[],"{
     ""id"": ""36ae1037-a639-4cff-946b-b36c53089a4c"",
     ""name"": ""Audit Write and Execute access to aproved USBs"",
     ""includeGroups"": [
@@ -2364,7 +2366,7 @@
         }
     ]
 }",1.0
-100,macOS\policy\rules\scenario_1_gpo_policy_-_prevent_write_and_execute_access_to_all_but_allow_specific_approved_usbs.json,mac,Block Write and Execute Access,c544a991-5786-4402-949e-a032cb790d0e,['9b28fae8-72f7-4267-a1a5-685f747a7146'],['65fa649a-a111-4912-9294-fb6337a25038'],"{
+macOS\policy\rules\scenario_1_gpo_policy_-_prevent_write_and_execute_access_to_all_but_allow_specific_approved_usbs.json,mac,Block Write and Execute Access,Apple Removable Media,c544a991-5786-4402-949e-a032cb790d0e,[<devicecontrol.Property object at 0x000001F0FFF99F40>],['65fa649a-a111-4912-9294-fb6337a25038'],"{
     ""id"": ""c544a991-5786-4402-949e-a032cb790d0e"",
     ""name"": ""Block Write and Execute Access"",
     ""includeGroups"": [
@@ -2402,7 +2404,7 @@
         }
     ]
 }",1.0
-101,macOS\policy\samples\audit_all_apple_devices.json,mac,Audit all Apple Devices,772cef80-229f-48b4-bd17-a6913009298e,['3f082cd3-f701-4c21-9a6a-ed115c28e217'],[],"{
+macOS\policy\samples\audit_all_apple_devices.json,mac,Audit all Apple Devices,Apple Device,772cef80-229f-48b4-bd17-a6913009298e,[<devicecontrol.Property object at 0x000001F08FF9FC20>],[],"{
     ""id"": ""772cef80-229f-48b4-bd17-a6913009298e"",
     ""name"": ""Audit all Apple Devices"",
     ""includeGroups"": [
@@ -2428,7 +2430,7 @@
         }
     ]
 }",1.0
-102,macOS\policy\samples\audit_all_removable_media.json,mac,Audit RWX to all Removable Media Devices,2e18a6b9-eb30-440a-a6aa-1f930b443baf,['94b5df10-bd2f-4b19-8a9f-539520b9d6ff'],[],"{
+macOS\policy\samples\audit_all_removable_media.json,mac,Audit RWX to all Removable Media Devices,Apple Removable Media,2e18a6b9-eb30-440a-a6aa-1f930b443baf,[<devicecontrol.Property object at 0x000001F08FF9DE80>],[],"{
     ""id"": ""2e18a6b9-eb30-440a-a6aa-1f930b443baf"",
     ""name"": ""Audit RWX to all Removable Media Devices"",
     ""includeGroups"": [
@@ -2466,7 +2468,7 @@
         }
     ]
 }",1.0
-103,macOS\policy\samples\audit_mobile_devices.json,mac,Audit All Mobile Devices,2275E5E3-44D4-429E-A8BF-F73B390CBF46,['3778B4FD-A98B-4374-9EFE-859B98446E7D'],[],"{
+macOS\policy\samples\audit_mobile_devices.json,mac,Audit All Mobile Devices,Apple Generic Device,2275E5E3-44D4-429E-A8BF-F73B390CBF46,[<devicecontrol.Property object at 0x000001F08FF9FD10>],[],"{
     ""id"": ""2275E5E3-44D4-429E-A8BF-F73B390CBF46"",
     ""name"": ""Audit All Mobile Devices"",
     ""includeGroups"": [
@@ -2490,7 +2492,7 @@
         }
     ]
 }",1.0
-104,macOS\policy\samples\deny_all_bluetooth_devices_except_samsung.json,mac,Deny all Bluetooth Devices,772cef80-229f-48b4-bd17-a6913009248d,['3f082cd3-f701-4c21-9a6a-ed115c28e417'],['1A783D32-C6A3-4F5F-9D47-271B12130DFD'],"{
+macOS\policy\samples\deny_all_bluetooth_devices_except_samsung.json,mac,Deny all Bluetooth Devices,Apple Bluetooth Device,772cef80-229f-48b4-bd17-a6913009248d,[<devicecontrol.Property object at 0x000001F08FF9F5F0>],['1A783D32-C6A3-4F5F-9D47-271B12130DFD'],"{
     ""id"": ""772cef80-229f-48b4-bd17-a6913009248d"",
     ""name"": ""Deny all Bluetooth Devices"",
     ""includeGroups"": [
@@ -2528,7 +2530,7 @@
         }
     ]
 }",1.0
-105,macOS\policy\samples\deny_all_bluetooth_devices_except_samsung.json,mac,Audit S21,3C094B7B-DB94-4F17-86B8-3AA1D6547C58,['1A783D32-C6A3-4F5F-9D47-271B12130DFD'],[],"{
+macOS\policy\samples\deny_all_bluetooth_devices_except_samsung.json,mac,Audit S21,Apple Bluetooth Device,3C094B7B-DB94-4F17-86B8-3AA1D6547C58,[<devicecontrol.Property object at 0x000001F08FD99730>],[],"{
     ""id"": ""3C094B7B-DB94-4F17-86B8-3AA1D6547C58"",
     ""name"": ""Audit S21"",
     ""includeGroups"": [
@@ -2551,7 +2553,7 @@
         }
     ]
 }",1.0
-106,macOS\policy\samples\deny_all_removable_media.json,mac,Deny RWX to all Removable Media Devices,69a4a010-acb1-4573-8a58-50cf4ee7bc7f,['519a2e50-3bb7-49b7-9ae0-6feb415d58ca'],[],"{
+macOS\policy\samples\deny_all_removable_media.json,mac,Deny RWX to all Removable Media Devices,Apple Removable Media,69a4a010-acb1-4573-8a58-50cf4ee7bc7f,[<devicecontrol.Property object at 0x000001F08FFB1010>],[],"{
     ""id"": ""69a4a010-acb1-4573-8a58-50cf4ee7bc7f"",
     ""name"": ""Deny RWX to all Removable Media Devices"",
     ""includeGroups"": [
@@ -2590,7 +2592,7 @@
         }
     ]
 }",1.0
-107,macOS\policy\samples\deny_debug_on_android.json,mac,Deny all Portable Devices,772cef80-229f-48b4-bd17-a6913009249d,['3f082cd3-f701-4c21-9a6a-ed115c28e41D'],[],"{
+macOS\policy\samples\deny_debug_on_android.json,mac,Deny all Portable Devices,Apple Portable Device,772cef80-229f-48b4-bd17-a6913009249d,[<devicecontrol.Property object at 0x000001F08FFB0770>],[],"{
     ""id"": ""772cef80-229f-48b4-bd17-a6913009249d"",
     ""name"": ""Deny all Portable Devices"",
     ""includeGroups"": [
@@ -2637,7 +2639,7 @@
         }
     ]
 }",1.0
-108,macOS\policy\samples\deny_exe_extension_on_removable_media.json,mac,Deny Execute on all Removable Media Devices,772cef80-229f-48b4-bd17-a69130092981,['3f082cd3-f701-4c21-9a6a-ed115c28e211'],[],"{
+macOS\policy\samples\deny_exe_extension_on_removable_media.json,mac,Deny Execute on all Removable Media Devices,Apple Removable Media,772cef80-229f-48b4-bd17-a69130092981,[<devicecontrol.Property object at 0x000001F08FFB24B0>],[],"{
     ""id"": ""772cef80-229f-48b4-bd17-a69130092981"",
     ""name"": ""Deny Execute on all Removable Media Devices"",
     ""includeGroups"": [
@@ -2695,7 +2697,7 @@
         }
     ]
 }",1.0
-109,macOS\policy\samples\deny_mobile_devices.json,mac,Block All Portable Devices,350C4528-DE48-4E73-9298-0C9823CA1064,['3778B4FD-A98B-4374-9EFE-859B98446E7D'],[],"{
+macOS\policy\samples\deny_mobile_devices.json,mac,Block All Portable Devices,Apple Portable Device,350C4528-DE48-4E73-9298-0C9823CA1064,[<devicecontrol.Property object at 0x000001F08FFB25A0>],[],"{
     ""id"": ""350C4528-DE48-4E73-9298-0C9823CA1064"",
     ""name"": ""Block All Portable Devices"",
     ""includeGroups"": [
@@ -2736,7 +2738,7 @@
         }
     ]
 }",1.0
-110,macOS\policy\samples\deny_mobile_devices.json,mac,Block All Apple Devices,D861EEB3-9201-45F4-AC63-F823D4957D59,['3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4'],[],"{
+macOS\policy\samples\deny_mobile_devices.json,mac,Block All Apple Devices,Apple Device,D861EEB3-9201-45F4-AC63-F823D4957D59,[<devicecontrol.Property object at 0x000001F08FF9F6B0>],[],"{
     ""id"": ""D861EEB3-9201-45F4-AC63-F823D4957D59"",
     ""name"": ""Block All Apple Devices"",
     ""includeGroups"": [
@@ -2779,7 +2781,7 @@
         }
     ]
 }",1.0
-111,macOS\policy\samples\deny_removable_media_except_kingston.json,mac,Deny RWX to all Removable Media Devices except Kingston,772cef80-229f-48b4-bd17-a69130092981,['3f082cd3-f701-4c21-9a6a-ed115c28e211'],['3f082cd3-f701-4c21-9a6a-ed115c28e212'],"{
+macOS\policy\samples\deny_removable_media_except_kingston.json,mac,Deny RWX to all Removable Media Devices except Kingston,Apple Removable Media,772cef80-229f-48b4-bd17-a69130092981,[<devicecontrol.Property object at 0x000001F08FFB1A30>],['3f082cd3-f701-4c21-9a6a-ed115c28e212'],"{
     ""id"": ""772cef80-229f-48b4-bd17-a69130092981"",
     ""name"": ""Deny RWX to all Removable Media Devices except Kingston"",
     ""includeGroups"": [

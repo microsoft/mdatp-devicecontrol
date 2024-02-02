@@ -807,7 +807,8 @@ class Group:
         VPNConnectionNameProperty,
         VPNConnectionStatusProperty,
         VPNDnsSuffixProperty,
-        VPNServerAddressProperty
+        VPNServerAddressProperty,
+        WindowsGroupProperty
     ]
 
     VPNConnectionGroupType = GroupType(
@@ -831,7 +832,8 @@ class Group:
     )
 
     FileGroupProperties = [
-        FilePathProperty
+        FilePathProperty,
+        WindowsGroupProperty
     ]
 
     MacFileGroupProperties = [
@@ -871,7 +873,8 @@ class Group:
 
     PrintJobGroupProperties = [
         PrintDocumentNameProperty,
-        PrintOutputFileNameProperty
+        PrintOutputFileNameProperty,
+        WindowsGroupProperty
     ]
 
     PrintJobGroupType = GroupType(
@@ -1092,6 +1095,12 @@ class PolicyRule:
             if device_property_type.name == GroupProperty.WindowsGroupId:
                 groups_list.append(device_property_value)
 
+    def add_mac_group(groupId,device_properties_list,groups_list):
+        device_property =  Property(Group.MacGroupProperty,groupId)          
+        device_properties_list.append(device_property)
+        groups_list.append(groupId)
+
+
     Allow = Enforcement(Enforcement.Allow,"Allow",{
         "mac":"allow",
         "gpo":"Allow",
@@ -1178,12 +1187,16 @@ class PolicyRule:
                 self.name = root["name"]
 
             if "includeGroups" in root.keys():
-                self.included_groups = root["includeGroups"]
+                for groupId in root["includeGroups"]:
+                    PolicyRule.add_mac_group(groupId,self.included_device_properties,self.included_groups)
+                
             
             
             if "excludeGroups" in root.keys():
-                self.excluded_groups = root["excludeGroups"]
-
+                for groupId in root["excludeGroups"]:
+                    PolicyRule.add_mac_group(groupId,self.excluded_device_properties,self.excluded_groups)
+                
+                
             if "entries" in root.keys():
                 entries = root["entries"]
                 for entry in entries:

@@ -759,7 +759,10 @@ class Inventory:
             new_row["groupId"] = group.id
             if group.format != "mac":
                 for property in group._properties:
-                    new_row[property.label] = property.value
+                    if property.label in new_row:
+                        new_row[property.label] = new_row[property.label]+", "+property.value
+                    else:
+                        new_row[property.label] = property.value
             else:
                 clause_table = Helper.generate_clause_table(group,True)
                 for clause_row in clause_table:

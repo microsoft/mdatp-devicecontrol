@@ -1,3 +1,3 @@
-,groupId,VPN Connection Name,VPN Connection Status,VPN Connection DNS Suffix,VPN Connection Server Address
-0,{d633d17d-d1d1-4c73-aa27-c545c343b6d7},MSFTVPN,Connected,corp.microsoft.com,msftvpn.*.microsoft.com
-1,{d633d17d-d1d1-4c73-aa27-c545c343b6d7},MSFTVPN,Connected,corp.microsoft.com,msftvpn.*.microsoft.com
+groupId,VPN Connection Name,VPN Connection Status,VPN Connection DNS Suffix,VPN Connection Server Address,Device Control Group
+{d633d17d-d1d1-4c73-aa27-c545c343b6d7},MSFTVPN,Connected,corp.microsoft.com,msftvpn.*.microsoft.com,
+{d633d17d-d1d1-4c73-aa27-c545c343b6d7},MSFTVPN,Connected,corp.microsoft.com,msftvpn.*.microsoft.com,
