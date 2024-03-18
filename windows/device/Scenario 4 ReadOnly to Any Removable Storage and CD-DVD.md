@@ -109,8 +109,8 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 - [windows/device/Intune OMA-URI/Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml](/windows/device/Intune%20OMA-URI/Scenario%204%20ReadOnly%20to%20Any%20Removable%20Storage%20and%20CD-DVD.xml)
+- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
