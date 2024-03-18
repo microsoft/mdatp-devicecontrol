@@ -3,7 +3,8 @@
     "scenarios":[
         {
             "file": "Group Policy\\Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml",
-            "title": "Scenario 1"
+            "title": "Scenario 1",
+            "description": "Prevent Write and Execute access to all but allow specific approved USBs"
            
         },
         {

@@ -77,31 +77,49 @@ Used to generate documentaion on device control policies
 
 ```
 usage: dcdoc.py [-h] [-q QUERY | -s SCENARIOS | -i IN_FILE]
-                [-p SOURCE_PATH] [-f FORMAT] [-o OUT_FILE] [-d DEST]
-                [-g GENERATED_FILES_LOCATIONS] [-t TEMPLATE]
+                [-p SOURCE_PATH] [-f FORMAT] [-o OUT_FILE]
+                [-d DEST] [-g GENERATED_FILES_LOCATIONS]
+                [-t TEMPLATE] [-rt README_TEMPLATE]
+                [-r README_FILE] [-tp TEMPLATES_PATH]
 
-Utility for generating documentation for device control policies.
+Utility for generating documentation for device control
+policies.
 
 options:
   -h, --help            show this help message and exit
   -q QUERY, --query QUERY
-                        The query to retrieve the policy rules to process    
+                        The query to retrieve the policy
+                        rules to process
   -s SCENARIOS, --scenarios SCENARIOS
-                        A JSON file that contains a list of scenarios to     
-                        process
+                        A JSON file that contains a list of
+                        scenarios to process
   -i IN_FILE, --input IN_FILE
                         A policy rule to process
   -p SOURCE_PATH, --path SOURCE_PATH
-                        The path to search for source files
+                        The path to search for source files.
+                        Defaults to current working
+                        directory.
   -f FORMAT, --format FORMAT
-                        The format of the output (text)
+                        The format of the output. Defaults    
+                        to text.
   -o OUT_FILE, --output OUT_FILE
                         The output file
-  -d DEST, --dest DEST  The output directory
+  -d DEST, --dest DEST  The output directory. Defaults to     
+                        current working directory.
   -g GENERATED_FILES_LOCATIONS, --generate GENERATED_FILES_LOCATIONS
-                        Generates files for other formats
+                        Generates files for other formats     
   -t TEMPLATE, --template TEMPLATE
-                        Jinja2 template to use to generate output
+                        Jinja2 template to use to generate    
+                        output. Defaults to dcutil.j2.        
+  -rt README_TEMPLATE, --readme_template README_TEMPLATE      
+                        Jinja2 template to use for the        
+                        readme. Defaults to readme.j2.        
+  -r README_FILE, --readme README_FILE
+                        The readme file to generate.
+                        Defaults to readme.md.
+  -tp TEMPLATES_PATH, --templates_path TEMPLATES_PATH
+                        path to Jinja2 templates. Defaults    
+                        to templates.
 ```
 
 ```dcdoc``` loads all of the group and policy files found in the ```SOURCE_PATH``` into an inventory.

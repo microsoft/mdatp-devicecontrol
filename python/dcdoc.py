@@ -803,7 +803,7 @@ class Inventory:
 
 
 
-    def generate_text(self,result,dest,file,title, description="A sample policy", settings = None ):
+    def generate_text(self,result,dest,file,title, settings = None ):
         
         if settings is not None:
             custom_settings_values = settings.getIntuneCustomValues()
@@ -819,10 +819,6 @@ class Inventory:
         if result["mac_policy"] is not None:
             result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
 
-        templatePath = pathlib.Path(__file__ ).parent.resolve() 
-        templatePath = pathlib.Path(str(templatePath)+ os.sep + "templates").resolve()
-        templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
-        templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = args.template
         template = templateEnv.get_template(TEMPLATE_FILE)
 
@@ -840,7 +836,7 @@ class Inventory:
              "macPolicy":result["mac_policy"],
              "macError": result["mac_error"],
              "entry_type": result["entry_type"],
-             "description": description,
+             "description": result["description"],
              "settings": settings,
              "env":os.environ,
              "Helper":Helper,
@@ -851,7 +847,18 @@ class Inventory:
             out_file.write(out)
             out_file.close()
 
+class Description:
 
+    def __init__(self,result,description_template_name):
+        self.result = result
+        self.template = templateEnv.get_template(description_template_name)
+
+        
+
+    def __str__(self):
+        return self.template.render({
+            "result":self.result
+        })
 
 def dir_path(string):
     paths = string.split(os.pathsep)
@@ -873,6 +880,22 @@ def file(path):
         return path
     else:
         raise argparse.ArgumentError("Not a file "+path)
+    
+
+def path_array(path):
+    paths = []
+    path_strs = str.split(path,os.pathsep)
+    for path_str in path_strs:
+        
+        path = pathlib.Path(path_str)
+        if path.is_absolute():
+            paths.append(path)
+        else:
+            parent_path = pathlib.Path(__file__ ).parent.resolve() 
+            path = pathlib.Path(str(parent_path)+ os.sep + path_str).resolve()
+            paths.append(path)
+
+    return paths
 
 def format(string):
     match string:
@@ -930,13 +953,9 @@ def load_scenarios(scenarios_file):
          scenarios = json.loads(file.read())
          return scenarios
      
-def generate_readme(results,dest,title):
-    templatePath = pathlib.Path(__file__).parent.resolve()
-    templatePath = pathlib.Path(str(templatePath)+ os.sep + "templates").resolve()
-    templateLoader = jinja2.FileSystemLoader(searchpath=templatePath)
-    templateEnv = jinja2.Environment(loader=templateLoader)
-    TEMPLATE_FILE = "readme.j2"
-    template = templateEnv.get_template(TEMPLATE_FILE)
+def generate_readme(results,dest,title,readme_template,readme_file,templates_path):
+
+    template = templateEnv.get_template(readme_template)
     out = template.render(
         {
             "results":results,
@@ -946,7 +965,13 @@ def generate_readme(results,dest,title):
          }
     )
 
-    with open(dest+os.sep+"readme.md","w") as out_file:
+
+    if pathlib.Path.is_absolute(pathlib.Path(readme_file)):
+        readme_file_path = readme_file
+    else:
+        readme_file_path = dest+os.sep+readme_file
+
+    with open(readme_file_path,"w") as out_file:
         out_file.write(out)
         out_file.close()
 
@@ -962,14 +987,22 @@ if __name__ == '__main__':
     input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rule to process')
 
 
-    arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files',default=".")
-    arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output (text)",default="text")
+    arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files.  Defaults to current working directory.',default=".")
+    arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output.  Defaults to text.",default="text")
     arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
-    arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory",default=".")
+    arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory.  Defaults to current working directory.",default=".")
     arg_parser.add_argument('-g','--generate',dest="generated_files_locations", type=generate_files_format, help='Generates files for other formats')
-    arg_parser.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output",default="dcutil.j2")
+    arg_parser.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output.  Defaults to dcutil.j2.",default="dcutil.j2")
+    arg_parser.add_argument('-rt','--readme_template',dest="readme_template",help="Jinja2 template to use for the readme.  Defaults to readme.j2.",default="readme.j2")
+    arg_parser.add_argument('-dt','--description_template',dest="description_template",help="Jinja2 template to use for the description.  Defaults to description.j2.",default="description.j2")
+    arg_parser.add_argument('-r','--readme',dest="readme_file",help="The readme file to generate.  Defaults to readme.md.",default="readme.md")
+    arg_parser.add_argument('-tp','--templates_path',dest="templates_path",help="path to Jinja2 templates.  Defaults to templates.",default="templates",type=path_array)
+    
 
     args = arg_parser.parse_args()
+
+    templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
+    templateEnv = jinja2.Environment(loader=templateLoader)
 
     inventory = Inventory(args.source_path,args.generated_files_locations,args.dest)
 
@@ -993,11 +1026,14 @@ if __name__ == '__main__':
             policy_path = policy_path.relative_to(os.getcwd())
             policy_file = str(policy_path)
 
-            description = "A sample policy"
+            
             
             title = None
+            description = None
+
             if "description" in rule.keys():
                 description = rule["description"]
+            
             if "title" in rule.keys():
                 title = rule["title"]
             
@@ -1011,7 +1047,13 @@ if __name__ == '__main__':
             if args.format == "text":
                 if title is None:
                     title = default_title
-                inventory.generate_text(result,args.dest,default_outfile,title,description,settings)
+
+                if description is not None:
+                    result["description"] = description
+                else:
+                    result["description"] = Description(result,args.description_template)
+
+                inventory.generate_text(result,args.dest,default_outfile,title,settings)
 
             results[policy_file] = {
                 "result":result,
@@ -1019,7 +1061,7 @@ if __name__ == '__main__':
                 "file": default_outfile
             }
 
-        generate_readme(results,args.dest,scenarios["title"])
+        generate_readme(results,args.dest,scenarios["title"],args.readme_template, args.readme_file, args.templates_path)
 
 
     elif query is None:
@@ -1030,7 +1072,10 @@ if __name__ == '__main__':
 
         if args.format == "text":
             result = inventory.process_query(query)
-            inventory.generate_text(result,args.dest,out_file,title,None,settings)
+
+            result["description"] = Description(result,args.description_template)
+
+            inventory.generate_text(result,args.dest,out_file,title,settings)
         elif args.format == "csv":
             inventory.generate_csv(args.dest)
         
