@@ -1,6 +1,6 @@
 # Device control policy sample: Audit Write Access
 
-Description: A sample policy              
+Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE247A2840>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE247A27B0>}, 'web_paths': [], 'rules': {}, 'groups': {}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE2474ED80>, 'groupsXML': '<Groups>\n</Groups>', 'rulesXML': '<PolicyRules>\n</PolicyRules>', 'mac_policy': '{\n    "groups": [],\n    "rules": [],\n    "settings": {\n        "global": {\n            "defaultEnforcement": "deny"\n        }\n    }\n}', 'mac_error': None, 'windows_support': <devicecontrol.Support object at 0x000002AE24705FA0>, 'entry_type': None, 'description': <__main__.Description object at 0x000002AE24726B70>}              
 Device Type: None
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
