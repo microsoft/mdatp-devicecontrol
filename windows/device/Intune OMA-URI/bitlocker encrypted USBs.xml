@@ -1,5 +1,6 @@
     <Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}">
         <!-- Encrypted Removable Media Devices -->
+        <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7b33e06f08-8787-4219-9dca-5872854f9d79%7d/GroupData -->
         <MatchType>MatchAll</MatchType>
         <DescriptorIdList>
             <PrimaryId>RemovableMediaDevices</PrimaryId>
