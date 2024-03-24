@@ -1,4 +1,4 @@
 pandas
 jinja2
 azure-identity
-msgraph-sdk
+msgraph-beta-sdk

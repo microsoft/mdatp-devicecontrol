@@ -2,19 +2,17 @@ import asyncio
 import configparser
 import os
 import base64
-from msgraph.generated.models.o_data_errors.o_data_error import ODataError
+from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 from dcgraph import Graph
 import plistlib
 
 async def main():
-    print('Python Graph Tutorial\n')
-
+    
     # Load settings
     config = configparser.ConfigParser()
 
     config_file_path = os.path.join(os.path.dirname(__file__), "config.cfg")  
     config.read(config_file_path)
-    print(config.sections())
     azure_settings = config['azure']
 
     graph: Graph = Graph(azure_settings)
@@ -86,6 +84,11 @@ async def make_graph_call(graph: Graph):
             if 'deviceControl' in plist['PayloadContent'][0]:
                 deviceControl = plist['PayloadContent'][0]['deviceControl']
                 print(deviceControl)
+
+                id = device_config.id
+
+                assignments = await graph.get_assignments(id)
+
 
 
 # Run main
