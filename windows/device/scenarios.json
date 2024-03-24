@@ -69,6 +69,16 @@
         },
         {
             "file": "Group Policy\\Mass_storage_policies_GPO_2.xml"
+        },
+        {
+            "file": "Intune OMA-URI\\Allow only bitlocker encrypted USBs.xml",
+            "title": "Allow only bitlocker encrypted USBs",
+            "settings":{
+                "DeviceControlEnabled": true,
+                "DefaultEnforcement": "Deny",
+                "SecuredDevicesConfiguration": "RemovableMediaDevices"
+
+            }
         }
     ]
     

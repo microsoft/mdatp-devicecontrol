@@ -1,6 +1,6 @@
 # Device control policy sample: Mass_storage_policies_GPO_2
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B466faba8-dddf-4ae5-9871-dabbb600d4f3%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A3350>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B540efb7f-1836-4956-8888-5d41d981d6ba%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A0A40>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B505e2563-1de8-40aa-b8f9-472a37b2f6ee%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A0830>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE247D8440>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A1D60>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE247D8230>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A1670>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE247A0980>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE247A26F0>}, 'web_paths': ['windows/device/Group Policy/mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml', 'windows/device/Group Policy/Mass_storage_groups_GPO_2.xml', 'windows/device/Group Policy/mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml', 'windows/device/Group Policy/mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml', 'windows/device/Group Policy/Mass_storage_policies_GPO_2.xml'], 'rules': {'{466faba8-dddf-4ae5-9871-dabbb600d4f3}': <devicecontrol.PolicyRule object at 0x000002AE246B7260>, '{540efb7f-1836-4956-8888-5d41d981d6ba}': <devicecontrol.PolicyRule object at 0x000002AE2464BC50>, '{505e2563-1de8-40aa-b8f9-472a37b2f6ee}': <devicecontrol.PolicyRule object at 0x000002AE2464B980>}, 'groups': {'{7f191817-c305-451d-812a-1c4b03ebcec8}': <devicecontrol.Group object at 0x000002AE246B5970>, '{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}': <devicecontrol.Group object at 0x000002AE24593CE0>, '{d2887bd4-a916-4011-a385-83c6b15df529}': <devicecontrol.Group object at 0x000002AE246B6C60>, '{1653593b-5b92-47e6-975a-c43ffa9cd28d}': <devicecontrol.Group object at 0x000002AE2464A7B0>}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE247A06E0>, 'groupsXML': '<Groups>\n\t<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->\n\t\t<Name>Mass_storage_groups_GPO_2_2</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<VID_PID>07B4_0232</VID_PID>\n\t\t\t<VID_PID>07B4_0279</VID_PID>\n\t\t\t<VID_PID>07B4_0244</VID_PID>\n\t\t\t<VID_PID>07B4_0264</VID_PID>\n\t\t\t<VID_PID>07B4_0236</VID_PID>\n\t\t\t<VID_PID>07B4_0245</VID_PID>\n\t\t\t<VID_PID>0911_1F40</VID_PID>\n\t\t\t<VID_PID>0911_251C</VID_PID>\n\t\t\t<VID_PID>1D54_1072</VID_PID>\n\t\t\t<VID_PID>1D54_1070</VID_PID>\n\t\t\t<VID_PID>1D54_1080</VID_PID>\n\t\t\t<VID_PID>054C_0B6F</VID_PID>\n\t\t</DescriptorIdList>\n\t</Group>\n\t<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->\n\t\t<Name>Mass_storage_groups_GPO_2_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PrimaryId>RemovableMediaDevices</PrimaryId>\n\t\t\t<PrimaryId>CdRomDevices</PrimaryId>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t\t<FriendlyNameId>SDHC*</FriendlyNameId>\n\t\t\t<FriendlyNameId>SDXC*</FriendlyNameId>\n\t\t\t<DeviceId>USBSTOR\\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>\n\t\t\t<VID_PID>0951_169D</VID_PID>\n\t\t\t<VID_PID>2009_16AF</VID_PID>\n\t\t\t<VID_PID>1908_0226</VID_PID>\n\t\t</DescriptorIdList>\n\t</Group>\n\t<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->\n\t\t<Name>Mass_storage_groups_GPO_2_4</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<VID_PID>09CB_1007</VID_PID>\n\t\t\t<VID_PID>0F7E_900C</VID_PID>\n\t\t</DescriptorIdList>\n\t</Group>\n\t<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->\n\t\t<Name>Mass_storage_groups_GPO_2_3</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<VID_PID>046D_0837</VID_PID>\n\t\t\t<VID_PID>046D_085B</VID_PID>\n\t\t\t<VID_PID>046D_0825</VID_PID>\n\t\t\t<VID_PID>03F0_5705</VID_PID>\n\t\t\t<VID_PID>03F0_5D05</VID_PID>\n\t\t\t<VID_PID>040A_6030</VID_PID>\n\t\t\t<VID_PID>040A_601D</VID_PID>\n\t\t\t<VID_PID>1083_1646</VID_PID>\n\t\t\t<VID_PID>1083_1647</VID_PID>\n\t\t\t<VID_PID>04CA_7053</VID_PID>\n\t\t\t<VID_PID>04CA_7054</VID_PID>\n\t\t\t<VID_PID>04F2_B51C</VID_PID>\n\t\t\t<VID_PID>05C8_0383</VID_PID>\n\t\t\t<VID_PID>05C8_034B</VID_PID>\n\t\t\t<VID_PID>0461_4DFE</VID_PID>\n\t\t</DescriptorIdList>\n\t</Group>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{466faba8-dddf-4ae5-9871-dabbb600d4f3}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B466faba8-dddf-4ae5-9871-dabbb600d4f3%7D/RuleData -->\n\t\t<Name>Gestion des périphériques externes</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t\t<GroupId>{7f191817-c305-451d-812a-1c4b03ebcec8}</GroupId>\n\t\t\t<GroupId>{1653593b-5b92-47e6-975a-c43ffa9cd28d}</GroupId>\n\t\t\t<GroupId>{d2887bd4-a916-4011-a385-83c6b15df529}</GroupId>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{f577a950-ce74-4153-90fd-c79d3bf0eb3d}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{428e439f-d8ee-4314-9a8a-92685c4d961c}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{a3886e5f-093f-4e9c-812f-d7334d5ee052}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{4565ab13-0d58-4a7c-8399-5b65f470ecae}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{f7cd79af-e330-4fea-9345-467d9bb51131}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{e8e9077f-5111-4a7d-ade6-723c08fd7797}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{a3421c37-ac07-4085-9bbd-ec9b4ebbd60e}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{e2f263f2-c597-406d-a5f7-9d91909a32c6}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{170070b1-b68d-4175-9cd4-753a76197496}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{ca86bec9-ba43-4849-a632-e59e5e5c207b}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n\t<PolicyRule Id="{540efb7f-1836-4956-8888-5d41d981d6ba}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B540efb7f-1836-4956-8888-5d41d981d6ba%7D/RuleData -->\n\t\t<Name>Gestion des dictaphones</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{7f191817-c305-451d-812a-1c4b03ebcec8}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{bdd26ee1-4d28-487a-9931-6322ae9e3f91}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{92237bd0-84bf-4d1a-81c0-2507d6274532}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{cd7fb4ed-fe8d-4122-949e-3c8306152978}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{84a53752-fbdc-4e39-b15c-8787130bc6d6}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{873026a4-0c93-4061-b784-b1f7bb43b891}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{77073a70-eacd-4008-b031-9bdce7cb65be}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{d3255814-cacb-4a78-8cf7-5195db00b049}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{5bdd9755-6e5a-4692-ba71-d597b709d2dd}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n\t<PolicyRule Id="{505e2563-1de8-40aa-b8f9-472a37b2f6ee}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B505e2563-1de8-40aa-b8f9-472a37b2f6ee%7D/RuleData -->\n\t\t<Name>Gestion des appareils immobiliers</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{d2887bd4-a916-4011-a385-83c6b15df529}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{9ca73bfa-4ee9-4b2d-acfd-5a2106a83d05}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{927520b9-d12e-4d68-b7e0-d3c0e639a341}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{125f91ef-0253-4846-8532-cc83fe9c3187}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{6597a4ba-f8e7-4cf2-a184-4e17cc7c3a62}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{79fca045-f064-4d07-8b25-213687f3ee75}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{8db057be-a510-4efe-b8b4-d64e9c5848c3}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>XXXXXX</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{92d71792-5349-4c64-8a72-b9f35fbd4cab}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{d110deed-4386-4e50-816c-4584e2902de2}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'Primary ID [CdRomDevices] is not supported on macOS.', 'windows_support': <devicecontrol.Support object at 0x000002AE247D8950>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE247A0800>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -389,6 +389,53 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### Mass_storage_groups_GPO_2_1
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
+| FriendlyNameId | SDHC* |
+| FriendlyNameId | SDXC* |
+| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
+| VID_PID | 0951_169D |
+| VID_PID | 2009_16AF |
+| VID_PID | 1908_0226 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_1</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
+		<FriendlyNameId>SDHC*</FriendlyNameId>
+		<FriendlyNameId>SDXC*</FriendlyNameId>
+		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+		<VID_PID>0951_169D</VID_PID>
+		<VID_PID>2009_16AF</VID_PID>
+		<VID_PID>1908_0226</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### Mass_storage_groups_GPO_2_2
 
 
@@ -437,86 +484,6 @@ The match type for the group is *MatchAny*.
 		<VID_PID>1D54_1070</VID_PID>
 		<VID_PID>1D54_1080</VID_PID>
 		<VID_PID>054C_0B6F</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Mass_storage_groups_GPO_2_1
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| PrimaryId | CdRomDevices |
-| PrimaryId | WpdDevices |
-| FriendlyNameId | SDHC* |
-| FriendlyNameId | SDXC* |
-| DeviceId | USBSTOR\CDROM&VEN_KINGSTON&PROD_DTLOCKER+G3 |
-| VID_PID | 0951_169D |
-| VID_PID | 2009_16AF |
-| VID_PID | 1908_0226 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
-		<FriendlyNameId>SDHC*</FriendlyNameId>
-		<FriendlyNameId>SDXC*</FriendlyNameId>
-		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-		<VID_PID>0951_169D</VID_PID>
-		<VID_PID>2009_16AF</VID_PID>
-		<VID_PID>1908_0226</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Mass_storage_groups_GPO_2_4
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 09CB_1007 |
-| VID_PID | 0F7E_900C |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_4</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>09CB_1007</VID_PID>
-		<VID_PID>0F7E_900C</VID_PID>
 	</DescriptorIdList>
 </Group>
 ```
@@ -581,6 +548,39 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Mass_storage_groups_GPO_2_4
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 09CB_1007 |
+| VID_PID | 0F7E_900C |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
+	<Name>Mass_storage_groups_GPO_2_4</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>09CB_1007</VID_PID>
+		<VID_PID>0F7E_900C</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
 | Setting Name |  Setting Value | Documentation |
@@ -592,10 +592,7 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/mass_storage_groups_gpo_2_1{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}.xml](/windows/device/Group%20Policy/mass_storage_groups_gpo_2_1%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D.xml)
 - [windows/device/Group Policy/Mass_storage_groups_GPO_2.xml](/windows/device/Group%20Policy/Mass_storage_groups_GPO_2.xml)
-- [windows/device/Group Policy/mass_storage_groups_gpo_2_2{7f191817-c305-451d-812a-1c4b03ebcec8}.xml](/windows/device/Group%20Policy/mass_storage_groups_gpo_2_2%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D.xml)
-- [windows/device/Group Policy/mass_storage_groups_gpo_2_4{d2887bd4-a916-4011-a385-83c6b15df529}.xml](/windows/device/Group%20Policy/mass_storage_groups_gpo_2_4%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D.xml)
 - [windows/device/Group Policy/Mass_storage_policies_GPO_2.xml](/windows/device/Group%20Policy/Mass_storage_policies_GPO_2.xml)
 
 
@@ -616,20 +613,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_2</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_2 for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
 <summary>Create a reusable setting for Mass_storage_groups_GPO_2_1</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
@@ -644,12 +627,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_2</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
+   4. Enter the Mass_storage_groups_GPO_2_2 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -664,6 +647,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Click on Reusable Settings
    3. Click (+) Add
    4. Enter the Mass_storage_groups_GPO_2_3 for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Mass_storage_groups_GPO_2_4</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Mass_storage_groups_GPO_2_4 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -1034,6 +1031,22 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{7f191817-c305-451d-812a-1c4b03ebcec8}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7f191817-c305-451d-812a-1c4b03ebcec8%7D/GroupData -->
 		<Name>Mass_storage_groups_GPO_2_2</Name>
@@ -1051,31 +1064,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<VID_PID>1D54_1070</VID_PID>
 			<VID_PID>1D54_1080</VID_PID>
 			<VID_PID>054C_0B6F</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_1</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<PrimaryId>CdRomDevices</PrimaryId>
-			<PrimaryId>WpdDevices</PrimaryId>
-			<FriendlyNameId>SDHC*</FriendlyNameId>
-			<FriendlyNameId>SDXC*</FriendlyNameId>
-			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-			<VID_PID>0951_169D</VID_PID>
-			<VID_PID>2009_16AF</VID_PID>
-			<VID_PID>1908_0226</VID_PID>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
-		<Name>Mass_storage_groups_GPO_2_4</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>09CB_1007</VID_PID>
-			<VID_PID>0F7E_900C</VID_PID>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
@@ -1098,6 +1086,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 			<VID_PID>05C8_0383</VID_PID>
 			<VID_PID>05C8_034B</VID_PID>
 			<VID_PID>0461_4DFE</VID_PID>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{d2887bd4-a916-4011-a385-83c6b15df529}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd2887bd4-a916-4011-a385-83c6b15df529%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_4</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>09CB_1007</VID_PID>
+			<VID_PID>0F7E_900C</VID_PID>
 		</DescriptorIdList>
 	</Group>
 </Groups>
