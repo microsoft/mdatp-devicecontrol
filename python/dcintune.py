@@ -1,8 +1,10 @@
 import asyncio
 import configparser
 import os
+import base64
 from msgraph.generated.models.o_data_errors.o_data_error import ODataError
 from dcgraph import Graph
+import plistlib
 
 async def main():
     print('Python Graph Tutorial\n')
@@ -76,7 +78,14 @@ async def send_mail(graph: Graph):
 
 async def make_graph_call(graph: Graph):
     configs = await graph.make_graph_call()
-    print(configs)
+    for device_config in configs.value:
+        if device_config.odata_type == "#microsoft.graph.macOSCustomConfiguration":
+            payload_bytes = device_config.payload
+            payload = base64.b64decode(payload_bytes)
+            plist = plistlib.loads(payload,fmt=plistlib.FMT_XML)
+            if 'deviceControl' in plist['PayloadContent'][0]:
+                deviceControl = plist['PayloadContent'][0]['deviceControl']
+                print(deviceControl)
 
 
 # Run main
