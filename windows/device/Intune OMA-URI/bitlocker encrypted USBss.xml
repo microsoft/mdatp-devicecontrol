@@ -1,0 +1,8 @@
+    <Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}">
+        <!-- Encrypted Removable Media Devices -->
+        <MatchType>MatchAll</MatchType>
+        <DescriptorIdList>
+            <PrimaryId>RemovableMediaDevices</PrimaryId>
+            <DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+        </DescriptorIdList>
+    </Group>
