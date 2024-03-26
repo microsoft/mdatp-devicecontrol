@@ -15,16 +15,18 @@ from msgraph_beta.generated.models.email_address import EmailAddress
 
 from msgraph_beta.generated.device_management.configuration_policies.item.assignments.assignments_request_builder import (AssignmentsRequestBuilder)
 
+scopes = "User.Read Mail.Read Mail.Send DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All"
+
 class Graph:
-    settings: SectionProxy
+    
     device_code_credential: DeviceCodeCredential
     user_client: GraphServiceClient
 
-    def __init__(self, config: SectionProxy):
-        self.settings = config
-        client_id = self.settings['clientId']
-        tenant_id = self.settings['tenantId']
-        graph_scopes = self.settings['graphUserScopes'].split(' ')
+    def __init__(self, tenantId, clientId):
+        
+        client_id = clientId
+        tenant_id = tenantId
+        graph_scopes = scopes.split(' ')
 
         self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
         self.user_client = GraphServiceClient(self.device_code_credential, graph_scopes)
@@ -50,7 +52,7 @@ class Graph:
         user = await self.user_client.me().get(request_configuration=request_config)
         return user
 
-    async def make_graph_call(self):
+    async def export_device_configurations(self):
         # INSERT YOUR CODE HERE
 
         #self.user_client.device_
@@ -64,3 +66,9 @@ class Graph:
  
         assignments = await self.user_client.device_management.device_configurations.by_device_configuration_id(id).assignments.get()
         return assignments
+    
+
+    async def get_xml(self,id,secret_reference):
+
+        xml = await self.user_client.device_management.device_configurations.by_device_configuration_id(id).get_oma_setting_plain_text_value_with_secret_reference_value_id(secret_reference_value_id=secret_reference).get()
+        return xml

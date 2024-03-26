@@ -5,52 +5,53 @@ import base64
 from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 from dcgraph import Graph
 import plistlib
+import argparse
+
+def client_id_type(value):
+    return value
+
+def tenant_id_type(value):
+    return value
+
+def dir_type(path):
+    if os.path.isdir(path):
+        return path
+    else:
+        raise NotADirectoryError(path)
 
 async def main():
     
-    # Load settings
-    config = configparser.ConfigParser()
+    arg_parser = argparse.ArgumentParser(
+    description='Utility for importing and exporting device control settings to/from Intune.')
 
-    config_file_path = os.path.join(os.path.dirname(__file__), "config.cfg")  
-    config.read(config_file_path)
-    azure_settings = config['azure']
+    arg_parser.add_argument('-t', '--tenantId', type=tenant_id_type, dest="tenantId", help='tenantId for the tenant',required=True)
+    arg_parser.add_argument('-c', '--clientId', type=client_id_type, dest="clientId", help='clientId of the application',required=True)
+ 
+    subparsers = arg_parser.add_subparsers(help='sub-command help')
+    parser_export = subparsers.add_parser('export', help='export help')
+    parser_export.add_argument("command",action="store_const",const="export")
+    parser_export.add_argument('-d','--dest',dest="dest",type=dir_type,help="The output directory.  Defaults to current working directory.",default=".")
+   
 
-    graph: Graph = Graph(azure_settings)
+    parser_import = subparsers.add_parser('import', help='export help')
+    parser_import.add_argument("command",action="store_const",const="import")
+    
+    args = arg_parser.parse_args()
+
+    graph: Graph = Graph(args.tenantId,args.clientId)
 
     await greet_user(graph)
 
-    choice = -1
-
-    while choice != 0:
-        print('Please choose one of the following options:')
-        print('0. Exit')
-        print('1. Display access token')
-        print('2. List my inbox')
-        print('3. Send mail')
-        print('4. Make a Graph call')
-
-        try:
-            choice = int(input())
-        except ValueError:
-            choice = -1
-
-        try:
-            if choice == 0:
-                print('Goodbye...')
-            elif choice == 1:
-                await display_access_token(graph)
-            elif choice == 2:
-                await list_inbox(graph)
-            elif choice == 3:
-                await send_mail(graph)
-            elif choice == 4:
-                await make_graph_call(graph)
-            else:
-                print('Invalid choice!\n')
-        except ODataError as odata_error:
-            print('Error:')
-            if odata_error.error:
-                print(odata_error.error.code, odata_error.error.message)
+    
+    
+    try:
+        if args.command == "export":
+            await export(graph)
+            
+    except ODataError as odata_error:
+        print('Error:')
+        if odata_error.error:
+            print(odata_error.error.code, odata_error.error.message)
 
 
 
@@ -66,16 +67,8 @@ async def display_access_token(graph: Graph):
     token = await graph.get_user_token()
     print('User token:', token, '\n')
 
-async def list_inbox(graph: Graph):
-    # TODO
-    return
-
-async def send_mail(graph: Graph):
-    # TODO
-    return
-
-async def make_graph_call(graph: Graph):
-    configs = await graph.make_graph_call()
+async def export(graph: Graph):
+    configs = await graph.export_device_configurations()
     for device_config in configs.value:
         if device_config.odata_type == "#microsoft.graph.macOSCustomConfiguration":
             payload_bytes = device_config.payload
@@ -86,8 +79,20 @@ async def make_graph_call(graph: Graph):
                 print(deviceControl)
 
                 id = device_config.id
-
                 assignments = await graph.get_assignments(id)
+
+        if device_config.odata_type == "#microsoft.graph.windows10CustomConfiguration":
+            id = device_config.id
+            for oma_setting in device_config.oma_settings:
+                value = None
+                if oma_setting.odata_type == "#microsoft.graph.omaSettingInteger":
+                    value = int(oma_setting.value)
+                elif oma_setting.odata_type == "#microsoft.graph.omaSettingStringXml":
+                    secret_reference_value_id = oma_setting.secret_reference_value_id
+                    xml = await graph.get_xml(id,secret_reference_value_id)
+                    print (xml.value)
+                
+            
 
 
 
