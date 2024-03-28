@@ -161,6 +161,20 @@ class Setting:
         }
     
     }
+
+    def getSettingNameFor(oma_uri):
+
+        for key in Setting.data:
+            setting_data = Setting.data[key]
+            if setting_data["oma-uri"]["supported"]:
+                if oma_uri == setting_data["oma-uri"]:
+                    return key
+                
+        return None
+
+    
+
+
     
     def __init__(self,name,value):
         self.name = name
@@ -275,11 +289,18 @@ class Settings:
         return settings
 
 
-    def __init__(self, setting_dict):
+    def __init__(self, setting_dict=None):
         self.settings = []
-        for name in setting_dict:
-            value = setting_dict[name]
-            self.settings.append(Setting(name,value))
+        if setting_dict is None:
+            return
+        else: 
+            for name in setting_dict:
+                value = setting_dict[name]
+                self.settings.append(Setting(name,value))
+
+    def addSetting(self,setting):
+        self.settings.append(setting)
+
 
     def getIntuneCustomValues(self):
         custom_rows = {}
@@ -903,7 +924,7 @@ class Group:
 
     
 
-    def __init__(self,root,format,path):
+    def __init__(self,root,format,path=None):
 
         self.format = format
         self.set_path(path)
@@ -1130,7 +1151,7 @@ class PolicyRule:
     ]
 
 
-    def __init__(self,root, format, path, rule_index = 1):
+    def __init__(self,root, format, path=None, rule_index = 1):
 
                             
         self.root = root
