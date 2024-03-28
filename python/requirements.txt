@@ -1,2 +1,5 @@
 pandas
 jinja2
+azure-identity
+msgraph-beta-sdk
+pytest

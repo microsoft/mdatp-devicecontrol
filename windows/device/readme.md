@@ -19,3 +19,4 @@
 | [ Demo_Policies ]( Demo_Policies.md) | None | True
 | [ File Duplication ]( File%20Duplication.md) | Windows Removable Device | False
 | [ Mass_storage_policies_GPO_2 ]( Mass_storage_policies_GPO_2.md) | Windows Removable Device | True
+| [ Allow only bitlocker encrypted USBs ]( Allow%20only%20bitlocker%20encrypted%20USBs.md) | Windows Removable Device | False

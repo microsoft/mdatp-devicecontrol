@@ -89,9 +89,6 @@
                                     "$ref": "#/$defs/removableMediaEntry"
                                 },
                                 {
-                                    "$ref": "#/$defs/bluetoothDeviceEntry"
-                                },
-                                {
                                     "$ref": "#/$defs/portableDeviceEntry"
                                 },
                                 {
@@ -149,25 +146,6 @@
                                     "title": "Disable the Removable Media feature?",
                                     "examples": [
                                         false
-                                    ]
-                                },
-                                "__comments": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "bluetoothDevice": {
-                            "type": "object",
-                            "default": {},
-                            "title": "Settings for Bluetooth Devices",
-                            "additionalProperties": false,
-                            "properties": {
-                                "disable": {
-                                    "type": "boolean",
-                                    "default": true,
-                                    "title": "Disable the Bluetooth Devices feature?",
-                                    "examples": [
-                                        true
                                     ]
                                 },
                                 "__comments": {
@@ -297,7 +275,6 @@
                         "enum": [
                             "apple_devices",
                             "removable_media_devices",
-                            "bluetooth_devices",
                             "portable_devices"
                         ],
                         "title": "The device family"
@@ -956,48 +933,6 @@
                 }
             }
         },
-        "bluetoothDeviceEntry": {
-            "title": "An entry for a bluetooth device",
-            "required": [
-                "$type",
-                "enforcement",
-                "access"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "bluetoothDevice"
-                    ]
-                },
-                "enforcement": {
-                    "$ref": "#/$defs/enforcement"
-                },
-                "access": {
-                    "type": "array",
-                    "minItems": 1,
-                    "uniqueItems": true,
-                    "title": "The access kind to control",
-                    "items": {
-                        "enum": [
-                            "download_files_from_device",
-                            "send_files_to_device"
-                        ],
-                        "title": "Bluetooth Device specific access types",
-                        "examples": [
-                            "send_files_to_device"
-                        ]
-                    }
-                },
-                "id": {
-                    "title": "UUID of the entry",
-                    "$ref": "#/$defs/uuid"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            }
-        },
         "portableDeviceEntry": {
             "title": "An entry for a portable device",
             "required": [
@@ -1268,9 +1203,6 @@
                     },
                     "removableMedia": {
                         "disable": null
-                    },
-                    "bluetoothDevice": {
-                        "disable": false
                     }
                 },
                 "global": {

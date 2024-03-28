@@ -1,0 +1,21 @@
+<PolicyRule Id="{2da643ac-fdfe-4764-802b-adeed59c32b9}"> 
+<!-- Allow Any Read activity -->
+<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b2da643ac-fdfe-4764-802b-adeed59c32b9%7d/RuleData -->
+   <Name>Allow Only Bitlocker Encrypted USBs</Name>
+   <IncludedIdList>
+		<GroupId>{33e06f08-8787-4219-9dca-5872854f9d79}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+      <GroupId>{3ed80052-0861-4a8e-bab0-3e185820ee2e}</GroupId>
+   </ExcludedIdList>
+   <Entry Id="{66fd76ff-4233-4534-bded-f7ba13fd3011}">
+      <Type>Allow</Type>
+      <Options>0</Options>
+      <AccessMask>63</AccessMask>
+   </Entry>
+    <Entry Id="{4f9737f9-7fc7-44fe-8b55-3f3cb3240f3c}">
+      <Type>AuditDenied</Type>
+      <Options>3</Options>
+      <AccessMask>63</AccessMask>
+   </Entry>
+</PolicyRule>

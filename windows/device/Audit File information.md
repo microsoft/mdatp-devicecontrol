@@ -1,6 +1,6 @@
 # Device control policy sample: File Evidence
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A24B0>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE24041B50>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE247A27E0>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE247A2F90>, './Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory': <devicecontrol.IntuneCustomRow object at 0x000002AE247A2DE0>}, 'web_paths': ['windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml', 'windows/device/Group Policy/Audit File Information.xml'], 'rules': {'{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}': <devicecontrol.PolicyRule object at 0x000002AE2275DEB0>}, 'groups': {'{9b28fae8-72f7-4267-a1a5-685f747a7146}': <devicecontrol.Group object at 0x000002AE24593EF0>}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE247A0E00>, 'groupsXML': '<Groups>\n\t<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->\n\t\t<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PrimaryId>RemovableMediaDevices</PrimaryId>\n\t\t\t<PrimaryId>CdRomDevices</PrimaryId>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t</DescriptorIdList>\n\t</Group>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->\n\t\t<Name>Audit File Information</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>16</AccessMask>\n\t\t\t<Options>16</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'Primary ID [CdRomDevices] is not supported on macOS.', 'windows_support': <devicecontrol.Support object at 0x000002AE247A1DF0>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE246E9C70>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -30,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="1" valign="top"><b>Audit File Information</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="1" valign="top">
@@ -52,7 +52,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Any Removable Storage and CD-DVD and WPD Group_1
+### Any Removable Storage and CD-DVD and WPD Group_0
 
 
 
@@ -76,7 +76,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -99,7 +99,7 @@ DataDuplicationDirectory | Enter the directory to store files locally | [documen
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 - [windows/device/Group Policy/Audit File Information.xml](/windows/device/Group%20Policy/Audit%20File%20Information.xml)
 
 
@@ -120,12 +120,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -153,7 +153,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Click on "+ Set reusable settings" under Included Id
 
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_0*
 
    1. Click on "Select"
 
@@ -183,7 +183,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 <Groups>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
