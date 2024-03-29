@@ -15,7 +15,7 @@ from msgraph_beta.generated.models.email_address import EmailAddress
 
 from msgraph_beta.generated.device_management.configuration_policies.item.assignments.assignments_request_builder import (AssignmentsRequestBuilder)
 
-scopes = "User.Read Mail.Read Mail.Send DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All"
+scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
 class Graph:
     
@@ -72,3 +72,8 @@ class Graph:
 
         xml = await self.user_client.device_management.device_configurations.by_device_configuration_id(id).get_oma_setting_plain_text_value_with_secret_reference_value_id(secret_reference_value_id=secret_reference).get()
         return xml
+    
+    async def get_group_by_id(self,group_id):
+
+        group = await self.user_client.groups.by_group_id(group_id=group_id).get()
+        return group

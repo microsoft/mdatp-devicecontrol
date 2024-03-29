@@ -5,6 +5,7 @@ import os
 import urllib.parse
 import pathlib
 import xml.etree.ElementTree as ET
+from json import JSONEncoder
 
 class Util:
 
@@ -26,6 +27,13 @@ class Util:
     def rreplace(s, old, new, occurrence):
         li = s.rsplit(old, occurrence)
         return new.join(li)
+
+class DCJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        try:
+            return obj.toJSON()  # Call a custom method if available
+        except AttributeError:
+            return super().default(obj)
 
     
 class Format:
@@ -167,7 +175,7 @@ class Setting:
         for key in Setting.data:
             setting_data = Setting.data[key]
             if setting_data["oma-uri"]["supported"]:
-                if oma_uri == setting_data["oma-uri"]:
+                if oma_uri == setting_data["oma-uri"]["oma-uri"]:
                     return key
                 
         return None
@@ -1162,6 +1170,7 @@ class PolicyRule:
         self.rule_index = rule_index
         self.id = None
         self.name = None
+        self.description = None
         self.included_device_properties = []
         self.included_groups = []
 
