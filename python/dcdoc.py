@@ -605,7 +605,7 @@ class Inventory:
 
         return oma_uri_object
     
-    def process_query(self,query):
+    def process_query(self,query=None):
 
         if query is None:
             query="path.str.contains('(.*)')"
@@ -803,7 +803,7 @@ class Inventory:
 
 
 
-    def generate_text(self,result,dest,file,title, settings = None ):
+    def generate_text(self,result,template,dest,file,title, settings = None ):
         
         if settings is not None:
             custom_settings_values = settings.getIntuneCustomValues()
@@ -819,8 +819,16 @@ class Inventory:
         if result["mac_policy"] is not None:
             result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
 
-        TEMPLATE_FILE = args.template
-        template = templateEnv.get_template(TEMPLATE_FILE)
+
+        #Make web_paths relative to output file
+        dest_path = pathlib.PurePath(dest)
+        rel_web_paths = []
+        for web_path in result["web_paths"]:
+            rel_path = os.path.relpath(web_path,str(dest_path))
+            rel_web_paths.append(rel_path)
+
+        result["web_paths"] = rel_web_paths
+
 
         Helper.set_entry_type(result["entry_type"])
 
@@ -849,7 +857,7 @@ class Inventory:
 
 class Description:
 
-    def __init__(self,result,description_template_name):
+    def __init__(self,result,templateEnv,description_template_name):
         self.result = result
         self.template = templateEnv.get_template(description_template_name)
 
@@ -992,6 +1000,7 @@ if __name__ == '__main__':
     arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
     arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory.  Defaults to current working directory.",default=".")
     arg_parser.add_argument('-g','--generate',dest="generated_files_locations", type=generate_files_format, help='Generates files for other formats')
+    
     arg_parser.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output.  Defaults to dcutil.j2.",default="dcutil.j2")
     arg_parser.add_argument('-rt','--readme_template',dest="readme_template",help="Jinja2 template to use for the readme.  Defaults to readme.j2.",default="readme.j2")
     arg_parser.add_argument('-dt','--description_template',dest="description_template",help="Jinja2 template to use for the description.  Defaults to description.j2.",default="description.j2")
@@ -1051,9 +1060,12 @@ if __name__ == '__main__':
                 if description is not None:
                     result["description"] = description
                 else:
-                    result["description"] = Description(result,args.description_template)
+                    result["description"] = Description(result,templateEnv, args.description_template)
 
-                inventory.generate_text(result,args.dest,default_outfile,title,settings)
+                TEMPLATE_FILE = args.template
+                template = templateEnv.get_template(TEMPLATE_FILE)
+
+                inventory.generate_text(result,template,args.dest,default_outfile,title,settings)
 
             results[policy_file] = {
                 "result":result,
@@ -1073,9 +1085,12 @@ if __name__ == '__main__':
         if args.format == "text":
             result = inventory.process_query(query)
 
-            result["description"] = Description(result,args.description_template)
+            result["description"] = Description(result,templateEnv,args.description_template)
 
-            inventory.generate_text(result,args.dest,out_file,title,settings)
+            TEMPLATE_FILE = args.template
+            template = templateEnv.get_template(TEMPLATE_FILE)
+
+            inventory.generate_text(result,template,args.dest,out_file,title,settings)
         elif args.format == "csv":
             inventory.generate_csv(args.dest)
         

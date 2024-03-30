@@ -1,6 +1,7 @@
 import asyncio
 import os
 import base64
+import jinja2
 from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 from dcgraph import Graph
 import plistlib
@@ -12,6 +13,7 @@ import yaml
 import xml.etree.ElementTree as ET
 
 import devicecontrol as dc
+from dcdoc import Inventory, Description
 
 
 class Package:
@@ -29,6 +31,9 @@ class Package:
     MAC_PATH = "macOS.devicecontrol.policies"
     WINDOWS_GROUPS_PATH = "windows.devicecontrol.groups"
     WINDOWS_RULES_PATH = "windows.devicecontrol.rules"
+
+    MAC_DEVICE_CONTROL = "macOS.devicecontrol"
+    MAC_DEVICE_CONTROL_POLICIES = "macOS.devicecontrol.policies"
 
     class IntuneSetting:
 
@@ -146,6 +151,32 @@ class Package:
                 for dc_setting in dc_settings:
                     self.settings.append(Package.IntuneSetting(dc_setting))
 
+        def getMacOSSettings(self):
+
+            settings_dict = {}
+            if self.os == Package.Policy.MAC_OS:
+                for setting in self.settings:
+                    dc_setting = setting.setting
+
+                    mac_settings_data = dc_setting.data[dc_setting.name]["mac"]["mac_setting"]
+                    
+                    category = mac_settings_data["category"]
+
+                    settings_for_category = {}
+
+                    if category in settings_dict.keys():
+                        settings_for_category = settings_dict[category]
+
+                    if "name" in mac_settings_data:
+                        setting_name = mac_settings_data["name"]
+                        settings_for_category[setting_name] = dc_setting.value
+                    else:    
+                        settings_for_category = dc_setting.value
+
+                    settings_dict[category] = settings_for_category
+
+            return settings_dict
+        
         def getPolicyJSON(self):
 
             json = {}
@@ -153,21 +184,30 @@ class Package:
             if self.os == Package.Policy.MAC_OS:
                 json["groups"] = self.groups
                 json["rules"] = self.rules
+                json["settings"] = self.getMacOSSettings()
 
             return json
 
 
-    def __init__(self,name):
+    def __init__(self,name,templateEnv=None):
+
         self.name = name
         self.policies = []
+        self.templateEnv = templateEnv
+        if templateEnv is None:
+            templateLoader = jinja2.FileSystemLoader("templates")
+            self.templateEnv = jinja2.Environment(loader=templateLoader)
 
+
+        
 
 
     def addPolicy(self,policy):
         self.policies.append(policy)
 
-    def save(self,destination):
+    def save(self,destination,rule_template_name,readme_template_name,description_template_name):
 
+        
         package_path = pathlib.PurePath(os.path.join(destination,self.name))
         if not os.path.isdir(package_path):
             os.mkdir(package_path)
@@ -186,6 +226,9 @@ class Package:
 
         policy_data = {}
 
+        mac_policy_file_paths = []
+        windows_policy_file_paths = []
+
         for policy in self.policies:
             name = policy.name
             if policy.os == Package.Policy.MAC_OS:
@@ -201,6 +244,9 @@ class Package:
                     "description": policy.description,
                     "assignments": policy.assignments
                 }
+
+                mac_policy_file_paths.append(policy_file_path)
+
 
             elif policy.os == Package.Policy.WINDOWS_OS:
 
@@ -230,6 +276,8 @@ class Package:
                         "description": rule.description
                     }
 
+                    windows_policy_file_paths.append(rule_file_path)
+
                 for setting in policy.settings:
 
                     dc_setting = setting.setting
@@ -258,6 +306,40 @@ class Package:
             "policies":policy_data
         }
 
+        #load_templates
+        rule_template = self.templateEnv.get_template(rule_template_name)
+        readme_template = self.templateEnv.get_template(readme_template_name)
+        description_template = self.templateEnv.get_template(description_template_name)
+
+
+        #generate documentation for mac
+        mac_src_paths = [str(path_map[Package.MAC_DEVICE_CONTROL_POLICIES])]
+        mac_dest_paths = str(path_map[Package.MAC_DEVICE_CONTROL])
+        
+        mac_inventory = Inventory(mac_src_paths,None,mac_dest_paths)
+        mac_inventory.load_inventory()
+
+        for mac_policy_file_path in mac_policy_file_paths:
+
+            mac_policy_file_name = str(mac_policy_file_path).split(os.sep)[-1]
+
+            query = "path.str.contains('"+str(mac_policy_file_name)+"',regex=False)"
+            title = mac_policy_file_name.split(".")[0]
+            outfile = title+".md"
+
+            result = mac_inventory.process_query(query)
+
+            result["description"] = Description(result,self.templateEnv,description_template_name)
+
+            with open(mac_policy_file_path,"r") as json_file:
+                mac_policy = json.loads(json_file.read())
+                mac_settings = dc.Settings.generate_settings_from_mac_policy(mac_policy)
+            
+            json_file.close()
+            
+
+            mac_inventory.generate_text(result,rule_template,str(path_map[Package.MAC_DEVICE_CONTROL]),outfile,title,mac_settings)
+            
         yaml.dump(package_data,package_file)
         package_file.close()
 
@@ -277,7 +359,20 @@ def dir_type(path):
     else:
         raise NotADirectoryError(path)
     
+def path_array(path):
+    paths = []
+    path_strs = str.split(path,os.pathsep)
+    for path_str in path_strs:
+        
+        path = pathlib.Path(path_str)
+        if path.is_absolute():
+            paths.append(path)
+        else:
+            parent_path = pathlib.Path(__file__ ).parent.resolve() 
+            path = pathlib.Path(str(parent_path)+ os.sep + path_str).resolve()
+            paths.append(path)
 
+    return paths
 
 
 async def main():
@@ -293,19 +388,35 @@ async def main():
     parser_export.add_argument("command",action="store_const",const="export")
     parser_export.add_argument('-d','--dest',dest="dest",type=dir_type,help="The output directory.  Defaults to current working directory.",default=".")
     parser_export.add_argument('-n','--name',dest="package_name",help="The name of the package")
+    parser_export.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output.  Defaults to dcutil.j2.",default="dcutil.j2")
+    parser_export.add_argument('-rt','--readme_template',dest="readme_template",help="Jinja2 template to use for the readme.  Defaults to readme.j2.",default="readme.j2")
+    parser_export.add_argument('-dt','--description_template',dest="description_template",help="Jinja2 template to use for the description.  Defaults to description.j2.",default="description.j2")
+    parser_export.add_argument('-r','--readme',dest="readme_file",help="The readme file to generate.  Defaults to readme.md.",default="readme.md")
+    parser_export.add_argument('-tp','--templates_path',dest="templates_path",help="path to Jinja2 templates.  Defaults to templates.",default="templates",type=path_array)
     
    
 
     parser_import = subparsers.add_parser('import', help='export help')
     parser_import.add_argument("command",action="store_const",const="import")
     
+
+
     args = arg_parser.parse_args()
 
     graph: Graph = Graph(args.tenantId,args.clientId)
 
     try:
         if args.command == "export":
-            await export(graph,args.dest,args.package_name)
+
+            templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
+            templateEnv = jinja2.Environment(loader=templateLoader)
+
+            
+            await export(graph,args.dest,args.package_name,
+                         templateEnv,
+                         args.template,
+                         args.readme_template,
+                         args.description_template)
             
     except ODataError as odata_error:
         print('Error:')
@@ -315,9 +426,13 @@ async def main():
 
 
 
-async def export(graph: Graph, destination,name):
+async def export(graph: Graph, destination,name, 
+                 templateEnv, 
+                 rule_template="dcutil.j2",
+                 readme_template="readme.j2",
+                 description_template="description.j2"):
 
-    package = Package(name)
+    package = Package(name,templateEnv)
 
     configs = await graph.export_device_configurations()
     for device_config in configs.value:
@@ -395,7 +510,7 @@ async def export(graph: Graph, destination,name):
                         intune_settings = Package.IntuneSetting(dc_setting,oma_setting.display_name,oma_setting.description)
                         policy.addSetting(intune_settings)
 
-    package.save(destination)
+    package.save(destination,rule_template,readme_template,description_template)
 
 
 # Run main
