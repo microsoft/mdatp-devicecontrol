@@ -30,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="7" valign="top"><b>Authorized removable storage policy</b></td>
             <td rowspan="7 valign="top">
-                <ul><li>Group: Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a>  
+                <ul><li>Group: Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="7" valign="top">
@@ -49,7 +49,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <summary>View</summary>
                 MatchAll:
                 <ul><li> Windows File: MatchAny 
-                        <ul><li>Group: Unauthorized File Group_0<a href="#unauthorized-file-group_0" title="MatchAny {'PathId': '*.dll'}"> (details)</a>  
+                        <ul><li>Group: Block Read and Write access to specific file _Groups_2<a href="#block-read-and-write-access-to-specific-file-_groups_2" title="MatchAny {'PathId': '*.dll'}"> (details)</a>  
 </ul>
                 </ul>
                 </details></td>
@@ -126,11 +126,11 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="5" valign="top"><b>Authorized removable storage policy</b></td>
             <td rowspan="5 valign="top">
-                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="5" valign="top">
-                <ul><li>Group: Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a>  
+                <ul><li>Group: Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}"> (details)</a>  
 </ul>
             </td>
             <td>Deny</td>
@@ -146,7 +146,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <summary>View</summary>
                 MatchAll:
                 <ul><li> Windows File: MatchAny 
-                        <ul><li>Group: Unauthorized File Group_0<a href="#unauthorized-file-group_0" title="MatchAny {'PathId': '*.dll'}"> (details)</a>  
+                        <ul><li>Group: Block Read and Write access to specific file _Groups_2<a href="#block-read-and-write-access-to-specific-file-_groups_2" title="MatchAny {'PathId': '*.dll'}"> (details)</a>  
 </ul>
                 </ul>
                 </details></td>
@@ -200,7 +200,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Approved USBs Group_0
+### Approved USBs Group_1
 
 
 
@@ -210,7 +210,7 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&* |
+| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&0 |
 
 
 
@@ -222,16 +222,16 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-	<Name>Approved USBs Group_0</Name>
+	<Name>Approved USBs Group_1</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
 	</DescriptorIdList>
 </Group>
 ```
 </details>
 
-### Unauthorized File Group_0
+### Block Read and Write access to specific file _Groups_2
 
 
 
@@ -254,7 +254,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-	<Name>Unauthorized File Group_0</Name>
+	<Name>Block Read and Write access to specific file _Groups_2</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PathId>*.exe</PathId>
@@ -264,7 +264,7 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
-### Any Removable Storage and CD-DVD and WPD Group_1
+### Any Removable Storage and CD-DVD and WPD Group_0
 
 
 
@@ -288,7 +288,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -301,19 +301,25 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Intune OMA-URI/Unauthorized File Group.xml](/windows/device/Intune%20OMA-URI/Unauthorized%20File%20Group.xml)
-- [windows/device/Intune OMA-URI/Approved USBs Group.xml](/windows/device/Intune%20OMA-URI/Approved%20USBs%20Group.xml)
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Group Policy/Demo_2_Policies.xml](/windows/device/Group%20Policy/Demo_2_Policies.xml)
+- [Group Policy/Block Read and Write access to specific file _Groups.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
+- [Group Policy/Demo_2_Policies.xml](Group%20Policy/Demo_2_Policies.xml)
+- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
+- [Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -333,12 +339,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Windows File groups not supported.
-- Create file evidence with file is an unsupported notification.
-- Parameters are not supported
-- File Execute (32) is an unsupported access mask
 - File Read (8) is an unsupported access mask
+- Create file evidence with file is an unsupported notification.
+- File Execute (32) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- Windows File groups not supported.
+- Parameters are not supported
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -353,15 +359,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 <Groups>
 	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-		<Name>Approved USBs Group_0</Name>
+		<Name>Approved USBs Group_1</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
 		</DescriptorIdList>
 	</Group>
 	<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->
-		<Name>Unauthorized File Group_0</Name>
+		<Name>Block Read and Write access to specific file _Groups_2</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PathId>*.exe</PathId>
@@ -370,7 +376,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
+		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -511,7 +517,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\authorized_removable_storage_policy{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/authorized_removable_storage_policy{6f3f8bbb-607f-4ed5-96af-51e3428db8f7}.xml*
          
    
    7. Click "Save"
@@ -526,7 +532,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\authorized_removable_storage_policy{3984f1f4-7f66-4848-96de-491e2d038b07}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/authorized_removable_storage_policy{3984f1f4-7f66-4848-96de-491e2d038b07}.xml*
          
    
    7. Click "Save"
@@ -541,7 +547,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Approved USBs Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Approved USBs Group.xml*
          
    
    7. Click "Save"
@@ -556,7 +562,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Unauthorized File Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Unauthorized File Group.xml*
          
    
    7. Click "Save"
@@ -571,7 +577,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

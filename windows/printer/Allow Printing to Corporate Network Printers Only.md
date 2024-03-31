@@ -22,8 +22,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        
-		<th>Print</th>
+        <th>Print</th>
         </tr><tr>
             <td rowspan="1" valign="top"><b>Allow printing only on network printers on corporate network</b></td>
             <td rowspan="1 valign="top">
@@ -169,19 +168,26 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
-DefaultEnforcement | Allow | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-SecuredDevicesConfiguration | PrinterDevices | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+SecuredDevicesConfiguration | PrinterDevices | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Intune OMA-URI/network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml](/windows/printer/Intune%20OMA-URI/network_printers%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D.xml)
-- [windows/printer/Group Policy/Allow Printing to Corporate Network Printers Only.xml](/windows/printer/Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
-- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
+- [Group Policy/Allow Printing to Corporate Network Printers Only.xml](Group%20Policy/Allow%20Printing%20to%20Corporate%20Network%20Printers%20Only.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Corporate Network.xml](Intune%20OMA-URI/Corporate%20Network.xml)
+- [Intune OMA-URI/network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml](Intune%20OMA-URI/network_printers%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D.xml)
 
 
 # Deployment Instructions
@@ -201,8 +207,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Parameters are not supported
 - Windows Network groups not supported.
+- Parameters are not supported
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -321,7 +327,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/allow_printing_only_on_network_printers_on_corporate_network{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}.xml*
          
    
    7. Click "Save"
@@ -336,7 +342,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/deny_all_other_printing{47420f70-ef17-467e-a982-ab4c3abde16e}.xml*
          
    
    7. Click "Save"
@@ -351,7 +357,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/network_printers{257e3e1e-790c-4e29-ae2c-45a5f3363201}.xml*
          
    
    7. Click "Save"
@@ -366,7 +372,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Corporate Network.xml*
          
    
    7. Click "Save"
@@ -381,7 +387,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Any printer group.xml*
          
    
    7. Click "Save"

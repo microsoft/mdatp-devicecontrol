@@ -30,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="2" valign="top"><b>Block Write Activity</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="2" valign="top">
@@ -63,7 +63,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Any Removable Storage and CD-DVD and WPD Group_0
+### Any Removable Storage and CD-DVD and WPD Group_1
 
 
 
@@ -87,7 +87,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -100,17 +100,23 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Intune OMA-URI/Scenario 10 Audit Write_Intune.xml](/windows/device/Intune%20OMA-URI/Scenario%2010%20Audit%20Write_Intune.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Scenario 10 Audit Write_Intune.xml](Intune%20OMA-URI/Scenario%2010%20Audit%20Write_Intune.xml)
 
 
 # Deployment Instructions
@@ -130,12 +136,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -163,7 +169,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Click on "+ Set reusable settings" under Included Id
 
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_0*
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
 
    1. Click on "Select"
 
@@ -202,7 +208,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 <Groups>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -271,7 +277,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 10 Audit Write_Intune.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Scenario 10 Audit Write_Intune.xml*
          
    
    7. Click "Save"
@@ -286,7 +292,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

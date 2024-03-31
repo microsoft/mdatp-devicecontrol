@@ -66,16 +66,22 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](/windows/device/Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
+- [Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
 
 
 # Deployment Instructions
@@ -207,7 +213,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
          
    
    7. Click "Save"

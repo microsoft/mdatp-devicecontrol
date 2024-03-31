@@ -30,11 +30,11 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="1" valign="top"><b>Block Write and Execute but allow specific user access approved USB</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="1" valign="top">
-                <ul><li>Group: Approved USBs Group_0<a href="#approved-usbs-group_0" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&*'}"> (details)</a>  
+                <ul><li>Group: Approved USBs Group_1<a href="#approved-usbs-group_1" title="MatchAny {'InstancePathId': 'USBSTOR\\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\\03003324080520232521&0'}"> (details)</a>  
 </ul>
             </td>
             <td>Allow</td>
@@ -53,7 +53,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="3" valign="top"><b>Block removable storage and CdRom</b></td>
             <td rowspan="3 valign="top">
-                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_0<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_0" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+                <ul><li>Group: Any Removable Storage and CD-DVD and WPD Group_1<a href="#any-removable-storage-and-cd-dvd-and-wpd-group_1" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="3" valign="top">
@@ -97,38 +97,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Approved USBs Group_0
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&* |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-	<Name>Approved USBs Group_0</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Any Removable Storage and CD-DVD and WPD Group_0
+### Any Removable Storage and CD-DVD and WPD Group_1
 
 
 
@@ -152,7 +121,7 @@ The match type for the group is *MatchAny*.
 ```xml
 <Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-	<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+	<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
@@ -163,20 +132,57 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Approved USBs Group_1
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| InstancePathId | USBSTOR\DISK&VEN__USB&PROD__SANDISK_3.2GEN1&REV_1.00\03003324080520232521&0 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+	<Name>Approved USBs Group_1</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Intune%20OMA-URI/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Intune OMA-URI/Approved USBs Group.xml](/windows/device/Intune%20OMA-URI/Approved%20USBs%20Group.xml)
-- [windows/device/Group Policy/Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml](/windows/device/Group%20Policy/Scenario%206%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20approved%20USB.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Group Policy/Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml](Group%20Policy/Scenario%206%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20approved%20USB.xml)
+- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
 
 
 # Deployment Instructions
@@ -196,12 +202,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Approved USBs Group_0</summary> 
+<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_1</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Approved USBs Group_0 for the name.  
+   4. Enter the Any Removable Storage and CD-DVD and WPD Group_1 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -210,12 +216,12 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    9. Click "Add"
 </details>
 <details>
-<summary>Create a reusable setting for Any Removable Storage and CD-DVD and WPD Group_0</summary> 
+<summary>Create a reusable setting for Approved USBs Group_1</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Any Removable Storage and CD-DVD and WPD Group_0 for the name.  
+   4. Enter the Approved USBs Group_1 for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -249,14 +255,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Click on "+ Set reusable settings" under Included Id
 
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_0*
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
 
    1. Click on "Select"
 
 
    1. Click on "+ Set reusable settings" under Excluded Id
 
-   1. Click on *Approved USBs Group_0*
+   1. Click on *Approved USBs Group_1*
 
    1. Click on "Select"
 
@@ -283,7 +289,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
    1. Click on "+ Set reusable settings" under Included Id
 
-   1. Click on *Any Removable Storage and CD-DVD and WPD Group_0*
+   1. Click on *Any Removable Storage and CD-DVD and WPD Group_1*
 
    1. Click on "Select"
 
@@ -329,22 +335,22 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
-		<Name>Approved USBs Group_0</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;*</InstancePathId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->
-		<Name>Any Removable Storage and CD-DVD and WPD Group_0</Name>
+		<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
 			<PrimaryId>CdRomDevices</PrimaryId>
 			<PrimaryId>WpdDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->
+		<Name>Approved USBs Group_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<InstancePathId>USBSTOR\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\03003324080520232521&amp;0</InstancePathId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -429,7 +435,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\block_write_and_execute_but_allow_specific_user_access_approved_usb{83c390b6-b01e-4d83-8834-c8015a2316f2}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/block_write_and_execute_but_allow_specific_user_access_approved_usb{83c390b6-b01e-4d83-8834-c8015a2316f2}.xml*
          
    
    7. Click "Save"
@@ -444,7 +450,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\block_removable_storage_and_cdrom{d2193a7f-ceec-4729-a72a-fe949639db55}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/block_removable_storage_and_cdrom{d2193a7f-ceec-4729-a72a-fe949639db55}.xml*
          
    
    7. Click "Save"
@@ -459,7 +465,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"
@@ -474,7 +480,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Approved USBs Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Approved USBs Group.xml*
          
    
    7. Click "Save"

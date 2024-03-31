@@ -1,6 +1,6 @@
 # Device control policy sample: Default Deny - custom policy2
 
-Description: A sample policy              
+Description: This is a policy.              
 Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -22,8 +22,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        
-		<th>Print</th>
+        <th>Print</th>
         </tr><tr>
             <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
@@ -83,17 +82,23 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
-- [windows/printer/Intune OMA-URI/Default Deny - custom policy2.xml](/windows/printer/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Default Deny - custom policy2.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy2.xml)
 
 
 # Deployment Instructions
@@ -252,7 +257,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Default Deny - custom policy2.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Default Deny - custom policy2.xml*
          
    
    7. Click "Save"
@@ -267,7 +272,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Any printer group.xml*
          
    
    7. Click "Save"

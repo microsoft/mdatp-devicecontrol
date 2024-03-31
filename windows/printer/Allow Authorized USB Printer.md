@@ -1,6 +1,6 @@
 # Device control policy sample: Allow Authorized USB Printer
 
-Description: A sample policy              
+Description: This is a policy.              
 Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -22,8 +22,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        
-		<th>Print</th>
+        <th>Print</th>
         </tr><tr>
             <td rowspan="2" valign="top"><b>Allow approved USB Printer</b></td>
             <td rowspan="2 valign="top">
@@ -164,19 +163,23 @@ The match type for the group is *MatchAll*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Intune OMA-URI/Authorized USB Printer.xml](/windows/printer/Intune%20OMA-URI/Authorized%20USB%20Printer.xml)
-- [windows/printer/Intune OMA-URI/Corporate VPN.xml](/windows/printer/Intune%20OMA-URI/Corporate%20VPN.xml)
-- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
-- [windows/printer/Intune OMA-URI/Allow Authorized USB Printer.xml](/windows/printer/Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
+- [Intune OMA-URI/Allow Authorized USB Printer.xml](Intune%20OMA-URI/Allow%20Authorized%20USB%20Printer.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -197,8 +200,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 Intune UX is not supported for this policy because:
 - Windows VPN Connection groups not supported.
-- Parameters are not supported
 - Windows Network groups not supported.
+- Parameters are not supported
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -309,7 +312,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Allow Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Allow Authorized USB Printer.xml*
          
    
    7. Click "Save"
@@ -324,7 +327,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Authorized USB Printer.xml*
          
    
    7. Click "Save"
@@ -339,7 +342,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate Network.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Corporate Network.xml*
          
    
    7. Click "Save"
@@ -354,7 +357,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Corporate VPN.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Corporate VPN.xml*
          
    
    7. Click "Save"

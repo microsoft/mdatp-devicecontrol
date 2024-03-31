@@ -1,6 +1,6 @@
 # Device control policy sample: deny_all_bluetooth_devices_except_samsung
 
-Description: A sample policy              
+Description: This is a policy.              
 Device Type: Apple Bluetooth Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -20,18 +20,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th>Included</th>
         <th>Excluded</th><th>Download files</th><th>Send files</th></tr><tr>
-            <td rowspan="1"><b>Audit S21</b></td>
-            <td rowspan="1 valign="top">
-                <ul><li>Samsung Galaxy S21<a href="#samsung-galaxy-s21" title="and [{'$type': 'primaryId', 'value': 'bluetooth_devices'}, {'$type': 'vendorId', 'value': '0075'}, {'$type': 'productId', 'value': '0100'}]"> (details)</a></ul>
-            </td>
-            <td rowspan="1" valign="top">.
-                <ul></ul>
-            </td>
-            <td>Audit Allowed</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>Send event</td> 
-        </tr><tr>
             <td rowspan="2"><b>Deny all Bluetooth Devices</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>All Bluetooth Devices<a href="#all-bluetooth-devices" title="or [{'$type': 'primaryId', 'value': 'bluetooth_devices'}]"> (details)</a></ul>
@@ -48,11 +36,75 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>Send event and Show notification</td>
+        </tr><tr>
+            <td rowspan="1"><b>Audit S21</b></td>
+            <td rowspan="1 valign="top">
+                <ul><li>Samsung Galaxy S21<a href="#samsung-galaxy-s21" title="and [{'$type': 'primaryId', 'value': 'bluetooth_devices'}, {'$type': 'vendorId', 'value': '0075'}, {'$type': 'productId', 'value': '0100'}]"> (details)</a></ul>
+            </td>
+            <td rowspan="1" valign="top">.
+                <ul></ul>
+            </td>
+            <td>Audit Allowed</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>Send event</td> 
         </tr></table>
 
 
 ## Groups
 
+
+### All Bluetooth Devices
+
+
+
+This is a group of type *device*. 
+The match type for the group is *or*.
+
+
+<table>
+<tr>
+<th>Operator</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+
+<tr>
+
+<td></td>
+
+<td>primaryId</td>
+
+<td>bluetooth_devices</td>
+
+</tr>
+
+</table>
+
+
+#### Available properties for All Bluetooth Devices
+
+
+<details>
+<summary>View JSON</summary>
+
+```json
+{
+    "$type": "device",
+    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+    "name": "All Bluetooth Devices",
+    "query": {
+        "$type": "or",
+        "clauses": [
+            {
+                "$type": "primaryId",
+                "value": "bluetooth_devices"
+            }
+        ]
+    }
+}
+```
+</details>
 
 ### Samsung Galaxy S21
 
@@ -134,71 +186,25 @@ The match type for the group is *and*.
 ```
 </details>
 
-### All Bluetooth Devices
-
-
-
-This is a group of type *device*. 
-The match type for the group is *or*.
-
-
-<table>
-<tr>
-<th>Operator</th>
-<th>Property</th>
-<th>Value</th>
-</tr>
-
-<tr>
-
-<td></td>
-
-<td>primaryId</td>
-
-<td>bluetooth_devices</td>
-
-</tr>
-
-</table>
-
-
-#### Available properties for All Bluetooth Devices
-
-
-<details>
-<summary>View JSON</summary>
-
-```json
-{
-    "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
-    "name": "All Bluetooth Devices",
-    "query": {
-        "$type": "or",
-        "clauses": [
-            {
-                "$type": "primaryId",
-                "value": "bluetooth_devices"
-            }
-        ]
-    }
-}
-```
-</details>
-
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': True}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': False}} | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
-DefaultEnforcement | Allow | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-UXNavigationTarget | http://www.microsoft.com | [documentation]() |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': True}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': False}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [macOS/policy/samples/deny_all_bluetooth_devices_except_samsung.json](/macOS/policy/samples/deny_all_bluetooth_devices_except_samsung.json)
+- [deny_all_bluetooth_devices_except_samsung.json](deny_all_bluetooth_devices_except_samsung.json)
 
 
 # Deployment Instructions
@@ -289,6 +295,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+            "name": "All Bluetooth Devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "bluetooth_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
             "id": "1A783D32-C6A3-4F5F-9D47-271B12130DFD",
             "name": "Samsung Galaxy S21",
             "query": {
@@ -308,46 +328,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     }
                 ]
             }
-        },
-        {
-            "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
-            "name": "All Bluetooth Devices",
-            "query": {
-                "$type": "or",
-                "clauses": [
-                    {
-                        "$type": "primaryId",
-                        "value": "bluetooth_devices"
-                    }
-                ]
-            }
         }
     ],
     "rules": [
-        {
-            "id": "3C094B7B-DB94-4F17-86B8-3AA1D6547C58",
-            "name": "Audit S21",
-            "includeGroups": [
-                "1A783D32-C6A3-4F5F-9D47-271B12130DFD"
-            ],
-            "entries": [
-                {
-                    "$type": "bluetoothDevice",
-                    "id": "477C626F-510E-4881-B475-592CF6E501AF",
-                    "enforcement": {
-                        "$type": "auditAllow",
-                        "options": [
-                            "send_event"
-                        ]
-                    },
-                    "access": [
-                        "download_files_from_device",
-                        "send_files_to_device"
-                    ]
-                }
-            ]
-        },
         {
             "id": "772cef80-229f-48b4-bd17-a6913009248d",
             "name": "Deny all Bluetooth Devices",
@@ -377,6 +360,29 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                         "options": [
                             "send_event",
                             "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3C094B7B-DB94-4F17-86B8-3AA1D6547C58",
+            "name": "Audit S21",
+            "includeGroups": [
+                "1A783D32-C6A3-4F5F-9D47-271B12130DFD"
+            ],
+            "entries": [
+                {
+                    "$type": "bluetoothDevice",
+                    "id": "477C626F-510E-4881-B475-592CF6E501AF",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
                         ]
                     },
                     "access": [
@@ -448,6 +454,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+            "name": "All Bluetooth Devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "bluetooth_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
             "id": "1A783D32-C6A3-4F5F-9D47-271B12130DFD",
             "name": "Samsung Galaxy S21",
             "query": {
@@ -467,46 +487,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     }
                 ]
             }
-        },
-        {
-            "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
-            "name": "All Bluetooth Devices",
-            "query": {
-                "$type": "or",
-                "clauses": [
-                    {
-                        "$type": "primaryId",
-                        "value": "bluetooth_devices"
-                    }
-                ]
-            }
         }
     ],
     "rules": [
-        {
-            "id": "3C094B7B-DB94-4F17-86B8-3AA1D6547C58",
-            "name": "Audit S21",
-            "includeGroups": [
-                "1A783D32-C6A3-4F5F-9D47-271B12130DFD"
-            ],
-            "entries": [
-                {
-                    "$type": "bluetoothDevice",
-                    "id": "477C626F-510E-4881-B475-592CF6E501AF",
-                    "enforcement": {
-                        "$type": "auditAllow",
-                        "options": [
-                            "send_event"
-                        ]
-                    },
-                    "access": [
-                        "download_files_from_device",
-                        "send_files_to_device"
-                    ]
-                }
-            ]
-        },
         {
             "id": "772cef80-229f-48b4-bd17-a6913009248d",
             "name": "Deny all Bluetooth Devices",
@@ -536,6 +519,29 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                         "options": [
                             "send_event",
                             "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3C094B7B-DB94-4F17-86B8-3AA1D6547C58",
+            "name": "Audit S21",
+            "includeGroups": [
+                "1A783D32-C6A3-4F5F-9D47-271B12130DFD"
+            ],
+            "entries": [
+                {
+                    "$type": "bluetoothDevice",
+                    "id": "477C626F-510E-4881-B475-592CF6E501AF",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
                         ]
                     },
                     "access": [

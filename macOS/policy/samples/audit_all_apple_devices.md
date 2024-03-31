@@ -1,6 +1,6 @@
 # Device control policy sample: audit_all_apple_devices
 
-Description: A sample policy              
+Description: This is a policy.              
 Device Type: Apple Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -94,17 +94,23 @@ The match type for the group is *all*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': True}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': True}} | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
-DefaultEnforcement | Allow | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-UXNavigationTarget | http://www.microsoft.com | [documentation]() |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': True}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': True}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [macOS/policy/samples/audit_all_apple_devices.json](/macOS/policy/samples/audit_all_apple_devices.json)
+- [audit_all_apple_devices.json](audit_all_apple_devices.json)
 
 
 # Deployment Instructions

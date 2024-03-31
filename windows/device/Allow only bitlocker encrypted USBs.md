@@ -64,39 +64,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### bitlocker encrypted USBs_0
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAll*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| DeviceEncryptionStateId | BitlockerEncrypted |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
-	<Name>bitlocker encrypted USBs_0</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### bitlocker unencrypted USBs_0
 
 
@@ -130,21 +97,60 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
+### bitlocker encrypted USBs_0
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAll*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| DeviceEncryptionStateId | BitlockerEncrypted |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
+	<Name>bitlocker encrypted USBs_0</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-SecuredDevicesConfiguration | RemovableMediaDevices | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+SecuredDevicesConfiguration | RemovableMediaDevices | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Intune OMA-URI/bitlocker encrypted USBs.xml](/windows/device/Intune%20OMA-URI/bitlocker%20encrypted%20USBs.xml)
-- [windows/device/Intune OMA-URI/bitlocker unencrypted USBs.xml](/windows/device/Intune%20OMA-URI/bitlocker%20unencrypted%20USBs.xml)
-- [windows/device/Intune OMA-URI/Allow only bitlocker encrypted USBs.xml](/windows/device/Intune%20OMA-URI/Allow%20only%20bitlocker%20encrypted%20USBs.xml)
+- [Intune OMA-URI/Allow only bitlocker encrypted USBs.xml](Intune%20OMA-URI/Allow%20only%20bitlocker%20encrypted%20USBs.xml)
+- [Intune OMA-URI/bitlocker encrypted USBs.xml](Intune%20OMA-URI/bitlocker%20encrypted%20USBs.xml)
+- [Intune OMA-URI/bitlocker unencrypted USBs.xml](Intune%20OMA-URI/bitlocker%20unencrypted%20USBs.xml)
 
 
 # Deployment Instructions
@@ -164,9 +170,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Read (8) is an unsupported access mask
-- File Execute (32) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- File Execute (32) is an unsupported access mask
+- File Read (8) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -179,15 +185,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
-		<Name>bitlocker encrypted USBs_0</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{3ed80052-0861-4a8e-bab0-3e185820ee2e}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B3ed80052-0861-4a8e-bab0-3e185820ee2e%7D/GroupData -->
 		<Name>bitlocker unencrypted USBs_0</Name>
@@ -195,6 +192,15 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
 			<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
+		<Name>bitlocker encrypted USBs_0</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -259,7 +265,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Allow only bitlocker encrypted USBs.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Allow only bitlocker encrypted USBs.xml*
          
    
    7. Click "Save"
@@ -274,7 +280,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\bitlocker encrypted USBs.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/bitlocker encrypted USBs.xml*
          
    
    7. Click "Save"
@@ -289,7 +295,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\bitlocker unencrypted USBs.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/bitlocker unencrypted USBs.xml*
          
    
    7. Click "Save"
