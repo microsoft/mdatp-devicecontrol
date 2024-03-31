@@ -25,7 +25,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>All Removable Media Devices<a href="#all-removable-media-devices" title="all [{'$type': 'primaryId', 'value': 'removable_media_devices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">.
-                <ul><li>Some Executable Extensions<a href="#some-executable-extensions" title="any [{'$type': 'fileType', 'value': '.exe'}, {'$type': 'fileType', 'value': '.ps1'}, {'$type': 'fileType', 'value': '.cmd'}]"> (details)</a></ul>
+                <ul><li>Kingston Devices<a href="#kingston-devices" title="all [{'$type': 'vendorId', 'value': '0951'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -43,6 +43,58 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+
+### Kingston Devices
+
+
+
+This is a group of type *device*. 
+The match type for the group is *all*.
+
+
+<table>
+<tr>
+<th>Operator</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+
+<tr>
+
+<td></td>
+
+<td>vendorId</td>
+
+<td>0951</td>
+
+</tr>
+
+</table>
+
+
+#### Available properties for Kingston Devices
+
+
+<details>
+<summary>View JSON</summary>
+
+```json
+{
+    "$type": "device",
+    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+    "name": "Kingston Devices",
+    "query": {
+        "$type": "all",
+        "clauses": [
+            {
+                "$type": "vendorId",
+                "value": "0951"
+            }
+        ]
+    }
+}
+```
+</details>
 
 ### All Removable Media Devices
 
@@ -96,86 +148,6 @@ The match type for the group is *all*.
 ```
 </details>
 
-### Some Executable Extensions
-
-
-
-This is a group of type *file*. 
-The match type for the group is *any*.
-
-
-<table>
-<tr>
-<th>Operator</th>
-<th>Property</th>
-<th>Value</th>
-</tr>
-
-<tr>
-
-<td></td>
-
-<td>fileType</td>
-
-<td>.exe</td>
-
-</tr>
-
-<tr>
-
-<td>any</td>
-
-<td>fileType</td>
-
-<td>.ps1</td>
-
-</tr>
-
-<tr>
-
-<td>any</td>
-
-<td>fileType</td>
-
-<td>.cmd</td>
-
-</tr>
-
-</table>
-
-
-#### Available properties for Some Executable Extensions
-
-
-<details>
-<summary>View JSON</summary>
-
-```json
-{
-    "$type": "file",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-    "name": "Some Executable Extensions",
-    "query": {
-        "$type": "any",
-        "clauses": [
-            {
-                "$type": "fileType",
-                "value": ".exe"
-            },
-            {
-                "$type": "fileType",
-                "value": ".ps1"
-            },
-            {
-                "$type": "fileType",
-                "value": ".cmd"
-            }
-        ]
-    }
-}
-```
-</details>
-
 
 ## Settings
 
@@ -195,7 +167,6 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 This policy is based on information in the following files:
 
 - [deny_removable_media_except_kingston.json](deny_removable_media_except_kingston.json)
-- [deny_exe_extension_on_removable_media.json](deny_exe_extension_on_removable_media.json)
 
 
 # Deployment Instructions
@@ -286,6 +257,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+            "name": "Kingston Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "vendorId",
+                        "value": "0951"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
             "name": "All Removable Media Devices",
             "query": {
@@ -294,28 +279,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "primaryId",
                         "value": "removable_media_devices"
-                    }
-                ]
-            }
-        },
-        {
-            "$type": "file",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-            "name": "Some Executable Extensions",
-            "query": {
-                "$type": "any",
-                "clauses": [
-                    {
-                        "$type": "fileType",
-                        "value": ".exe"
-                    },
-                    {
-                        "$type": "fileType",
-                        "value": ".ps1"
-                    },
-                    {
-                        "$type": "fileType",
-                        "value": ".cmd"
                     }
                 ]
             }
@@ -424,6 +387,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+            "name": "Kingston Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "vendorId",
+                        "value": "0951"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
             "name": "All Removable Media Devices",
             "query": {
@@ -432,28 +409,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "primaryId",
                         "value": "removable_media_devices"
-                    }
-                ]
-            }
-        },
-        {
-            "$type": "file",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-            "name": "Some Executable Extensions",
-            "query": {
-                "$type": "any",
-                "clauses": [
-                    {
-                        "$type": "fileType",
-                        "value": ".exe"
-                    },
-                    {
-                        "$type": "fileType",
-                        "value": ".ps1"
-                    },
-                    {
-                        "$type": "fileType",
-                        "value": ".cmd"
                     }
                 ]
             }
