@@ -1,6 +1,6 @@
 # Device control policy sample: deny_removable_media_except_kingston
 
-Description: A sample policy              
+Description: This is a policy.              
 Device Type: Apple Removable Media
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -25,7 +25,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <ul><li>All Removable Media Devices<a href="#all-removable-media-devices" title="all [{'$type': 'primaryId', 'value': 'removable_media_devices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">.
-                <ul><li>Some Executable Extensions<a href="#some-executable-extensions" title="any [{'$type': 'fileType', 'value': '.exe'}, {'$type': 'fileType', 'value': '.ps1'}, {'$type': 'fileType', 'value': '.cmd'}]"> (details)</a></ul>
+                <ul><li>Kingston Devices<a href="#kingston-devices" title="all [{'$type': 'vendorId', 'value': '0951'}]"> (details)</a></ul>
             </td>
             <td>Deny</td>
             <td>:x:</td>
@@ -44,12 +44,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Some Executable Extensions
+### Kingston Devices
 
 
 
-This is a group of type *file*. 
-The match type for the group is *any*.
+This is a group of type *device*. 
+The match type for the group is *all*.
 
 
 <table>
@@ -63,36 +63,16 @@ The match type for the group is *any*.
 
 <td></td>
 
-<td>fileType</td>
+<td>vendorId</td>
 
-<td>.exe</td>
-
-</tr>
-
-<tr>
-
-<td>any</td>
-
-<td>fileType</td>
-
-<td>.ps1</td>
-
-</tr>
-
-<tr>
-
-<td>any</td>
-
-<td>fileType</td>
-
-<td>.cmd</td>
+<td>0951</td>
 
 </tr>
 
 </table>
 
 
-#### Available properties for Some Executable Extensions
+#### Available properties for Kingston Devices
 
 
 <details>
@@ -100,23 +80,15 @@ The match type for the group is *any*.
 
 ```json
 {
-    "$type": "file",
+    "$type": "device",
     "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-    "name": "Some Executable Extensions",
+    "name": "Kingston Devices",
     "query": {
-        "$type": "any",
+        "$type": "all",
         "clauses": [
             {
-                "$type": "fileType",
-                "value": ".exe"
-            },
-            {
-                "$type": "fileType",
-                "value": ".ps1"
-            },
-            {
-                "$type": "fileType",
-                "value": ".cmd"
+                "$type": "vendorId",
+                "value": "0951"
             }
         ]
     }
@@ -178,17 +150,22 @@ The match type for the group is *all*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': False}, 'bluetoothDevice': {'disable': False}} | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration) |
-DefaultEnforcement | Allow | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-UXNavigationTarget | http://www.microsoft.com | [documentation]() |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': False}, 'bluetoothDevice': {'disable': False}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 
 
 ## Files
 This policy is based on information in the following files:
-
-- [macOS/policy/samples/deny_removable_media_except_kingston.json](/macOS/policy/samples/deny_removable_media_except_kingston.json)
+- [deny_removable_media_except_kingston.json](deny_removable_media_except_kingston.json)
 
 
 # Deployment Instructions

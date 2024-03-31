@@ -1,6 +1,6 @@
 # Device control policy sample: Scenario 3
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE245D5340>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE2474E120>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE2474FEC0>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE2474FF80>}, 'web_paths': ['windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml', 'windows/device/Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml'], 'rules': {'{d2193a7f-ceec-4729-a72a-fe949639db55}': <devicecontrol.PolicyRule object at 0x000002AE2473E6F0>}, 'groups': {'{9b28fae8-72f7-4267-a1a5-685f747a7146}': <devicecontrol.Group object at 0x000002AE24593EF0>}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE2474D7C0>, 'groupsXML': '<Groups>\n\t<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->\n\t\t<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PrimaryId>RemovableMediaDevices</PrimaryId>\n\t\t\t<PrimaryId>CdRomDevices</PrimaryId>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t</DescriptorIdList>\n\t</Group>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{d2193a7f-ceec-4729-a72a-fe949639db55}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd2193a7f-ceec-4729-a72a-fe949639db55%7D/RuleData -->\n\t\t<Name>Block removable storage and CdRom</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{c1adfc3e-0347-4096-88c3-6e0777b2a15b}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>7</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{fee5f127-951b-4ece-9196-fa1c9ff21678}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t\t<Entry Id="{ad04437c-e279-41a3-8a1a-b76b7e35bce5}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>1</AccessMask>\n\t\t\t<Options>1</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'Primary ID [CdRomDevices] is not supported on macOS.', 'windows_support': <devicecontrol.Support object at 0x000002AE2474E900>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE246B6E70>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -111,17 +111,23 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml](/windows/device/Intune%20OMA-URI/Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml](Intune%20OMA-URI/Scenario%203%20Block%20any%20Removable%20Storage%20and%20CD-DVD.xml)
 
 
 # Deployment Instructions
@@ -296,7 +302,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 3 Block any Removable Storage and CD-DVD.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml*
          
    
    7. Click "Save"
@@ -311,7 +317,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

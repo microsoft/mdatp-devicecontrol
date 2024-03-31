@@ -5,6 +5,7 @@ import os
 import urllib.parse
 import pathlib
 import xml.etree.ElementTree as ET
+from json import JSONEncoder
 
 class Util:
 
@@ -26,6 +27,13 @@ class Util:
     def rreplace(s, old, new, occurrence):
         li = s.rsplit(old, occurrence)
         return new.join(li)
+
+class DCJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        try:
+            return obj.toJSON()  # Call a custom method if available
+        except AttributeError:
+            return super().default(obj)
 
     
 class Format:
@@ -74,6 +82,7 @@ class Setting:
         },
         DefaultEnforcement:{
             "name": "Default Enforcement",
+            "description": "Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched.",
             "oma-uri": {
                 "supported":True,
                 "oma-uri":"./Vendor/MSFT/Defender/Configuration/DefaultEnforcement",
@@ -93,12 +102,17 @@ class Setting:
                 "value_map":{
                     "Allow":"allow",
                     "Deny":"deny"
+                },
+                "mac_setting": {
+                    "category": "global",
+                    "name": "defaultEnforcement",  
                 }
                 
             }
         },
         DataDuplicationDirectory:{
             "name": "File Evidence Directory",
+            "description": "Define data duplication directory for device control.",
             "oma-uri": {
                 "supported":True,
                 "oma-uri":"./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory",
@@ -111,6 +125,7 @@ class Setting:
         },
         SecuredDevicesConfiguration: {
             "name": "Secured Devices",
+            "description":"Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured.",
             "oma-uri": {
                 "supported": True,
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationsecureddevicesconfiguration",
@@ -119,12 +134,18 @@ class Setting:
             },
             "mac": {
                 "supported": True,
-                "documentation": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings"
+                "documentation": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings",
+                "mac_setting": {
+                    "category":"features"
+                },
+                "documentation": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings",
+                
             }
 
         },
         DataDuplicationMaximumQuota:{
             "name": "File Evidence Quota",
+            "description":"Defines the maximum data duplication quota in MB that can be collected. When the quota is reached the filter will stop duplicating any data until the service manages to dispatch the existing collected data, thus decreasing the quota again below the maximum. The valid interval is [5-5000] MB. By default, the maximum quota will be 500 MB.",
             "oma-uri":{
                 "supported":True,
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationmaximumquota",
@@ -137,6 +158,7 @@ class Setting:
         },
         DataDuplicationRemoteLocation:{
             "name": "File Evidence Remote Location",
+            "description":"Define data duplication remote location for Device Control. When configuring this setting, ensure that Device Control is Enabled and that the provided path is a remote path the user can access.",
             "oma-uri":{
                 "supported": True,
                 "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
@@ -149,6 +171,7 @@ class Setting:
         },
         UXNavigationTarget: {
             "name":"UX Navigation Target",
+            "description":"Notification hyperlink",
             "oma-uri":{
                 "supported":False
             },
@@ -156,11 +179,31 @@ class Setting:
                 "supported":False
             },
             "mac":{
-                "supported":True
+                "supported":True,
+                "mac_setting":{
+                    "category": "UX",
+                    "name": "navigationTarget",
+                },
+                "documentation": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings",
+                
             }
         }
     
     }
+
+    def getSettingNameFor(oma_uri):
+
+        for key in Setting.data:
+            setting_data = Setting.data[key]
+            if setting_data["oma-uri"]["supported"]:
+                if oma_uri == setting_data["oma-uri"]["oma-uri"]:
+                    return key
+                
+        return None
+
+    
+
+
     
     def __init__(self,name,value):
         self.name = name
@@ -183,7 +226,10 @@ class Setting:
         if supported:
             return Setting.data[self.name][format]["documentation"]
         return ""
-
+    
+    def get_description(self):
+        return Setting.data[self.name]["description"]
+        
     def get_oma_uri(self):
 
         supported = Setting.data[self.name]["oma-uri"]["supported"]
@@ -259,7 +305,10 @@ class Settings:
             if "global" in settings_json:
                 global_json = settings_json["global"]
                 mac_default_enforcement = global_json["defaultEnforcement"]
-                default_enforcement = Settings.default_enforcement_map[mac_default_enforcement]
+                if mac_default_enforcement not in Settings.default_enforcement_map.values():
+                    default_enforcement = Settings.default_enforcement_map[mac_default_enforcement]
+                else:
+                    default_enforcement = mac_default_enforcement
 
                 settings_dict[Setting.DefaultEnforcement] = default_enforcement
             else:
@@ -275,11 +324,18 @@ class Settings:
         return settings
 
 
-    def __init__(self, setting_dict):
+    def __init__(self, setting_dict=None):
         self.settings = []
-        for name in setting_dict:
-            value = setting_dict[name]
-            self.settings.append(Setting(name,value))
+        if setting_dict is None:
+            return
+        else: 
+            for name in setting_dict:
+                value = setting_dict[name]
+                self.settings.append(Setting(name,value))
+
+    def addSetting(self,setting):
+        self.settings.append(setting)
+
 
     def getIntuneCustomValues(self):
         custom_rows = {}
@@ -903,7 +959,7 @@ class Group:
 
     
 
-    def __init__(self,root,format,path):
+    def __init__(self,root,format,path=None):
 
         self.format = format
         self.set_path(path)
@@ -1037,7 +1093,7 @@ class Group:
                 else:
                     return False
             return True
-        return False
+        return self.id == other.id
     
     def __hash__(self):
         hashList = []
@@ -1045,7 +1101,8 @@ class Group:
             key = property.name
             value = property.value
             hashList.append(key+"="+value)
-
+            
+        hashList.append("id="+self.id)    
         hashList.append ("type="+self.match_type)
 
         hashList.sort()
@@ -1130,7 +1187,7 @@ class PolicyRule:
     ]
 
 
-    def __init__(self,root, format, path, rule_index = 1):
+    def __init__(self,root, format, path=None, rule_index = 1):
 
                             
         self.root = root
@@ -1141,6 +1198,7 @@ class PolicyRule:
         self.rule_index = rule_index
         self.id = None
         self.name = None
+        self.description = None
         self.included_device_properties = []
         self.included_groups = []
 

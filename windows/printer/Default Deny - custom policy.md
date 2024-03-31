@@ -1,6 +1,6 @@
 # Device control policy sample: Default Deny - custom policy
 
-Description: A sample policy              
+Description: This is a policy.              
 Device Type: Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -22,8 +22,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        
-		<th>Print</th>
+        <th>Print</th>
         </tr><tr>
             <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
@@ -51,39 +50,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
-
-### Authorized USB Printer
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| VID_PID | 03F0_ |
-| VID_PID | 035E_0872 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-	<Name>Authorized USB Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>03F0_</VID_PID>
-		<VID_PID>035E_0872</VID_PID>
-	</DescriptorIdList>
-</Group>
-```
-</details>
 
 ### Any Printer
 
@@ -147,19 +113,60 @@ The match type for the group is *MatchAny*.
 ```
 </details>
 
+### Authorized USB Printer
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| VID_PID | 03F0_ |
+| VID_PID | 035E_0872 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+	<Name>Authorized USB Printer</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<VID_PID>03F0_</VID_PID>
+		<VID_PID>035E_0872</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Intune OMA-URI/Default Deny - custom policy.xml](/windows/printer/Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
-- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
+- [Group Policy/Printer_Groups.xml](Group%20Policy/Printer_Groups.xml)
+- [Intune OMA-URI/Default Deny - custom policy.xml](Intune%20OMA-URI/Default%20Deny%20-%20custom%20policy.xml)
+- [Intune OMA-URI/Any printer group.xml](Intune%20OMA-URI/Any%20printer%20group.xml)
+- [Intune OMA-URI/PDF_XPS Printer.xml](Intune%20OMA-URI/PDF_XPS%20Printer.xml)
 
 
 # Deployment Instructions
@@ -178,20 +185,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for Authorized USB Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Authorized USB Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
 <details>
 <summary>Create a reusable setting for Any Printer</summary> 
 
@@ -213,6 +206,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Click on Reusable Settings
    3. Click (+) Add
    4. Enter the PDF_XPS Printer for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   7. Set the match type toggle to MatchAny
+   
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Authorized USB Printer</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the Authorized USB Printer for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
    7. Set the match type toggle to MatchAny
@@ -285,15 +292,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
-		<Name>Authorized USB Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<VID_PID>03F0_</VID_PID>
-			<VID_PID>035E_0872</VID_PID>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
 		<Name>Any Printer</Name>
@@ -308,6 +306,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{05b56e90-e682-48ff-a6c0-5602c9638182}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B05b56e90-e682-48ff-a6c0-5602c9638182%7D/GroupData -->
+		<Name>Authorized USB Printer</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -373,7 +380,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Default Deny - custom policy.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Default Deny - custom policy.xml*
          
    
    7. Click "Save"
@@ -388,7 +395,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Any printer group.xml*
          
    
    7. Click "Save"
@@ -403,7 +410,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\PDF_XPS Printer.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/PDF_XPS Printer.xml*
          
    
    7. Click "Save"
@@ -418,7 +425,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Authorized USB Printer.xml*
+   6. For Custom XML, select  *windows/printer/Intune OMA-URI/Authorized USB Printer.xml*
          
    
    7. Click "Save"

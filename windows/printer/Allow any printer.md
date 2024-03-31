@@ -1,7 +1,7 @@
 # Device control policy sample: Allow any printer
 
-Description: A sample policy              
-Device Type: Windows Printer
+Description: This is a policy.              
+Device Type: None
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -15,79 +15,41 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top"><center>Devices</center></th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="1" valign="top"><center>Access</center></th>
+        <th colspan="6" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
         <th rowspan="2" valign="top">Conditions</th>
     </tr>
     <tr>
         <th>Included</th>
         <th>Excluded</th>
-        
-		<th>Print</th>
-        </tr><tr>
-            <td rowspan="1" valign="top"><b>Default Printer Allow</b></td>
-            <td rowspan="1 valign="top">
-                <ul><li>Group: Any Printer<a href="#any-printer" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
-</ul>
-            </td>
-            <td rowspan="1" valign="top">
-                <ul></ul>
-            </td>
-            <td>Allow</td>
-            <td>:white_check_mark:</td>
-            <td>Disable (4)</td> 
-            <td>
-                <center>-</center></td>
-        </tr></table>
+        <th>Disk Read</th>
+		<th>Disk Write</th>
+		<th>Disk Execute</th>
+		<th>File Read</th>
+		<th>File Write</th>
+		<th>File Execute</th></tr></table>
 
 
 ## Groups
 
 
-### Any Printer
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | PrinterDevices |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-	<Name>Any Printer</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>PrinterDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/printer/Intune OMA-URI/Allow any printer.xml](/windows/printer/Intune%20OMA-URI/Allow%20any%20printer.xml)
-- [windows/printer/Group Policy/Printer_Groups.xml](/windows/printer/Group%20Policy/Printer_Groups.xml)
 
 
 # Deployment Instructions
@@ -102,24 +64,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 
+## Mac
+- [Mac Deployment with Intune](#mac-deployment-with-intune)
+- [Mac Deployment with JAMF](#mac-deployment-with-jamf)
+- [Manual Mac Deployment](#manual-mac-deployment)
+
 
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for Any Printer</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the Any Printer for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
 <details>
 <summary>Create a Device Control Rules configuration profile</summary>  
 
@@ -134,30 +87,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 </details>
 
 
-<details>
-<summary>Add a rule for Default Printer Allow to the policy</summary>
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Any Printer*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Default Printer Allow* for the name
-
-
-
-   1. Select *Allow* from "Type"
-   1. Select *Disable* from "Options"
-   1. Select *Print* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
 
 
 ## Group Policy (GPO)
@@ -168,14 +97,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData -->
-		<Name>Any Printer</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>PrinterDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
 </Groups>
 ```
    3. In the Define device control policy groups window, select *Enabled* and specify the network share file path containing the XML groups data.
@@ -188,20 +109,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{2f746a4d-4ae1-4bc0-aaef-136d12518fd4}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData -->
-		<Name>Default Printer Allow</Name>
-		<IncludedIdList>
-			<GroupId>{090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc}</GroupId>
-		</IncludedIdList>
-		<ExcludedIdList>
-		</ExcludedIdList>
-		<Entry Id="{ddcac8c7-e492-4cb9-ac46-28813e195d56}">
-			<Type>Allow</Type>
-			<AccessMask>64</AccessMask>
-			<Options>4</Options>
-		</Entry>
-	</PolicyRule>
 </PolicyRules>
 ```
   3. In the Define device control policy rules window, select *Enabled*, and enter the network share file path containing the XML rules data.
@@ -221,36 +128,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    7. Under Name, enter **
    8. Optionally, enter a description
    9. Click "Next" 
-</details>
-<details>
-<summary>Add a row for Default Printer Allow</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *Default Printer Allow*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B2f746a4d-4ae1-4bc0-aaef-136d12518fd4%7D/RuleData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Allow any printer.xml*
-         
-   
-   7. Click "Save"
-</details>
-<details>
-<summary>Add a row for Any Printer</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *Any Printer*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B090b8e1d-5c7b-4f69-a4f2-fb76fa0535fc%7D/GroupData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. For Custom XML, select  *windows\printer\Intune OMA-URI\Any printer group.xml*
-         
-   
-   7. Click "Save"
 </details>
 <details>
 <summary>Add a row for DefaultEnforcement</summary>  
@@ -279,5 +156,142 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    7. Click "Save"
 </details>
 
+
+
+
+## Mac Policy
+### Mac Deployment with Intune
+
+1. Create the .mobileconfig file
+
+<details>
+    <summary>Copy the contents below into a file, and save it.</summary>       
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+    <dict>
+        <key>PayloadUUID</key>
+        <string>C4E6A782-0C8D-44AB-A025-EB893987A295</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadOrganization</key>
+        <string>Microsoft</string>
+        <key>PayloadIdentifier</key>
+        <string>com.microsoft.wdav</string>
+        <key>PayloadDisplayName</key>
+        <string>Microsoft Defender settings</string>
+        <key>PayloadDescription</key>
+        <string>Microsoft Defender configuration settings</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true/>
+        <key>PayloadRemovalDisallowed</key>
+        <true/>
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadUUID</key>
+                <string>99DBC2BC-3B3A-46A2-A413-C8F9BB9A7295</string>
+                <key>PayloadType</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadOrganization</key>
+                <string>Microsoft</string>
+                <key>PayloadIdentifier</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadDisplayName</key>
+                <string>Microsoft Defender configuration settings</string>
+                <key>PayloadDescription</key>
+                <string/>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadEnabled</key>
+                <true/>
+                <key>dlp</key>
+                <dict>
+                  <key>features</key>
+                    <array>
+                        <dict>
+                            <key>name</key>
+                            <string>DC_in_dlp</string>
+                            <key>state</key>
+                            <string>enabled</string>
+                        </dict>
+                    </array>
+                </dict>
+                <key>deviceControl</key>
+                <dict>
+                    <key>policy</key>
+                    <string>
+{
+    "groups": [],
+    "rules": [],
+    "settings": {
+        "global": {
+            "defaultEnforcement": "deny"
+        }
+    }
+}
+                    </string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
+```
+</details>
+
+
+
+2. Deploy the .mobileconfig file using Intune
+
+    1.   Navigate to https://endpoint.microsoft.com/ > **Devices** > **macOS** > ** Configuration profiles
+    2.   Click on create + New Policy
+    3.   Select Profile type Templates
+    4.   Select Custom profile
+    5.   Enter the name of the policy, optionally a description, and then click Next
+    6.   Select the device deployment channel
+    7.   Choose the .mobileconfig that you created
+    8.   Click "Next"
+    9.   Scope, assign and deploy the policy.
+
+
+
+### Manual Mac Deployment
+
+
+1. Create the .json file
+
+<details>
+     <summary>Save the .json to a file</summary>
+
+```json
+{
+    "groups": [],
+    "rules": [],
+    "settings": {
+        "global": {
+            "defaultEnforcement": "deny"
+        }
+    }
+}
+```
+</details>
+
+
+2. Use ```mdatp config device-control policy set --path <full-path-to-policy.json>``` to apply the policy.
+
+
+
+### Mac Deployment with JAMF
+
+Instructions on how to deploy the policy with JAMF can be found [here](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-jamf?view=o365-worldwide#deploy-policy-by-using-jamf)
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 
 

@@ -605,7 +605,7 @@ class Inventory:
 
         return oma_uri_object
     
-    def process_query(self,query):
+    def process_query(self,query=None):
 
         if query is None:
             query="path.str.contains('(.*)')"
@@ -803,7 +803,7 @@ class Inventory:
 
 
 
-    def generate_text(self,result,dest,file,title, settings = None ):
+    def generate_text(self,result,template,dest,file,title, settings = None ):
         
         if settings is not None:
             custom_settings_values = settings.getIntuneCustomValues()
@@ -819,8 +819,16 @@ class Inventory:
         if result["mac_policy"] is not None:
             result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
 
-        TEMPLATE_FILE = args.template
-        template = templateEnv.get_template(TEMPLATE_FILE)
+
+        #Make web_paths relative to output file
+        dest_path = pathlib.PurePath(dest)
+        rel_web_paths = []
+        for web_path in result["web_paths"]:
+            rel_path = os.path.relpath(web_path,str(dest_path))
+            rel_web_paths.append(rel_path)
+
+        result["web_paths"] = rel_web_paths
+
 
         Helper.set_entry_type(result["entry_type"])
 
@@ -849,7 +857,7 @@ class Inventory:
 
 class Description:
 
-    def __init__(self,result,description_template_name):
+    def __init__(self,result,templateEnv,description_template_name):
         self.result = result
         self.template = templateEnv.get_template(description_template_name)
 
@@ -953,7 +961,7 @@ def load_scenarios(scenarios_file):
          scenarios = json.loads(file.read())
          return scenarios
      
-def generate_readme(results,dest,title,readme_template,readme_file,templates_path):
+def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,templates_path):
 
     template = templateEnv.get_template(readme_template)
     out = template.render(
@@ -975,31 +983,7 @@ def generate_readme(results,dest,title,readme_template,readme_file,templates_pat
         out_file.write(out)
         out_file.close()
 
-if __name__ == '__main__':
-
-    arg_parser = argparse.ArgumentParser(
-        description='Utility for generating documentation for device control policies.')
-
-    
-    input_group =arg_parser.add_mutually_exclusive_group()
-    input_group.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process')
-    input_group.add_argument('-s','--scenarios',dest="scenarios",type=file,help='A JSON file that contains a list of scenarios to process')
-    input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rule to process')
-
-
-    arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files.  Defaults to current working directory.',default=".")
-    arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output.  Defaults to text.",default="text")
-    arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
-    arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory.  Defaults to current working directory.",default=".")
-    arg_parser.add_argument('-g','--generate',dest="generated_files_locations", type=generate_files_format, help='Generates files for other formats')
-    arg_parser.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output.  Defaults to dcutil.j2.",default="dcutil.j2")
-    arg_parser.add_argument('-rt','--readme_template',dest="readme_template",help="Jinja2 template to use for the readme.  Defaults to readme.j2.",default="readme.j2")
-    arg_parser.add_argument('-dt','--description_template',dest="description_template",help="Jinja2 template to use for the description.  Defaults to description.j2.",default="description.j2")
-    arg_parser.add_argument('-r','--readme',dest="readme_file",help="The readme file to generate.  Defaults to readme.md.",default="readme.md")
-    arg_parser.add_argument('-tp','--templates_path',dest="templates_path",help="path to Jinja2 templates.  Defaults to templates.",default="templates",type=path_array)
-    
-
-    args = arg_parser.parse_args()
+def main(args):
 
     templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
     templateEnv = jinja2.Environment(loader=templateLoader)
@@ -1051,9 +1035,12 @@ if __name__ == '__main__':
                 if description is not None:
                     result["description"] = description
                 else:
-                    result["description"] = Description(result,args.description_template)
+                    result["description"] = Description(result,templateEnv, args.description_template)
 
-                inventory.generate_text(result,args.dest,default_outfile,title,settings)
+                TEMPLATE_FILE = args.template
+                template = templateEnv.get_template(TEMPLATE_FILE)
+
+                inventory.generate_text(result,template,args.dest,default_outfile,title,settings)
 
             results[policy_file] = {
                 "result":result,
@@ -1061,7 +1048,7 @@ if __name__ == '__main__':
                 "file": default_outfile
             }
 
-        generate_readme(results,args.dest,scenarios["title"],args.readme_template, args.readme_file, args.templates_path)
+        generate_readme(results,templateEnv,args.dest,scenarios["title"],args.readme_template, args.readme_file, args.templates_path)
 
 
     elif query is None:
@@ -1073,9 +1060,41 @@ if __name__ == '__main__':
         if args.format == "text":
             result = inventory.process_query(query)
 
-            result["description"] = Description(result,args.description_template)
+            result["description"] = Description(result,templateEnv,args.description_template)
 
-            inventory.generate_text(result,args.dest,out_file,title,settings)
+            TEMPLATE_FILE = args.template
+            template = templateEnv.get_template(TEMPLATE_FILE)
+
+            inventory.generate_text(result,template,args.dest,out_file,title,settings)
         elif args.format == "csv":
             inventory.generate_csv(args.dest)
         
+    
+if __name__ == '__main__':
+
+    arg_parser = argparse.ArgumentParser(
+        description='Utility for generating documentation for device control policies.')
+
+    
+    input_group =arg_parser.add_mutually_exclusive_group()
+    input_group.add_argument('-q','--query',dest="query",help='The query to retrieve the policy rules to process')
+    input_group.add_argument('-s','--scenarios',dest="scenarios",type=file,help='A JSON file that contains a list of scenarios to process')
+    input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rule to process')
+
+
+    arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files.  Defaults to current working directory.',default=".")
+    arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output.  Defaults to text.",default="text")
+    arg_parser.add_argument('-o','--output',dest="out_file",help="The output file")
+    arg_parser.add_argument('-d','--dest',dest="dest",type=dir,help="The output directory.  Defaults to current working directory.",default=".")
+    arg_parser.add_argument('-g','--generate',dest="generated_files_locations", type=generate_files_format, help='Generates files for other formats')
+    
+    arg_parser.add_argument('-t','--template',dest="template",help="Jinja2 template to use to generate output.  Defaults to dcutil.j2.",default="dcutil.j2")
+    arg_parser.add_argument('-rt','--readme_template',dest="readme_template",help="Jinja2 template to use for the readme.  Defaults to readme.j2.",default="readme.j2")
+    arg_parser.add_argument('-dt','--description_template',dest="description_template",help="Jinja2 template to use for the description.  Defaults to description.j2.",default="description.j2")
+    arg_parser.add_argument('-r','--readme',dest="readme_file",help="The readme file to generate.  Defaults to readme.md.",default="readme.md")
+    arg_parser.add_argument('-tp','--templates_path',dest="templates_path",help="path to Jinja2 templates.  Defaults to templates.",default="templates",type=path_array)
+    
+
+    args = arg_parser.parse_args()
+    main(args)
+

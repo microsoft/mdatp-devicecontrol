@@ -132,25 +132,6 @@
                                         false
                                     ]
                                 },
-                                "unallowedApplications": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "title": "Additional applications to restrict when a restricted apple device is attached to the system.",
-                                    "items": {
-                                        "type": "object",
-                                        "title": "Application to restrict",
-                                        "$ref": "#/$defs/applicationIdentifier"
-                                    }
-                                },
-                                "excludedPaths": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "title": "Paths to allow restricted applications to access.",
-                                    "items": {
-                                        "type": "string",
-                                        "title": "Path to exclude"
-                                    }
-                                },
                                 "__comments": {
                                     "type": "string"
                                 }
@@ -189,25 +170,6 @@
                                         true
                                     ]
                                 },
-                                "unallowedApplications": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "title": "Additional applications to restrict when a restricted bluetooth device is attached to the system.",
-                                    "items": {
-                                        "type": "object",
-                                        "title": "Application to restrict",
-                                        "$ref": "#/$defs/applicationIdentifier"
-                                    }
-                                },
-                                "excludedPaths": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "title": "Paths to allow restricted applications to access.",
-                                    "items": {
-                                        "type": "string",
-                                        "title": "Path to exclude"
-                                    }
-                                },
                                 "__comments": {
                                     "type": "string"
                                 }
@@ -226,25 +188,6 @@
                                     "examples": [
                                         true
                                     ]
-                                },
-                                "unallowedApplications": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "title": "Additional applications to restrict when a restricted portable device is attached to the system.",
-                                    "items": {
-                                        "type": "object",
-                                        "title": "Application to restrict",
-                                        "$ref": "#/$defs/applicationIdentifier"
-                                    }
-                                },
-                                "excludedPaths": {
-                                    "type": "array",
-                                    "minItems": 1,
-                                    "title": "Paths to allow restricted applications to access.",
-                                    "items": {
-                                        "type": "string",
-                                        "title": "Path to exclude"
-                                    }
                                 },
                                 "__comments": {
                                     "type": "string"
@@ -279,15 +222,6 @@
                             "examples": [
                                 "deny"
                             ]
-                        },
-                        "protectedLocations": {
-                            "type": "array",
-                            "minItems": 1,
-                            "title": "Additional paths that should be protected from restricted applications.",
-                            "items": {
-                                "type": "string",
-                                "title": "Path to protect from restricted applications."
-                            }
                         },
                         "__comments": {
                             "type": "string"
@@ -342,14 +276,6 @@
             "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
             "examples": [
                 "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-            ]
-        },
-        "sid": {
-            "type": "string",
-            "pattern": "^S-[0-9\\-]*$",
-            "title": "Security Identifier",
-            "examples": [
-                "S-1-12-1-2928708656-1113891680-214612123-1557141850"
             ]
         },
         "clauses": {
@@ -536,97 +462,6 @@
                     {
                         "$type": "encryption",
                         "value": "apfs"
-                    }
-                ]
-            },
-            "fileType": {
-                "title": "File Type",
-                "description": "Match against a file type. (Only supports Removable Media Devices)",
-                "required": [
-                    "$type",
-                    "value"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                    "$type": {
-                        "enum": [
-                            "fileType"
-                        ]
-                    },
-                    "value": {
-                        "type": "string",
-                        "title": "File Type",
-                        "pattern": "^\\.\\w+$",
-                        "examples": [
-                            ".exe",
-                            ".ps1",
-                            ".txt"
-                        ]
-                    },
-                    "__comments": {
-                        "type": "string"
-                    }
-                },
-                "examples": [
-                    {
-                        "$type": "fileType",
-                        "value": ".exe"
-                    }
-                ]
-            },
-            "securityIdentifier": {
-                "title": "Security Identifier Clause",
-                "description": "Match against a specific security identifier.",
-                "required": [
-                    "$type",
-                    "value"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                    "$type": {
-                        "enum": [
-                            "securityIdentifier"
-                        ]
-                    },
-                    "value": {
-                        "$ref": "#/$defs/sid"
-                    },
-                    "__comments": {
-                        "type": "string"
-                    }
-                },
-                "examples": [
-                    {
-                        "$type": "securityIdentifier",
-                        "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
-                    }
-                ]
-            },
-            "aadObjectId": {
-                "title": "AzureAD Object ID Clause",
-                "description": "Match against an AzureAD object ID",
-                "required": [
-                    "$type",
-                    "value"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                    "$type": {
-                        "enum": [
-                            "aadObjectId"
-                        ]
-                    },
-                    "value": {
-                        "$ref": "#/$defs/uuid"
-                    },
-                    "__comments": {
-                        "type": "string"
-                    }
-                },
-                "examples": [
-                    {
-                        "type": "aadObjectId",
-                        "value": "FE09D726-F582-479E-A737-AAAEE124864F"
                     }
                 ]
             }
@@ -826,283 +661,7 @@
                         }
                     ]
                 }
-            },
-            "file": {
-                "query": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/$defs/groups/file/binaryQuery"
-                        },
-                        {
-                            "$ref": "#/$defs/groups/file/unaryQuery"
-                        }
-                    ]
-                },
-                "binaryQuery": {
-                    "type": "object",
-                    "title": "A query which describes the files to include in this group",
-                    "required": [
-                        "$type",
-                        "clauses"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "$type": {
-                            "enum": [
-                                "any",
-                                "or",
-                                "all",
-                                "and"
-                            ],
-                            "title": "Describes how this query combines clauses",
-                            "examples": [
-                                "all",
-                                "any"
-                            ]
-                        },
-                        "clauses": {
-                            "type": "array",
-                            "minItems": 1,
-                            "title": "Clauses to evaluate",
-                            "items": {
-                                "type": "object",
-                                "title": "An individual clause to match against a file",
-                                "oneOf": [
-                                    {
-                                        "$ref": "#/$defs/clauses/fileType"
-                                    }
-                                ]
-                            }
-                        },
-                        "__comments": {
-                            "type": "string"
-                        }
-                    },
-                    "examples": [
-                        {
-                            "$type": "all",
-                            "clauses": [
-                                {
-                                    "$type": "fileType",
-                                    "value": ".exe"
-                                }
-                            ]
-                        },
-                        {
-                            "$type": "any",
-                            "clauses": [
-                                {
-                                    "$type": "fileType",
-                                    "value": ".exe"
-                                },
-                                {
-                                    "$type": "fileType",
-                                    "value": ".txt"
-                                },
-                                {
-                                    "$type": "any",
-                                    "clauses": [
-                                        {
-                                            "$type": "fileType",
-                                            "value": ".doc"
-                                        },
-                                        {
-                                            "$type": "fileType",
-                                            "value": ".docx"
-                                        },
-                                        {
-                                            "$type": "all",
-                                            "clauses": [
-                                                {
-                                                    "$type": "fileType",
-                                                    "value": ".ps1"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "unaryQuery": {
-                    "type": "object",
-                    "title": "A query which describes the file types to include in this group",
-                    "required": [
-                        "$type",
-                        "query"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "$type": {
-                            "enum": [
-                                "not"
-                            ],
-                            "title": "Describes how this query combines clauses",
-                            "examples": [
-                                "not"
-                            ]
-                        },
-                        "query": {
-                            "$ref": "#/$defs/groups/file/query"
-                        },
-                        "__comments": {
-                            "type": "string"
-                        }
-                    },
-                    "examples": [
-                        {
-                            "$type": "not",
-                            "query": {
-                                "$type": "any",
-                                "clauses": [
-                                    {
-                                        "$type": "fileType",
-                                        "value": ".txt"
-                                    },
-                                    {
-                                        "$type": "fileType",
-                                        "value": ".pdf"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "user": {
-                "query": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/$defs/groups/user/binaryQuery"
-                        },
-                        {
-                            "$ref": "#/$defs/groups/user/unaryQuery"
-                        }
-                    ]
-                },
-                "binaryQuery": {
-                    "type": "object",
-                    "title": "A query which describes the users to include in this group",
-                    "required": [
-                        "$type",
-                        "clauses"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "$type": {
-                            "enum": [
-                                "any",
-                                "or",
-                                "all",
-                                "and"
-                            ],
-                            "title": "Describes how this query combines clauses",
-                            "examples": [
-                                "all",
-                                "any"
-                            ]
-                        },
-                        "clauses": {
-                            "type": "array",
-                            "minItems": 1,
-                            "title": "Clauses to evaluate",
-                            "items": {
-                                "type": "object",
-                                "title": "An individual clause to match against a user",
-                                "oneOf": [
-                                    {
-                                        "$ref": "#/$defs/clauses/securityIdentifier"
-                                    },
-                                    {
-                                        "$ref": "#/$defs/clauses/aadObjectId"
-                                    }
-                                ]
-                            }
-                        },
-                        "__comments": {
-                            "type": "string"
-                        }
-                    },
-                    "examples": [
-                        {
-                            "$type": "or",
-                            "clauses": [
-                                {
-                                    "$type": "securityIdentifier",
-                                    "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
-                                }
-                            ]
-                        },
-                        {
-                            "$type": "or",
-                            "clauses": [
-                                {
-                                    "$type": "securityIdentifier",
-                                    "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
-                                },
-                                {
-                                    "$type": "securityIdentifier",
-                                    "value": "S-1-12-1-2928708656-1113891680-214612123-1557141851"
-                                },
-                                {
-                                    "$type": "and",
-                                    "clauses": [
-                                        {
-                                            "$type": "aadObjectId",
-                                            "value": "FE09D726-F582-479E-A737-AAAEE1248640"
-                                        },
-                                        {
-                                            "$type": "aadObjectId",
-                                            "value": "FE09D726-F582-479E-A737-AAAEE1248641"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "unaryQuery": {
-                    "type": "object",
-                    "title": "A query which describes the users to include in this group",
-                    "required": [
-                        "$type",
-                        "query"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "$type": {
-                            "enum": [
-                                "not"
-                            ],
-                            "title": "Describes how this query combines clauses",
-                            "examples": [
-                                "not"
-                            ]
-                        },
-                        "query": {
-                            "$ref": "#/$defs/groups/user/query"
-                        },
-                        "__comments": {
-                            "type": "string"
-                        }
-                    },
-                    "examples": [
-                        {
-                            "$type": "not",
-                            "query": {
-                                "$type": "or",
-                                "clauses": [
-                                    {
-                                        "$type": "securityIdentifier",
-                                        "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
+            }            
         },
         "deviceGroup": {
             "type": "object",
@@ -1156,122 +715,6 @@
                 }
             ]
         },
-        "fileGroup": {
-            "type": "object",
-            "title": "Identifies a specific group of file types",
-            "required": [
-                "$type",
-                "id",
-                "name",
-                "query"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "file"
-                    ]
-                },
-                "id": {
-                    "title": "UUID representing a unique ID for this file group.",
-                    "$ref": "#/$defs/uuid"
-                },
-                "name": {
-                    "type": "string",
-                    "title": "A friendly name for the group",
-                    "examples": [
-                        "Executable Types",
-                        "Text Types"
-                    ]
-                },
-                "query": {
-                    "$ref": "#/$defs/groups/file/query"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "file",
-                    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                    "name": "Executable Types",
-                    "query": {
-                        "$type": "any",
-                        "clauses": [
-                            {
-                                "$type": "fileType",
-                                "value": ".exe"
-                            },
-                            {
-                                "$type": "fileType",
-                                "value": ".bat"
-                            },
-                            {
-                                "$type": "fileType",
-                                "value": ".ps1"
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "userGroup": {
-            "type": "object",
-            "title": "Identifies a specific group of users",
-            "required": [
-                "$type",
-                "id",
-                "name",
-                "query"
-            ],
-            "additionalProperties": false,
-            "properties": {
-                "$type": {
-                    "enum": [
-                        "user"
-                    ]
-                },
-                "id": {
-                    "title": "UUID representing a unique ID for this user group.",
-                    "$ref": "#/$defs/uuid"
-                },
-                "name": {
-                    "type": "string",
-                    "title": "A friendly name for the group",
-                    "examples": [
-                        "Developers",
-                        "Marketing"
-                    ]
-                },
-                "query": {
-                    "$ref": "#/$defs/groups/user/query"
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "$type": "user",
-                    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-                    "name": "Developers",
-                    "query": {
-                        "$type": "or",
-                        "clauses": [
-                            {
-                                "$type": "securityIdentifier",
-                                "value": "S-1-12-1-2928708656-1113891680-214612123-1557141850"
-                            },
-                            {
-                                "$type": "securityIdentifier",
-                                "value": "S-1-12-1-2928708656-1113891680-214612123-1557141851"
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
         "denyEnforcement": {
             "title": "Access should be denied",
             "required": [
@@ -1293,16 +736,6 @@
                             "disable_audit_deny"
                         ]
                     }
-                },
-                "tag": {
-                    "type": "string",
-                    "title": "Custom tag to propogate to portal",
-                    "pattern": "^[0-9]+$",
-                    "format": "uint64",
-                    "examples": [
-                        "42",
-                        "98765432100"
-                    ]
                 },
                 "__comments": {
                     "type": "string"
@@ -1330,16 +763,6 @@
                             "disable_audit_allow"
                         ]
                     }
-                },
-                "tag": {
-                    "type": "string",
-                    "title": "Custom tag to propogate to portal",
-                    "pattern": "^[0-9]+$",
-                    "format": "uint64",
-                    "examples": [
-                        "42",
-                        "98765432100"
-                    ]
                 },
                 "__comments": {
                     "type": "string"
@@ -1421,111 +844,6 @@
                 }
             ]
         },
-        "conditions": {
-            "clause": {
-                "file": {
-                    "title": "A file condition",
-                    "required": [
-                        "$type",
-                        "groupId"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "$type": {
-                            "enum": [
-                                "file"
-                            ]
-                        },
-                        "groupId": {
-                            "title": "File Group ID",
-                            "$ref": "#/$defs/uuid"
-                        }
-                    }
-                },
-                "user": {
-                    "title": "A user condition",
-                    "required": [
-                        "$type",
-                        "groupId"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "$type": {
-                            "enum": [
-                                "user"
-                            ]
-                        },
-                        "groupId": {
-                            "title": "User Group ID",
-                            "$ref": "#/$defs/uuid"
-                        }
-                    }
-                }
-            },
-            "standard": {
-                "title": "Conditions for any entry",
-                "required": [
-                    "$type",
-                    "values"
-                ],
-                "additionalProperties": false,
-                    "properties": {
-                    "$type": {
-                        "enum": [
-                            "any",
-                            "or",
-                            "all",
-                            "and"
-                        ]
-                    },
-                    "values": {
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "The conditions to use",
-                        "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/$defs/conditions/clause/user"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "removableMedia": {
-                "title": "Conditions for a removable_media entry",
-                "required": [
-                    "$type",
-                    "values"
-                ],
-                "additionalProperties": false,
-                    "properties": {
-                    "$type": {
-                        "enum": [
-                            "any",
-                            "or",
-                            "all",
-                            "and"
-                        ]
-                    },
-                    "values": {
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "The conditions to use",
-                        "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/$defs/conditions/clause/user"
-                                },
-                                {
-                                    "$ref": "#/$defs/conditions/clause/file"
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
         "appleDeviceEntry": {
             "title": "An entry to control actions for apple devices",
             "required": [
@@ -1565,9 +883,6 @@
                 "id": {
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
-                },
-                "conditions": {
-                    "$ref": "#/$defs/conditions/standard"
                 },
                 "__comments": {
                     "type": "string"
@@ -1678,9 +993,6 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "conditions": {
-                    "$ref": "#/$defs/conditions/standard"
-                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1725,9 +1037,6 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "conditions": {
-                    "$ref": "#/$defs/conditions/standard"
-                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1771,9 +1080,6 @@
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
                 },
-                "conditions": {
-                    "$ref": "#/$defs/conditions/standard"
-                },
                 "__comments": {
                     "type": "string"
                 }
@@ -1790,47 +1096,6 @@
                         "generic_execute"
                     ],
                     "id": "34aec8e5-e2fa-4d1e-8788-2b1284226653"
-                }
-            ]
-        },
-        "applicationIdentifier": {
-            "title": "Identify an application",
-            "description": "Identifying information for an application.  Only one property is required, if multiple are provided will match any process that satisfies any provided identifiers.",
-            "minProperties": 1,
-            "additionalProperties": false,
-            "properties": {
-                "signingId": {
-                    "type": "string",
-                    "title": "The signing_id of an application",
-                    "examples": [
-                        "com.microsoft.Word"
-                    ]
-                },
-                "processName": {
-                    "type": "string",
-                    "title": "Name of executable",
-                    "examples": [
-                        "Microsoft Word"
-                    ]
-                },
-                "executablePath": {
-                    "type": "string",
-                    "title": "Full path to an executable",
-                    "examples": [
-                        "/Applications/Microsoft Word.app/Contents/MacOS/Microsoft Word"
-                    ]
-                },
-                "__comments": {
-                    "type": "string"
-                }
-            },
-            "examples": [
-                {
-                    "signingId": "com.microsoft.Word"
-                },
-                {
-                    "signingId": "com.contoso.signed",
-                    "executablePath": "/Applications/Contoso App.app/Contents/MacOS/unsigned"
                 }
             ]
         }

@@ -1,5 +1,13 @@
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
+{% if "Apple" in entry_type | string %}
+{% set settings_format = "mac" %}
+{% else %}
+{% set settings_format = "oma-uri" %}
+{% endif %}
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
 {% for setting in settings -%}
-{{ setting.name }} | {{ setting.value }} | [documentation]({{ setting.get_documentation() }}) |
+{{ setting.name }} | {{ setting.value }} | {{ setting.get_description() }} |[documentation]({{ setting.get_documentation(settings_format) }}) |
 {% endfor -%}

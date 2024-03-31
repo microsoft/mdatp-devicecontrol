@@ -1,6 +1,6 @@
 # Device control policy sample: Audit Write Access
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE247A2840>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE247A27B0>}, 'web_paths': [], 'rules': {}, 'groups': {}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE2474ED80>, 'groupsXML': '<Groups>\n</Groups>', 'rulesXML': '<PolicyRules>\n</PolicyRules>', 'mac_policy': '{\n    "groups": [],\n    "rules": [],\n    "settings": {\n        "global": {\n            "defaultEnforcement": "deny"\n        }\n    }\n}', 'mac_error': None, 'windows_support': <devicecontrol.Support object at 0x000002AE24705FA0>, 'entry_type': None, 'description': <__main__.Description object at 0x000002AE24726B70>}              
+Description: This is a policy.              
 Device Type: None
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -35,10 +35,16 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files

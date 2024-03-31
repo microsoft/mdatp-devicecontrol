@@ -1,6 +1,6 @@
 # Device control policy sample: Scenario 7
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE22795880>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE2474E990>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE2474EED0>}, 'web_paths': ['windows/device/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml'], 'rules': {'{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}': <devicecontrol.PolicyRule object at 0x000002AE2473F0B0>}, 'groups': {}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE2474F2F0>, 'groupsXML': '<Groups>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{b8615f3d-a41e-4c70-a70a-88e7b7aa7768}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb8615f3d-a41e-4c70-a70a-88e7b7aa7768%7D/RuleData -->\n\t\t<Name>Deny Wpd Write</Name>\n\t\t<IncludedIdList>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t\t<DeviceId>USB\\VID_04E8&PID_6860&MS_COMP_MTP&SAMSUNG_ANDROID</DeviceId>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>2</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{ae40741a-cc96-42b7-9dab-f5ba59adef8a}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>2</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'not well-formed (invalid token): line 9, column 34', 'windows_support': <devicecontrol.Support object at 0x000002AE2474F110>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE242DF950>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -66,16 +66,22 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](/windows/device/Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
+- [Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml](Intune%20OMA-URI/Scenario%207%20WPD%20Policy%20Sample%2C%20e.g.%20iPhone.xml)
 
 
 # Deployment Instructions
@@ -207,7 +213,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml*
          
    
    7. Click "Save"

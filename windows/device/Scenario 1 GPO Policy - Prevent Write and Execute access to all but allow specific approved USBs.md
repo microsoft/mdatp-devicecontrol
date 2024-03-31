@@ -162,18 +162,24 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Approved USBs Group.xml](/windows/device/Group%20Policy/Approved%20USBs%20Group.xml)
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Group Policy/Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml](/windows/device/Group%20Policy/Scenario%201%20GPO%20Policy%20-%20Prevent%20Write%20and%20Execute%20access%20to%20all%20but%20allow%20specific%20approved%20USBs.xml)
+- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Group Policy/Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml](Group%20Policy/Scenario%201%20GPO%20Policy%20-%20Prevent%20Write%20and%20Execute%20access%20to%20all%20but%20allow%20specific%20approved%20USBs.xml)
 
 
 # Deployment Instructions
@@ -306,7 +312,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\audit_write_and_execute_access_to_aproved_usbs{36ae1037-a639-4cff-946b-b36c53089a4c}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/audit_write_and_execute_access_to_aproved_usbs{36ae1037-a639-4cff-946b-b36c53089a4c}.xml*
          
    
    7. Click "Save"
@@ -321,7 +327,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\block_write_and_execute_access{c544a991-5786-4402-949e-a032cb790d0e}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/block_write_and_execute_access{c544a991-5786-4402-949e-a032cb790d0e}.xml*
          
    
    7. Click "Save"
@@ -336,7 +342,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Approved USBs Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Approved USBs Group.xml*
          
    
    7. Click "Save"
@@ -351,7 +357,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

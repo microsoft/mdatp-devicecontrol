@@ -1,6 +1,6 @@
 # Device control policy sample: Block Read and Write access to specific file _Policy
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE2474F5F0>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A2C90>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE247A04D0>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE22AEF4D0>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE247A3320>}, 'web_paths': ['windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml', 'windows/device/Group Policy/Block Read and Write access to specific file _Groups.xml', 'windows/device/Group Policy/Block Read and Write access to specific file _Policy.xml'], 'rules': {'{5038638c-9352-47bb-88df-8a659f0c02a7}': <devicecontrol.PolicyRule object at 0x000002AE245D6EA0>}, 'groups': {'{9b28fae8-72f7-4267-a1a5-685f747a7146}': <devicecontrol.Group object at 0x000002AE24593EF0>, '{e5f619a7-5c58-4927-90cd-75da2348a30f}': <devicecontrol.Group object at 0x000002AE245D7A40>}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE247A01A0>, 'groupsXML': '<Groups>\n\t<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->\n\t\t<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PrimaryId>RemovableMediaDevices</PrimaryId>\n\t\t\t<PrimaryId>CdRomDevices</PrimaryId>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t</DescriptorIdList>\n\t</Group>\n\t<Group Id="{e5f619a7-5c58-4927-90cd-75da2348a30f}" Type="File">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be5f619a7-5c58-4927-90cd-75da2348a30f%7D/GroupData -->\n\t\t<Name>Block Read and Write access to specific file _Groups_2</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PathId>*.exe</PathId>\n\t\t\t<PathId>*.dll</PathId>\n\t\t</DescriptorIdList>\n\t</Group>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{5038638c-9352-47bb-88df-8a659f0c02a7}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B5038638c-9352-47bb-88df-8a659f0c02a7%7D/RuleData -->\n\t\t<Name>Block Read and Write access to specific file</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{1ecfdafb-9b7f-4b66-b3c5-f1d872b0961d}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>40</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Parameters MatchType="MatchAll">\n\t\t\t\t<File MatchType="MatchAny">\n\t\t\t\t\t<GroupId>{e5f619a7-5c58-4927-90cd-75da2348a30f}</GroupId>\n\t\t\t\t</File>\n\t\t\t</Parameters>\n\t\t</Entry>\n\t\t<Entry Id="{2925ecd8-40dc-42bb-a972-da0de839dd4f}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>63</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'Primary ID [CdRomDevices] is not supported on macOS.', 'windows_support': <devicecontrol.Support object at 0x000002AE247A2BD0>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE22B9E900>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -140,18 +140,24 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Group Policy/Block Read and Write access to specific file _Groups.xml](/windows/device/Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
-- [windows/device/Group Policy/Block Read and Write access to specific file _Policy.xml](/windows/device/Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Policy.xml)
+- [Group Policy/Block Read and Write access to specific file _Groups.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Groups.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Group Policy/Block Read and Write access to specific file _Policy.xml](Group%20Policy/Block%20Read%20and%20Write%20access%20to%20specific%20file%20_Policy.xml)
 
 
 # Deployment Instructions
@@ -171,11 +177,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- Windows File groups not supported.
-- File Execute (32) is an unsupported access mask
 - File Read (8) is an unsupported access mask
-- Parameters are not supported
+- File Execute (32) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- Windows File groups not supported.
+- Parameters are not supported
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -273,7 +279,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\block_read_and_write_access_to_specific_file{5038638c-9352-47bb-88df-8a659f0c02a7}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/block_read_and_write_access_to_specific_file{5038638c-9352-47bb-88df-8a659f0c02a7}.xml*
          
    
    7. Click "Save"
@@ -288,7 +294,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"
@@ -303,7 +309,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Unauthorized File Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Unauthorized File Group.xml*
          
    
    7. Click "Save"

@@ -2,49 +2,49 @@
     "title": "Removable Storage",
     "scenarios":[
         {
-            "file": "Group Policy\\Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml",
+            "file": "Group Policy/Scenario 1 GPO Policy - Prevent Write and Execute access to all but allow specific approved USBs.xml",
             "title": "Scenario 1",
             "description": "Prevent Write and Execute access to all but allow specific approved USBs"
            
         },
         {
-            "file": "Group Policy\\Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml",
+            "file": "Group Policy/Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml",
             "title": "Scenario 2"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 3 Block any Removable Storage and CD-DVD.xml",
+            "file": "Intune OMA-URI/Scenario 3 Block any Removable Storage and CD-DVD.xml",
             "title": "Scenario 3"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml",
+            "file": "Intune OMA-URI/Scenario 4 ReadOnly to Any Removable Storage and CD-DVD.xml",
             "title": "Scenario 4"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml",
+            "file": "Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml",
             "title": "Scenario 5"
         },
         {
-            "file": "Group Policy\\Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml",
+            "file": "Group Policy/Scenario 6 Block Wirte and Execute but allow specific user access approved USB.xml",
             "title": "Scenario 6"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 7 WPD Policy Sample, e.g. iPhone.xml",
+            "file": "Intune OMA-URI/Scenario 7 WPD Policy Sample, e.g. iPhone.xml",
             "title": "Scenario 7"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 8 Audit Read_Intune.xml",
+            "file": "Intune OMA-URI/Scenario 8 Audit Read_Intune.xml",
             "title": "Scenario 8"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 9 Block Write_Intune.xml",
+            "file": "Intune OMA-URI/Scenario 9 Block Write_Intune.xml",
             "title": "Scenario 9"
         },
         {
-            "file": "Intune OMA-URI\\Scenario 10 Audit Write_Intune.xml",
+            "file": "Intune OMA-URI/Scenario 10 Audit Write_Intune.xml",
             "title": "Scenario 10"
         },
         {
-            "file": "Group Policy\\\\Audit File Information.xml",
+            "file": "Group Policy/Audit File Information.xml",
             "title": "File Evidence",
             "settings":{
                 "DeviceControlEnabled": true,
@@ -53,22 +53,32 @@
             }
         },
         {
-            "file": "Group Policy\\Audit Write Access.xml"
+            "file": "Group Policy/Audit Write Access.xml"
         },
         {
-            "file": "Group Policy\\Block Read and Write access to specific file _Policy.xml"
+            "file": "Group Policy/Block Read and Write access to specific file _Policy.xml"
         },
         {
-            "file": "Group Policy\\Demo_2_Policies.xml"
+            "file": "Group Policy/Demo_2_Policies.xml"
         },
         {
-            "file": "Group Policy\\Demo_Policies.xml"
+            "file": "Group Policy/Demo_Policies.xml"
         },
         {
-            "file": "Group Policy\\File Duplication.xml"
+            "file": "Group Policy/File Duplication.xml"
         },
         {
-            "file": "Group Policy\\Mass_storage_policies_GPO_2.xml"
+            "file": "Group Policy/Mass_storage_policies_GPO_2.xml"
+        },
+        {
+            "file": "Intune OMA-URI/Allow only bitlocker encrypted USBs.xml",
+            "title": "Allow only bitlocker encrypted USBs",
+            "settings":{
+                "DeviceControlEnabled": true,
+                "DefaultEnforcement": "Deny",
+                "SecuredDevicesConfiguration": "RemovableMediaDevices"
+
+            }
         }
     ]
     

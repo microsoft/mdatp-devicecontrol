@@ -1,6 +1,6 @@
 # Device control policy sample: Scenario 2
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B23b8e437-66ac-4b32-b3d7-24044637fc98%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE23D63470>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb58ab853-9a6f-405c-a194-740e69422b48%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE24705B80>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE2474F860>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE22907C80>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE245D67B0>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE2474F1D0>}, 'web_paths': ['windows/device/Group Policy/Approved USBs Group.xml', 'windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml', 'windows/device/Group Policy/Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml'], 'rules': {'{23b8e437-66ac-4b32-b3d7-24044637fc98}': <devicecontrol.PolicyRule object at 0x000002AE246CE090>, '{b58ab853-9a6f-405c-a194-740e69422b48}': <devicecontrol.PolicyRule object at 0x000002AE246CE0F0>}, 'groups': {'{65fa649a-a111-4912-9294-fb6337a25038}': <devicecontrol.Group object at 0x000002AE22883650>, '{9b28fae8-72f7-4267-a1a5-685f747a7146}': <devicecontrol.Group object at 0x000002AE24593EF0>}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE2474F590>, 'groupsXML': '<Groups>\n\t<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->\n\t\t<Name>Approved USBs Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<InstancePathId>USBSTOR\\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\\03003324080520232521&amp;0</InstancePathId>\n\t\t</DescriptorIdList>\n\t</Group>\n\t<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->\n\t\t<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PrimaryId>RemovableMediaDevices</PrimaryId>\n\t\t\t<PrimaryId>CdRomDevices</PrimaryId>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t</DescriptorIdList>\n\t</Group>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{23b8e437-66ac-4b32-b3d7-24044637fc98}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B23b8e437-66ac-4b32-b3d7-24044637fc98%7D/RuleData -->\n\t\t<Name>Block Write and Execute access to all but block specific unapproved USBs</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{5fbf7a77-0e50-456a-bb25-1b60e1b9b288}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{e1caaa4e-7bd1-4812-bec0-5a5973cb88f4}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n\t<PolicyRule Id="{b58ab853-9a6f-405c-a194-740e69422b48}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb58ab853-9a6f-405c-a194-740e69422b48%7D/RuleData -->\n\t\t<Name>Audit Write and Execute access to others</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t\t<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{979701d8-584a-4f27-8b68-2ecca59ccabd}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>54</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'Unsupported Descriptor ID InstancePathId', 'windows_support': <devicecontrol.Support object at 0x000002AE2474E2D0>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE22B9E930>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -151,18 +151,24 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Approved USBs Group.xml](/windows/device/Group%20Policy/Approved%20USBs%20Group.xml)
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Group Policy/Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml](/windows/device/Group%20Policy/Scenario%202%20GPO%20Policy%20-%20Audit%20Write%20and%20Execute%20access%20to%20all%20but%20block%20specific%20unapproved%20USBs.xml)
+- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
+- [Group Policy/Scenario 2 GPO Policy - Audit Write and Execute access to all but block specific unapproved USBs.xml](Group%20Policy/Scenario%202%20GPO%20Policy%20-%20Audit%20Write%20and%20Execute%20access%20to%20all%20but%20block%20specific%20unapproved%20USBs.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
 
 
 # Deployment Instructions
@@ -290,7 +296,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\block_write_and_execute_access_to_all_but_block_specific_unapproved_usbs{23b8e437-66ac-4b32-b3d7-24044637fc98}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/block_write_and_execute_access_to_all_but_block_specific_unapproved_usbs{23b8e437-66ac-4b32-b3d7-24044637fc98}.xml*
          
    
    7. Click "Save"
@@ -305,7 +311,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\audit_write_and_execute_access_to_others{b58ab853-9a6f-405c-a194-740e69422b48}.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/audit_write_and_execute_access_to_others{b58ab853-9a6f-405c-a194-740e69422b48}.xml*
          
    
    7. Click "Save"
@@ -320,7 +326,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Approved USBs Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Approved USBs Group.xml*
          
    
    7. Click "Save"
@@ -335,7 +341,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"

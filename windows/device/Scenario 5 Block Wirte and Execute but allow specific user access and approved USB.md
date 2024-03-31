@@ -1,6 +1,6 @@
 # Device control policy sample: Scenario 5
 
-Description: This is a policy {'oma_uri': {'./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData': <devicecontrol.IntuneCustomRow object at 0x000002AE24591B80>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE2474F0E0>, './Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData': <devicecontrol.IntuneCustomRow object at 0x000002AE2474FC80>, './Vendor/MSFT/Defender/Configuration/DefaultEnforcement': <devicecontrol.IntuneCustomRow object at 0x000002AE2474EAE0>, './Vendor/MSFT/Defender/Configuration/DeviceControlEnabled': <devicecontrol.IntuneCustomRow object at 0x000002AE2474EF30>}, 'web_paths': ['windows/device/Group Policy/Approved USBs Group.xml', 'windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml', 'windows/device/Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml'], 'rules': {'{83c390b6-b01e-4d83-8834-c8015a2316f2}': <devicecontrol.PolicyRule object at 0x000002AE24616A80>}, 'groups': {'{9b28fae8-72f7-4267-a1a5-685f747a7146}': <devicecontrol.Group object at 0x000002AE24593EF0>, '{65fa649a-a111-4912-9294-fb6337a25038}': <devicecontrol.Group object at 0x000002AE22883650>}, 'intune_ux_support': <devicecontrol.Support object at 0x000002AE2474FAA0>, 'groupsXML': '<Groups>\n\t<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B9b28fae8-72f7-4267-a1a5-685f747a7146%7D/GroupData -->\n\t\t<Name>Any Removable Storage and CD-DVD and WPD Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<PrimaryId>RemovableMediaDevices</PrimaryId>\n\t\t\t<PrimaryId>CdRomDevices</PrimaryId>\n\t\t\t<PrimaryId>WpdDevices</PrimaryId>\n\t\t</DescriptorIdList>\n\t</Group>\n\t<Group Id="{65fa649a-a111-4912-9294-fb6337a25038}" Type="Device">\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B65fa649a-a111-4912-9294-fb6337a25038%7D/GroupData -->\n\t\t<Name>Approved USBs Group_1</Name>\n\t\t<MatchType>MatchAny</MatchType>\n\t\t<DescriptorIdList>\n\t\t\t<InstancePathId>USBSTOR\\DISK&amp;VEN__USB&amp;PROD__SANDISK_3.2GEN1&amp;REV_1.00\\03003324080520232521&amp;0</InstancePathId>\n\t\t</DescriptorIdList>\n\t</Group>\n</Groups>', 'rulesXML': '<PolicyRules>\n\t<PolicyRule Id="{83c390b6-b01e-4d83-8834-c8015a2316f2}" >\n\t\t<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B83c390b6-b01e-4d83-8834-c8015a2316f2%7D/RuleData -->\n\t\t<Name>Block Wirte and Execute but allow specific user and approved USB</Name>\n\t\t<IncludedIdList>\n\t\t\t<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>\n\t\t</IncludedIdList>\n\t\t<ExcludedIdList>\n\t\t\t<GroupId>{65fa649a-a111-4912-9294-fb6337a25038}</GroupId>\n\t\t</ExcludedIdList>\n\t\t<Entry Id="{5d660ff3-a19f-47ae-8779-ca6a989d9780}">\n\t\t\t<Type>Allow</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t\t<Sid>xxxxxxxx</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{f9f6d219-1332-4c64-b6cb-2e14c65cd243}">\n\t\t\t<Type>AuditAllowed</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>2</Options>\n\t\t\t<Sid>xxxxxxxx</Sid>\n\t\t</Entry>\n\t\t<Entry Id="{07234f5c-304f-4073-a332-2434cd269816}">\n\t\t\t<Type>Deny</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>0</Options>\n\t\t</Entry>\n\t\t<Entry Id="{b2827dd5-db81-48d8-8cde-fb2c84a8367f}">\n\t\t\t<Type>AuditDenied</Type>\n\t\t\t<AccessMask>6</AccessMask>\n\t\t\t<Options>3</Options>\n\t\t</Entry>\n\t</PolicyRule>\n</PolicyRules>', 'mac_policy': None, 'mac_error': 'Primary ID [CdRomDevices] is not supported on macOS.', 'windows_support': <devicecontrol.Support object at 0x000002AE2474FFE0>, 'entry_type': <devicecontrol.WindowsEntryType object at 0x000002AE24590E60>, 'description': <__main__.Description object at 0x000002AE24593D10>}              
+Description: This is a policy.              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -159,18 +159,24 @@ The match type for the group is *MatchAny*.
 
 
 ## Settings
-| Setting Name |  Setting Value | Documentation |
-|--------------|----------------|---------------|
-DefaultEnforcement | Deny | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
-DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
+
+
+
+
+
+
+| Setting Name |  Setting Value | Description |Documentation |
+|--------------|----------------|-------------|---------------|
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DeviceControlEnabled | True | Enables/disables device control |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [windows/device/Group Policy/Approved USBs Group.xml](/windows/device/Group%20Policy/Approved%20USBs%20Group.xml)
-- [windows/device/Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](/windows/device/Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
-- [windows/device/Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml](/windows/device/Intune%20OMA-URI/Scenario%205%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20and%20approved%20USB.xml)
+- [Group Policy/Any Removable Storage and CD-DVD and WPD Group.xml](Group%20Policy/Any%20Removable%20Storage%20and%20CD-DVD%20and%20WPD%20Group.xml)
+- [Group Policy/Approved USBs Group.xml](Group%20Policy/Approved%20USBs%20Group.xml)
+- [Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml](Intune%20OMA-URI/Scenario%205%20Block%20Wirte%20and%20Execute%20but%20allow%20specific%20user%20access%20and%20approved%20USB.xml)
 
 
 # Deployment Instructions
@@ -394,7 +400,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Scenario 5 Block Wirte and Execute but allow specific user access and approved USB.xml*
          
    
    7. Click "Save"
@@ -409,7 +415,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Any Removable Storage and CD-DVD and WPD Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Any Removable Storage and CD-DVD and WPD Group.xml*
          
    
    7. Click "Save"
@@ -424,7 +430,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  *windows\device\Intune OMA-URI\Approved USBs Group.xml*
+   6. For Custom XML, select  *windows/device/Intune OMA-URI/Approved USBs Group.xml*
          
    
    7. Click "Save"
