@@ -16,6 +16,93 @@ import devicecontrol as dc
 from dcdoc import Inventory, Description
 
 
+class DeviceControlPolicyTemplate:
+
+    async def getTemplate(graph):
+        template = DeviceControlPolicyTemplate()
+        await template.load_data(graph)
+        return template
+
+    def __init__(self):
+        self.dc_setting_instance_templates = {}
+    
+    async def load_data(self,graph):
+
+        #configuration_settings = await graph.get_configuration_settings()
+
+        dc_policy_template = await graph.get_device_control_policy_template()
+        dc_policy_template_id = dc_policy_template.value[0].id
+
+        dc_policy_template_settings_instance_templates = await graph.get_configuration_policy_settings_templates_by_id(dc_policy_template_id)
+        
+
+        #create a map of the settings in the device control template by their id
+        for dc_policy_template_setting_instance_template in dc_policy_template_settings_instance_templates.value:
+            setting_instance_template = dc_policy_template_setting_instance_template.setting_instance_template
+            details = await graph.get_configuration_settings_for_definition(setting_instance_template.setting_definition_id)
+            self.dc_setting_instance_templates[setting_instance_template.setting_definition_id] = details
+
+
+
+    def get_value(self,setting):
+        setting_instance = setting.setting_instance
+        setting_definition_id = setting_instance.setting_definition_id
+
+        setting_instance_template = self.dc_setting_instance_templates[setting_definition_id]
+            
+        if setting_instance.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
+            return self.get_choice_value(setting_instance,setting_instance_template)
+        else:
+            print(setting_instance.odata_type)
+
+    def get_choice_value(self,setting_instance,setting_instance_template):
+        
+        
+        print("choice_value > setting_instance > setting_definition_id="+setting_instance.setting_definition_id)
+        choice_setting_value = setting_instance.choice_setting_value
+        print("choice_value > setting_instance > choice_setting_value="+choice_setting_value.odata_type)
+
+        if choice_setting_value.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingValue":
+            print("choice_value > setting_instance > choice_setting_value > value ="+choice_setting_value.value)
+            for child in choice_setting_value.children:
+                value = None
+                
+                if child.odata_type == "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionInstance":
+                    value = self.get_simple_setting_collection_value(child,setting_instance_template)
+                elif child.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
+                    value = self.get_choice_setting_value(child,setting_instance_template)
+                else:
+                    print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
+
+
+    def get_simple_setting_collection_value(self,simple_setting_collection_instance,template):
+        print(simple_setting_collection_instance)
+        collection = []
+        for value in simple_setting_collection_instance.simple_setting_collection_value:
+            if value.odata_type == "#microsoft.graph.deviceManagementConfigurationStringSettingValue":
+                collection.append(str(value.value))
+            else:
+                print(value.odata_type)
+
+        return collection
+
+
+    def get_choice_setting_value(self,choice_setting_instance,template):
+        value = choice_setting_instance.choice_setting_value.value
+
+        setting_value = None
+        options = template.options
+        for option in options:
+            if option.item_id == value:
+                setting_value = option
+
+        return setting_value
+                    
+
+
+
+        
+
 class Package:
 
     layout = [
@@ -434,6 +521,21 @@ async def export(graph: Graph, destination,name,
 
     package = Package(name,templateEnv)
 
+    dc_policy_template = await DeviceControlPolicyTemplate.getTemplate(graph)
+
+    #get the device control configuration policies
+    dc_policies = await graph.get_device_control_policies()
+    for dc_policy in dc_policies.value:
+
+        id = dc_policy.id
+
+        settings = await graph.get_device_control_policy_settings(id)
+
+        for setting in settings.value:
+
+            settings_value = dc_policy_template.get_value(setting)
+
+
     configs = await graph.export_device_configurations()
     for device_config in configs.value:
         if device_config.odata_type == "#microsoft.graph.macOSCustomConfiguration":
@@ -509,6 +611,9 @@ async def export(graph: Graph, destination,name,
                         dc_setting = dc.Setting(dc_setting_name,setting_value)
                         intune_settings = Package.IntuneSetting(dc_setting,oma_setting.display_name,oma_setting.description)
                         policy.addSetting(intune_settings)
+
+
+    
 
     package.save(destination,rule_template,readme_template,description_template)
 

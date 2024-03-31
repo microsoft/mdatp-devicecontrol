@@ -13,9 +13,17 @@ from msgraph_beta.generated.models.body_type import BodyType
 from msgraph_beta.generated.models.recipient import Recipient
 from msgraph_beta.generated.models.email_address import EmailAddress
 
-from msgraph_beta.generated.device_management.configuration_policies.item.assignments.assignments_request_builder import (AssignmentsRequestBuilder)
+from msgraph_beta.generated.device_management.configuration_policy_templates.configuration_policy_templates_request_builder import ConfigurationPolicyTemplatesRequestBuilder
+from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
+from msgraph_beta.generated.device_management.configuration_settings.item.device_management_configuration_setting_definition_item_request_builder import DeviceManagementConfigurationSettingDefinitionItemRequestBuilder 
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
+
+'''
+https://graph.microsoft.com/beta/deviceManagement/configurationPolicyTemplates?$filter=displayName eq 'Device Control'
+
+https://graph.microsoft.com/beta/deviceManagement/reusablePolicySettings
+'''
 
 class Graph:
     
@@ -29,7 +37,7 @@ class Graph:
         graph_scopes = scopes.split(' ')
 
         self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
-        self.user_client = GraphServiceClient(self.device_code_credential, graph_scopes)
+        self.graph_client = GraphServiceClient(self.device_code_credential, graph_scopes)
 
 
     async def get_user_token(self):
@@ -49,31 +57,80 @@ class Graph:
         )
 
         
-        user = await self.user_client.me().get(request_configuration=request_config)
+        user = await self.graph_client.me().get(request_configuration=request_config)
         return user
 
     async def export_device_configurations(self):
-        # INSERT YOUR CODE HERE
-
-        #self.user_client.device_
-        #configs = await self.user_client.device_management.device_configurations.get_targeted_users_and_devices
         
-        configs = await self.user_client.device_management.device_configurations.get()
+        configs = await self.graph_client.device_management.device_configurations.get()
         return configs
     
     async def get_assignments(self,id):
-        # INSERT YOUR CODE HERE
  
-        assignments = await self.user_client.device_management.device_configurations.by_device_configuration_id(id).assignments.get()
+        assignments = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).assignments.get()
         return assignments
     
 
     async def get_xml(self,id,secret_reference):
 
-        xml = await self.user_client.device_management.device_configurations.by_device_configuration_id(id).get_oma_setting_plain_text_value_with_secret_reference_value_id(secret_reference_value_id=secret_reference).get()
+        xml = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).get_oma_setting_plain_text_value_with_secret_reference_value_id(secret_reference_value_id=secret_reference).get()
         return xml
     
     async def get_group_by_id(self,group_id):
 
-        group = await self.user_client.groups.by_group_id(group_id=group_id).get()
+        group = await self.graph_client.groups.by_group_id(group_id=group_id).get()
         return group
+    
+    async def get_device_control_policy_template(self):
+
+        query_params = ConfigurationPolicyTemplatesRequestBuilder.ConfigurationPolicyTemplatesRequestBuilderGetQueryParameters(
+		filter = "displayName eq 'Device Control'",
+)
+
+        request_configuration = ConfigurationPolicyTemplatesRequestBuilder.ConfigurationPolicyTemplatesRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.configuration_policy_templates.get(request_configuration = request_configuration)
+        return result
+    
+
+    async def get_device_control_policies(self):
+
+        query_params = ConfigurationPoliciesRequestBuilder.ConfigurationPoliciesRequestBuilderGetQueryParameters(
+		filter = "templateReference/templateDisplayName eq 'Device Control'",
+)
+
+        request_configuration = ConfigurationPoliciesRequestBuilder.ConfigurationPoliciesRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.configuration_policies.get(request_configuration = request_configuration)
+        return result
+    
+    async def get_device_control_policy_settings(self,id):
+        result = await self.graph_client.device_management.configuration_policies.by_device_management_configuration_policy_id(id).settings.get()
+        return result
+    
+    async def get_configuration_policy_settings_templates_by_id(self,id):
+
+        result = await self.graph_client.device_management.configuration_policy_templates.by_device_management_configuration_policy_template_id(id).setting_templates.get()
+        return result
+    
+    async def get_configuration_settings_for_definition(self,deviceManagementConfigurationSettingDefinitionid):
+
+        query_params = DeviceManagementConfigurationSettingDefinitionItemRequestBuilder.DeviceManagementConfigurationSettingDefinitionItemRequestBuilderGetQueryParameters(
+		select = ["baseUri","description","displayName","infoUrls","occurrence","offsetUri","settingUsage","uxBehavior","options"],
+)
+
+        request_configuration = DeviceManagementConfigurationSettingDefinitionItemRequestBuilder.DeviceManagementConfigurationSettingDefinitionItemRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.configuration_settings.by_device_management_configuration_setting_definition_id(deviceManagementConfigurationSettingDefinitionid).get()
+
+        return result
+
+    async def get_configuration_settings(self):
+        result = await self.graph_client.device_management.configuration_settings.get()
+        return result
