@@ -165,7 +165,6 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 
 ## Files
 This policy is based on information in the following files:
-
 - [deny_removable_media_except_kingston.json](deny_removable_media_except_kingston.json)
 
 
@@ -257,20 +256,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-            "name": "Kingston Devices",
-            "query": {
-                "$type": "all",
-                "clauses": [
-                    {
-                        "$type": "vendorId",
-                        "value": "0951"
-                    }
-                ]
-            }
-        },
-        {
-            "$type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
             "name": "All Removable Media Devices",
             "query": {
@@ -279,6 +264,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "primaryId",
                         "value": "removable_media_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+            "name": "Kingston Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "vendorId",
+                        "value": "0951"
                     }
                 ]
             }
@@ -328,16 +327,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "settings": {
         "features": {
-            "appleDevice": {
-                "disable": false
-            },
             "removableMedia": {
-                "disable": false
-            },
-            "portableDevice": {
-                "disable": false
-            },
-            "bluetoothDevice": {
                 "disable": false
             }
         },
@@ -348,8 +338,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
             "navigationTarget": "http://www.microsoft.com"
         }
     }
-}
-                    </string>
+}                    </string>
                 </dict>
             </dict>
         </array>
@@ -387,20 +376,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-            "name": "Kingston Devices",
-            "query": {
-                "$type": "all",
-                "clauses": [
-                    {
-                        "$type": "vendorId",
-                        "value": "0951"
-                    }
-                ]
-            }
-        },
-        {
-            "$type": "device",
             "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
             "name": "All Removable Media Devices",
             "query": {
@@ -409,6 +384,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "primaryId",
                         "value": "removable_media_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
+            "name": "Kingston Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "vendorId",
+                        "value": "0951"
                     }
                 ]
             }
@@ -458,16 +447,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "settings": {
         "features": {
-            "appleDevice": {
-                "disable": false
-            },
             "removableMedia": {
-                "disable": false
-            },
-            "portableDevice": {
-                "disable": false
-            },
-            "bluetoothDevice": {
                 "disable": false
             }
         },
@@ -478,8 +458,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
             "navigationTarget": "http://www.microsoft.com"
         }
     }
-}
-```
+}```
 </details>
 
 
