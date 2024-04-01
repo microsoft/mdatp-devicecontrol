@@ -19,63 +19,74 @@ from dcdoc import Inventory, Description
 class DeviceControlPolicyTemplate:
 
     async def getTemplate(graph):
-        template = DeviceControlPolicyTemplate()
-        await template.load_data(graph)
+        template = DeviceControlPolicyTemplate(graph)
+        await template.load_data()
         return template
 
-    def __init__(self):
+    def __init__(self,graph):
         self.dc_setting_instance_templates = {}
-    
-    async def load_data(self,graph):
+        self.graph = graph
 
-        #configuration_settings = await graph.get_configuration_settings()
+    async def load_data(self):
 
-        dc_policy_template = await graph.get_device_control_policy_template()
+        
+        dc_policy_template = await self.graph.get_device_control_policy_template()
         dc_policy_template_id = dc_policy_template.value[0].id
 
-        dc_policy_template_settings_instance_templates = await graph.get_configuration_policy_settings_templates_by_id(dc_policy_template_id)
+        dc_policy_template_settings_instance_templates = await self.graph.get_configuration_policy_settings_templates_by_id(dc_policy_template_id)
         
 
         #create a map of the settings in the device control template by their id
         for dc_policy_template_setting_instance_template in dc_policy_template_settings_instance_templates.value:
             setting_instance_template = dc_policy_template_setting_instance_template.setting_instance_template
-            details = await graph.get_configuration_settings_for_definition(setting_instance_template.setting_definition_id)
+            
+            details = self.get_configuration_settings_for_definition(setting_instance_template.setting_definition_id)
+            
             self.dc_setting_instance_templates[setting_instance_template.setting_definition_id] = details
 
 
+    async def get_configuration_settings_for_definition(self,definitionId):
+        details = await self.graph.get_configuration_settings_for_definition(definitionId)
+        return details
 
-    def get_value(self,setting):
+    async def get_value(self,setting):
         setting_instance = setting.setting_instance
-        setting_definition_id = setting_instance.setting_definition_id
-
-        setting_instance_template = self.dc_setting_instance_templates[setting_definition_id]
-            
+        
         if setting_instance.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
-            return self.get_choice_value(setting_instance,setting_instance_template)
+            return await self.get_choice_value(setting_instance)
         else:
             print(setting_instance.odata_type)
+            return None
 
-    def get_choice_value(self,setting_instance,setting_instance_template):
-        
-        
+    async def get_choice_value(self,setting_instance):
+         
         print("choice_value > setting_instance > setting_definition_id="+setting_instance.setting_definition_id)
         choice_setting_value = setting_instance.choice_setting_value
         print("choice_value > setting_instance > choice_setting_value="+choice_setting_value.odata_type)
 
         if choice_setting_value.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingValue":
             print("choice_value > setting_instance > choice_setting_value > value ="+choice_setting_value.value)
-            for child in choice_setting_value.children:
-                value = None
+            if len(choice_setting_value.children) == 0:
+                return await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
+            else:
+                values = []
+                for child in choice_setting_value.children:
+                    value = None
                 
-                if child.odata_type == "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionInstance":
-                    value = self.get_simple_setting_collection_value(child,setting_instance_template)
-                elif child.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
-                    value = self.get_choice_setting_value(child,setting_instance_template)
-                else:
-                    print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
+                    if child.odata_type == "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionInstance":
+                        value = self.get_simple_setting_collection_value(child)
+                    elif child.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
+                        value = await self.get_choice_setting_value(child)
+                    else:
+                        print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
 
+                    values.append(value)
 
-    def get_simple_setting_collection_value(self,simple_setting_collection_instance,template):
+                    return values
+        else:
+            print(choice_setting_value.odata_type)        
+
+    def get_simple_setting_collection_value(self,simple_setting_collection_instance):
         print(simple_setting_collection_instance)
         collection = []
         for value in simple_setting_collection_instance.simple_setting_collection_value:
@@ -87,12 +98,14 @@ class DeviceControlPolicyTemplate:
         return collection
 
 
-    def get_choice_setting_value(self,choice_setting_instance,template):
+    async def get_choice_setting_value(self,choice_setting_instance):
         value = choice_setting_instance.choice_setting_value.value
+        return await self.get_option_for_value(choice_setting_instance.setting_definition_id,value)
 
+    async def get_option_for_value(self,setting_definition_id,value):
         setting_value = None
-        options = template.options
-        for option in options:
+        settings = await self.get_configuration_settings_for_definition(setting_definition_id)
+        for option in settings.options:
             if option.item_id == value:
                 setting_value = option
 
@@ -533,7 +546,13 @@ async def export(graph: Graph, destination,name,
 
         for setting in settings.value:
 
-            settings_value = dc_policy_template.get_value(setting)
+            configuration_settings = \
+                await dc_policy_template.get_configuration_settings_for_definition(
+                    setting.setting_instance.setting_definition_id
+                )
+
+            settings_value = await dc_policy_template.get_value(setting)
+            print(configuration_settings.name+"=>"+str(settings_value))
 
 
     configs = await graph.export_device_configurations()
