@@ -44,7 +44,124 @@ class Format:
 
 class Setting: 
 
-    
+    class Data:
+
+        def fromDictionary(dict):
+
+            name = "default name"
+            description = "default description"
+
+            if "name" in dict.keys():
+                name = dict["name"]
+
+            if "description" in dict.keys():
+                description = dict["description"]
+
+            data = Setting.Data(name,description)
+
+            if Format.OMA_URI in dict.keys():
+                oma_uri = dict[Format.OMA_URI]
+                if "supported" in oma_uri.keys():
+                    data.set_supported(Format.OMA_URI,oma_uri["supported"])
+                if "documenation" in oma_uri.keys():
+                    data.set_documentation(Format.OMA_URI,oma_uri["documentation"])
+                if "value_map" in oma_uri.keys():
+                    data.set_value_map(Format.OMA_URI,oma_uri["value_map"])
+                if "type" in oma_uri.keys():
+                    data.set_oma_uri_type(Format.OMA_URI,oma_uri["type"])
+                if "oma-uri" in oma_uri.keys():
+                    data.set_oma_uri(Format.OMA_URI,oma_uri["oma-uri"])
+
+            if Format.Mac in dict.keys():
+                mac = dict[Format.Mac]
+                if "supported" in mac.keys():
+                    data.set_supported(Format.Mac,mac["supported"])
+                if "documenation" in mac.keys():
+                    data.set_documentation(Format.Mac,mac["documentation"])
+                if "value_map" in mac.keys():
+                    data.set_value_map(Format.Mac,mac["value_map"])
+                if "mac_setting" in mac.keys():
+                    mac_setting = mac["mac_setting"]
+                    if "name" in mac_setting.keys():
+                        data.set_mac_setting_name(mac_setting["name"])
+                    if "category" in mac_setting.keys():
+                        data.set_mac_setting_category(mac_setting["category"])
+
+            if Format.GPO in dict.keys():
+                gpo = dict["gpo"]
+                if "supported" in gpo.keys():
+                    data.set_supported(Format.GPO,gpo["supported"])
+                if "documenation" in gpo.keys():
+                    data.set_documentation(Format.GPO,gpo["documentation"])
+                if "value_map" in gpo.keys():
+                    data.set_value_map(Format.GPO,gpo["value_map"])
+
+                    
+                
+                    
+
+
+        def __init__(self,name,description):
+            self.name = name
+            self.description = description
+            self.data = {
+                "name": name,
+                "description": description,
+                "oma-uri":{
+                    "supported": False
+
+                },
+                "gpo":{
+                    "supported": False
+                },
+                "mac":{
+                    "supported": False
+                }
+            }
+
+        def set_supported(self,format,supported):
+            self.data[format]["supported"] = supported
+
+        def set_documentation(self,format,documentation):
+            self.data[format]["documenation"] = documentation
+
+        def set_value_map(self,format,value_map):
+            self.data[format]["value_map"] = value_map
+
+        def set_oma_uri(self,oma_uri):
+            self.data["oma-uri"]["oma-uri"] = oma_uri
+
+        def set_oma_uri_type(self,oma_uri_type):
+            self.data["oma-uri"]["type"] = oma_uri_type
+
+        
+        def set_mac_setting_name(self,name):
+            if "mac_setting" in self.data["mac"].keys():
+                mac_setting = self.data["mac"]["mac_setting"]
+                mac_setting["name"] = name
+            else:
+                mac_setting = {
+                    "name":name
+                }
+                self.data["mac"]["mac_setting"] = mac_setting
+
+        def set_mac_setting_category(self,category):
+            if "mac_setting" in self.data["mac"].keys():
+                mac_setting = self.data["mac"]["mac_setting"]
+                mac_setting["category"] = category
+            else:
+                mac_setting = {
+                    "category":category
+                }
+                self.data["mac"]["mac_setting"] = mac_setting
+        
+        
+        def get_data(self):
+            return self.data
+        
+        
+            
+            
     OMA_URI_Integer_DataType = "Integer"
     OMA_URI_XML_DataType = "String (XML File)"
     OMA_URI_String_DataType = "String"
@@ -200,6 +317,10 @@ class Setting:
                     return key
                 
         return None
+    
+
+    def addSettingData(name,data):
+        Setting.data[name] = data
 
     
 

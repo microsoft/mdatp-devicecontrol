@@ -9,6 +9,7 @@ import argparse
 import json
 import pathlib
 import yaml
+import urllib.parse
 
 import xml.etree.ElementTree as ET
 
@@ -17,6 +18,181 @@ from dcdoc import Inventory, Description
 
 
 class DeviceControlPolicyTemplate:
+
+    class Util:
+
+        def get_values_from_group_setting_collection_instance_as_list(group_setting_collection_instance):
+            return_list = []
+            for group_setting in group_setting_collection_instance.group_setting_collection_value:
+                if group_setting.odata_type == "#microsoft.graph.deviceManagementConfigurationGroupSettingValue":
+                    for child in group_setting.children:
+                        return_list.append(child.simple_setting_value.value)
+
+
+            return return_list
+
+
+    class DeviceControlRule:
+
+
+        class Entry:
+
+            ENTRY_ID_SETTING_ID =   'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_id'
+            ENTRY_TYPE_SETTING_ID  =   'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type'
+            ENTRY_ACCESS_MASK_SETTING_ID   =   'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask'
+            ENTRY_NAME_SETTING_ID =  "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_name"
+
+            ENTRY_ACCESS_MASK_READ_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_1'
+            ENTRY_ACCESS_MASK_WRITE_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_2'
+            ENTRY_ACCESS_MASK_EXECUTE_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_4'
+            ENTRY_ACCESS_MASK_PRINT_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_64'
+
+            def __init__(self,entry_setting):
+
+                    for entry_data in entry_setting.children:
+                        
+                        match entry_data.setting_definition_id:
+                            case self.ENTRY_ID_SETTING_ID:
+                                self.entry_id = entry_data.simple_setting_value.value
+                            case self.ENTRY_TYPE_SETTING_ID:
+                                self.entry_type = entry_data.choice_setting_value.value
+                                self.options = entry_data.choice_setting_value.children[0].choice_setting_value.value
+                            case self.ENTRY_ACCESS_MASK_SETTING_ID:
+                                
+                                self.access_mask = 0
+                                for access_mask_selection in entry_data.choice_setting_collection_value:
+                                    match access_mask_selection.value:
+                                        case self.ENTRY_ACCESS_MASK_READ_SETTING_ID:
+                                            self.access_mask = self.access_mask + 1
+                                        case self.ENTRY_ACCESS_MASK_WRITE_SETTING_ID:
+                                            self.access_mask = self.access_mask + 2
+                                        case self.ENTRY_ACCESS_MASK_EXECUTE_SETTING_ID:
+                                            self.access_mask = self.access_mask + 4
+                                        case self.ENTRY_ACCESS_MASK_PRINT_SETTING_ID:
+                                            self.access_mask = self.access_mask + 64
+                            case self.ENTRY_NAME_SETTING_ID:
+                                self.entry_name = entry_data.simple_setting_value.value  
+                            case _:
+                                print(entry_data.setting_definition_id)                                      
+
+
+
+
+        RULE_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}"
+        RULE_DATA_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
+        RULE_DATA_ID_SETTING_ID  = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_id"
+        RULE_DATA_INCLUDED_GROUPS_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist"
+        RULE_DATA_ENTRY_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
+        RULE_DATA_NAME_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_name"
+
+        def __init__(self,setting):
+            self.setting = setting
+
+            self.description = ""
+
+            for group_setting_collection_value in setting.group_setting_collection_value:
+                for child in group_setting_collection_value.children:
+                    if child.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_SETTING_ID:
+                        for group_setting_collection_value_2 in child.group_setting_collection_value:
+
+                            #I think this is all of the data for the rule
+                            for rules_data_setting in group_setting_collection_value_2.children:
+                                match rules_data_setting.setting_definition_id:
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ID_SETTING_ID:
+                                        #this is the rule id
+                                        self.id = rules_data_setting.simple_setting_value.value
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_INCLUDED_GROUPS_SETTING_ID:
+                                        self.included_groups = DeviceControlPolicyTemplate.Util.get_values_from_group_setting_collection_instance_as_list(rules_data_setting)
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_SETTING_ID:
+                                        
+                                        self.entries = []
+                                        for entry_setting in rules_data_setting.group_setting_collection_value:
+                                            entry = DeviceControlPolicyTemplate.DeviceControlRule.Entry(entry_setting)
+                                            self.entries.append(entry)
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_NAME_SETTING_ID:
+
+                                        self.name = rules_data_setting.simple_setting_value.value
+
+                                    case _:
+                                        print(rules_data_setting.setting_definition_id)
+
+        def __str__(self):
+            '''
+            <PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"> 
+                <!-- Allow Any Read activity -->
+                <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7d/RuleData -->
+                <Name>Allow Read Activity</Name>
+                <IncludedIdList>
+		            <GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+                </IncludedIdList>
+                <ExcludedIdList>
+                </ExcludedIdList>
+                <Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+                    <Type>Allow</Type>
+                    <Options>0</Options>
+                    <AccessMask>9</AccessMask>
+                </Entry>
+                <Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
+                    <Type>AuditAllowed</Type>
+                    <Options>2</Options>
+                    <AccessMask>9</AccessMask>
+                </Entry>
+            </PolicyRule>
+            '''
+            tb = ET.TreeBuilder()
+            rule_tag = tb.start("PolicyRule",{ "id":"{"+self.id+"}"})
+
+            name_comment = tb.comment(self.name)
+            ET.indent(name_comment, level=1)
+            oma_uri_comment = tb.comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote("{"+self.id+"}"))
+            ET.indent(oma_uri_comment,level=1)
+
+            rule_tag.append(name_comment)
+            rule_tag.append(oma_uri_comment)
+            
+            name_tag = tb.start("Name",{})
+            name_tag.text = self.name
+            ET.indent(name_tag,level=1)
+
+
+            includedid_list_tag = tb.start("IncludedIdList",{})
+            rule_tag.append(includedid_list_tag)
+            ET.indent(includedid_list_tag,level=1)
+            
+
+            return ET.tostring(rule_tag).decode("utf-8")
+
+            
+
+
+
+
+
+
+    class DeviceControlPolicy:
+
+        def __init__(self,id,name,policy_settings):
+            self.id = id
+            self.name = name
+            self.os = Package.Policy.WINDOWS_OS
+
+            self.settings = {}
+            self.rules = []
+            self.groups = []
+
+            #just store the objects for now
+            for setting_id in policy_settings.keys():
+                if setting_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
+                    rule = policy_settings[setting_id]
+                    self.rules.append(rule)
+                else:
+                    self.settings[setting_id] = policy_settings[setting_id]
+                    
+            
+
 
     async def getTemplate(graph):
         template = DeviceControlPolicyTemplate(graph)
@@ -27,6 +203,40 @@ class DeviceControlPolicyTemplate:
         self.dc_setting_instance_templates = {}
         self.graph = graph
 
+
+    async def getPolicies(self):
+
+        policies = []
+
+        #get the device control configuration policies
+        dc_policies = await self.graph.get_device_control_policies()
+        for dc_policy in dc_policies.value:
+
+            id = dc_policy.id
+            name = dc_policy.name
+
+            settings = await self.graph.get_device_control_policy_settings(id)
+
+            settings_value_for_policy = {}
+            for setting in settings.value:
+
+                setting_config = \
+                    await self.get_configuration_settings_for_definition(
+                        setting.setting_instance.setting_definition_id
+                )
+
+                setting_value = await self.get_value(setting)
+                settings_value_for_policy[setting_config.id] = setting_value
+
+            policy = DeviceControlPolicyTemplate.DeviceControlPolicy(id,name,settings_value_for_policy)
+            policies.append(policy)
+
+        return policies    
+
+
+
+
+
     async def load_data(self):
 
         
@@ -35,14 +245,58 @@ class DeviceControlPolicyTemplate:
 
         dc_policy_template_settings_instance_templates = await self.graph.get_configuration_policy_settings_templates_by_id(dc_policy_template_id)
         
-
-        #create a map of the settings in the device control template by their id
+        #Add the settings from the dc template to the devicecontrol api settings
         for dc_policy_template_setting_instance_template in dc_policy_template_settings_instance_templates.value:
             setting_instance_template = dc_policy_template_setting_instance_template.setting_instance_template
             
-            details = self.get_configuration_settings_for_definition(setting_instance_template.setting_definition_id)
+            details = await self.get_configuration_settings_for_definition(setting_instance_template.setting_definition_id)
             
-            self.dc_setting_instance_templates[setting_instance_template.setting_definition_id] = details
+            if details.id == "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}":
+                #This is the setting in the template for the rules 
+                continue
+
+            name = details.display_name
+            description = details.description
+
+            setting_data = dc.Setting.Data(name,description)
+
+            oma_uri = details.base_uri + details.offset_uri
+
+            setting_data.set_oma_uri(oma_uri)
+            setting_data.set_supported(dc.Format.OMA_URI,True)
+
+            if len(details.info_urls) > 0:
+                documentation = details.info_urls[0]
+                setting_data.set_documentation(dc.Format.OMA_URI,documentation)
+
+            value_type = None
+            if details.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingDefinition":
+                value_map = {}
+                for option in details.options:
+                    value_map[option.name] = option.option_value.value 
+                    value_type = option.option_value.odata_type
+
+                setting_data.set_value_map(dc.Format.OMA_URI,value_map)
+
+            elif details.odata_type == "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionDefinition":
+                
+                value_definition = details.value_definition
+                value_type = value_definition.odata_type 
+                
+            else:
+                #This is a type that we don't parse
+                print(details.odata_type)
+                continue
+
+
+            if "Integer" in value_type:
+                setting_data.set_oma_uri_type(dc.Setting.OMA_URI_Integer_DataType)
+            elif "String"in value_type:
+                setting_data.set_oma_uri_type(dc.Setting.OMA_URI_String_DataType)
+            else:
+                print(value_type)
+
+            dc.Setting.addSettingData(details.name,setting_data.get_data())
 
 
     async def get_configuration_settings_for_definition(self,definitionId):
@@ -54,9 +308,11 @@ class DeviceControlPolicyTemplate:
         
         if setting_instance.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
             return await self.get_choice_value(setting_instance)
-        else:
-            print(setting_instance.odata_type)
-            return None
+        elif setting_instance.odata_type == "#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance":
+            if setting_instance.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
+                return DeviceControlPolicyTemplate.DeviceControlRule(setting_instance)
+            else:
+                print(setting_instance.setting_definition_id)
 
     async def get_choice_value(self,setting_instance):
          
@@ -67,30 +323,35 @@ class DeviceControlPolicyTemplate:
         if choice_setting_value.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingValue":
             print("choice_value > setting_instance > choice_setting_value > value ="+choice_setting_value.value)
             if len(choice_setting_value.children) == 0:
-                return await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
+                config = await self.graph.get_configuration_settings_for_definition(setting_instance.setting_definition_id)
+                option = await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
+                return {config.id: option}
             else:
-                values = []
+                values = {}
                 for child in choice_setting_value.children:
                     value = None
-                
+
+                    child_config = await self.graph.get_configuration_settings_for_definition(child.setting_definition_id)
+
                     if child.odata_type == "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionInstance":
                         value = self.get_simple_setting_collection_value(child)
                     elif child.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
-                        value = await self.get_choice_setting_value(child)
+                        option = await self.get_choice_setting_option(child)
+                        value = option
                     else:
                         print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
 
-                    values.append(value)
+                    values[child_config.id] = value
 
-                    return values
+                return values
         else:
             print(choice_setting_value.odata_type)        
 
     def get_simple_setting_collection_value(self,simple_setting_collection_instance):
-        print(simple_setting_collection_instance)
+        #print(simple_setting_collection_instance)
         collection = []
         for value in simple_setting_collection_instance.simple_setting_collection_value:
-            if value.odata_type == "#microsoft.graph.deviceManagementConfigurationStringSettingValue":
+            if "String" in value.odata_type:
                 collection.append(str(value.value))
             else:
                 print(value.odata_type)
@@ -98,7 +359,7 @@ class DeviceControlPolicyTemplate:
         return collection
 
 
-    async def get_choice_setting_value(self,choice_setting_instance):
+    async def get_choice_setting_option(self,choice_setting_instance):
         value = choice_setting_instance.choice_setting_value.value
         return await self.get_option_for_value(choice_setting_instance.setting_definition_id,value)
 
@@ -366,9 +627,9 @@ class Package:
                     }
 
                 for rule in policy.rules:
-                    rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],group.name+".xml"))
+                    rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],rule.name+".xml"))
                     rule_file = open(rule_file_path,"w")
-                    rule_file.write(str(group))
+                    rule_file.write(str(rule))
                     rule_file.close()
 
                     rules_data [rule.name] = {
@@ -535,26 +796,10 @@ async def export(graph: Graph, destination,name,
     package = Package(name,templateEnv)
 
     dc_policy_template = await DeviceControlPolicyTemplate.getTemplate(graph)
-
-    #get the device control configuration policies
-    dc_policies = await graph.get_device_control_policies()
-    for dc_policy in dc_policies.value:
-
-        id = dc_policy.id
-
-        settings = await graph.get_device_control_policy_settings(id)
-
-        for setting in settings.value:
-
-            configuration_settings = \
-                await dc_policy_template.get_configuration_settings_for_definition(
-                    setting.setting_instance.setting_definition_id
-                )
-
-            settings_value = await dc_policy_template.get_value(setting)
-            print(configuration_settings.name+"=>"+str(settings_value))
-
-
+    dc_policies = await dc_policy_template.getPolicies()
+    for dc_policy in dc_policies:
+        package.addPolicy(dc_policy)
+    
     configs = await graph.export_device_configurations()
     for device_config in configs.value:
         if device_config.odata_type == "#microsoft.graph.macOSCustomConfiguration":
