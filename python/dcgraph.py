@@ -65,10 +65,7 @@ class Graph:
         configs = await self.graph_client.device_management.device_configurations.get()
         return configs
     
-    async def get_assignments(self,id):
- 
-        assignments = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).assignments.get()
-        return assignments
+
     
 
     async def get_xml(self,id,secret_reference):
@@ -134,3 +131,13 @@ class Graph:
     async def get_configuration_settings(self):
         result = await self.graph_client.device_management.configuration_settings.get()
         return result
+    
+    async def get_assignments_for_policy(self,policy_id):
+        result = await self.graph_client.device_management.configuration_policies.by_device_management_configuration_policy_id(policy_id).assignments.get()
+        
+        return result
+    
+    async def get_assignments_for_configuration(self,id):
+ 
+        assignments = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).assignments.get()
+        return assignments

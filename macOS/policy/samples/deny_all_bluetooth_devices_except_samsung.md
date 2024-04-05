@@ -54,6 +54,58 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### All Bluetooth Devices
+
+
+
+This is a group of type *device*. 
+The match type for the group is *or*.
+
+
+<table>
+<tr>
+<th>Operator</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+
+<tr>
+
+<td></td>
+
+<td>primaryId</td>
+
+<td>bluetooth_devices</td>
+
+</tr>
+
+</table>
+
+
+#### Available properties for All Bluetooth Devices
+
+
+<details>
+<summary>View JSON</summary>
+
+```json
+{
+    "$type": "device",
+    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+    "name": "All Bluetooth Devices",
+    "query": {
+        "$type": "or",
+        "clauses": [
+            {
+                "$type": "primaryId",
+                "value": "bluetooth_devices"
+            }
+        ]
+    }
+}
+```
+</details>
+
 ### Samsung Galaxy S21
 
 
@@ -127,58 +179,6 @@ The match type for the group is *and*.
             {
                 "$type": "productId",
                 "value": "0100"
-            }
-        ]
-    }
-}
-```
-</details>
-
-### All Bluetooth Devices
-
-
-
-This is a group of type *device*. 
-The match type for the group is *or*.
-
-
-<table>
-<tr>
-<th>Operator</th>
-<th>Property</th>
-<th>Value</th>
-</tr>
-
-<tr>
-
-<td></td>
-
-<td>primaryId</td>
-
-<td>bluetooth_devices</td>
-
-</tr>
-
-</table>
-
-
-#### Available properties for All Bluetooth Devices
-
-
-<details>
-<summary>View JSON</summary>
-
-```json
-{
-    "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
-    "name": "All Bluetooth Devices",
-    "query": {
-        "$type": "or",
-        "clauses": [
-            {
-                "$type": "primaryId",
-                "value": "bluetooth_devices"
             }
         ]
     }
@@ -295,6 +295,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+            "name": "All Bluetooth Devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "bluetooth_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
             "id": "1A783D32-C6A3-4F5F-9D47-271B12130DFD",
             "name": "Samsung Galaxy S21",
             "query": {
@@ -311,20 +325,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "productId",
                         "value": "0100"
-                    }
-                ]
-            }
-        },
-        {
-            "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
-            "name": "All Bluetooth Devices",
-            "query": {
-                "$type": "or",
-                "clauses": [
-                    {
-                        "$type": "primaryId",
-                        "value": "bluetooth_devices"
                     }
                 ]
             }
@@ -454,6 +454,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
+            "name": "All Bluetooth Devices",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "bluetooth_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
             "id": "1A783D32-C6A3-4F5F-9D47-271B12130DFD",
             "name": "Samsung Galaxy S21",
             "query": {
@@ -470,20 +484,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                     {
                         "$type": "productId",
                         "value": "0100"
-                    }
-                ]
-            }
-        },
-        {
-            "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e417",
-            "name": "All Bluetooth Devices",
-            "query": {
-                "$type": "or",
-                "clauses": [
-                    {
-                        "$type": "primaryId",
-                        "value": "bluetooth_devices"
                     }
                 ]
             }

@@ -1,5 +1,6 @@
 import dcdoc
 import os
+import xml.etree.ElementTree as ET
 
 class DcDocArgs: 
 

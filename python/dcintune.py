@@ -35,6 +35,43 @@ class DeviceControlPolicyTemplate:
     class DeviceControlRule:
 
 
+        def createRulesFromSetting(setting):
+
+            rules = []
+            for group_setting_collection_value in setting.group_setting_collection_value:
+                for child in group_setting_collection_value.children:
+                    if child.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_SETTING_ID:
+                        for group_setting_collection_value_2 in child.group_setting_collection_value:
+
+                            #I think this is all of the data for the rule
+                            rule = DeviceControlPolicyTemplate.DeviceControlRule()
+                            for rules_data_setting in group_setting_collection_value_2.children:
+                                match rules_data_setting.setting_definition_id:
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ID_SETTING_ID:
+                                        #this is the rule id
+                                        rule.id = rules_data_setting.simple_setting_value.value
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_INCLUDED_GROUPS_SETTING_ID:
+                                        rule.included_groups = DeviceControlPolicyTemplate.Util.get_values_from_group_setting_collection_instance_as_list(rules_data_setting)
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_SETTING_ID:
+                                        
+                                        
+                                        for entry_setting in rules_data_setting.group_setting_collection_value:
+                                            entry = DeviceControlPolicyTemplate.DeviceControlRule.Entry(entry_setting)
+                                            rule.entries.append(entry)
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_NAME_SETTING_ID:
+
+                                        rule.name = rules_data_setting.simple_setting_value.value
+
+                                    case _:
+                                        print(rules_data_setting.setting_definition_id)
+
+                        rules.append(rule)
+
+            return rules
+
         class Entry:
 
             ENTRY_ID_SETTING_ID =   'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_id'
@@ -85,40 +122,16 @@ class DeviceControlPolicyTemplate:
         RULE_DATA_ENTRY_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
         RULE_DATA_NAME_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_name"
 
-        def __init__(self,setting):
-            self.setting = setting
-
+        def __init__(self):
+            
             self.description = ""
+            self.entries = []
+            self.id = None
+            self.included_groups = []
+            self.excluded_groups = []
+            self.name = ""
 
-            for group_setting_collection_value in setting.group_setting_collection_value:
-                for child in group_setting_collection_value.children:
-                    if child.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_SETTING_ID:
-                        for group_setting_collection_value_2 in child.group_setting_collection_value:
-
-                            #I think this is all of the data for the rule
-                            for rules_data_setting in group_setting_collection_value_2.children:
-                                match rules_data_setting.setting_definition_id:
-                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ID_SETTING_ID:
-                                        #this is the rule id
-                                        self.id = rules_data_setting.simple_setting_value.value
-
-                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_INCLUDED_GROUPS_SETTING_ID:
-                                        self.included_groups = DeviceControlPolicyTemplate.Util.get_values_from_group_setting_collection_instance_as_list(rules_data_setting)
-
-                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_SETTING_ID:
-                                        
-                                        self.entries = []
-                                        for entry_setting in rules_data_setting.group_setting_collection_value:
-                                            entry = DeviceControlPolicyTemplate.DeviceControlRule.Entry(entry_setting)
-                                            self.entries.append(entry)
-
-                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_NAME_SETTING_ID:
-
-                                        self.name = rules_data_setting.simple_setting_value.value
-
-                                    case _:
-                                        print(rules_data_setting.setting_definition_id)
-
+            
         def __str__(self):
             '''
             <PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"> 
@@ -144,25 +157,26 @@ class DeviceControlPolicyTemplate:
             '''
             tb = ET.TreeBuilder()
             rule_tag = tb.start("PolicyRule",{ "id":"{"+self.id+"}"})
-
+            
             name_comment = tb.comment(self.name)
-            ET.indent(name_comment, level=1)
+            #ET.indent(name_comment, space="\t", level=1)
             oma_uri_comment = tb.comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote("{"+self.id+"}"))
-            ET.indent(oma_uri_comment,level=1)
+            #ET.indent(oma_uri_comment,level=1)
 
             rule_tag.append(name_comment)
             rule_tag.append(oma_uri_comment)
             
             name_tag = tb.start("Name",{})
             name_tag.text = self.name
-            ET.indent(name_tag,level=1)
+            #ET.indent(name_tag,level=1)
 
 
             includedid_list_tag = tb.start("IncludedIdList",{})
             rule_tag.append(includedid_list_tag)
-            ET.indent(includedid_list_tag,level=1)
-            
 
+            #ET.indent(includedid_list_tag,level=1)
+            
+            ET.indent(rule_tag, space="\t", level=0)
             return ET.tostring(rule_tag).decode("utf-8")
 
             
@@ -174,22 +188,56 @@ class DeviceControlPolicyTemplate:
 
     class DeviceControlPolicy:
 
-        def __init__(self,id,name,policy_settings):
+        def __init__(self,id,name,policy_settings,assignments):
             self.id = id
             self.name = name
             self.os = Package.Policy.WINDOWS_OS
 
-            self.settings = {}
+            self.settings = []
             self.rules = []
             self.groups = []
 
+            self.assignments = assignments
+            self.intune_assignments = []
+            self.policy_settings = policy_settings
+
+        async def proces_data(self,graph):
+            for assignment in self.assignments.value:
+                intune_assignment = Package.IntuneAssignment(assignment)
+                await intune_assignment.update_groups(graph)
+                self.intune_assignments.append(intune_assignment.data)
+            
+            self.assignments = self.intune_assignments
+            self.description = ""
+
             #just store the objects for now
-            for setting_id in policy_settings.keys():
+            for setting_id in self.policy_settings.keys():
                 if setting_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
-                    rule = policy_settings[setting_id]
-                    self.rules.append(rule)
+                    rules = self.policy_settings[setting_id]
+                    for rule in rules:
+                        self.rules.append(rule)
                 else:
-                    self.settings[setting_id] = policy_settings[setting_id]
+                    #setting id is the oma-uri
+                    self.policy_setting = self.policy_settings[setting_id]
+                    name = dc.Setting.getSettingNameFor(setting_id)
+
+                    value_dict = self.policy_setting["value"]
+                    config = self.policy_setting["config"]
+
+                    if len(value_dict) == 1:
+                         value = list(value_dict.values())[0]
+                         if hasattr(value,"name"):
+                            dc_setting = dc.Setting(name,value.name) 
+                         else:
+                            dc_setting = dc.Setting(name,value)
+
+                         self.settings.append(Package.IntuneSetting(dc_setting,config.display_name))
+                    else:
+                        for key in value_dict.keys():
+                            print(key)
+                    
+                     
+                        
                     
             
 
@@ -226,9 +274,19 @@ class DeviceControlPolicyTemplate:
                 )
 
                 setting_value = await self.get_value(setting)
-                settings_value_for_policy[setting_config.id] = setting_value
+                if setting.setting_instance.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
+                    settings_value_for_policy[setting.setting_instance.setting_definition_id] = setting_value
+                else:
+                    oma_uri = setting_config.base_uri + setting_config.offset_uri
+                    settings_value_for_policy[oma_uri] = { "value": setting_value, "config": setting_config }
 
-            policy = DeviceControlPolicyTemplate.DeviceControlPolicy(id,name,settings_value_for_policy)
+
+            assignments = await self.graph.get_assignments_for_policy(id)
+
+
+
+            policy = DeviceControlPolicyTemplate.DeviceControlPolicy(id,name,settings_value_for_policy,assignments)
+            await policy.proces_data(self.graph)
             policies.append(policy)
 
         return policies    
@@ -310,7 +368,7 @@ class DeviceControlPolicyTemplate:
             return await self.get_choice_value(setting_instance)
         elif setting_instance.odata_type == "#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance":
             if setting_instance.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
-                return DeviceControlPolicyTemplate.DeviceControlRule(setting_instance)
+                return DeviceControlPolicyTemplate.DeviceControlRule.createRulesFromSetting(setting_instance)
             else:
                 print(setting_instance.setting_definition_id)
 
@@ -433,12 +491,32 @@ class Package:
                 "exclude":[]
             }
 
-            for assignment in assignments.value:
+            if hasattr(assignments,"value"):
+                for assignment in assignments.value:
+                    target = assignment.target
+                    self.update_data_for_target(target)
+            elif hasattr(assignments,"target"):
+                target = assignments.target
+                self.update_data_for_target(target)
+            else:
+                print(assignments)
 
-                target = assignment.target
+        async def update_groups(self,graph):
+            target_types = ["include","exclude"]
+            for target_type in target_types:
+                targets = self.data[target_type]
+                index = 0
+                for target in targets:
+                    if not str(target).startswith("all"):
+                        group = await graph.get_group_by_id(target)
+                        self.data[target_type][index] = \
+                                Package.IntuneAssignment.TargetGroup(group).toJSON()
+                    index=index+1
+            
+        
+        def update_data_for_target(self,target):
+
                 target_type = target.odata_type
-
-                print(target_type)
 
                 if target_type == "#microsoft.graph.allDevicesAssignmentTarget":
                     self.data["include"].append("all machines")
@@ -450,6 +528,8 @@ class Package:
                 elif target_type == "#microsoft.graph.groupAssignmentTarget":
                     included_group_id = target.group_id
                     self.data["include"].append(included_group_id)
+                else:
+                    print(target_type)
 
             
     class Policy:
@@ -471,19 +551,8 @@ class Package:
 
         async def setAssignments(self,assignments):
 
-            intune_assignment = Package.IntuneAssignment(assignments)
-
-            target_types = ["include","exclude"]
-            for target_type in target_types:
-                targets = intune_assignment.data[target_type]
-                index = 0
-                for target in targets:
-                    if not str(target).startswith("all"):
-                        group = await self.graph.get_group_by_id(target)
-                        intune_assignment.data[target_type][index] = \
-                            Package.IntuneAssignment.TargetGroup(group).toJSON()
-                    index=index+1
- 
+            intune_assignment = Package.IntuneAssignment(assignments) 
+            await intune_assignment.update_groups(self.graph)
             self.assignments = intune_assignment.data
 
         def addGroup(self,group):
@@ -822,7 +891,7 @@ async def export(graph: Graph, destination,name,
                 
                 policy.setPayload(deviceControl['policy'])
 
-                assignments = await graph.get_assignments(id)
+                assignments = await graph.get_assignments_for_configuration(id)
 
                 await policy.setAssignments(assignments)
 
@@ -838,7 +907,7 @@ async def export(graph: Graph, destination,name,
             policy.description = device_config.description
 
             
-            assignments = await graph.get_assignments(id)
+            assignments = await graph.get_assignments_for_configuration(id)
 
             await policy.setAssignments(assignments)
 
