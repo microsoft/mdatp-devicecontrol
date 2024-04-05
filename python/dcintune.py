@@ -120,6 +120,13 @@ class DeviceControlPolicyTemplate:
         RULE_DATA_ID_SETTING_ID  = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_id"
         RULE_DATA_INCLUDED_GROUPS_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist"
         RULE_DATA_ENTRY_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
+        
+        RULE_DATA_ENTRY_TYPE_DENY_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_deny'
+        RULE_DATA_ENTRY_TYPE_ALLOW_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_allow'
+        RULE_DATA_ENTRY_TYPE_AUDIT_DENIED_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_auditdenied'
+        RULE_DATA_ENTRY_TYPE_AUDIT_ALLOWED_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_auditallowed'
+        
+        
         RULE_DATA_NAME_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_name"
 
         def __init__(self):
@@ -155,29 +162,54 @@ class DeviceControlPolicyTemplate:
                 </Entry>
             </PolicyRule>
             '''
-            tb = ET.TreeBuilder()
-            rule_tag = tb.start("PolicyRule",{ "id":"{"+self.id+"}"})
             
-            name_comment = tb.comment(self.name)
-            #ET.indent(name_comment, space="\t", level=1)
-            oma_uri_comment = tb.comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote("{"+self.id+"}"))
-            #ET.indent(oma_uri_comment,level=1)
 
-            rule_tag.append(name_comment)
-            rule_tag.append(oma_uri_comment)
+            rule = ET.Element("PolicyRule", id=self.id)
+            name_comment = ET.Comment(self.name)
+            rule.append(name_comment)
             
-            name_tag = tb.start("Name",{})
-            name_tag.text = self.name
-            #ET.indent(name_tag,level=1)
+            oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote(self.id))
+            rule.append(oma_uri_comment)
 
+            name = ET.SubElement(rule,"Name",{})
+            name.text = self.name
 
-            includedid_list_tag = tb.start("IncludedIdList",{})
-            rule_tag.append(includedid_list_tag)
-
-            #ET.indent(includedid_list_tag,level=1)
             
-            ET.indent(rule_tag, space="\t", level=0)
-            return ET.tostring(rule_tag).decode("utf-8")
+            includedid_list = ET.SubElement(rule,"IncludedIdList")
+            for included_group_id in self.included_groups:
+                group_id = ET.SubElement(includedid_list,"GroupId")
+                group_id.text = "{"+included_group_id+"}"
+
+
+            excludedid_list = ET.SubElement(rule,"ExcludedIdList")
+            for excluded_group_id in self.excluded_groups:
+                group_id = ET.SubElement(excludedid_list,"GroupId")
+                group_id.text = "{"+excluded_group_id+"}"
+
+                
+            for entry in self.entries:
+                entry_element = ET.SubElement(rule,"Entry",id=entry.entry_id)
+                access_mask = ET.SubElement(entry_element,"AccessMask")
+                access_mask.text = str(entry.access_mask)
+                
+                options = ET.SubElement(entry_element,"Options")
+                options.text = str(entry.options).split("_")[-1]
+                
+                type = ET.SubElement(entry_element,"Type",{})
+                match entry.entry_type:
+                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_TYPE_ALLOW_ID:
+                        type.text = "Allow"
+                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_TYPE_AUDIT_ALLOWED_ID:
+                        type.text = "AuditAllowed"
+                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_TYPE_DENY_ID:
+                        type.text = "Deny"
+                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_TYPE_AUDIT_DENIED_ID:
+                        type.text = "AuditDenied"
+                    case _:
+                        print(entry.entry_type)
+            
+            ET.indent(rule, space="\t", level=0)
+            return ET.tostring(rule,method="xml").decode("utf-8")
 
             
 
