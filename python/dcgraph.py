@@ -16,6 +16,8 @@ from msgraph_beta.generated.models.email_address import EmailAddress
 from msgraph_beta.generated.device_management.configuration_policy_templates.configuration_policy_templates_request_builder import ConfigurationPolicyTemplatesRequestBuilder
 from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
 from msgraph_beta.generated.device_management.configuration_settings.item.device_management_configuration_setting_definition_item_request_builder import DeviceManagementConfigurationSettingDefinitionItemRequestBuilder 
+from msgraph_beta.generated.device_management.reusable_policy_settings.item.device_management_reusable_policy_setting_item_request_builder import DeviceManagementReusablePolicySettingItemRequestBuilder
+
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -141,3 +143,16 @@ class Graph:
  
         assignments = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).assignments.get()
         return assignments
+    
+    async def get_group_details(self,id):
+
+        query_params = DeviceManagementReusablePolicySettingItemRequestBuilder.DeviceManagementReusablePolicySettingItemRequestBuilderGetQueryParameters(
+		    select = ["settingInstance"],
+        )
+
+        request_configuration = DeviceManagementReusablePolicySettingItemRequestBuilder.DeviceManagementReusablePolicySettingItemRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(id).get(request_configuration = request_configuration)
+        return result

@@ -32,6 +32,64 @@ class DeviceControlPolicyTemplate:
             return return_list
 
 
+    class DeviceControlGroup:
+
+        GROUP_DATA_ID_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_id'
+        GROUP_DATA_PRINTER_DEVICES_ID_LIST_SETTINGD_ID  = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist'
+        GROUP_DATA_MATCH_TYPE_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype'
+        GROUP_DATA_DESCRIPTOR_LIST_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist'
+        
+        def __init__(self):
+            self.id = ""
+            self.name = ""
+            self.description = ""
+            self.type = "Device"
+            self.match_type = ""
+            self.values = {}
+            self.descriptors = []
+
+
+        def createGroupfromSetting(setting):
+            group = DeviceControlPolicyTemplate.DeviceControlGroup()
+            setting_instance = setting.setting_instance
+            group_setting_collection_value = setting_instance.group_setting_collection_value[0]
+
+            for child in group_setting_collection_value.children:
+
+                match child.setting_definition_id:
+                    case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_ID_SETTING_ID:
+                        group.id = child.simple_setting_value.value
+                    case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_PRINTER_DEVICES_ID_LIST_SETTINGD_ID:
+                        group.type = "Printer"
+                        for group_setting in child.group_setting_collection_value:
+                            for group_setting_child in group_setting.children:
+                                group_setting_definition_id = group_setting_child.setting_definition_id
+                                group_setting_value = group_setting_child.simple_setting_value.value
+                                group.values[group_setting_definition_id] = group_setting_value
+
+                    case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_TYPE_SETTING_ID:
+                        group.match_type = child.choice_setting_value.value
+                    case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_DESCRIPTOR_LIST_SETTING_ID:
+                        
+                        descriptor_ids = {}
+                        for group_setting in child.group_setting_collection_value:
+                            for group_setting_child in group_setting.children:
+                                group_setting_definition_id = group_setting_child.setting_definition_id
+                                group_setting_value = group_setting_child.simple_setting_value.value
+
+                                descriptor_ids[group_setting_definition_id] = group_setting_value
+
+                        group.descriptors.append(descriptor_ids)
+                                
+                    case _:
+                        print(child.setting_definition_id)
+
+
+
+            return group
+
+        
+
     class DeviceControlRule:
 
 
@@ -53,6 +111,9 @@ class DeviceControlPolicyTemplate:
 
                                     case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_INCLUDED_GROUPS_SETTING_ID:
                                         rule.included_groups = DeviceControlPolicyTemplate.Util.get_values_from_group_setting_collection_instance_as_list(rules_data_setting)
+
+                                    case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_EXCLUDED_GROUPS_SETTING_ID:
+                                        rule.excluded_groups = DeviceControlPolicyTemplate.Util.get_values_from_group_setting_collection_instance_as_list(rules_data_setting)
 
                                     case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_SETTING_ID:
                                         
@@ -119,6 +180,7 @@ class DeviceControlPolicyTemplate:
         RULE_DATA_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
         RULE_DATA_ID_SETTING_ID  = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_id"
         RULE_DATA_INCLUDED_GROUPS_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist"
+        RULE_DATA_EXCLUDED_GROUPS_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_excludedidlist"
         RULE_DATA_ENTRY_SETTING_ID = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
         
         RULE_DATA_ENTRY_TYPE_DENY_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_deny'
@@ -176,15 +238,15 @@ class DeviceControlPolicyTemplate:
 
             
             includedid_list = ET.SubElement(rule,"IncludedIdList")
-            for included_group_id in self.included_groups:
+            for included_group in self.included_groups:
                 group_id = ET.SubElement(includedid_list,"GroupId")
-                group_id.text = "{"+included_group_id+"}"
+                group_id.text = included_group.id
 
 
             excludedid_list = ET.SubElement(rule,"ExcludedIdList")
-            for excluded_group_id in self.excluded_groups:
+            for excluded_group in self.excluded_groups:
                 group_id = ET.SubElement(excludedid_list,"GroupId")
-                group_id.text = "{"+excluded_group_id+"}"
+                group_id.text = excluded_group.id
 
                 
             for entry in self.entries:
@@ -248,6 +310,14 @@ class DeviceControlPolicyTemplate:
                     rules = self.policy_settings[setting_id]
                     for rule in rules:
                         self.rules.append(rule)
+
+                    #retrieve the groups from the rule
+                    for group in rule.included_groups:
+                        self.groups.append(group)
+
+                    for group in rule.excluded_groups:
+                        self.groups.append(group)
+    
                 else:
                     #setting id is the oma-uri
                     self.policy_setting = self.policy_settings[setting_id]
@@ -400,7 +470,18 @@ class DeviceControlPolicyTemplate:
             return await self.get_choice_value(setting_instance)
         elif setting_instance.odata_type == "#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance":
             if setting_instance.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
-                return DeviceControlPolicyTemplate.DeviceControlRule.createRulesFromSetting(setting_instance)
+                rules = DeviceControlPolicyTemplate.DeviceControlRule.createRulesFromSetting(setting_instance)
+                for rule in rules:
+                    updated_included_groups = []
+                    for group_id in rule.included_groups:
+                        group_setting = await self.graph.get_group_details(group_id)
+                        group = DeviceControlPolicyTemplate.DeviceControlGroup.createGroupfromSetting(group_setting)
+                        updated_included_groups.append(group)
+
+                    rule.included_groups = updated_included_groups
+
+                return rules
+            
             else:
                 print(setting_instance.setting_definition_id)
 
