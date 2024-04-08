@@ -51,7 +51,6 @@ class DeviceControlPolicyTemplate:
             self.description = ""
             self.type = "Device"
             self.match_type = ""
-            self.values = {}
             self.descriptors = []
 
 
@@ -71,7 +70,7 @@ class DeviceControlPolicyTemplate:
 
             group = ET.Element("Group", id=self.id)
             
-            oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(self.id))
+            oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(self.id)+"/GroupData")
             group.append(oma_uri_comment)
 
             name = ET.SubElement(group,"Name",{})
@@ -97,7 +96,6 @@ class DeviceControlPolicyTemplate:
                             comment = descriptor[key]
                         case _:
                             setting_details = DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[key]
-                            print(setting_details)
                             tag_name = setting_details.display_name
                             tag_text = descriptor[key]
 
@@ -119,6 +117,7 @@ class DeviceControlPolicyTemplate:
         def createGroupfromSetting(setting):
             group = DeviceControlPolicyTemplate.DeviceControlGroup()
             group.name = setting.display_name
+            group.description = setting.description
             setting_instance = setting.setting_instance
             group_setting_collection_value = setting_instance.group_setting_collection_value[0]
 
@@ -129,11 +128,22 @@ class DeviceControlPolicyTemplate:
                         group.id = child.simple_setting_value.value
                     case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_PRINTER_DEVICES_ID_LIST_SETTINGD_ID:
                         group.type = "Printer"
+                        descriptor_ids = {}
                         for group_setting in child.group_setting_collection_value:
                             for group_setting_child in group_setting.children:
                                 group_setting_definition_id = group_setting_child.setting_definition_id
-                                group_setting_value = group_setting_child.simple_setting_value.value
-                                group.values[group_setting_definition_id] = group_setting_value
+                                
+                                if group_setting_child.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingInstance":
+                                    group_setting_value = group_setting_child.choice_setting_value.value
+                                    group_setting_value_index = int(str(group_setting_value).split("_")[-1])
+                                    value = DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[group_setting_child.setting_definition_id]
+                                    group_setting_value = value.options[group_setting_value_index].display_name
+                                else:    
+                                    group_setting_value = group_setting_child.simple_setting_value.value
+
+                                descriptor_ids[group_setting_definition_id] = group_setting_value
+
+                        group.descriptors.append(descriptor_ids)
 
                     case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_TYPE_SETTING_ID:
                         group.match_type = child.choice_setting_value.value

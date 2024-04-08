@@ -148,7 +148,7 @@ class Graph:
     async def get_group_details(self,id):
 
         query_params = DeviceManagementReusablePolicySettingItemRequestBuilder.DeviceManagementReusablePolicySettingItemRequestBuilderGetQueryParameters(
-		    select = ["settingInstance","displayName"],
+		    select = ["settingInstance","displayName","description"],
         )
 
         request_configuration = DeviceManagementReusablePolicySettingItemRequestBuilder.DeviceManagementReusablePolicySettingItemRequestBuilderGetRequestConfiguration(
