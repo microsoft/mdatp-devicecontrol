@@ -38,7 +38,13 @@ class DeviceControlPolicyTemplate:
         GROUP_DATA_PRINTER_DEVICES_ID_LIST_SETTINGD_ID  = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist'
         GROUP_DATA_MATCH_TYPE_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype'
         GROUP_DATA_DESCRIPTOR_LIST_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist'
-        
+        GROUP_DATA_DESCRIPTOR_LIST_NAME_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name'
+
+        GROUP_DATA_MATCH_ANY_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype_matchany'
+        GROUP_DATA_MATCH_ALL_SETTING_ID = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype_matchall'
+
+        group_settings = {}
+
         def __init__(self):
             self.id = ""
             self.name = ""
@@ -49,8 +55,70 @@ class DeviceControlPolicyTemplate:
             self.descriptors = []
 
 
+        def __str__(self):
+
+            '''
+            	<Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
+		            <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
+		            <Name>bitlocker encrypted USBs</Name>
+		            <MatchType>MatchAll</MatchType>
+		            <DescriptorIdList>
+			            <PrimaryId>RemovableMediaDevices</PrimaryId>
+			            <DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+		            </DescriptorIdList>
+	            </Group>
+            '''
+
+            group = ET.Element("Group", id=self.id)
+            
+            oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(self.id))
+            group.append(oma_uri_comment)
+
+            name = ET.SubElement(group,"Name",{})
+            name.text = self.name
+
+            match_type = ET.SubElement(group,"MatchType")
+            match self.match_type:
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ANY_SETTING_ID:
+                    match_type.text = "MatchAny"
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ALL_SETTING_ID:
+                    match_type.text = "MatchAll"
+                case _:
+                    print(self.match_type)
+        
+            descriptorId_list = ET.SubElement(group,"DescriptorIdList")
+            for descriptor in self.descriptors:
+                comment = None
+                tag_name = None
+                tag_text = None
+                for key in descriptor:
+                    match key:
+                        case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_DESCRIPTOR_LIST_NAME_SETTING_ID:
+                            comment = descriptor[key]
+                        case _:
+                            setting_details = DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[key]
+                            print(setting_details)
+                            tag_name = setting_details.display_name
+                            tag_text = descriptor[key]
+
+                if comment is not None:
+                    descriptorId_list.append(ET.Comment(comment))
+
+                if tag_name is not None:
+                    tag = ET.SubElement(descriptorId_list,tag_name)
+                    tag.text = tag_text
+
+
+            
+            ET.indent(group, space="\t", level=0)
+            return ET.tostring(group,method="xml").decode("utf-8")
+
+
+
+
         def createGroupfromSetting(setting):
             group = DeviceControlPolicyTemplate.DeviceControlGroup()
+            group.name = setting.display_name
             setting_instance = setting.setting_instance
             group_setting_collection_value = setting_instance.group_setting_collection_value[0]
 
@@ -458,6 +526,9 @@ class DeviceControlPolicyTemplate:
 
             dc.Setting.addSettingData(details.name,setting_data.get_data())
 
+        group_settings = await self.graph.get_reusable_settings_for_groups()
+        for group_setting in group_settings.value:
+            DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[group_setting.id] = group_setting
 
     async def get_configuration_settings_for_definition(self,definitionId):
         details = await self.graph.get_configuration_settings_for_definition(definitionId)

@@ -17,6 +17,7 @@ from msgraph_beta.generated.device_management.configuration_policy_templates.con
 from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
 from msgraph_beta.generated.device_management.configuration_settings.item.device_management_configuration_setting_definition_item_request_builder import DeviceManagementConfigurationSettingDefinitionItemRequestBuilder 
 from msgraph_beta.generated.device_management.reusable_policy_settings.item.device_management_reusable_policy_setting_item_request_builder import DeviceManagementReusablePolicySettingItemRequestBuilder
+from msgraph_beta.generated.device_management.reusable_settings.reusable_settings_request_builder import ReusableSettingsRequestBuilder
 
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
@@ -147,7 +148,7 @@ class Graph:
     async def get_group_details(self,id):
 
         query_params = DeviceManagementReusablePolicySettingItemRequestBuilder.DeviceManagementReusablePolicySettingItemRequestBuilderGetQueryParameters(
-		    select = ["settingInstance"],
+		    select = ["settingInstance","displayName"],
         )
 
         request_configuration = DeviceManagementReusablePolicySettingItemRequestBuilder.DeviceManagementReusablePolicySettingItemRequestBuilderGetRequestConfiguration(
@@ -155,4 +156,16 @@ class Graph:
         )
 
         result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(id).get(request_configuration = request_configuration)
+        return result
+    
+    async def get_reusable_settings_for_groups(self):
+        query_params = ReusableSettingsRequestBuilder.ReusableSettingsRequestBuilderGetQueryParameters(
+		    filter = "offsetUri eq '/configuration/devicecontrol/policygroups/{0}/groupdata'",
+        )
+
+        request_configuration = ReusableSettingsRequestBuilder.ReusableSettingsRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.reusable_settings.get(request_configuration = request_configuration)
         return result
