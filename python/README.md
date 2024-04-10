@@ -5,18 +5,22 @@ Useful python scripts for interacting with Device Control
 ## Getting started
 
 1. Install [python 3.10](https://www.python.org/downloads/release/python-3100/) or greater
-2. Install the required python libraries
+2. Install the package locally
 
 ```
-pip3 install -r requirements.txt
+python3 -m pip install --upgrade build
+python3 -m build
+pip3 install -e
 ```
 
-## convert_dc_policy.py
+This will create the link to the command line tools
+
+## dcconvert
 
 Converts Windows DC policy XML into equivalent macOS policy JSON.
 
 ```
-usage: convert_dc_policy.py [--groups=groups.xml][--rules=rules.xml][--strict][--o=outfile]
+usage: dcconvert [--groups=groups.xml][--rules=rules.xml][--strict][--o=outfile]
 ```
 
 <details>
@@ -42,12 +46,12 @@ usage: convert_dc_policy.py [--groups=groups.xml][--rules=rules.xml][--strict][-
 > [!NOTE]  
 > Not all Windows policies can be converted to Mac.  
 
-## upgrade_dc_policy.py
+## dcupgrade
 
 Used to update v1 macOS DC policy plists into the new JSON policy format.
 
 ```
-usage: upgrade_dc_policy.py [-h] [-o OUTPUT_FILE]
+usage: dcupgrade [-h] [-o OUTPUT_FILE]
                             v1_policy
 ```
 
@@ -71,12 +75,12 @@ usage: upgrade_dc_policy.py [-h] [-o OUTPUT_FILE]
 </details>
 
 
-## dcdoc.py
+## dcdoc
 
 Used to generate documentaion on device control policies
 
 ```
-usage: dcdoc.py [-h] [-q QUERY | -s SCENARIOS | -i IN_FILE]
+usage: dcdoc [-h] [-q QUERY | -s SCENARIOS | -i IN_FILE]
                 [-p SOURCE_PATH] [-f FORMAT] [-o OUT_FILE]
                 [-d DEST] [-g GENERATED_FILES_LOCATIONS]
                 [-t TEMPLATE] [-rt README_TEMPLATE]
