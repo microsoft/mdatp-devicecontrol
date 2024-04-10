@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+"*" = ["*.j2"]
+
+[project]
+name = "mdedevicecontrol"
+version = "0.0.1"
+authors = [
+  { name="Josh Bregman", email="joshbregman@microsoft.com" }
+]
+description = "Tools for MDE Device Control"
+readme = "README.md"    
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas",
+    "jinja2",
+    "azure-identity",
+    "msgraph-beta-sdk",
+    "pytest",
+    "pyyaml"
+]
+
+[project.scripts]
+dcdoc = "mdedevicecontrol.dcdoc:main"
+dcupgrade = "mdedevicecontrol.upgrade_dc_policy:main"
+dcconvert = "mdedevicecontrol.convert_dc_policy:main" 
+
+[project.urls]
+Homepage = "https://github.com/microsoft/mdatp-devicecontrol"
+Issues = "https://github.com/microsoft/mdatp-devicecontrol/issues"

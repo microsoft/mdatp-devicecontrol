@@ -13,8 +13,8 @@ import urllib.parse
 
 import xml.etree.ElementTree as ET
 
-import devicecontrol as dc
-from dcdoc import Inventory, Description
+import mdedevicecontrol.devicecontrol as dc
+from mdedevicecontrol.dcdoc import Inventory, Description
 
 
 class DeviceControlPolicyTemplate:

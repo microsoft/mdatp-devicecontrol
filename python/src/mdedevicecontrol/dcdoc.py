@@ -9,8 +9,8 @@ import pathlib
 import copy
 import json
 
-from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
-import convert_dc_policy as mac 
+from mdedevicecontrol.devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
+import mdedevicecontrol.convert_dc_policy as mac 
 
 Default_Settings = Settings(
     {
@@ -983,7 +983,7 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
         out_file.write(out)
         out_file.close()
 
-def main(args):
+def dcdoc(args):
 
     templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
     templateEnv = jinja2.Environment(loader=templateLoader)
@@ -1070,8 +1070,8 @@ def main(args):
             inventory.generate_csv(args.dest)
         
     
-if __name__ == '__main__':
 
+def main():
     arg_parser = argparse.ArgumentParser(
         description='Utility for generating documentation for device control policies.')
 
@@ -1096,5 +1096,7 @@ if __name__ == '__main__':
     
 
     args = arg_parser.parse_args()
-    main(args)
+    dcdoc(args)
 
+if __name__ == '__main__':
+    main()

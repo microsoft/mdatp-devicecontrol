@@ -1,4 +1,4 @@
-import dcdoc
+import mdedevicecontrol.dcdoc
 import os
 import xml.etree.ElementTree as ET
 

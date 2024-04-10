@@ -1,4 +1,4 @@
-import dcintune
+import mdedevicecontrol.dcintune
 
 def test_rule_xml():
 

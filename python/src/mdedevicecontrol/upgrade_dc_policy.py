@@ -364,7 +364,7 @@ def upgrade_v1_policy(v1_policy):
 
 
 
-if __name__ == '__main__':
+def main():
     import argparse
     import json
 
@@ -383,3 +383,6 @@ if __name__ == '__main__':
     except Exception as e:
         log_error("Failed to convert policy:")
         log_error(str(e))
+
+if __name__ == '__main__':
+    main()
