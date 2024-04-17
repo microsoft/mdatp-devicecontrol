@@ -86,7 +86,14 @@ class Helper:
 
             masks_to_check = entry.entry_type.access_masks
             if Helper.helper_entry_type is not None:
-                masks_to_check = Helper.helper_entry_type.access_masks
+                if hasattr(Helper.helper_entry_type,"access_masks"):
+                    masks_to_check = Helper.helper_entry_type.access_masks
+                elif entry.entry_type.name == "windows_device":
+                    masks_to_check = Entry.WindowsDevice.access_masks
+                elif entry.entry_type.name == "windows_printer":
+                    masks_to_check = Entry.WindowsPrinter.access_masks
+                else:
+                    masks_to_check = list(WindowsEntryType.access_masks.keys())
 
             for mask in masks_to_check:
 
@@ -407,6 +414,7 @@ class Inventory:
                 "conditionMatchType": entry.get_condition_match_type()
             }
 
+            
             permissions = Helper.get_permission_icons(entry,True)
             for permission in permissions:
                 if type(permission) == int:

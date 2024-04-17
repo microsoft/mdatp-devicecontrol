@@ -123,7 +123,7 @@ class Setting:
             self.data[format]["supported"] = supported
 
         def set_documentation(self,format,documentation):
-            self.data[format]["documenation"] = documentation
+            self.data[format]["documentation"] = documentation
 
         def set_value_map(self,format,value_map):
             self.data[format]["value_map"] = value_map
@@ -452,7 +452,15 @@ class Settings:
         else: 
             for name in setting_dict:
                 value = setting_dict[name]
-                self.settings.append(Setting(name,value))
+                if isinstance(value,dict):
+                    if "value" in value.keys():
+                        #this is loaded from Intune
+                        self.settings.append(Setting(name,value["value"]))
+                    else:
+                        #this is mac settings
+                        self.settings.append(Setting(name,value))    
+                else:
+                    self.settings.append(Setting(name,value))
 
     def addSetting(self,setting):
         self.settings.append(setting)
@@ -1165,7 +1173,8 @@ class Group:
     
     def set_path(self,path):
         if path is not None:
-            p = pathlib.PurePath(path)
+            p = pathlib.Path(path)
+            p = p.resolve()
             p = p.relative_to(os.getcwd())
             self.path = str(p)
 
@@ -1400,7 +1409,8 @@ class PolicyRule:
     
     def set_path(self,path):
         if path is not None:
-            p = pathlib.PurePath(path)
+            p = pathlib.Path(path)
+            p = p.resolve()
             p = p.relative_to(os.getcwd())
             self.path = str(p)
         

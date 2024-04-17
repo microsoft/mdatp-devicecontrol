@@ -3,7 +3,7 @@ import os
 import base64
 import jinja2
 from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
-from dcgraph import Graph
+from mdedevicecontrol.dcgraph import Graph
 import plistlib
 import argparse
 import json
@@ -68,7 +68,7 @@ class DeviceControlPolicyTemplate:
 	            </Group>
             '''
 
-            group = ET.Element("Group", id=self.id)
+            group = ET.Element("Group", Id=self.id)
             
             oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(self.id)+"/GroupData")
             group.append(oma_uri_comment)
@@ -304,7 +304,7 @@ class DeviceControlPolicyTemplate:
             '''
             
 
-            rule = ET.Element("PolicyRule", id=self.id)
+            rule = ET.Element("PolicyRule", Id=self.id)
             name_comment = ET.Comment(self.name)
             rule.append(name_comment)
             
@@ -328,7 +328,7 @@ class DeviceControlPolicyTemplate:
 
                 
             for entry in self.entries:
-                entry_element = ET.SubElement(rule,"Entry",id=entry.entry_id)
+                entry_element = ET.SubElement(rule,"Entry",Id=entry.entry_id)
                 access_mask = ET.SubElement(entry_element,"AccessMask")
                 access_mask.text = str(entry.access_mask)
                 
@@ -398,23 +398,23 @@ class DeviceControlPolicyTemplate:
     
                 else:
                     #setting id is the oma-uri
-                    self.policy_setting = self.policy_settings[setting_id]
+                    policy_setting = self.policy_settings[setting_id]
                     name = dc.Setting.getSettingNameFor(setting_id)
 
-                    value_dict = self.policy_setting["value"]
-                    config = self.policy_setting["config"]
+                    value_dict = policy_setting["value"]
+                    config = policy_setting["config"]
 
-                    if len(value_dict) == 1:
-                         value = list(value_dict.values())[0]
-                         if hasattr(value,"name"):
+                    for key in value_dict.keys():
+                        value = value_dict[key]
+
+                        if hasattr(value,"name"):
                             dc_setting = dc.Setting(name,value.name) 
-                         else:
+                        else:
                             dc_setting = dc.Setting(name,value)
 
-                         self.settings.append(Package.IntuneSetting(dc_setting,config.display_name))
-                    else:
-                        for key in value_dict.keys():
-                            print(key)
+                        self.settings.append(Package.IntuneSetting(dc_setting,config.display_name))
+                    
+
                     
                      
                         
@@ -568,18 +568,25 @@ class DeviceControlPolicyTemplate:
 
     async def get_choice_value(self,setting_instance):
          
-        print("choice_value > setting_instance > setting_definition_id="+setting_instance.setting_definition_id)
+         
+        #print("choice_value > setting_instance > setting_definition_id="+setting_instance.setting_definition_id)
         choice_setting_value = setting_instance.choice_setting_value
+
         print("choice_value > setting_instance > choice_setting_value="+choice_setting_value.odata_type)
 
         if choice_setting_value.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingValue":
             print("choice_value > setting_instance > choice_setting_value > value ="+choice_setting_value.value)
+            
+            config = await self.graph.get_configuration_settings_for_definition(setting_instance.setting_definition_id)
+            option = await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
+            
+            oma_uri = config.base_uri + config.offset_uri
+
+            result = {oma_uri: option}
             if len(choice_setting_value.children) == 0:
-                config = await self.graph.get_configuration_settings_for_definition(setting_instance.setting_definition_id)
-                option = await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
-                return {config.id: option}
+                return result
             else:
-                values = {}
+                
                 for child in choice_setting_value.children:
                     value = None
 
@@ -593,9 +600,10 @@ class DeviceControlPolicyTemplate:
                     else:
                         print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
 
-                    values[child_config.id] = value
+                    oma_uri = child_config.base_uri + child_config.offset_uri
+                    result[oma_uri] = value
 
-                return values
+                return result
         else:
             print(choice_setting_value.odata_type)        
 
@@ -644,6 +652,7 @@ class Package:
     MAC_PATH = "macOS.devicecontrol.policies"
     WINDOWS_GROUPS_PATH = "windows.devicecontrol.groups"
     WINDOWS_RULES_PATH = "windows.devicecontrol.rules"
+    WINDOWS_DEVICE_CONTROL = "windows.devicecontrol"
 
     MAC_DEVICE_CONTROL = "macOS.devicecontrol"
     MAC_DEVICE_CONTROL_POLICIES = "macOS.devicecontrol.policies"
@@ -851,7 +860,7 @@ class Package:
         policy_data = {}
 
         mac_policy_file_paths = []
-        windows_policy_file_paths = []
+        windows_policy_file_paths = {}
 
         for policy in self.policies:
             name = policy.name
@@ -878,6 +887,7 @@ class Package:
                 rules_data = {}
                 settings_data = {}
 
+                
                 for group in policy.groups:
                     group_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_GROUPS_PATH],group.name+".xml"))
                     group_file = open(group_file_path,"w")
@@ -900,7 +910,7 @@ class Package:
                         "description": rule.description
                     }
 
-                    windows_policy_file_paths.append(rule_file_path)
+                    
 
                 for setting in policy.settings:
 
@@ -920,6 +930,10 @@ class Package:
                     "rules": rules_data,
                     "settings": settings_data
                 }
+
+                for rule_name in policy_data[name]["rules"]:
+                    rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],rule_name+".xml"))
+                    windows_policy_file_paths[rule_file_path] = dc.Settings(settings_data)
 
 
 
@@ -964,6 +978,29 @@ class Package:
 
             mac_inventory.generate_text(result,rule_template,str(path_map[Package.MAC_DEVICE_CONTROL]),outfile,title,mac_settings)
             
+
+        #generate documentation for windows
+        windows_src_paths = [str(path_map[Package.WINDOWS_DEVICE_CONTROL])]
+        windows_dest_paths = str(path_map[Package.WINDOWS_DEVICE_CONTROL])
+        
+        windows_inventory = Inventory(windows_src_paths,None,windows_dest_paths)
+        windows_inventory.load_inventory()
+
+        for windows_policy_file_path in windows_policy_file_paths.keys():
+            windows_policy_file_name = str(windows_policy_file_path).split(os.sep)[-1]
+
+            query = "path.str.contains('"+str(windows_policy_file_name)+"',regex=False)"
+            title = windows_policy_file_name.split(".")[0]
+            outfile = title+".md"
+
+            result = windows_inventory.process_query(query)
+
+            result["description"] = Description(result,self.templateEnv,description_template_name)
+
+            settings_data_for_path = windows_policy_file_paths[windows_policy_file_path]
+            windows_inventory.generate_text(result,rule_template,str(path_map[Package.WINDOWS_DEVICE_CONTROL]),outfile,title,settings_data_for_path)
+            
+
         yaml.dump(package_data,package_file)
         package_file.close()
 
