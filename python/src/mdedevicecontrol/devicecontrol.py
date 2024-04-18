@@ -367,6 +367,9 @@ class Setting:
         
         elif format == "oma-uri":
             oma_uri = Setting.data[self.name]["oma-uri"]
+            if not "type" in oma_uri.keys():
+                return self.value
+            
             if oma_uri["type"] == Setting.OMA_URI_String_DataType:
                 return self.value
             elif oma_uri["type"] == Setting.OMA_URI_Integer_DataType:

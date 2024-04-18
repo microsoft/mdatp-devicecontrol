@@ -408,9 +408,9 @@ class DeviceControlPolicyTemplate:
                         value = value_dict[key]
 
                         if hasattr(value,"name"):
-                            dc_setting = dc.Setting(name,value.name) 
+                            dc_setting = dc.Setting(key,value.name) 
                         else:
-                            dc_setting = dc.Setting(name,value)
+                            dc_setting = dc.Setting(key,value)
 
                         self.settings.append(Package.IntuneSetting(dc_setting,config.display_name))
                     
@@ -514,6 +514,39 @@ class DeviceControlPolicyTemplate:
                     value_map[option.name] = option.option_value.value 
                     value_type = option.option_value.odata_type
 
+                    for depended_on_by in option.depended_on_by:
+                        
+                        depended_on_by_id = depended_on_by.depended_on_by
+                        depended_on_by_details = await self.get_configuration_settings_for_definition(depended_on_by_id)
+                        
+                        dependent_name = depended_on_by_details.display_name
+                        dependent_description = depended_on_by_details.description
+
+                        dependent_setting_data = dc.Setting.Data(dependent_name,dependent_description)
+
+                        dependent_oma_uri = depended_on_by_details.base_uri + depended_on_by_details.offset_uri
+
+                        dependent_setting_data.set_oma_uri(dependent_oma_uri)
+                        dependent_setting_data.set_supported(dc.Format.OMA_URI,True)
+
+                        if hasattr(depended_on_by_details,"value_definition"):
+                            dependent_value_type = depended_on_by_details.value_definition.odata_type
+                        
+                            if "Integer" in dependent_value_type:
+                                dependent_setting_data.set_oma_uri_type(dc.Setting.OMA_URI_Integer_DataType)
+                            elif "String" in dependent_value_type:
+                                dependent_setting_data.set_oma_uri_type(dc.Setting.OMA_URI_String_DataType)
+                            else:
+                                print(dependent_value_type)
+
+                        if len(depended_on_by_details.info_urls) > 0:
+                            dependent_documentation = depended_on_by_details.info_urls[0]
+                            dependent_setting_data.set_documentation(dc.Format.OMA_URI,dependent_documentation)
+
+                    
+                        dc.Setting.addSettingData(depended_on_by_details.name,dependent_setting_data.get_data())
+                        
+
                 setting_data.set_value_map(dc.Format.OMA_URI,value_map)
 
             elif details.odata_type == "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionDefinition":
@@ -580,9 +613,9 @@ class DeviceControlPolicyTemplate:
             config = await self.graph.get_configuration_settings_for_definition(setting_instance.setting_definition_id)
             option = await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
             
-            oma_uri = config.base_uri + config.offset_uri
+            #oma_uri = config.base_uri + config.offset_uri
 
-            result = {oma_uri: option}
+            result = {config.name: option}
             if len(choice_setting_value.children) == 0:
                 return result
             else:
@@ -600,8 +633,8 @@ class DeviceControlPolicyTemplate:
                     else:
                         print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
 
-                    oma_uri = child_config.base_uri + child_config.offset_uri
-                    result[oma_uri] = value
+                    #oma_uri = child_config.base_uri + child_config.offset_uri
+                    result[child_config.name] = value
 
                 return result
         else:
