@@ -12,6 +12,9 @@ import json
 from mdedevicecontrol.devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
 import mdedevicecontrol.convert_dc_policy as mac 
 
+import logging
+logger = logging.getLogger(__name__)
+
 Default_Settings = Settings(
     {
         Setting.DefaultEnforcement: "Deny",

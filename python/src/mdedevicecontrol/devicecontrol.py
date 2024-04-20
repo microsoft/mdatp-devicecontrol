@@ -7,6 +7,9 @@ import pathlib
 import xml.etree.ElementTree as ET
 from json import JSONEncoder
 
+import logging
+logger = logging.getLogger(__name__)
+
 class Util:
 
     def xml_safe_text(text):

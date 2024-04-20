@@ -28,6 +28,9 @@ https://graph.microsoft.com/beta/deviceManagement/configurationPolicyTemplates?$
 https://graph.microsoft.com/beta/deviceManagement/reusablePolicySettings
 '''
 
+import logging
+logger = logging.getLogger(__name__)
+
 class Graph:
     
     device_code_credential: DeviceCodeCredential
@@ -39,6 +42,7 @@ class Graph:
         tenant_id = tenantId
         graph_scopes = scopes.split(' ')
 
+        logger.debug("scopes: "+str(graph_scopes))
         self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
         self.graph_client = GraphServiceClient(self.device_code_credential, graph_scopes)
 

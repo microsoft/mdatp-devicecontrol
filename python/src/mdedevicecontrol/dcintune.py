@@ -16,6 +16,8 @@ import xml.etree.ElementTree as ET
 import mdedevicecontrol.devicecontrol as dc
 from mdedevicecontrol.dcdoc import Inventory, Description
 
+import logging
+logger = logging.getLogger(__name__)
 
 class DeviceControlPolicyTemplate:
 
@@ -950,10 +952,15 @@ class Package:
                     dc_setting = setting.setting
 
                     settings_data[dc_setting.name] = {
-                        "value" : dc_setting.value,
-                        "name": setting.name,
-                        "description": setting.description
+                        "value" : dc_setting.value
                     }
+
+                    if setting.name is not None:
+                        settings_data[dc_setting.name]["name"] = setting.name
+                    if setting.description is not None:
+                        settings_data[dc_setting.name]["description"] = setting.description
+                                        
+
 
                 policy_data[name] = {
                     "os":"Windows",
@@ -1068,6 +1075,12 @@ def path_array(path):
 
     return paths
 
+def file(path):
+    if os.path.isfile(path):
+        return path
+    else:
+        raise argparse.ArgumentError(None,"Not a file "+path)
+
 
 async def main():
     
@@ -1076,7 +1089,8 @@ async def main():
 
     arg_parser.add_argument('-t', '--tenantId', type=tenant_id_type, dest="tenantId", help='tenantId for the tenant',required=True)
     arg_parser.add_argument('-c', '--clientId', type=client_id_type, dest="clientId", help='clientId of the application',required=True)
- 
+    arg_parser.add_argument('-l','--loggingConf', type=file,dest="loggingConf",help="path to the logging.conf",default="python"+os.sep+"logging.conf")
+
     subparsers = arg_parser.add_subparsers(help='sub-command help')
     parser_export = subparsers.add_parser('export', help='export help')
     parser_export.add_argument("command",action="store_const",const="export")
@@ -1096,6 +1110,11 @@ async def main():
 
 
     args = arg_parser.parse_args()
+
+    import logging.config
+    logging.config.fileConfig(args.loggingConf)
+
+    logger.info("Starting....")
 
     graph: Graph = Graph(args.tenantId,args.clientId)
 

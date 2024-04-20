@@ -2,6 +2,9 @@
 
 import xml.etree.ElementTree as ET
 
+import logging
+logger = logging.getLogger(__name__)
+
 def log_error(text):
     print("\033[0;31m" + text + "\033[00m")
 
