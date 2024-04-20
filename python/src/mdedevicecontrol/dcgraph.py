@@ -77,7 +77,9 @@ class Graph:
 
     async def get_xml(self,id,secret_reference):
 
+        logger.debug(">>>> get_xml id="+id+" secret_reference="+secret_reference)
         xml = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).get_oma_setting_plain_text_value_with_secret_reference_value_id(secret_reference_value_id=secret_reference).get()
+        logger.debug("<<<< get_xml "+str(xml))
         return xml
     
     async def get_group_by_id(self,group_id):

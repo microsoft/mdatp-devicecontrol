@@ -85,7 +85,7 @@ class DeviceControlPolicyTemplate:
                 case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ALL_SETTING_ID:
                     match_type.text = "MatchAll"
                 case _:
-                    print(self.match_type)
+                    logger.warn("Unknown MatchType "+self.match_type)
         
             descriptorId_list = ET.SubElement(group,"DescriptorIdList")
             for descriptor in self.descriptors:
@@ -162,7 +162,7 @@ class DeviceControlPolicyTemplate:
                         group.descriptors.append(descriptor_ids)
                                 
                     case _:
-                        print(child.setting_definition_id)
+                        logger.warn("Unknown child.setting_definition_id"+child.setting_definition_id)
 
 
 
@@ -207,7 +207,7 @@ class DeviceControlPolicyTemplate:
                                         rule.name = rules_data_setting.simple_setting_value.value
 
                                     case _:
-                                        print(rules_data_setting.setting_definition_id)
+                                        logger.warn("Unknown rules_data_setting.setting_definition_id "+rules_data_setting.setting_definition_id)
 
                         rules.append(rule)
 
@@ -251,7 +251,7 @@ class DeviceControlPolicyTemplate:
                             case self.ENTRY_NAME_SETTING_ID:
                                 self.entry_name = entry_data.simple_setting_value.value  
                             case _:
-                                print(entry_data.setting_definition_id)                                      
+                                logger.warn("Unknown entry_data.setting_definition_id "+entry_data.setting_definition_id)                                      
 
 
 
@@ -348,7 +348,7 @@ class DeviceControlPolicyTemplate:
                     case DeviceControlPolicyTemplate.DeviceControlRule.RULE_DATA_ENTRY_TYPE_AUDIT_DENIED_ID:
                         type.text = "AuditDenied"
                     case _:
-                        print(entry.entry_type)
+                        logger.warn("Unknown entry.entry_type "+entry.entry_type)
             
             ET.indent(rule, space="\t", level=0)
             return ET.tostring(rule,method="xml").decode("utf-8")
@@ -539,7 +539,7 @@ class DeviceControlPolicyTemplate:
                             elif "String" in dependent_value_type:
                                 dependent_setting_data.set_oma_uri_type(dc.Setting.OMA_URI_String_DataType)
                             else:
-                                print(dependent_value_type)
+                                logger.warn("Unknown dependent_value_type "+dependent_value_type)
 
                         if len(depended_on_by_details.info_urls) > 0:
                             dependent_documentation = depended_on_by_details.info_urls[0]
@@ -558,7 +558,7 @@ class DeviceControlPolicyTemplate:
                 
             else:
                 #This is a type that we don't parse
-                print(details.odata_type)
+                logger.warn("Unknown details.odata_type "+details.odata_type)
                 continue
 
 
@@ -567,7 +567,7 @@ class DeviceControlPolicyTemplate:
             elif "String"in value_type:
                 setting_data.set_oma_uri_type(dc.Setting.OMA_URI_String_DataType)
             else:
-                print(value_type)
+                logger.warn("Unknown value_type "+value_type)
 
             dc.Setting.addSettingData(details.name,setting_data.get_data())
 
@@ -599,18 +599,18 @@ class DeviceControlPolicyTemplate:
                 return rules
             
             else:
-                print(setting_instance.setting_definition_id)
+                logger.warn("Unknown setting_instance.setting_definition_id "+setting_instance.setting_definition_id)
 
     async def get_choice_value(self,setting_instance):
          
          
-        #print("choice_value > setting_instance > setting_definition_id="+setting_instance.setting_definition_id)
+        logger.debug("choice_value > setting_instance > setting_definition_id="+setting_instance.setting_definition_id)
         choice_setting_value = setting_instance.choice_setting_value
 
-        print("choice_value > setting_instance > choice_setting_value="+choice_setting_value.odata_type)
+        logger.debug("choice_value > setting_instance > choice_setting_value="+choice_setting_value.odata_type)
 
         if choice_setting_value.odata_type == "#microsoft.graph.deviceManagementConfigurationChoiceSettingValue":
-            print("choice_value > setting_instance > choice_setting_value > value ="+choice_setting_value.value)
+            logger.debug("choice_value > setting_instance > choice_setting_value > value ="+choice_setting_value.value)
             
             config = await self.graph.get_configuration_settings_for_definition(setting_instance.setting_definition_id)
             option = await self.get_option_for_value(setting_instance.setting_definition_id,choice_setting_value.value)
@@ -633,23 +633,23 @@ class DeviceControlPolicyTemplate:
                         option = await self.get_choice_setting_option(child)
                         value = option
                     else:
-                        print("choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
+                        logger.warn("Unknown choice_value > setting_instance > choice_setting_value > child > odata_type="+child.odata_type)
 
                     #oma_uri = child_config.base_uri + child_config.offset_uri
                     result[child_config.name] = value
 
                 return result
         else:
-            print(choice_setting_value.odata_type)        
+            logger.warn("Unknown choice_setting_value.odata_type "+choice_setting_value.odata_type)        
 
     def get_simple_setting_collection_value(self,simple_setting_collection_instance):
-        #print(simple_setting_collection_instance)
+        logger.debug("get_simple_setting_collection_value "+str(simple_setting_collection_instance))
         collection = []
         for value in simple_setting_collection_instance.simple_setting_collection_value:
             if "String" in value.odata_type:
                 collection.append(str(value.value))
             else:
-                print(value.odata_type)
+                logger.warn("Unknown value.odata_type "+value.odata_type)
 
         return collection
 
@@ -737,7 +737,7 @@ class Package:
                 target = assignments.target
                 self.update_data_for_target(target)
             else:
-                print(assignments)
+                logger.warn("Unknown assignments "+assignments)
 
         async def update_groups(self,graph):
             target_types = ["include","exclude"]
@@ -767,7 +767,7 @@ class Package:
                     included_group_id = target.group_id
                     self.data["include"].append(included_group_id)
                 else:
-                    print(target_type)
+                    logger.warn("Unknown target_type "+target_type)
 
             
     class Policy:
@@ -1111,10 +1111,10 @@ async def main():
 
     args = arg_parser.parse_args()
 
+
     import logging.config
     logging.config.fileConfig(args.loggingConf)
 
-    logger.info("Starting....")
 
     graph: Graph = Graph(args.tenantId,args.clientId)
 
@@ -1124,7 +1124,11 @@ async def main():
             templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
             templateEnv = jinja2.Environment(loader=templateLoader)
 
-            
+            logger.info("Exporting package "+args.package_name+" from tenantId "+args.tenantId+" to "+args.dest)
+
+            logger.debug("description_template="+args.description_template)
+
+
             await export(graph,args.dest,args.package_name,
                          templateEnv,
                          args.template,
@@ -1132,9 +1136,9 @@ async def main():
                          args.description_template)
             
     except ODataError as odata_error:
-        print('Error:')
+        logger.error('Error:')
         if odata_error.error:
-            print(odata_error.error.code, odata_error.error.message)
+            logger.error(odata_error.error.code, odata_error.error.message)
 
 
 

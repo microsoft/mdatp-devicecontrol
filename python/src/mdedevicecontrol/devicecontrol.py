@@ -579,7 +579,7 @@ class Clause:
                 group_property = self.group_type.get_property_by_name(property)
                 self._properties.append(Property(group_property, value))
             elif self.sub_clause_type is None:
-                print("Unknown Clause")
+                logger.warn("Unknown Clause")
                 return
             
 class GroupProperty:
@@ -1976,7 +1976,7 @@ class Entry:
                 elif type == "portableDevice":
                     self.entry_type = Entry.ApplePortableDevice
                 else:
-                    print("Unknown type "+self.entry_type)
+                    logger.warn("Unknown type "+self.entry_type)
                     self.entry_type = Entry.AppleGeneric
 
                 
