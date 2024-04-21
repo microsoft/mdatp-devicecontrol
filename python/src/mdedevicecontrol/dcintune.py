@@ -9,6 +9,7 @@ import argparse
 import json
 import pathlib
 import urllib.parse
+import hashlib
 
 import xml.etree.ElementTree as ET
 
@@ -390,7 +391,7 @@ class DeviceControlPolicyTemplate:
             for assignment in self.assignments.value:
                 intune_assignment = Package.IntuneAssignment(assignment)
                 await intune_assignment.update_groups(graph)
-                self.intune_assignments.append(intune_assignment.data)
+                self.intune_assignments.append(intune_assignment)
             
             self.assignments = self.intune_assignments
             self.description = ""
@@ -459,6 +460,7 @@ class DeviceControlPolicyTemplate:
 
             id = dc_policy.id
             name = dc_policy.name
+            description = dc_policy.description
 
             settings = await self.graph.get_device_control_policy_settings(id)
 
@@ -484,6 +486,7 @@ class DeviceControlPolicyTemplate:
 
             policy = DeviceControlPolicyTemplate.DeviceControlPolicy("v2",id,name,settings_value_for_policy,assignments)
             await policy.proces_data(self.graph)
+            policy.description = description
             policies.append(policy)
 
         return policies    
@@ -712,7 +715,16 @@ class Package:
         WINDOWS_RULES_PATH
     ]
 
-    
+    def getSHA256Hash(filename):
+
+        file = open(filename)
+        contents = file.read()
+        hashed_object = hashlib.sha256(contents.encode())
+        hash_result = hashed_object.hexdigest()
+        file.close()
+        return hash_result
+        
+
     class IntuneSetting:
 
         def __init__(self,dc_setting,name = None,description = None):
@@ -751,10 +763,18 @@ class Package:
 
         def __init__(self,assignments):
 
-            self.data = {
-                "include":[],
-                "exclude":[]
-            }
+            self.metadata_id = None
+            self.metadata_source_id = None
+            self.metadata_additional_data = None
+
+            if hasattr(assignments,"id"):
+                self.metadata_id = assignments.id
+            if hasattr(assignments,"source_id"):
+                self.metadata_source_id = assignments.source_id
+            if hasattr(assignments,"additional_data"):
+                self.metadata_additional_data = assignments.additional_data
+
+            self.data = None
 
             if hasattr(assignments,"value"):
                 for assignment in assignments.value:
@@ -767,35 +787,33 @@ class Package:
                 logger.warn("Unknown assignments "+assignments)
 
         async def update_groups(self,graph):
-            target_types = ["include","exclude"]
-            for target_type in target_types:
-                targets = self.data[target_type]
-                index = 0
-                for target in targets:
-                    if not str(target).startswith("all"):
-                        group = await graph.get_group_by_id(target)
-                        self.data[target_type][index] = \
-                                Package.IntuneAssignment.TargetGroup(group).toJSON()
-                    index=index+1
-            
-        
+                
+            group = self.data["group"]
+            if "id" in group.keys():
+                group_id = group["id"]
+                group = await graph.get_group_by_id(group_id)
+                self.data["group"] = Package.IntuneAssignment.TargetGroup(group).toJSON()
+                
         def update_data_for_target(self,target):
 
                 target_type = target.odata_type
 
                 if target_type == "#microsoft.graph.allDevicesAssignmentTarget":
-                    self.data["include"].append("all machines")
+                    self.data = {"type":"include","group":{"name":"all machines"}}
                 elif target_type == "#microsoft.graph.allLicensedUsersAssignmentTarget":
-                    self.data["include"].append("all users")
+                    self.data ={"type":"include","group":{"name":"all users"}}
                 elif target_type == "#microsoft.graph.exclusionGroupAssignmentTarget":
                     excluded_group_id = target.group_id
-                    self.data["exclude"].append(excluded_group_id)
+                    self.data = {"type":"exclude","group":{"id":excluded_group_id}}
                 elif target_type == "#microsoft.graph.groupAssignmentTarget":
                     included_group_id = target.group_id
-                    self.data["include"].append(included_group_id)
+                    self.data ={"type":"include","group":{"id":included_group_id}}
                 else:
                     logger.warn("Unknown target_type "+target_type)
 
+        def toJSON(self):
+
+            return json.dumps(self.data,indent=5)
             
     class Policy:
 
@@ -808,16 +826,18 @@ class Package:
             self.settings = []
             self.os = Package.WINDOWS_OS
             self.id = None
-            self.assignments = {}
+            self.assignments = []
             self.version = "v1"
 
             self.graph = graph
 
         async def setAssignments(self,assignments):
 
-            intune_assignment = Package.IntuneAssignment(assignments) 
-            await intune_assignment.update_groups(self.graph)
-            self.assignments = intune_assignment.data
+            for assignment in assignments.value:
+                intune_assignment = Package.IntuneAssignment(assignment)
+                await intune_assignment.update_groups(self.graph)
+                self.assignments.append(intune_assignment)
+
 
         def addGroup(self,group):
             self.groups.append(group)
@@ -975,23 +995,33 @@ class Package:
                 logger.warn("Unknown policy.version "+policy.version)
 
             assignments_meta_data = {}
-            for assignment_type in policy.assignments:
-
-                assignments = policy.assignments[assignment_type]
-                new_assignments_for_type = []
-                for assignment in assignments:
-                    logger.debug(">>>>> assignment "+str(assignment))
-                    if isinstance(assignment,dict):
-                        new_assignments_for_type.append(assignment["name"])
-                        assignments_meta_data[assignment["name"]] = {
-                            "@odata.context": "https://graph.microsoft.com/beta/$metadata#groups/$entity",
-                            "id": assignment["id"]
-                        }
-                    else:
-                        new_assignments_for_type.append(assignment)
+            index = 0
+            for assignment in policy.assignments:
+                new_assignment = None
+                logger.debug(">>>>> assignment "+str(assignment))
                 
-                if len(new_assignments_for_type) > 0:
-                    policy.assignments[assignment_type] = new_assignments_for_type
+                if "id" in assignment.data["group"].keys():
+                    new_assignment = {"type":assignment.data["type"],"group":{"name":assignment.data["group"]["name"]}}
+                    assignments_meta_data[assignment.data["group"]["name"]] = {
+                        "@odata.context": "https://graph.microsoft.com/beta/$metadata#groups/$entity",
+                        "id": assignment.data["group"]["id"]
+                    }
+                else:
+                    assignments_meta_data[assignment.data["group"]["name"]] = {}
+                    new_assignment = assignment.data
+
+                if hasattr(assignment,"metadata_id"):
+                    if assignment.metadata_id is not None:
+                        assignments_meta_data[assignment.data["group"]["name"]]["assignment_id"] = assignment.metadata_id
+
+                if hasattr(assignment,"metadata_source_id"):
+                    if assignment.metadata_source_id is not None:
+                        assignments_meta_data[assignment.data["group"]["name"]]["assignment_source_id"] = assignment.metadata_source_id
+                
+
+                policy.assignments[index] = new_assignment
+
+                index = index+1
 
             if len(assignments_meta_data) > 0:
                 self.metadata["policies"][policy.name]["assignments"] = assignments_meta_data
@@ -1056,7 +1086,11 @@ class Package:
                     "os":Package.MAC_OS,
                     "version": version,
                     "description": policy.description,
-                    "assignments": policy.assignments
+                    "assignments": policy.assignments,
+                    "file": {
+                        "path": str(policy_file_path.relative_to(package_path)),
+                        "sha256": Package.getSHA256Hash(policy_file_path)
+                    }
                 }
 
                 mac_policy_file_paths.append(policy_file_path)
@@ -1076,7 +1110,11 @@ class Package:
                     group_file.close()
 
                     groups_data [group.name] = {
-                        "description": group.description
+                        "description": group.description,
+                        "file": {
+                            "path": str(group_file_path.relative_to(package_path)),
+                            "sha256": Package.getSHA256Hash(group_file_path)
+                        }
                     }
 
                 for rule in policy.rules:
@@ -1086,8 +1124,13 @@ class Package:
                     rule_file.close()
 
                     rules_data [rule.name] = {
-                        "description": rule.description
+                        "description": rule.description,
+                        "file": {
+                            "path": str(rule_file_path.relative_to(package_path)),
+                            "sha256": Package.getSHA256Hash(rule_file_path)
+                        }
                     }
+                    
 
                     
 
@@ -1099,10 +1142,21 @@ class Package:
                         "value" : dc_setting.value
                     }
 
-                    if setting.name is not None:
+                    if policy.version == "v1":
+                        #v1 policies - OMA-URI - can have name and description
+                        if setting.name is None:
+                            setting.name = ""
                         settings_data[dc_setting.name]["name"] = setting.name
-                    if setting.description is not None:
+                        if setting.description is None:
+                            setting.description = ""
                         settings_data[dc_setting.name]["description"] = setting.description
+                    elif policy.version == "v2":
+                        #v2 policies - no name or description
+                        pass
+                    else:
+                        logger.warn("Unknown policy version "+policy.version)
+
+ 
                                         
 
 
