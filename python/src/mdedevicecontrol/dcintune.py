@@ -1082,6 +1082,9 @@ class Package:
                 json.dump(policy_json,policy_file,cls=dc.DCJSONEncoder,indent=5)
                 policy_file.close()
 
+                if policy.description is None:
+                    policy.description = ""
+                    
                 policy_data[name] = {
                     "os":Package.MAC_OS,
                     "version": version,
@@ -1109,6 +1112,9 @@ class Package:
                     group_file.write(str(group))
                     group_file.close()
 
+                    if group.description is None:
+                        group.description = ""
+
                     groups_data [group.name] = {
                         "description": group.description,
                         "file": {
@@ -1122,6 +1128,9 @@ class Package:
                     rule_file = open(rule_file_path,"w")
                     rule_file.write(str(rule))
                     rule_file.close()
+
+                    if rule.description is None:
+                        rule.description = ""
 
                     rules_data [rule.name] = {
                         "description": rule.description,
@@ -1159,6 +1168,8 @@ class Package:
  
                                         
 
+                if policy.description is None:
+                    policy.description = ""
 
                 policy_data[name] = {
                     "os":Package.WINDOWS_OS,
