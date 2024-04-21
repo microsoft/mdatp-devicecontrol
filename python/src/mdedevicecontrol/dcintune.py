@@ -8,7 +8,6 @@ import plistlib
 import argparse
 import json
 import pathlib
-import yaml
 import urllib.parse
 
 import xml.etree.ElementTree as ET
@@ -49,6 +48,9 @@ class DeviceControlPolicyTemplate:
 
         def __init__(self):
             self.id = ""
+
+            self.metadata_id = ""
+
             self.name = ""
             self.description = ""
             self.type = "Device"
@@ -118,6 +120,8 @@ class DeviceControlPolicyTemplate:
 
         def createGroupfromSetting(setting):
             group = DeviceControlPolicyTemplate.DeviceControlGroup()
+
+            group.metadata_id = setting.id
             group.name = setting.display_name
             group.description = setting.description
             setting_instance = setting.setting_instance
@@ -279,6 +283,7 @@ class DeviceControlPolicyTemplate:
             self.included_groups = []
             self.excluded_groups = []
             self.name = ""
+            self.setting_id = None
 
             
         def __str__(self):
@@ -362,13 +367,19 @@ class DeviceControlPolicyTemplate:
 
     class DeviceControlPolicy:
 
-        def __init__(self,id,name,policy_settings,assignments):
+        def __init__(self,version, id,name,policy_settings,assignments):
+            
+            logger.debug(">>>DeviceControlPolicy.__init__ id="+id+" name="+name+" version="+version)
+            logger.debug(">>>DeviceControlPolicy.__init__ policy_settings="+str(policy_settings))
+
             self.id = id
+            self.version = version
             self.name = name
-            self.os = Package.Policy.WINDOWS_OS
+            self.os = Package.WINDOWS_OS
 
             self.settings = []
             self.rules = []
+            self.rules_metadata_id = None
             self.groups = []
 
             self.assignments = assignments
@@ -387,7 +398,8 @@ class DeviceControlPolicyTemplate:
             #just store the objects for now
             for setting_id in self.policy_settings.keys():
                 if setting_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
-                    rules = self.policy_settings[setting_id]
+                    rules = self.policy_settings[setting_id]["value"]
+                    self.rules_metadata_id = self.policy_settings[setting_id]["id"]
                     for rule in rules:
                         self.rules.append(rule)
 
@@ -405,6 +417,7 @@ class DeviceControlPolicyTemplate:
 
                     value_dict = policy_setting["value"]
                     config = policy_setting["config"]
+                    id = policy_setting["id"]
 
                     for key in value_dict.keys():
                         value = value_dict[key]
@@ -414,7 +427,9 @@ class DeviceControlPolicyTemplate:
                         else:
                             dc_setting = dc.Setting(key,value)
 
-                        self.settings.append(Package.IntuneSetting(dc_setting,config.display_name))
+                        intune_setting = Package.IntuneSetting(dc_setting,config.display_name)
+                        intune_setting.metadata_id = id
+                        self.settings.append(intune_setting)
                     
 
                     
@@ -457,17 +472,17 @@ class DeviceControlPolicyTemplate:
 
                 setting_value = await self.get_value(setting)
                 if setting.setting_instance.setting_definition_id == DeviceControlPolicyTemplate.DeviceControlRule.RULE_SETTING_ID:
-                    settings_value_for_policy[setting.setting_instance.setting_definition_id] = setting_value
+                    settings_value_for_policy[setting.setting_instance.setting_definition_id] = { "value": setting_value, "id": setting.id }
                 else:
                     oma_uri = setting_config.base_uri + setting_config.offset_uri
-                    settings_value_for_policy[oma_uri] = { "value": setting_value, "config": setting_config }
+                    settings_value_for_policy[oma_uri] = { "value": setting_value, "config": setting_config , "id": setting.id}
 
 
             assignments = await self.graph.get_assignments_for_policy(id)
 
 
 
-            policy = DeviceControlPolicyTemplate.DeviceControlPolicy(id,name,settings_value_for_policy,assignments)
+            policy = DeviceControlPolicyTemplate.DeviceControlPolicy("v2",id,name,settings_value_for_policy,assignments)
             await policy.proces_data(self.graph)
             policies.append(policy)
 
@@ -674,31 +689,43 @@ class DeviceControlPolicyTemplate:
 
 class Package:
 
-    layout = [
-        "macOS",
-        "macOS.devicecontrol",
-        "macOS.devicecontrol.policies",
-        "windows",
-        "windows.devicecontrol",
-        "windows.devicecontrol.groups",
-        "windows.devicecontrol.rules"
-    ]
 
-    MAC_PATH = "macOS.devicecontrol.policies"
-    WINDOWS_GROUPS_PATH = "windows.devicecontrol.groups"
-    WINDOWS_RULES_PATH = "windows.devicecontrol.rules"
-    WINDOWS_DEVICE_CONTROL = "windows.devicecontrol"
+    WINDOWS_OS = "windows"
+    MAC_OS = "macOS"
+
+    MAC_PATH = MAC_OS+".devicecontrol.policies"
+    WINDOWS_GROUPS_PATH = WINDOWS_OS+".devicecontrol.groups"
+    WINDOWS_RULES_PATH = WINDOWS_OS+".devicecontrol.rules"
+    WINDOWS_DEVICE_CONTROL = WINDOWS_OS+".devicecontrol"
 
     MAC_DEVICE_CONTROL = "macOS.devicecontrol"
     MAC_DEVICE_CONTROL_POLICIES = "macOS.devicecontrol.policies"
 
+
+    layout = [
+        MAC_OS,
+        MAC_DEVICE_CONTROL,
+        MAC_DEVICE_CONTROL_POLICIES,
+        WINDOWS_OS,
+        WINDOWS_DEVICE_CONTROL,
+        WINDOWS_GROUPS_PATH,
+        WINDOWS_RULES_PATH
+    ]
+
+    
     class IntuneSetting:
 
         def __init__(self,dc_setting,name = None,description = None):
             self.setting = dc_setting
             self.name = name
             self.description = description
+
+            self.metadata_id = None
             pass
+
+        def get_oma_uri(self):
+
+            return dc.Setting.getOMAURIFor(self.setting.name)
         
     class IntuneAssignment:
 
@@ -772,8 +799,6 @@ class Package:
             
     class Policy:
 
-        WINDOWS_OS = "Windows"
-        MAC_OS = "MacOS"
 
         def __init__(self, graph):
             self.name = "A Windows Policy"
@@ -781,9 +806,10 @@ class Package:
             self.rules = []
             self.groups = []
             self.settings = []
-            self.os = self.WINDOWS_OS
+            self.os = Package.WINDOWS_OS
             self.id = None
             self.assignments = {}
+            self.version = "v1"
 
             self.graph = graph
 
@@ -803,7 +829,7 @@ class Package:
             self.settings.append(setting)
 
         def setPayload(self,payload):
-            if self.os == self.MAC_OS:
+            if self.os == Package.MAC_OS:
                 mac_policy = json.loads(payload)
 
                 if "groups" in mac_policy.keys():
@@ -822,7 +848,7 @@ class Package:
         def getMacOSSettings(self):
 
             settings_dict = {}
-            if self.os == Package.Policy.MAC_OS:
+            if self.os == Package.MAC_OS:
                 for setting in self.settings:
                     dc_setting = setting.setting
 
@@ -849,13 +875,130 @@ class Package:
 
             json = {}
 
-            if self.os == Package.Policy.MAC_OS:
+            if self.os == Package.MAC_OS:
                 json["groups"] = self.groups
                 json["rules"] = self.rules
                 json["settings"] = self.getMacOSSettings()
 
             return json
 
+
+    class Metadata:
+
+        def __init__(self):
+            self.metadata = {
+                "policies":{
+
+                }
+            }
+            pass
+
+        def addPolicy(self,policy):
+            logger.debug(">>>>>Package.Metadata.addPolicy "+str(policy))
+            self.metadata["policies"][policy.name] = {
+                "id": policy.id
+            }
+
+            if policy.version == "v2":
+                self.metadata["policies"][policy.name]["@odata.context"] = "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity"
+
+                settings = {
+                        "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies('"+policy.id+"')/settings",
+                }                
+                for setting in policy.settings:
+                    logger.debug("setting="+str(setting))
+                    settings[setting.setting.name] = {
+                        "id":setting.metadata_id
+                    }
+
+
+                settings["ruleid"] = {
+                    "id":policy.rules_metadata_id
+                }
+                    
+                self.metadata["policies"][policy.name]["settings"] = settings
+
+                groups_metadata = {}
+                for group in policy.groups:
+                    groups_metadata[group.name] = {
+                        "groupdata_id":group.id,
+                        "id":group.metadata_id,
+                        "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"
+                    }
+                
+                if len(groups_metadata) > 0:
+                    self.metadata["policies"][policy.name]["groups"] = groups_metadata
+
+                rules_metadata = {}
+                for rule in policy.rules:
+                    rules_metadata[rule.name] = {
+                        "ruledata_id":rule.id
+                    }
+                
+                if len(rules_metadata) > 0:
+                    self.metadata["policies"][policy.name]["rules"] = rules_metadata
+
+                pass
+            elif policy.version == "v1":
+
+                self.metadata["policies"][policy.name]["@odata.context"] = "https://graph.microsoft.com/beta/$metadata#deviceManagement/deviceConfigurations/$entity"
+    
+                if policy.os == Package.WINDOWS_OS:
+                    self.metadata["policies"][policy.name]["@odata.type"] = "#microsoft.graph.windows10CustomConfiguration"
+                    
+                    groups_metadata = {}
+                    for group in policy.groups:
+                        groups_metadata[group.name] = {
+                            "id":group.id
+                        }
+                
+                    if len(groups_metadata) > 0:
+                        self.metadata["policies"][policy.name]["groups"] = groups_metadata
+
+                    rules_metadata = {}
+                    for rule in policy.rules:
+                        rules_metadata[rule.name] = {
+                            "id":rule.id
+                        }
+                
+                    if len(rules_metadata) > 0:
+                        self.metadata["policies"][policy.name]["rules"] = rules_metadata
+                    
+                    pass
+                elif policy.os == Package.MAC_OS:
+                    self.metadata["policies"][policy.name]["@odata.type"] = "#microsoft.graph.macOSCustomConfiguration"
+                   
+                    pass
+                else:
+                    logger.warn("Unknown policy.os "+policy.os)
+            else:
+                logger.warn("Unknown policy.version "+policy.version)
+
+            assignments_meta_data = {}
+            for assignment_type in policy.assignments:
+
+                assignments = policy.assignments[assignment_type]
+                new_assignments_for_type = []
+                for assignment in assignments:
+                    logger.debug(">>>>> assignment "+str(assignment))
+                    if isinstance(assignment,dict):
+                        new_assignments_for_type.append(assignment["name"])
+                        assignments_meta_data[assignment["name"]] = {
+                            "@odata.context": "https://graph.microsoft.com/beta/$metadata#groups/$entity",
+                            "id": assignment["id"]
+                        }
+                    else:
+                        new_assignments_for_type.append(assignment)
+                
+                if len(new_assignments_for_type) > 0:
+                    policy.assignments[assignment_type] = new_assignments_for_type
+
+            if len(assignments_meta_data) > 0:
+                self.metadata["policies"][policy.name]["assignments"] = assignments_meta_data
+
+
+        def __str__(self):
+            return json.dumps(self.metadata,indent=5)
 
     def __init__(self,name,templateEnv=None):
 
@@ -866,12 +1009,13 @@ class Package:
             templateLoader = jinja2.FileSystemLoader("templates")
             self.templateEnv = jinja2.Environment(loader=templateLoader)
 
-
+        self.metadata = Package.Metadata()
         
 
 
     def addPolicy(self,policy):
         self.policies.append(policy)
+        self.metadata.addPolicy(policy)
 
     def save(self,destination,rule_template_name,readme_template_name,description_template_name):
 
@@ -899,7 +1043,8 @@ class Package:
 
         for policy in self.policies:
             name = policy.name
-            if policy.os == Package.Policy.MAC_OS:
+            version = policy.version
+            if policy.os == Package.MAC_OS:
                 policy_json = policy.getPolicyJSON()
 
                 policy_file_path = pathlib.PurePath(os.path.join(path_map[Package.MAC_PATH],name+".json"))
@@ -908,7 +1053,8 @@ class Package:
                 policy_file.close()
 
                 policy_data[name] = {
-                    "os":"mac",
+                    "os":Package.MAC_OS,
+                    "version": version,
                     "description": policy.description,
                     "assignments": policy.assignments
                 }
@@ -916,7 +1062,7 @@ class Package:
                 mac_policy_file_paths.append(policy_file_path)
 
 
-            elif policy.os == Package.Policy.WINDOWS_OS:
+            elif policy.os == Package.WINDOWS_OS:
 
                 groups_data = {}
                 rules_data = {}
@@ -930,7 +1076,6 @@ class Package:
                     group_file.close()
 
                     groups_data [group.name] = {
-                        "groupId":group.id,
                         "description": group.description
                     }
 
@@ -941,7 +1086,6 @@ class Package:
                     rule_file.close()
 
                     rules_data [rule.name] = {
-                        "ruleId":rule.id,
                         "description": rule.description
                     }
 
@@ -963,7 +1107,8 @@ class Package:
 
 
                 policy_data[name] = {
-                    "os":"Windows",
+                    "os":Package.WINDOWS_OS,
+                    "version":version,
                     "description": policy.description,
                     "assignments": policy.assignments,
                     "groups": groups_data,
@@ -977,8 +1122,11 @@ class Package:
 
 
 
-        package_file_path = pathlib.PurePath(os.path.join(package_path,"package.yaml"))
+        package_file_path = pathlib.PurePath(os.path.join(package_path,"package.json"))
+        metadata_file_path = pathlib.PurePath(os.path.join(package_path,"metadata.json"))
+        
         package_file = open(package_file_path,"w")    
+        metadata_file = open(metadata_file_path,"w")
 
         package_data = {
             "policies":policy_data
@@ -1041,8 +1189,11 @@ class Package:
             windows_inventory.generate_text(result,rule_template,str(path_map[Package.WINDOWS_DEVICE_CONTROL]),outfile,title,settings_data_for_path)
             
 
-        yaml.dump(package_data,package_file)
+        json.dump(package_data,package_file,indent=5)
         package_file.close()
+
+        metadata_file.write(str(self.metadata))
+        metadata_file.close()
 
         
         
@@ -1168,8 +1319,8 @@ async def export(graph: Graph, destination,name,
 
                 id = device_config.id
 
-                package.addPolicy(policy)
-                policy.os = policy.MAC_OS
+                
+                policy.os = Package.MAC_OS
                 policy.id = id
                 policy.name = device_config.display_name
                 policy.description = device_config.description
@@ -1182,13 +1333,14 @@ async def export(graph: Graph, destination,name,
 
                 await policy.setAssignments(assignments)
 
+                package.addPolicy(policy)
+
         if device_config.odata_type == "#microsoft.graph.windows10CustomConfiguration":
             
             policy = Package.Policy(graph)
 
             id = device_config.id
 
-            package.addPolicy(policy)
             policy.id = id
             policy.name = device_config.display_name
             policy.description = device_config.description
@@ -1217,22 +1369,22 @@ async def export(graph: Graph, destination,name,
                         rule = dc.PolicyRule(root,dc.Format.OMA_URI)
                         policy.addRule(rule)
                         policy.name = name
-                        policy.description = oma_setting.description
+                        policy.description = description
                     elif root.tag == "Group":
                         group = dc.Group(root,dc.Format.OMA_URI)
                         policy.addGroup(group)
                         group.name = name
-                        group.description = oma_setting.description
+                        group.description = description
             
                 else:
                     dc_setting_name = dc.Setting.getSettingNameFor(oma_uri)
                     if dc_setting_name is not None:
                         setting_value = oma_setting.value
                         dc_setting = dc.Setting(dc_setting_name,setting_value)
-                        intune_settings = Package.IntuneSetting(dc_setting,oma_setting.display_name,oma_setting.description)
+                        intune_settings = Package.IntuneSetting(dc_setting,oma_setting.display_name,description)
                         policy.addSetting(intune_settings)
 
-
+            package.addPolicy(policy)
     
 
     package.save(destination,rule_template,readme_template,description_template)

@@ -321,6 +321,18 @@ class Setting:
                 
         return None
     
+    def getOMAURIFor(name):
+
+        setting_data = Setting.data[name]
+
+        if setting_data == None:
+            return None
+
+        if "oma-uri" in setting_data.keys():
+            return setting_data["oma-uri"]["oma-uri"]
+        else:
+            return None
+    
 
     def addSettingData(name,data):
         Setting.data[name] = data
