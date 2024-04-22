@@ -20,13 +20,13 @@
                         "$ref": "#/$defs/macPolicy"
                     },
                     {
-                        "$ref": "#/$defs/macPolicyMetadata"
-                    },
-                    {
                         "$ref": "#/$defs/windowsV1PolicyMetadata"
                     },
                     {
                         "$ref": "#/$defs/windowsV2PolicyMetadata"
+                    },
+                    {
+                        "$ref": "#/$defs/macPolicyMetadata"
                     }
                     
                 ]

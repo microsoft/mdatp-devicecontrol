@@ -1,0 +1,93 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "531278a2-a318-48d7-8e6a-0f0fd7589b07",
+            "name": "All Removable Media Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "5553fc5d-acec-467c-a23e-13023290e367",
+            "name": "Allow and audit read only access to removable media devices",
+            "includeGroups": [
+                "531278a2-a318-48d7-8e6a-0f0fd7589b07"
+            ],
+            "entries": [
+                {
+                    "$type": "removableMedia",
+                    "id": "54210657-995e-42be-a8a4-419c7afc7172",
+                    "enforcement": {
+                        "$type": "allow"
+                    },
+                    "access": [
+                        "read"
+
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "94d0e385-14f1-4856-bdfd-929c4362f879",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "read"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "3685c0ff-6056-4216-a077-0dff53907a3f",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "e7232712-af9a-4b07-ab64-b9e0dc7f7b7b",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "send_notification"
+                        ]
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "removableMedia": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "deny"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}

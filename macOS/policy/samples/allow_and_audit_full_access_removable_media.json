@@ -1,0 +1,69 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "531278a2-a318-48d7-8e6a-0f0fd7589b07",
+            "name": "All Removable Media Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "aa0f349b-fe01-4520-80a3-1004df3dc530",
+            "name": "Allow and audit full access to removable media devices",
+            "includeGroups": [
+                "531278a2-a318-48d7-8e6a-0f0fd7589b07"
+            ],
+            "entries": [
+                {
+                    "$type": "removableMedia",
+                    "id": "27f4a011-b8a0-42bd-a53f-ca3e75234869",
+                    "enforcement": {
+                        "$type": "allow"
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "21fd9576-8deb-4824-98cc-8c29564a74b1",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "removableMedia": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "deny"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
