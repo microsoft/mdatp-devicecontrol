@@ -18,12 +18,195 @@
                     },
                     {
                         "$ref": "#/$defs/macPolicy"
+                    },
+                    {
+                        "$ref": "#/$defs/macPolicyMetadata"
+                    },
+                    {
+                        "$ref": "#/$defs/windowsV1PolicyMetadata"
+                    },
+                    {
+                        "$ref": "#/$defs/windowsV2PolicyMetadata"
                     }
+                    
                 ]
             }
         }
     },
     "$defs":{
+        "graphIdType":{
+            "type":"string",
+            "description":"Id of the object in the graph",
+            "pattern":"([a-f]|[0-9]){8}-([a-f]|[0-9]){4}-([a-f]|[0-9]){4}-([a-f]|[0-9]){4}-([a-f]|[0-9]){12}"
+        },
+        "guidType":{
+            "type":"string",
+            "description":"GUID of the device control object",
+            "pattern":"\\{([a-f]|[0-9]){8}-([a-f]|[0-9]){4}-([a-f]|[0-9]){4}-([a-f]|[0-9]){4}-([a-f]|[0-9]){12}\\}"
+        },
+        "ruleMetadataType":{
+            "type":"object",
+            "description":"Name of the rule",
+            "properties":{
+                "id":{
+                    "$ref":"#/$defs/guidType"
+                }
+            }
+        },
+        "groupV2MetadataType":{
+            "type":"object",
+            "description":"Name of the group (V2)",
+            "properties":{
+                "groupdata_id":{
+                    "$ref":"#/$defs/guidType"
+                },
+                "id":{
+                    "$ref":"#/$defs/graphIdType"
+                },
+                "@odata.context": {
+                    "type":"string",
+                    "pattern":"https://graph.microsoft.com/beta/\\$metadata#deviceManagement/reusablePolicySettings\\(settingInstance,id,displayName,description\\)/\\$entity"
+            
+                }
+            },
+            "required":["groupdata_id","id","@data.context"]
+        },
+        "groupV1MetadataType":{
+            "type":"object",
+            "description":"Name of the group (V1)",
+            "properties":{
+                "id":{
+                    "$ref":"#/$defs/guidType"
+                }
+            },
+            "required":["id"]
+        },
+        "assignmentMetadataType":{
+            "type":"object",
+            "description":"Name of the group assigned the policy",
+            "properties":{
+                "assignment_source_id":{
+                    "$ref":"#/$defs/graphIdType"
+                },
+                "assignment_id":{
+                    "type":"string"
+                },
+                "id":{
+                    "$ref":"#/$defs/graphIdType"
+                }
+            },
+            "required":["assignment_id","assignment_source_id"]
+        },
+        "settingMetadataType":{
+            "type":"object",
+            "description":"The name of the setting",
+            "properties":{
+                "id":{
+                    "type":"number"
+                }
+            }
+        },
+        "rulesMetadataType":{
+            "type":"object",
+            "description":"The metadata for the rules",
+            "additionalProperties":{
+                "type":"object",
+                "$ref":"#/$defs/ruleMetadataType"
+            }
+        },
+        "groupsV1MetadataType":{
+            "type":"object",
+            "description":"The metadata for the groups (V1)",
+            "additionalProperties":{
+                "type":"object",
+                "$ref":"#/$defs/groupV1MetadataType"
+            }
+        },
+        "groupsV2MetadataType":{
+            "type":"object",
+            "description":"The metadata for the groups (V2)",
+            "additionalProperties":{
+                "type":"object",
+                "$ref":"#/$defs/groupV2MetadataType"
+            }
+        },
+        "assignmentsMetadataType":{
+            "type":"object",
+            "description":"The metadata for the assignments",
+            "additionalProperties":{
+                "type":"object",
+                "$ref":"#/$defs/assignmentMetadataType"
+            }
+        },
+        "settingsMetadataType":{
+            "type":"object",
+            "description":"The metadata for the settings",
+            "additionalProperties":{
+                "type":"object",
+                "$ref":"#/$defs/settingMetadataType"
+            }
+        },
+        "macPolicyMetadata":{
+            "type":"object",
+            "description":"Metadata for a macOS policy",
+            "properties":{
+                "@odata.type":{
+                    "type":"string",
+                    "pattern":"#microsoft.graph.macOSCustomConfiguration"
+                },
+                "id":{
+                    "$ref":"#/$defs/graphIdType"
+                }
+            },
+            "required":["@odata.type","id"]
+        },
+        "windowsV1PolicyMetadata":{
+            "type":"object",
+            "description":"Metadata for a Windows v1 policy",
+            "properties":{
+                "id":{
+                    "$ref":"#/$defs/graphIdType"
+                }
+                ,"@odata.type":{
+                    "type":"string",
+                    "pattern":"#microsoft.graph.windows10CustomConfiguration"
+                },
+                "@odata.context":{
+                    "type":"string",
+                    "pattern":"https://graph.microsoft.com/beta/\\$metadata#deviceManagement/deviceConfigurations/\\$entity"
+                },
+                "rules":{
+                    "$ref":"#/$defs/rulesMetadataType"
+                },
+                "groups":{
+                    "$ref":"#/$defs/groupsV1MetadataType"
+                },
+                "assignments":{
+                    "$ref":"#/$defs/assignmentsMetadataType"
+                }
+            },
+            "required":["@odata.type","@odata.context","id"]
+        },
+        "windowsV2PolicyMetadata":{
+            "type":"object",
+            "description":"Metadata for a Windows v2 policy",
+            "properties":{
+                "id":{
+                    "$ref":"#/$defs/graphIdType"
+                },
+                "@odata.context":{
+                    "type":"string",
+                    "pattern":"https://graph.microsoft.com/beta/\\$metadata#deviceManagement/configurationPolicies/\\$entity"
+                },
+                "groups":{
+                    "$ref":"#/$defs/groupsV2MetadataType"
+                },
+                "settings":{
+                    "$ref":"#/$defs/settingsMetadataType"
+                }
+            },
+            "required":["@odata.context","id"]
+        },
         "v1settingType":{
             "type":"object",
             "description":"The ID of the setting",
