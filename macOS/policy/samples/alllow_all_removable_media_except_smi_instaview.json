@@ -1,0 +1,74 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "c5c2fd68-0e09-44eb-880a-bfa662933f17",
+            "name": "SMI Instaview",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "vendorId",
+                        "value": "2316"
+                    },
+                    {
+                        "$type": "productId",
+                        "value": "8192"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "dd3a68d3-c3b7-4b61-a6c9-ab11c4193356",
+            "name": "Allow RWX to all Removable Media Devices except SMI INSTAVIEW",
+            "includeGroups": [
+                "c5c2fd68-0e09-44eb-880a-bfa662933f17"
+            ],
+            "entries": [
+                {
+                    "$type": "removableMedia",
+                    "id": "6c937114-8860-4127-a678-1b38ae196409",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "f5aac001-8a24-4565-a436-7a8331c035d2",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "removableMedia": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
