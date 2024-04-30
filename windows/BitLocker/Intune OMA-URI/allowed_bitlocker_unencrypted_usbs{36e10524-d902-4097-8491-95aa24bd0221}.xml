@@ -1,0 +1,10 @@
+<Group Id="{36e10524-d902-4097-8491-95aa24bd0221}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B36e10524-d902-4097-8491-95aa24bd0221%7D/GroupData -->
+	<Name>allowed bitlocker unencrypted USBs</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
+		<SerialNumberId>FBH1111183400787</SerialNumberId>
+	</DescriptorIdList>
+</Group>

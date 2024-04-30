@@ -161,7 +161,7 @@ The example are [VS Code Python configurations](https://code.visualstudio.com/do
 "name": "Python: dcdoc - single file",
 "type": "python",
 "request": "launch",
-"program": "${workspaceFolder}\\python\\dcdoc.py",
+"program": "${workspaceFolder}\\python\\src\\mdedevicecontrol\\dcdoc.py",
 "args": [
     "--path=${fileDirname}",
     "--input=${relativeFile}",
@@ -182,7 +182,7 @@ The example are [VS Code Python configurations](https://code.visualstudio.com/do
 "name": "Python: dcdoc with scenarios",
     "type": "python",
     "request": "launch",
-    "program": "${workspaceFolder}\\python\\dcdoc.py",
+    "program": "${workspaceFolder}\\python\\src\\mdedevicecontrol\\dcdoc.py",
     "args": [
         "--path=${fileDirname}",
         "--template=dcutil.j2",
@@ -204,7 +204,7 @@ The example are [VS Code Python configurations](https://code.visualstudio.com/do
     "name": "Python: dcdoc csv report",
     "type": "python",
     "request": "launch",
-    "program": "${workspaceFolder}\\python\\dcdoc.py",
+    "program": "${workspaceFolder}\\python\\src\\mdedevicecontrol\\dcdoc.py",
     "args": [
         "--path=${workspaceFolder}\\windows;${workspaceFolder}\\macOS",
         "--format=csv",
