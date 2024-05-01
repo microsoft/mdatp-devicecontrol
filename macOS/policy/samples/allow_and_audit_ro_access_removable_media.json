@@ -2,7 +2,7 @@
     "groups": [
         {
             "$type": "device",
-            "id": "94b5df10-bd2f-4b19-8a9f-539520b9d6ff",
+            "id": "531278a2-a318-48d7-8e6a-0f0fd7589b07",
             "name": "All Removable Media Devices",
             "query": {
                 "$type": "all",
@@ -17,29 +17,26 @@
     ],
     "rules": [
         {
-            "id": "2e18a6b9-eb30-440a-a6aa-1f930b443baf",
-            "name": "Audit RWX to all Removable Media Devices",
+            "id": "5553fc5d-acec-467c-a23e-13023290e367",
+            "name": "Allow and audit read only access to removable media devices",
             "includeGroups": [
-                "94b5df10-bd2f-4b19-8a9f-539520b9d6ff"
+                "531278a2-a318-48d7-8e6a-0f0fd7589b07"
             ],
             "entries": [
                 {
-                    "__comments": "Allow all Read, Write, and Execute operations.  Note: This entry is optional as global/defaultEnforcement is 'allow'.",
                     "$type": "removableMedia",
-                    "id": "2566d326-d8e9-49be-9b8e-2fd0853e6641",
+                    "id": "54210657-995e-42be-a8a4-419c7afc7172",
                     "enforcement": {
                         "$type": "allow"
                     },
                     "access": [
-                        "read",
-                        "write",
-                        "execute"
+                        "read"
+
                     ]
                 },
                 {
-                    "__comments": "Send events for all allowed operations.  Note: This may result in a significant volume of events.  Adjust or remove this entry as desired.",
                     "$type": "removableMedia",
-                    "id": "ea3ccfe9-ec04-4fa2-a6bb-06941c7b051a",
+                    "id": "94d0e385-14f1-4856-bdfd-929c4362f879",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [
@@ -47,7 +44,32 @@
                         ]
                     },
                     "access": [
-                        "read",
+                        "read"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "3685c0ff-6056-4216-a077-0dff53907a3f",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "write",
+                        "execute"
+
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "e7232712-af9a-4b07-ab64-b9e0dc7f7b7b",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "send_notification"
+                        ]
+                    },
+                    "access": [
                         "write",
                         "execute"
                     ]
@@ -62,7 +84,7 @@
             }
         },
         "global": {
-            "defaultEnforcement": "allow"
+            "defaultEnforcement": "deny"
         },
         "ux": {
             "navigationTarget": "http://www.microsoft.com"

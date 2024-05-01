@@ -9,8 +9,11 @@ import pathlib
 import copy
 import json
 
-from devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
-import convert_dc_policy as mac 
+from mdedevicecontrol.devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
+import mdedevicecontrol.convert_dc_policy as mac 
+
+import logging
+logger = logging.getLogger(__name__)
 
 Default_Settings = Settings(
     {
@@ -86,7 +89,14 @@ class Helper:
 
             masks_to_check = entry.entry_type.access_masks
             if Helper.helper_entry_type is not None:
-                masks_to_check = Helper.helper_entry_type.access_masks
+                if hasattr(Helper.helper_entry_type,"access_masks"):
+                    masks_to_check = Helper.helper_entry_type.access_masks
+                elif entry.entry_type.name == "windows_device":
+                    masks_to_check = Entry.WindowsDevice.access_masks
+                elif entry.entry_type.name == "windows_printer":
+                    masks_to_check = Entry.WindowsPrinter.access_masks
+                else:
+                    masks_to_check = list(WindowsEntryType.access_masks.keys())
 
             for mask in masks_to_check:
 
@@ -302,8 +312,8 @@ class Inventory:
 
             return
         except Exception as e:
-            print(full_stack())
-            print ("Error in "+json_path+": "+str(e))
+            logger.error(full_stack())
+            logger.error ("Error in "+json_path+": "+str(e))
             return
     
     def load_xml_file(self,xml_path):
@@ -335,8 +345,8 @@ class Inventory:
                 return root
 
         except Exception as e:
-            print(full_stack())
-            print ("Error in "+xml_path+": "+str(e))
+            logger.error(full_stack())
+            logger.error("Error in "+xml_path+": "+str(e))
             return
 
     def addGroup(self,group, group_index=0):
@@ -407,6 +417,7 @@ class Inventory:
                 "conditionMatchType": entry.get_condition_match_type()
             }
 
+            
             permissions = Helper.get_permission_icons(entry,True)
             for permission in permissions:
                 if type(permission) == int:
@@ -502,7 +513,7 @@ class Inventory:
     def get_group_by_id(self,group_id):
         group_frame = self.groups.query("id == '"+group_id+"'")
         if group_frame.size == 0:
-            print ("No group found for "+group_id)
+            logger.warning("No group found for "+group_id)
             return None
         else:
             groups = {
@@ -520,7 +531,7 @@ class Inventory:
                 elif len(groups[format]) == 0:
                     groups[format].append(group)
                 else:
-                    print("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
+                    logger.warning("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
 
             #Use either GPO or Mac, to create an OMA-URI group
             if len(groups["oma-uri"]) == 0:
@@ -565,7 +576,7 @@ class Inventory:
             if rule_id in rules_for_format:
                 existing_rule = rules_for_format[rule_id]
                 if existing_rule != rule:
-                    print ("Conflicting rules for id "+rule.id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
+                    logger.warning("Conflicting rules for id "+rule.id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
             elif format == "oma-uri":
                 rules[format][rule_id] = IntuneCustomRow(rule)
             else:
@@ -587,7 +598,7 @@ class Inventory:
     
 
     def missing_oma_uri(self,object):
-        print("Missing oma-uri for id "+object.id)
+        logger.warning("Missing oma-uri for id "+object.id)
         oma_uri_object = copy.copy(object)
         oma_uri_object.format = "oma-uri"
 
@@ -635,7 +646,7 @@ class Inventory:
         for rule in filtered_rules["all"]:
 
             if rule.id in rules:
-                print ("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
+                logger.warning("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
                 continue
         
             rules[rule.id] = rule
@@ -666,7 +677,8 @@ class Inventory:
                 if group.id not in groups:
                     groupsXML += "\n"+group.toXML()
                     groups[group.id] = group
-                    paths.append(group.path)
+                    if entry_type not in Entry.MacEntryTypes:
+                        paths.append(group.path)
                     mac_policy["groups"].append(group.toJSON())
 
                     intune_ux_support += IntuneUXFeature.get_support_for(group)
@@ -937,7 +949,8 @@ def generate_files_format(format_strings):
     return generated_files_locations_by_format
 
 def parse_in_file(in_file):
-    query = "path.str.contains('"+in_file+"',regex=False)"
+    #query = "path.str.contains('"+in_file+"',regex=False)"
+    query = "path == '"+in_file+"'"
     title = str(in_file.split(os.sep)[-1]).split(".")[0]
     outfile = title+".md"
     settings = Default_Settings
@@ -983,7 +996,7 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
         out_file.write(out)
         out_file.close()
 
-def main(args):
+def dcdoc(args):
 
     templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
     templateEnv = jinja2.Environment(loader=templateLoader)
@@ -1006,7 +1019,7 @@ def main(args):
         for rule in scenarios["scenarios"]:
             policy_file = rule["file"]
 
-            policy_path = pathlib.PurePath(os.path.join(scenarios_dir,policy_file))
+            policy_path = pathlib.Path(os.path.join(scenarios_dir,policy_file)).resolve()
             policy_path = policy_path.relative_to(os.getcwd())
             policy_file = str(policy_path)
 
@@ -1070,8 +1083,8 @@ def main(args):
             inventory.generate_csv(args.dest)
         
     
-if __name__ == '__main__':
 
+def main():
     arg_parser = argparse.ArgumentParser(
         description='Utility for generating documentation for device control policies.')
 
@@ -1096,5 +1109,7 @@ if __name__ == '__main__':
     
 
     args = arg_parser.parse_args()
-    main(args)
+    dcdoc(args)
 
+if __name__ == '__main__':
+    main()

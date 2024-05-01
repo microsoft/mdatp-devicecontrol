@@ -1,0 +1,13 @@
+{
+    "title":"Windows BitLocker Example",
+    "scenarios":[
+        {
+            "file": "Group Policy/example_1_rules.xml",
+            "title": "Require BitLocker Encryption to Write with Exceptions",
+            "settings": {
+                "DefaultEnforcement": "Allow"
+            }
+        }
+    ]
+}
+    

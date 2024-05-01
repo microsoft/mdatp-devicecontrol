@@ -359,3 +359,5 @@ Issue/
 dcutil.out
 dcutil.md
 python/config.cfg
+python/dist
+*.egg-info

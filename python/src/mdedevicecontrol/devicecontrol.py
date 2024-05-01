@@ -7,6 +7,9 @@ import pathlib
 import xml.etree.ElementTree as ET
 from json import JSONEncoder
 
+import logging
+logger = logging.getLogger(__name__)
+
 class Util:
 
     def xml_safe_text(text):
@@ -44,7 +47,124 @@ class Format:
 
 class Setting: 
 
-    
+    class Data:
+
+        def fromDictionary(dict):
+
+            name = "default name"
+            description = "default description"
+
+            if "name" in dict.keys():
+                name = dict["name"]
+
+            if "description" in dict.keys():
+                description = dict["description"]
+
+            data = Setting.Data(name,description)
+
+            if Format.OMA_URI in dict.keys():
+                oma_uri = dict[Format.OMA_URI]
+                if "supported" in oma_uri.keys():
+                    data.set_supported(Format.OMA_URI,oma_uri["supported"])
+                if "documenation" in oma_uri.keys():
+                    data.set_documentation(Format.OMA_URI,oma_uri["documentation"])
+                if "value_map" in oma_uri.keys():
+                    data.set_value_map(Format.OMA_URI,oma_uri["value_map"])
+                if "type" in oma_uri.keys():
+                    data.set_oma_uri_type(Format.OMA_URI,oma_uri["type"])
+                if "oma-uri" in oma_uri.keys():
+                    data.set_oma_uri(Format.OMA_URI,oma_uri["oma-uri"])
+
+            if Format.Mac in dict.keys():
+                mac = dict[Format.Mac]
+                if "supported" in mac.keys():
+                    data.set_supported(Format.Mac,mac["supported"])
+                if "documenation" in mac.keys():
+                    data.set_documentation(Format.Mac,mac["documentation"])
+                if "value_map" in mac.keys():
+                    data.set_value_map(Format.Mac,mac["value_map"])
+                if "mac_setting" in mac.keys():
+                    mac_setting = mac["mac_setting"]
+                    if "name" in mac_setting.keys():
+                        data.set_mac_setting_name(mac_setting["name"])
+                    if "category" in mac_setting.keys():
+                        data.set_mac_setting_category(mac_setting["category"])
+
+            if Format.GPO in dict.keys():
+                gpo = dict["gpo"]
+                if "supported" in gpo.keys():
+                    data.set_supported(Format.GPO,gpo["supported"])
+                if "documenation" in gpo.keys():
+                    data.set_documentation(Format.GPO,gpo["documentation"])
+                if "value_map" in gpo.keys():
+                    data.set_value_map(Format.GPO,gpo["value_map"])
+
+                    
+                
+                    
+
+
+        def __init__(self,name,description):
+            self.name = name
+            self.description = description
+            self.data = {
+                "name": name,
+                "description": description,
+                "oma-uri":{
+                    "supported": False
+
+                },
+                "gpo":{
+                    "supported": False
+                },
+                "mac":{
+                    "supported": False
+                }
+            }
+
+        def set_supported(self,format,supported):
+            self.data[format]["supported"] = supported
+
+        def set_documentation(self,format,documentation):
+            self.data[format]["documentation"] = documentation
+
+        def set_value_map(self,format,value_map):
+            self.data[format]["value_map"] = value_map
+
+        def set_oma_uri(self,oma_uri):
+            self.data["oma-uri"]["oma-uri"] = oma_uri
+
+        def set_oma_uri_type(self,oma_uri_type):
+            self.data["oma-uri"]["type"] = oma_uri_type
+
+        
+        def set_mac_setting_name(self,name):
+            if "mac_setting" in self.data["mac"].keys():
+                mac_setting = self.data["mac"]["mac_setting"]
+                mac_setting["name"] = name
+            else:
+                mac_setting = {
+                    "name":name
+                }
+                self.data["mac"]["mac_setting"] = mac_setting
+
+        def set_mac_setting_category(self,category):
+            if "mac_setting" in self.data["mac"].keys():
+                mac_setting = self.data["mac"]["mac_setting"]
+                mac_setting["category"] = category
+            else:
+                mac_setting = {
+                    "category":category
+                }
+                self.data["mac"]["mac_setting"] = mac_setting
+        
+        
+        def get_data(self):
+            return self.data
+        
+        
+            
+            
     OMA_URI_Integer_DataType = "Integer"
     OMA_URI_XML_DataType = "String (XML File)"
     OMA_URI_String_DataType = "String"
@@ -200,6 +320,22 @@ class Setting:
                     return key
                 
         return None
+    
+    def getOMAURIFor(name):
+
+        setting_data = Setting.data[name]
+
+        if setting_data == None:
+            return None
+
+        if "oma-uri" in setting_data.keys():
+            return setting_data["oma-uri"]["oma-uri"]
+        else:
+            return None
+    
+
+    def addSettingData(name,data):
+        Setting.data[name] = data
 
     
 
@@ -246,6 +382,9 @@ class Setting:
         
         elif format == "oma-uri":
             oma_uri = Setting.data[self.name]["oma-uri"]
+            if not "type" in oma_uri.keys():
+                return self.value
+            
             if oma_uri["type"] == Setting.OMA_URI_String_DataType:
                 return self.value
             elif oma_uri["type"] == Setting.OMA_URI_Integer_DataType:
@@ -331,7 +470,15 @@ class Settings:
         else: 
             for name in setting_dict:
                 value = setting_dict[name]
-                self.settings.append(Setting(name,value))
+                if isinstance(value,dict):
+                    if "value" in value.keys():
+                        #this is loaded from Intune
+                        self.settings.append(Setting(name,value["value"]))
+                    else:
+                        #this is mac settings
+                        self.settings.append(Setting(name,value))    
+                else:
+                    self.settings.append(Setting(name,value))
 
     def addSetting(self,setting):
         self.settings.append(setting)
@@ -444,7 +591,7 @@ class Clause:
                 group_property = self.group_type.get_property_by_name(property)
                 self._properties.append(Property(group_property, value))
             elif self.sub_clause_type is None:
-                print("Unknown Clause")
+                logger.warn("Unknown Clause")
                 return
             
 class GroupProperty:
@@ -1044,7 +1191,8 @@ class Group:
     
     def set_path(self,path):
         if path is not None:
-            p = pathlib.PurePath(path)
+            p = pathlib.Path(path)
+            p = p.resolve()
             p = p.relative_to(os.getcwd())
             self.path = str(p)
 
@@ -1279,7 +1427,8 @@ class PolicyRule:
     
     def set_path(self,path):
         if path is not None:
-            p = pathlib.PurePath(path)
+            p = pathlib.Path(path)
+            p = p.resolve()
             p = p.relative_to(os.getcwd())
             self.path = str(p)
         
@@ -1839,7 +1988,7 @@ class Entry:
                 elif type == "portableDevice":
                     self.entry_type = Entry.ApplePortableDevice
                 else:
-                    print("Unknown type "+self.entry_type)
+                    logger.warn("Unknown type "+self.entry_type)
                     self.entry_type = Entry.AppleGeneric
 
                 
@@ -2137,7 +2286,18 @@ class Feature:
                 supported_group_types = group_support["supported_types"]
                 if object.group_type not in supported_group_types:
                     support.issues.append(object.group_type.label+" groups not supported.")
-             
+                elif "unsupported_descriptors" in self.feature_data["group"].keys():
+                    unsupported_descriptors = self.feature_data["group"]["unsupported_descriptors"]
+                    if object.group_type in unsupported_descriptors.keys():
+                        unsupported_descriptors_for_group = unsupported_descriptors[object.group_type]
+                        if hasattr(object,"_properties"):
+                            for property in object._properties:
+                                for unsupported_descriptor_for_group in unsupported_descriptors_for_group:
+                                    logger.debug("Checking "+str(property.name)+" for unsupported descriptors "+unsupported_descriptor_for_group.name)
+                                    if property.name == unsupported_descriptor_for_group.name:
+                                        support.issues.append(property.name+" not supported" )
+                    
+
                 supported_match_types = group_support["match_types"]
                 if object.match_type not in supported_match_types:
                     support.issues.append(object.match_type+" not supported.")
@@ -2208,7 +2368,12 @@ IntuneUXFeature = Feature(
                 Group.WindowsDeviceGroupType,
                 Group.WindowsPrinterGroupType
             ],
-            "match_types": ["MatchAll","MatchAny"]
+            "match_types": ["MatchAll","MatchAny"],
+            "unsupported_descriptors": {
+                Group.WindowsDeviceGroupType: [
+                    Group.WindowsDeviceEncryptionStateProperty
+                ]
+            }
         },
         "entry":{
             "access_masks":[1,2,4,64],

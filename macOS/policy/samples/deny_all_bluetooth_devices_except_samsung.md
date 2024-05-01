@@ -196,7 +196,7 @@ The match type for the group is *or*.
 
 | Setting Name |  Setting Value | Description |Documentation |
 |--------------|----------------|-------------|---------------|
-SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': True}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': False}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': False}, 'bluetoothDevice': {'disable': False}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 
@@ -399,10 +399,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                 "disable": false
             },
             "removableMedia": {
-                "disable": true
+                "disable": false
             },
             "portableDevice": {
-                "disable": true
+                "disable": false
             },
             "bluetoothDevice": {
                 "disable": false
@@ -558,10 +558,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                 "disable": false
             },
             "removableMedia": {
-                "disable": true
+                "disable": false
             },
             "portableDevice": {
-                "disable": true
+                "disable": false
             },
             "bluetoothDevice": {
                 "disable": false

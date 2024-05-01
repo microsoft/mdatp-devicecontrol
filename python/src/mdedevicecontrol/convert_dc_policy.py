@@ -2,14 +2,17 @@
 
 import xml.etree.ElementTree as ET
 
+import logging
+logger = logging.getLogger(__name__)
+
 def log_error(text):
-    print("\033[0;31m" + text + "\033[00m")
+    logger.error("\033[0;31m" + text + "\033[00m")
 
 def log_warning(text, strict):
     if strict:
         raise Exception(text)
     else:
-        print("\033[0;93m" + text + "\033[00m")
+        logger.warn("\033[0;93m" + text + "\033[00m")
 
 def convert_match_type(match_type, strict):
     match match_type:
@@ -130,7 +133,7 @@ def convert_group(group, strict):
         log_warning("'Id' is not defined for group.", strict)
         return None
 
-    print(f'Converting Group: ID={id}')
+    logger.info(f'Converting Group: ID={id}')
     converted_group['id'] = id[1:-1]
 
     match_type = group.find('MatchType')
@@ -152,7 +155,7 @@ def convert_group(group, strict):
     return converted_group
 
 def convert_groups(root, strict):
-    print('Converting Groups...')
+    logger.info('Converting Groups...')
 
     groups = []
 
@@ -343,7 +346,7 @@ def convert_rule(rule, strict):
         log_warning("'Id' is not defined for rule.", strict)
         return None
 
-    print(f'Converting Rule: ID={id}')
+    logger.info(f'Converting Rule: ID={id}')
     converted_rule['id'] = id[1:-1]
 
     name = rule.find('Name')
@@ -378,7 +381,7 @@ def convert_rule(rule, strict):
     return converted_rule
 
 def convert_rules(root, strict):
-    print('Converting Rules...')
+    logger.info('Converting Rules...')
     
     rules = []
 
@@ -396,7 +399,7 @@ def convert_rules(root, strict):
 
     return rules
 
-if __name__ == '__main__':
+def main():
     import argparse
     import json
 
@@ -429,3 +432,5 @@ if __name__ == '__main__':
         log_error("Failed to convert policy:")
         log_error(str(e))
 
+if __name__ == '__main__':
+    main()

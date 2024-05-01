@@ -1,0 +1,29 @@
+<Groups>
+	<Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
+		<Name>bitlocker encrypted USBs</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+		</DescriptorIdList>
+	</Group>
+    <Group Id="{bdfbd64c-8586-4eb8-ae11-2f839e019532}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bbdfbd64c-8586-4eb8-ae11-2f839e019532%7D/GroupData -->
+		<Name>Any Removable Media</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>
+    <Group Id="{36e10524-d902-4097-8491-95aa24bd0221}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B36e10524-d902-4097-8491-95aa24bd0221%7D/GroupData -->
+		<Name>allowed bitlocker unencrypted USBs</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
+			<SerialNumberId>FBH1111183400787</SerialNumberId>
+		</DescriptorIdList>
+	</Group>
+</Groups>
