@@ -2,6 +2,26 @@
     "title":"Mac OS Examples",
     "scenarios":[
         {
+            "file":"allow_all_removable_media_except_smi_instaview.json",
+            "description": "Allow all removable media expect a device by VID PID"
+        },
+        {
+            "file":"allow_and_audit_full_access_removable_media.json",
+            "description":"Allow and audit full access for any removable media"
+        },
+        {
+            "file":"allow_and_audit_ro_access_removable_media.json",
+            "description":"Allow and audit read-only access for any removable media"
+        },
+        {
+            "file":"audit_deny_all_removable_media.json",
+            "description":"Audit and deny all removable media"
+        },
+        {
+            "file":"audit_mobile_devices.json",
+            "description":"Audit all access to Apple and Portable devices"
+        },
+        {
             "file": "audit_all_apple_devices.json"
         },
         {
@@ -12,6 +32,9 @@
         },
         {
             "file":"deny_removable_media_except_kingston.json"
+        },
+        {
+            "file":"deny_mobile_devices.json"
         }
     ]
     

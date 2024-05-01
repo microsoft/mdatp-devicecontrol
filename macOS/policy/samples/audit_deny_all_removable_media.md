@@ -1,7 +1,7 @@
-# Device control policy sample: audit_all_apple_devices
+# Device control policy sample: audit_deny_all_removable_media
 
-Description: This is a policy.              
-Device Type: Apple Device
+Description: Audit and deny all removable media              
+Device Type: Apple Removable Media
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -14,33 +14,31 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="5" valign="top"><center>Access</center></th>
+        <th colspan="3" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
     </tr>
     <tr>
         <th>Included</th>
-        <th>Excluded</th><th>Backup device</th><th>Update device</th><th>Download photos</th><th>Download files</th><th>Synch device</th></tr><tr>
-            <td rowspan="1"><b>Audit all Apple Devices</b></td>
+        <th>Excluded</th><th>Read</th><th>Write</th><th>Execute</th></tr><tr>
+            <td rowspan="1"><b>Audit Deny all Removable Media</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>All Apple Devices<a href="#all-apple-devices" title="all [{'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
+                <ul><li>All Removable Media Devices<a href="#all-removable-media-devices" title="all [{'$type': 'primaryId', 'value': 'removable_media_devices'}]"> (details)</a></ul>
             </td>
             <td rowspan="1" valign="top">.
                 <ul></ul>
             </td>
-            <td>Audit Allowed</td>
+            <td>Audit Denied</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>Send event</td> 
+            <td>Send event and Show notification</td> 
         </tr></table>
 
 
 ## Groups
 
 
-### All Apple Devices
+### All Removable Media Devices
 
 
 
@@ -61,14 +59,14 @@ The match type for the group is *all*.
 
 <td>primaryId</td>
 
-<td>apple_devices</td>
+<td>removable_media_devices</td>
 
 </tr>
 
 </table>
 
 
-#### Available properties for All Apple Devices
+#### Available properties for All Removable Media Devices
 
 
 <details>
@@ -77,14 +75,14 @@ The match type for the group is *all*.
 ```json
 {
     "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-    "name": "All Apple Devices",
+    "id": "531278a2-a318-48d7-8e6a-0f0fd7589b07",
+    "name": "All Removable Media Devices",
     "query": {
         "$type": "all",
         "clauses": [
             {
                 "$type": "primaryId",
-                "value": "apple_devices"
+                "value": "removable_media_devices"
             }
         ]
     }
@@ -102,15 +100,15 @@ The match type for the group is *all*.
 
 | Setting Name |  Setting Value | Description |Documentation |
 |--------------|----------------|-------------|---------------|
-SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': False}, 'bluetoothDevice': {'disable': True}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
-DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+SecuredDevicesConfiguration | {'appleDevice': {'disable': True}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': True}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [audit_all_apple_devices.json](audit_all_apple_devices.json)
+- [audit_deny_all_removable_media.json](audit_deny_all_removable_media.json)
 
 
 # Deployment Instructions
@@ -201,14 +199,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-            "name": "All Apple Devices",
+            "id": "531278a2-a318-48d7-8e6a-0f0fd7589b07",
+            "name": "All Removable Media Devices",
             "query": {
                 "$type": "all",
                 "clauses": [
                     {
                         "$type": "primaryId",
-                        "value": "apple_devices"
+                        "value": "removable_media_devices"
                     }
                 ]
             }
@@ -216,27 +214,26 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a6913009298e",
-            "name": "Audit all Apple Devices",
+            "id": "23d42678-ca49-453d-bef0-cf48ffe8c6ae",
+            "name": "Audit Deny all Removable Media",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                "531278a2-a318-48d7-8e6a-0f0fd7589b07"
             ],
             "entries": [
                 {
-                    "$type": "appleDevice",
-                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "$type": "removableMedia",
+                    "id": "21fd9576-8deb-4824-98cc-8c29564a74b1",
                     "enforcement": {
-                        "$type": "auditAllow",
+                        "$type": "auditDeny",
                         "options": [
-                            "send_event"
+                            "send_event",
+                            "show_notification"
                         ]
                     },
                     "access": [
-                        "download_files_from_device",
-                        "sync_content_to_device",
-                        "backup_device",
-                        "update_device",
-                        "download_photos_from_device"
+                        "read",
+                        "write",
+                        "execute"
                     ]
                 }
             ]
@@ -245,20 +242,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "settings": {
         "features": {
             "appleDevice": {
-                "disable": false
+                "disable": true
             },
             "removableMedia": {
                 "disable": false
             },
             "portableDevice": {
-                "disable": false
+                "disable": true
             },
             "bluetoothDevice": {
                 "disable": true
             }
         },
         "global": {
-            "defaultEnforcement": "allow"
+            "defaultEnforcement": "deny"
         },
         "ux": {
             "navigationTarget": "http://www.microsoft.com"
@@ -303,14 +300,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-            "name": "All Apple Devices",
+            "id": "531278a2-a318-48d7-8e6a-0f0fd7589b07",
+            "name": "All Removable Media Devices",
             "query": {
                 "$type": "all",
                 "clauses": [
                     {
                         "$type": "primaryId",
-                        "value": "apple_devices"
+                        "value": "removable_media_devices"
                     }
                 ]
             }
@@ -318,27 +315,26 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a6913009298e",
-            "name": "Audit all Apple Devices",
+            "id": "23d42678-ca49-453d-bef0-cf48ffe8c6ae",
+            "name": "Audit Deny all Removable Media",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                "531278a2-a318-48d7-8e6a-0f0fd7589b07"
             ],
             "entries": [
                 {
-                    "$type": "appleDevice",
-                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "$type": "removableMedia",
+                    "id": "21fd9576-8deb-4824-98cc-8c29564a74b1",
                     "enforcement": {
-                        "$type": "auditAllow",
+                        "$type": "auditDeny",
                         "options": [
-                            "send_event"
+                            "send_event",
+                            "show_notification"
                         ]
                     },
                     "access": [
-                        "download_files_from_device",
-                        "sync_content_to_device",
-                        "backup_device",
-                        "update_device",
-                        "download_photos_from_device"
+                        "read",
+                        "write",
+                        "execute"
                     ]
                 }
             ]
@@ -347,20 +343,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "settings": {
         "features": {
             "appleDevice": {
-                "disable": false
+                "disable": true
             },
             "removableMedia": {
                 "disable": false
             },
             "portableDevice": {
-                "disable": false
+                "disable": true
             },
             "bluetoothDevice": {
                 "disable": true
             }
         },
         "global": {
-            "defaultEnforcement": "allow"
+            "defaultEnforcement": "deny"
         },
         "ux": {
             "navigationTarget": "http://www.microsoft.com"

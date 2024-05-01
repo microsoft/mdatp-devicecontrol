@@ -1,7 +1,7 @@
-# Device control policy sample: audit_all_apple_devices
+# Device control policy sample: allow_all_removable_media_except_smi_instaview
 
-Description: This is a policy.              
-Device Type: Apple Device
+Description: Allow all removable media expect a device by VID PID              
+Device Type: Apple Removable Media
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -14,33 +14,37 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="5" valign="top"><center>Access</center></th>
+        <th colspan="3" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
     </tr>
     <tr>
         <th>Included</th>
-        <th>Excluded</th><th>Backup device</th><th>Update device</th><th>Download photos</th><th>Download files</th><th>Synch device</th></tr><tr>
-            <td rowspan="1"><b>Audit all Apple Devices</b></td>
-            <td rowspan="1 valign="top">
-                <ul><li>All Apple Devices<a href="#all-apple-devices" title="all [{'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
+        <th>Excluded</th><th>Read</th><th>Write</th><th>Execute</th></tr><tr>
+            <td rowspan="2"><b>Allow RWX to all Removable Media Devices except SMI INSTAVIEW</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>SMI Instaview<a href="#smi-instaview" title="all [{'$type': 'vendorId', 'value': '2316'}, {'$type': 'productId', 'value': '8192'}]"> (details)</a></ul>
             </td>
-            <td rowspan="1" valign="top">.
+            <td rowspan="2" valign="top">.
                 <ul></ul>
             </td>
-            <td>Audit Allowed</td>
+            <td>Deny</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>None</td> 
+        </tr><tr>
+            <td>Audit Denied</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>Send event</td> 
+            <td>Send event and Show notification</td>
         </tr></table>
 
 
 ## Groups
 
 
-### All Apple Devices
+### SMI Instaview
 
 
 
@@ -59,16 +63,26 @@ The match type for the group is *all*.
 
 <td></td>
 
-<td>primaryId</td>
+<td>vendorId</td>
 
-<td>apple_devices</td>
+<td>2316</td>
+
+</tr>
+
+<tr>
+
+<td>all</td>
+
+<td>productId</td>
+
+<td>8192</td>
 
 </tr>
 
 </table>
 
 
-#### Available properties for All Apple Devices
+#### Available properties for SMI Instaview
 
 
 <details>
@@ -77,14 +91,18 @@ The match type for the group is *all*.
 ```json
 {
     "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-    "name": "All Apple Devices",
+    "id": "c5c2fd68-0e09-44eb-880a-bfa662933f17",
+    "name": "SMI Instaview",
     "query": {
         "$type": "all",
         "clauses": [
             {
-                "$type": "primaryId",
-                "value": "apple_devices"
+                "$type": "vendorId",
+                "value": "2316"
+            },
+            {
+                "$type": "productId",
+                "value": "8192"
             }
         ]
     }
@@ -102,7 +120,7 @@ The match type for the group is *all*.
 
 | Setting Name |  Setting Value | Description |Documentation |
 |--------------|----------------|-------------|---------------|
-SecuredDevicesConfiguration | {'appleDevice': {'disable': False}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': False}, 'bluetoothDevice': {'disable': True}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
+SecuredDevicesConfiguration | {'appleDevice': {'disable': True}, 'removableMedia': {'disable': False}, 'portableDevice': {'disable': True}, 'bluetoothDevice': {'disable': True}} | Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documentation](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide#settings) |
 
@@ -110,7 +128,7 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 ## Files
 This policy is based on information in the following files:
 
-- [audit_all_apple_devices.json](audit_all_apple_devices.json)
+- [allow_all_removable_media_except_smi_instaview.json](allow_all_removable_media_except_smi_instaview.json)
 
 
 # Deployment Instructions
@@ -201,14 +219,18 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-            "name": "All Apple Devices",
+            "id": "c5c2fd68-0e09-44eb-880a-bfa662933f17",
+            "name": "SMI Instaview",
             "query": {
                 "$type": "all",
                 "clauses": [
                     {
-                        "$type": "primaryId",
-                        "value": "apple_devices"
+                        "$type": "vendorId",
+                        "value": "2316"
+                    },
+                    {
+                        "$type": "productId",
+                        "value": "8192"
                     }
                 ]
             }
@@ -216,27 +238,38 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a6913009298e",
-            "name": "Audit all Apple Devices",
+            "id": "dd3a68d3-c3b7-4b61-a6c9-ab11c4193356",
+            "name": "Allow RWX to all Removable Media Devices except SMI INSTAVIEW",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                "c5c2fd68-0e09-44eb-880a-bfa662933f17"
             ],
             "entries": [
                 {
-                    "$type": "appleDevice",
-                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "$type": "removableMedia",
+                    "id": "6c937114-8860-4127-a678-1b38ae196409",
                     "enforcement": {
-                        "$type": "auditAllow",
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "f5aac001-8a24-4565-a436-7a8331c035d2",
+                    "enforcement": {
+                        "$type": "auditDeny",
                         "options": [
-                            "send_event"
+                            "send_event",
+                            "show_notification"
                         ]
                     },
                     "access": [
-                        "download_files_from_device",
-                        "sync_content_to_device",
-                        "backup_device",
-                        "update_device",
-                        "download_photos_from_device"
+                        "read",
+                        "write",
+                        "execute"
                     ]
                 }
             ]
@@ -245,13 +278,13 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "settings": {
         "features": {
             "appleDevice": {
-                "disable": false
+                "disable": true
             },
             "removableMedia": {
                 "disable": false
             },
             "portableDevice": {
-                "disable": false
+                "disable": true
             },
             "bluetoothDevice": {
                 "disable": true
@@ -303,14 +336,18 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-            "name": "All Apple Devices",
+            "id": "c5c2fd68-0e09-44eb-880a-bfa662933f17",
+            "name": "SMI Instaview",
             "query": {
                 "$type": "all",
                 "clauses": [
                     {
-                        "$type": "primaryId",
-                        "value": "apple_devices"
+                        "$type": "vendorId",
+                        "value": "2316"
+                    },
+                    {
+                        "$type": "productId",
+                        "value": "8192"
                     }
                 ]
             }
@@ -318,27 +355,38 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a6913009298e",
-            "name": "Audit all Apple Devices",
+            "id": "dd3a68d3-c3b7-4b61-a6c9-ab11c4193356",
+            "name": "Allow RWX to all Removable Media Devices except SMI INSTAVIEW",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                "c5c2fd68-0e09-44eb-880a-bfa662933f17"
             ],
             "entries": [
                 {
-                    "$type": "appleDevice",
-                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "$type": "removableMedia",
+                    "id": "6c937114-8860-4127-a678-1b38ae196409",
                     "enforcement": {
-                        "$type": "auditAllow",
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "read",
+                        "write",
+                        "execute"
+                    ]
+                },
+                {
+                    "$type": "removableMedia",
+                    "id": "f5aac001-8a24-4565-a436-7a8331c035d2",
+                    "enforcement": {
+                        "$type": "auditDeny",
                         "options": [
-                            "send_event"
+                            "send_event",
+                            "show_notification"
                         ]
                     },
                     "access": [
-                        "download_files_from_device",
-                        "sync_content_to_device",
-                        "backup_device",
-                        "update_device",
-                        "download_photos_from_device"
+                        "read",
+                        "write",
+                        "execute"
                     ]
                 }
             ]
@@ -347,13 +395,13 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "settings": {
         "features": {
             "appleDevice": {
-                "disable": false
+                "disable": true
             },
             "removableMedia": {
                 "disable": false
             },
             "portableDevice": {
-                "disable": false
+                "disable": true
             },
             "bluetoothDevice": {
                 "disable": true

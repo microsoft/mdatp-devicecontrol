@@ -1,7 +1,7 @@
-# Device control policy sample: deny_removable_media_except_kingston
+# Device control policy sample: deny_mobile_devices
 
 Description: This is a policy.              
-Device Type: Apple Removable Media
+Device Type: Apple Generic Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -20,20 +20,45 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
     <tr>
         <th>Included</th>
         <th>Excluded</th><th>Read</th><th>Write</th><th>Execute</th></tr><tr>
-            <td rowspan="2"><b>Deny RWX to all Removable Media Devices except Kingston</b></td>
+            <td rowspan="2"><b>Block All Apple Devices</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>All Removable Media Devices<a href="#all-removable-media-devices" title="all [{'$type': 'primaryId', 'value': 'removable_media_devices'}]"> (details)</a></ul>
+                <ul><li>All Apple Devices<a href="#all-apple-devices" title="and [{'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">.
-                <ul><li>Kingston Devices<a href="#kingston-devices" title="all [{'$type': 'vendorId', 'value': '0951'}]"> (details)</a></ul>
+                <ul></ul>
             </td>
             <td>Deny</td>
+            <td>:x:</td>
+            <td>:x:</td>
             <td>:x:</td>
             <td>:x:</td>
             <td>:x:</td>
             <td>None</td> 
         </tr><tr>
             <td>Audit Denied</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>Send event and Show notification</td>
+        </tr><tr>
+            <td rowspan="2"><b>Block All Portable Devices</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>All Mobile Devices<a href="#all-mobile-devices" title="or [{'$type': 'primaryId', 'value': 'portable_devices'}, {'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
+            </td>
+            <td rowspan="2" valign="top">.
+                <ul></ul>
+            </td>
+            <td>Deny</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>None</td> 
+        </tr><tr>
+            <td>Audit Denied</td>
+            <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
@@ -44,64 +69,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### Kingston Devices
+### All Apple Devices
 
 
 
 This is a group of type *device*. 
-The match type for the group is *all*.
-
-
-<table>
-<tr>
-<th>Operator</th>
-<th>Property</th>
-<th>Value</th>
-</tr>
-
-<tr>
-
-<td></td>
-
-<td>vendorId</td>
-
-<td>0951</td>
-
-</tr>
-
-</table>
-
-
-#### Available properties for Kingston Devices
-
-
-<details>
-<summary>View JSON</summary>
-
-```json
-{
-    "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-    "name": "Kingston Devices",
-    "query": {
-        "$type": "all",
-        "clauses": [
-            {
-                "$type": "vendorId",
-                "value": "0951"
-            }
-        ]
-    }
-}
-```
-</details>
-
-### All Removable Media Devices
-
-
-
-This is a group of type *device*. 
-The match type for the group is *all*.
+The match type for the group is *and*.
 
 
 <table>
@@ -117,14 +90,14 @@ The match type for the group is *all*.
 
 <td>primaryId</td>
 
-<td>removable_media_devices</td>
+<td>apple_devices</td>
 
 </tr>
 
 </table>
 
 
-#### Available properties for All Removable Media Devices
+#### Available properties for All Apple Devices
 
 
 <details>
@@ -133,14 +106,80 @@ The match type for the group is *all*.
 ```json
 {
     "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
-    "name": "All Removable Media Devices",
+    "id": "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4",
+    "name": "All Apple Devices",
     "query": {
-        "$type": "all",
+        "$type": "and",
         "clauses": [
             {
                 "$type": "primaryId",
-                "value": "removable_media_devices"
+                "value": "apple_devices"
+            }
+        ]
+    }
+}
+```
+</details>
+
+### All Mobile Devices
+
+
+
+This is a group of type *device*. 
+The match type for the group is *or*.
+
+
+<table>
+<tr>
+<th>Operator</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+
+<tr>
+
+<td></td>
+
+<td>primaryId</td>
+
+<td>portable_devices</td>
+
+</tr>
+
+<tr>
+
+<td>or</td>
+
+<td>primaryId</td>
+
+<td>apple_devices</td>
+
+</tr>
+
+</table>
+
+
+#### Available properties for All Mobile Devices
+
+
+<details>
+<summary>View JSON</summary>
+
+```json
+{
+    "$type": "device",
+    "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+    "name": "All Mobile Devices",
+    "query": {
+        "$type": "or",
+        "clauses": [
+            {
+                "$type": "primaryId",
+                "value": "portable_devices"
+            },
+            {
+                "$type": "primaryId",
+                "value": "apple_devices"
             }
         ]
     }
@@ -166,7 +205,8 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 ## Files
 This policy is based on information in the following files:
 
-- [deny_removable_media_except_kingston.json](deny_removable_media_except_kingston.json)
+- [deny_mobile_devices.json](deny_mobile_devices.json)
+- [audit_mobile_devices.json](audit_mobile_devices.json)
 
 
 # Deployment Instructions
@@ -257,28 +297,32 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-            "name": "Kingston Devices",
+            "id": "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4",
+            "name": "All Apple Devices",
             "query": {
-                "$type": "all",
+                "$type": "and",
                 "clauses": [
                     {
-                        "$type": "vendorId",
-                        "value": "0951"
+                        "$type": "primaryId",
+                        "value": "apple_devices"
                     }
                 ]
             }
         },
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
-            "name": "All Removable Media Devices",
+            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+            "name": "All Mobile Devices",
             "query": {
-                "$type": "all",
+                "$type": "or",
                 "clauses": [
                     {
                         "$type": "primaryId",
-                        "value": "removable_media_devices"
+                        "value": "portable_devices"
+                    },
+                    {
+                        "$type": "primaryId",
+                        "value": "apple_devices"
                     }
                 ]
             }
@@ -286,30 +330,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a69130092981",
-            "name": "Deny RWX to all Removable Media Devices except Kingston",
+            "id": "D861EEB3-9201-45F4-AC63-F823D4957D59",
+            "name": "Block All Apple Devices",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e211"
-            ],
-            "excludeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e212"
+                "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4"
             ],
             "entries": [
                 {
-                    "$type": "removableMedia",
-                    "id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
+                    "$type": "appleDevice",
+                    "id": "03420B37-4F71-4AF3-AAE8-82D16817A194",
                     "enforcement": {
                         "$type": "deny"
                     },
+                    "__comments": "Customize Access Below",
                     "access": [
-                        "read",
-                        "write",
-                        "execute"
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
                     ]
                 },
                 {
-                    "$type": "removableMedia",
-                    "id": "18BA3DD5-4C9A-458B-A756-F1499FE94FB4",
+                    "$type": "appleDevice",
+                    "id": "8C66DF38-A4A2-4C98-B69C-BF5D13F32044",
                     "enforcement": {
                         "$type": "auditDeny",
                         "options": [
@@ -317,10 +361,54 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                             "show_notification"
                         ]
                     },
+                    "__comments": "Customize Access Below",
                     "access": [
-                        "read",
-                        "write",
-                        "execute"
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "350C4528-DE48-4E73-9298-0C9823CA1064",
+            "name": "Block All Portable Devices",
+            "includeGroups": [
+                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
+            ],
+            "entries": [
+                {
+                    "$type": "portableDevice",
+                    "id": "E0DB2A03-CAF8-48C6-9FC0-EB6A834166CA",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "__comments": "Customize Access Below",
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device",
+                        "download_photos_from_device",
+                        "debug"
+                    ]
+                },
+                {
+                    "$type": "portableDevice",
+                    "id": "E8112895-D818-4CBE-B4CA-EE9FFE351A4C",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "__comments": "Customize Access Below",
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device",
+                        "download_photos_from_device",
+                        "debug"
                     ]
                 }
             ]
@@ -387,28 +475,32 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e212",
-            "name": "Kingston Devices",
+            "id": "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4",
+            "name": "All Apple Devices",
             "query": {
-                "$type": "all",
+                "$type": "and",
                 "clauses": [
                     {
-                        "$type": "vendorId",
-                        "value": "0951"
+                        "$type": "primaryId",
+                        "value": "apple_devices"
                     }
                 ]
             }
         },
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e211",
-            "name": "All Removable Media Devices",
+            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+            "name": "All Mobile Devices",
             "query": {
-                "$type": "all",
+                "$type": "or",
                 "clauses": [
                     {
                         "$type": "primaryId",
-                        "value": "removable_media_devices"
+                        "value": "portable_devices"
+                    },
+                    {
+                        "$type": "primaryId",
+                        "value": "apple_devices"
                     }
                 ]
             }
@@ -416,30 +508,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a69130092981",
-            "name": "Deny RWX to all Removable Media Devices except Kingston",
+            "id": "D861EEB3-9201-45F4-AC63-F823D4957D59",
+            "name": "Block All Apple Devices",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e211"
-            ],
-            "excludeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e212"
+                "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4"
             ],
             "entries": [
                 {
-                    "$type": "removableMedia",
-                    "id": "A7CEE2F8-CE34-4B34-9CFE-4133F0361035",
+                    "$type": "appleDevice",
+                    "id": "03420B37-4F71-4AF3-AAE8-82D16817A194",
                     "enforcement": {
                         "$type": "deny"
                     },
+                    "__comments": "Customize Access Below",
                     "access": [
-                        "read",
-                        "write",
-                        "execute"
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
                     ]
                 },
                 {
-                    "$type": "removableMedia",
-                    "id": "18BA3DD5-4C9A-458B-A756-F1499FE94FB4",
+                    "$type": "appleDevice",
+                    "id": "8C66DF38-A4A2-4C98-B69C-BF5D13F32044",
                     "enforcement": {
                         "$type": "auditDeny",
                         "options": [
@@ -447,10 +539,54 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                             "show_notification"
                         ]
                     },
+                    "__comments": "Customize Access Below",
                     "access": [
-                        "read",
-                        "write",
-                        "execute"
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "350C4528-DE48-4E73-9298-0C9823CA1064",
+            "name": "Block All Portable Devices",
+            "includeGroups": [
+                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
+            ],
+            "entries": [
+                {
+                    "$type": "portableDevice",
+                    "id": "E0DB2A03-CAF8-48C6-9FC0-EB6A834166CA",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "__comments": "Customize Access Below",
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device",
+                        "download_photos_from_device",
+                        "debug"
+                    ]
+                },
+                {
+                    "$type": "portableDevice",
+                    "id": "E8112895-D818-4CBE-B4CA-EE9FFE351A4C",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "__comments": "Customize Access Below",
+                    "access": [
+                        "download_files_from_device",
+                        "send_files_to_device",
+                        "download_photos_from_device",
+                        "debug"
                     ]
                 }
             ]

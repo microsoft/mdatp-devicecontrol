@@ -513,7 +513,7 @@ class Inventory:
     def get_group_by_id(self,group_id):
         group_frame = self.groups.query("id == '"+group_id+"'")
         if group_frame.size == 0:
-            logger.warn("No group found for "+group_id)
+            logger.warning("No group found for "+group_id)
             return None
         else:
             groups = {
@@ -531,7 +531,7 @@ class Inventory:
                 elif len(groups[format]) == 0:
                     groups[format].append(group)
                 else:
-                    logger.warn("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
+                    logger.warning("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
 
             #Use either GPO or Mac, to create an OMA-URI group
             if len(groups["oma-uri"]) == 0:
@@ -576,7 +576,7 @@ class Inventory:
             if rule_id in rules_for_format:
                 existing_rule = rules_for_format[rule_id]
                 if existing_rule != rule:
-                    logger.warn("Conflicting rules for id "+rule.id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
+                    logger.warning("Conflicting rules for id "+rule.id+"\n"+str(rule)+"\n!=\n"+str(existing_rule))
             elif format == "oma-uri":
                 rules[format][rule_id] = IntuneCustomRow(rule)
             else:
@@ -598,7 +598,7 @@ class Inventory:
     
 
     def missing_oma_uri(self,object):
-        logger.warn("Missing oma-uri for id "+object.id)
+        logger.warning("Missing oma-uri for id "+object.id)
         oma_uri_object = copy.copy(object)
         oma_uri_object.format = "oma-uri"
 
@@ -646,7 +646,7 @@ class Inventory:
         for rule in filtered_rules["all"]:
 
             if rule.id in rules:
-                logger.warn("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
+                logger.warning("Conflicting rules "+rules[rule.id].toXML()+" in "+rules[rule.id].path+" != "+rule.toXML()+" in "+rule.path)
                 continue
         
             rules[rule.id] = rule

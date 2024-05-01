@@ -1,7 +1,7 @@
-# Device control policy sample: audit_all_apple_devices
+# Device control policy sample: audit_mobile_devices
 
-Description: This is a policy.              
-Device Type: Apple Device
+Description: Audit all access to Apple and Portable devices              
+Device Type: Apple Generic Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -14,22 +14,20 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th rowspan="2" valign="top">Name</th>
         <th colspan="2" valign="top">Devices</th>
         <th rowspan="2" valign="top">Rule Type</th>
-        <th colspan="5" valign="top"><center>Access</center></th>
+        <th colspan="3" valign="top"><center>Access</center></th>
         <th rowspan="2" valign="top">Notification</th>
     </tr>
     <tr>
         <th>Included</th>
-        <th>Excluded</th><th>Backup device</th><th>Update device</th><th>Download photos</th><th>Download files</th><th>Synch device</th></tr><tr>
-            <td rowspan="1"><b>Audit all Apple Devices</b></td>
+        <th>Excluded</th><th>Read</th><th>Write</th><th>Execute</th></tr><tr>
+            <td rowspan="1"><b>Audit All Mobile Devices</b></td>
             <td rowspan="1 valign="top">
-                <ul><li>All Apple Devices<a href="#all-apple-devices" title="all [{'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
+                <ul><li>All Mobile Devices<a href="#all-mobile-devices" title="or [{'$type': 'primaryId', 'value': 'portable_devices'}, {'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
             </td>
             <td rowspan="1" valign="top">.
                 <ul></ul>
             </td>
             <td>Audit Allowed</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
             <td>:page_facing_up:</td>
@@ -40,12 +38,12 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### All Apple Devices
+### All Mobile Devices
 
 
 
 This is a group of type *device*. 
-The match type for the group is *all*.
+The match type for the group is *or*.
 
 
 <table>
@@ -61,6 +59,16 @@ The match type for the group is *all*.
 
 <td>primaryId</td>
 
+<td>portable_devices</td>
+
+</tr>
+
+<tr>
+
+<td>or</td>
+
+<td>primaryId</td>
+
 <td>apple_devices</td>
 
 </tr>
@@ -68,7 +76,7 @@ The match type for the group is *all*.
 </table>
 
 
-#### Available properties for All Apple Devices
+#### Available properties for All Mobile Devices
 
 
 <details>
@@ -77,11 +85,15 @@ The match type for the group is *all*.
 ```json
 {
     "$type": "device",
-    "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-    "name": "All Apple Devices",
+    "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+    "name": "All Mobile Devices",
     "query": {
-        "$type": "all",
+        "$type": "or",
         "clauses": [
+            {
+                "$type": "primaryId",
+                "value": "portable_devices"
+            },
             {
                 "$type": "primaryId",
                 "value": "apple_devices"
@@ -110,7 +122,7 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 ## Files
 This policy is based on information in the following files:
 
-- [audit_all_apple_devices.json](audit_all_apple_devices.json)
+- [audit_mobile_devices.json](audit_mobile_devices.json)
 
 
 # Deployment Instructions
@@ -201,11 +213,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-            "name": "All Apple Devices",
+            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+            "name": "All Mobile Devices",
             "query": {
-                "$type": "all",
+                "$type": "or",
                 "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "portable_devices"
+                    },
                     {
                         "$type": "primaryId",
                         "value": "apple_devices"
@@ -216,15 +232,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a6913009298e",
-            "name": "Audit all Apple Devices",
+            "id": "2275E5E3-44D4-429E-A8BF-F73B390CBF46",
+            "name": "Audit All Mobile Devices",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
             ],
             "entries": [
                 {
-                    "$type": "appleDevice",
-                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "$type": "generic",
+                    "id": "0B77527F-ED25-4136-93CC-F604E847DAC4",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [
@@ -232,11 +248,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                         ]
                     },
                     "access": [
-                        "download_files_from_device",
-                        "sync_content_to_device",
-                        "backup_device",
-                        "update_device",
-                        "download_photos_from_device"
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
                     ]
                 }
             ]
@@ -303,11 +317,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     "groups": [
         {
             "$type": "device",
-            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
-            "name": "All Apple Devices",
+            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
+            "name": "All Mobile Devices",
             "query": {
-                "$type": "all",
+                "$type": "or",
                 "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "portable_devices"
+                    },
                     {
                         "$type": "primaryId",
                         "value": "apple_devices"
@@ -318,15 +336,15 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
     ],
     "rules": [
         {
-            "id": "772cef80-229f-48b4-bd17-a6913009298e",
-            "name": "Audit all Apple Devices",
+            "id": "2275E5E3-44D4-429E-A8BF-F73B390CBF46",
+            "name": "Audit All Mobile Devices",
             "includeGroups": [
-                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
             ],
             "entries": [
                 {
-                    "$type": "appleDevice",
-                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "$type": "generic",
+                    "id": "0B77527F-ED25-4136-93CC-F604E847DAC4",
                     "enforcement": {
                         "$type": "auditAllow",
                         "options": [
@@ -334,11 +352,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
                         ]
                     },
                     "access": [
-                        "download_files_from_device",
-                        "sync_content_to_device",
-                        "backup_device",
-                        "update_device",
-                        "download_photos_from_device"
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
                     ]
                 }
             ]
