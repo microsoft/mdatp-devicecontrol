@@ -677,7 +677,8 @@ class Inventory:
                 if group.id not in groups:
                     groupsXML += "\n"+group.toXML()
                     groups[group.id] = group
-                    paths.append(group.path)
+                    if entry_type not in Entry.MacEntryTypes:
+                        paths.append(group.path)
                     mac_policy["groups"].append(group.toJSON())
 
                     intune_ux_support += IntuneUXFeature.get_support_for(group)
@@ -948,7 +949,8 @@ def generate_files_format(format_strings):
     return generated_files_locations_by_format
 
 def parse_in_file(in_file):
-    query = "path.str.contains('"+in_file+"',regex=False)"
+    #query = "path.str.contains('"+in_file+"',regex=False)"
+    query = "path == '"+in_file+"'"
     title = str(in_file.split(os.sep)[-1]).split(".")[0]
     outfile = title+".md"
     settings = Default_Settings

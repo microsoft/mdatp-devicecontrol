@@ -114,7 +114,6 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 ## Files
 This policy is based on information in the following files:
 
-- [audit_deny_all_removable_media.json](audit_deny_all_removable_media.json)
 - [allow_and_audit_full_access_removable_media.json](allow_and_audit_full_access_removable_media.json)
 
 

@@ -45,7 +45,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         </tr><tr>
             <td rowspan="2"><b>Block All Portable Devices</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>All Mobile Devices<a href="#all-mobile-devices" title="or [{'$type': 'primaryId', 'value': 'portable_devices'}, {'$type': 'primaryId', 'value': 'apple_devices'}]"> (details)</a></ul>
+                <ul><li>All Portable Devices<a href="#all-portable-devices" title="and [{'$type': 'primaryId', 'value': 'portable_devices'}]"> (details)</a></ul>
             </td>
             <td rowspan="2" valign="top">.
                 <ul></ul>
@@ -121,12 +121,12 @@ The match type for the group is *and*.
 ```
 </details>
 
-### All Mobile Devices
+### All Portable Devices
 
 
 
 This is a group of type *device*. 
-The match type for the group is *or*.
+The match type for the group is *and*.
 
 
 <table>
@@ -146,20 +146,10 @@ The match type for the group is *or*.
 
 </tr>
 
-<tr>
-
-<td>or</td>
-
-<td>primaryId</td>
-
-<td>apple_devices</td>
-
-</tr>
-
 </table>
 
 
-#### Available properties for All Mobile Devices
+#### Available properties for All Portable Devices
 
 
 <details>
@@ -168,18 +158,14 @@ The match type for the group is *or*.
 ```json
 {
     "$type": "device",
-    "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
-    "name": "All Mobile Devices",
+    "id": "0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9",
+    "name": "All Portable Devices",
     "query": {
-        "$type": "or",
+        "$type": "and",
         "clauses": [
             {
                 "$type": "primaryId",
                 "value": "portable_devices"
-            },
-            {
-                "$type": "primaryId",
-                "value": "apple_devices"
             }
         ]
     }
@@ -206,7 +192,6 @@ UXNavigationTarget | http://www.microsoft.com | Notification hyperlink |[documen
 This policy is based on information in the following files:
 
 - [deny_mobile_devices.json](deny_mobile_devices.json)
-- [audit_mobile_devices.json](audit_mobile_devices.json)
 
 
 # Deployment Instructions
@@ -311,18 +296,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
         },
         {
             "$type": "device",
-            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
-            "name": "All Mobile Devices",
+            "id": "0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9",
+            "name": "All Portable Devices",
             "query": {
-                "$type": "or",
+                "$type": "and",
                 "clauses": [
                     {
                         "$type": "primaryId",
                         "value": "portable_devices"
-                    },
-                    {
-                        "$type": "primaryId",
-                        "value": "apple_devices"
                     }
                 ]
             }
@@ -376,7 +357,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
             "id": "350C4528-DE48-4E73-9298-0C9823CA1064",
             "name": "Block All Portable Devices",
             "includeGroups": [
-                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
+                "0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9"
             ],
             "entries": [
                 {
@@ -489,18 +470,14 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
         },
         {
             "$type": "device",
-            "id": "3778B4FD-A98B-4374-9EFE-859B98446E7D",
-            "name": "All Mobile Devices",
+            "id": "0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9",
+            "name": "All Portable Devices",
             "query": {
-                "$type": "or",
+                "$type": "and",
                 "clauses": [
                     {
                         "$type": "primaryId",
                         "value": "portable_devices"
-                    },
-                    {
-                        "$type": "primaryId",
-                        "value": "apple_devices"
                     }
                 ]
             }
@@ -554,7 +531,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
             "id": "350C4528-DE48-4E73-9298-0C9823CA1064",
             "name": "Block All Portable Devices",
             "includeGroups": [
-                "3778B4FD-A98B-4374-9EFE-859B98446E7D"
+                "0B2198B2-8E29-4AAB-AFC8-8B2CF827CDE9"
             ],
             "entries": [
                 {
