@@ -136,41 +136,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### allowed bitlocker unencrypted USBs
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAll*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-| DeviceEncryptionStateId | Plain |
-| SerialNumberId | FBH1111183400787 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{36e10524-d902-4097-8491-95aa24bd0221}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B36e10524-d902-4097-8491-95aa24bd0221%7D/GroupData -->
-	<Name>allowed bitlocker unencrypted USBs</Name>
-	<MatchType>MatchAll</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
-		<SerialNumberId>FBH1111183400787</SerialNumberId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Any Removable Media
 
 
@@ -235,6 +200,41 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
+### allowed bitlocker unencrypted USBs
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAll*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+| DeviceEncryptionStateId | Plain |
+| SerialNumberId | FBH1111183400787 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{36e10524-d902-4097-8491-95aa24bd0221}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B36e10524-d902-4097-8491-95aa24bd0221%7D/GroupData -->
+	<Name>allowed bitlocker unencrypted USBs</Name>
+	<MatchType>MatchAll</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
+		<SerialNumberId>FBH1111183400787</SerialNumberId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 
 ## Settings
 
@@ -253,7 +253,6 @@ This policy is based on information in the following files:
 
 - [Group Policy/example_1_groups.xml](Group%20Policy/example_1_groups.xml)
 - [Intune OMA-URI/bitlocker_encrypted_usbs{33e06f08-8787-4219-9dca-5872854f9d79}.xml](Intune%20OMA-URI/bitlocker_encrypted_usbs%7B33e06f08-8787-4219-9dca-5872854f9d79%7D.xml)
-- [Intune OMA-URI/any_removable_media{bdfbd64c-8586-4eb8-ae11-2f839e019532}.xml](Intune%20OMA-URI/any_removable_media%7Bbdfbd64c-8586-4eb8-ae11-2f839e019532%7D.xml)
 - [Group Policy/example_1_rules.xml](Group%20Policy/example_1_rules.xml)
 
 
@@ -274,9 +273,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Execute (32) is an unsupported access mask
-- File Read (8) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- File Execute (32) is an unsupported access mask
+- DeviceEncryptionStateId not supported
+- File Read (8) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -289,16 +289,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{36e10524-d902-4097-8491-95aa24bd0221}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B36e10524-d902-4097-8491-95aa24bd0221%7D/GroupData -->
-		<Name>allowed bitlocker unencrypted USBs</Name>
-		<MatchType>MatchAll</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-			<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
-			<SerialNumberId>FBH1111183400787</SerialNumberId>
-		</DescriptorIdList>
-	</Group>
 	<Group Id="{bdfbd64c-8586-4eb8-ae11-2f839e019532}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bbdfbd64c-8586-4eb8-ae11-2f839e019532%7D/GroupData -->
 		<Name>Any Removable Media</Name>
@@ -314,6 +304,16 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
 			<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{36e10524-d902-4097-8491-95aa24bd0221}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B36e10524-d902-4097-8491-95aa24bd0221%7D/GroupData -->
+		<Name>allowed bitlocker unencrypted USBs</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<DeviceEncryptionStateId>Plain</DeviceEncryptionStateId>
+			<SerialNumberId>FBH1111183400787</SerialNumberId>
 		</DescriptorIdList>
 	</Group>
 </Groups>

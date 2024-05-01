@@ -2286,7 +2286,18 @@ class Feature:
                 supported_group_types = group_support["supported_types"]
                 if object.group_type not in supported_group_types:
                     support.issues.append(object.group_type.label+" groups not supported.")
-             
+                elif "unsupported_descriptors" in self.feature_data["group"].keys():
+                    unsupported_descriptors = self.feature_data["group"]["unsupported_descriptors"]
+                    if object.group_type in unsupported_descriptors.keys():
+                        unsupported_descriptors_for_group = unsupported_descriptors[object.group_type]
+                        if hasattr(object,"_properties"):
+                            for property in object._properties:
+                                for unsupported_descriptor_for_group in unsupported_descriptors_for_group:
+                                    logger.debug("Checking "+str(property.name)+" for unsupported descriptors "+unsupported_descriptor_for_group.name)
+                                    if property.name == unsupported_descriptor_for_group.name:
+                                        support.issues.append(property.name+" not supported" )
+                    
+
                 supported_match_types = group_support["match_types"]
                 if object.match_type not in supported_match_types:
                     support.issues.append(object.match_type+" not supported.")
@@ -2357,7 +2368,12 @@ IntuneUXFeature = Feature(
                 Group.WindowsDeviceGroupType,
                 Group.WindowsPrinterGroupType
             ],
-            "match_types": ["MatchAll","MatchAny"]
+            "match_types": ["MatchAll","MatchAny"],
+            "unsupported_descriptors": {
+                Group.WindowsDeviceGroupType: [
+                    Group.WindowsDeviceEncryptionStateProperty
+                ]
+            }
         },
         "entry":{
             "access_masks":[1,2,4,64],
