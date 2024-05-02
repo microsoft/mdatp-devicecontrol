@@ -2,6 +2,9 @@
 
 Contains information and resources for creating and validating Device Control for macOS policy json.
 
+> [!IMPORTANT]  
+> Please review [Known Issues](https://learn.microsoft.com/en-us/defender-endpoint/mac-device-control-overview#known-issues) before deploying the samples.
+
 ## Samples
 
 The [samples](samples/README.md) directory contains a variety of example device control policies.
