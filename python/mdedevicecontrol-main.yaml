@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: UsePythonVersion@0
+  inputs:
+      versionSpec: '3.10'
+      addToPath: true
+      architecture: 'x64'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+    python3 -m pip install --upgrade build
+    python3 -m build
+    pip3 install -e .
+
+  displayName: 'Build mdedevicecontrol'
