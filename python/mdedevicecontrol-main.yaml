@@ -30,6 +30,8 @@ steps:
   displayName: 'Build mdedevicecontrol'
 
 - script: |
+    pwd
+    cd python
     python -m pytest tests/
     
   displayName: 'Run pytest'
