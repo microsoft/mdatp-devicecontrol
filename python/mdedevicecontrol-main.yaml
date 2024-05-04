@@ -22,6 +22,7 @@ steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
+    cd python
     python3 -m pip install --upgrade build
     python3 -m build
     pip3 install -e .
