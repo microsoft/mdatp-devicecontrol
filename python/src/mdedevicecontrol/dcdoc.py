@@ -1028,7 +1028,7 @@ def dcdoc(args):
                 try:
                     policy_path = policy_path.relative_to(source_path)
                     logger.debug(str(policy_path)+" is relative to "+source_path)
-                    policy_file = str(policy_path.resolve())
+                    policy_file = os.path.join(source_path,policy_path)
                     break
                 except ValueError as e:
                     logger.info(str(e))
