@@ -867,7 +867,7 @@ class Inventory:
             out_file.write(out)
             out_file.close()
 
-        logger.info("Generated documentation "+str(out_file))
+        logger.info("Generated documentation "+str(pathlib.Path(out_file).resolve())
 
 class Description:
 
@@ -998,7 +998,7 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
         out_file.write(out)
         out_file.close()
 
-    logger.info("Generated README "+str(out_file))
+    logger.info("Generated README "+str(pathlib.Path(out_file).resolve()))
 
 def dcdoc(args):
 
