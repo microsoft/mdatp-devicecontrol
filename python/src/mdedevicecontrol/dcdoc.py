@@ -1030,7 +1030,7 @@ def dcdoc(args):
                     logger.info(str(e))
 
             if policy_file is None:
-                logger.warning("Policy file in "+rule+" wasn't found in "+str(args.source_path))
+                logger.warning("Policy file in "+rule["file"]+" wasn't found in "+str(args.source_path))
                 continue
             
             title = None
