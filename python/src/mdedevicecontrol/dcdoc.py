@@ -862,12 +862,12 @@ class Inventory:
              "Helper":Helper,
              "title":title})
         
-
-        with open(dest+os.sep+file,"w") as out_file:
+        out_file_name = dest+os.sep+file
+        with open(out_file_name,"w") as out_file:
             out_file.write(out)
             out_file.close()
 
-        logger.info("Generated documentation "+str(pathlib.Path(out_file).resolve()))
+        logger.info("Generated documentation "+str(pathlib.Path(out_file_name).resolve()))
 
 class Description:
 
@@ -998,7 +998,7 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
         out_file.write(out)
         out_file.close()
 
-    logger.info("Generated README "+str(pathlib.Path(out_file).resolve()))
+    logger.info("Generated README "+str(pathlib.Path(readme_file_path).resolve()))
 
 def dcdoc(args):
 
