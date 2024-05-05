@@ -1023,11 +1023,11 @@ def dcdoc(args):
             policy_file = None
             for source_path in args.source_path:
                 try:
-                    policy_path = policy_path.relative_to(args.source_path)
+                    policy_path = policy_path.relative_to(source_path)
                     policy_file = str(policy_path)
                     break
-                except(e):
-                    logger.info(str(e))
+                except:
+                    logger.info(policy_path+" is not relative to "+source_path)
 
             if policy_file is None:
                 logger.warning("Policy file in "+rule+" wasn't found in "+str(args.source_path))
