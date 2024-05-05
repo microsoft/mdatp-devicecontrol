@@ -1454,6 +1454,6 @@ async def export(graph: Graph, destination,name,
 
     package.save(destination,rule_template,readme_template,description_template)
 
-
-# Run main
-asyncio.run(main())
+if __name__ == '__main__':
+    # Run main
+    asyncio.run(main())
