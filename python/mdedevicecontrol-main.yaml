@@ -41,3 +41,4 @@ steps:
     cd python
     cat mdedevicecontrol.log
   displayName: 'Show log'
+  continueOnError: true

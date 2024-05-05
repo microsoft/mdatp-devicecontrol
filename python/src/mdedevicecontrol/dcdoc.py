@@ -1027,6 +1027,7 @@ def dcdoc(args):
             for source_path in args.source_path:
                 try:
                     policy_path = policy_path.relative_to(source_path)
+                    logger.debug(policy_path+" is relative to "+source_path)
                     policy_file = str(policy_path.resolve())
                     break
                 except ValueError as e:
@@ -1045,6 +1046,7 @@ def dcdoc(args):
             if "title" in rule.keys():
                 title = rule["title"]
             
+            logger.debug("Generating parameters for "+policy_file)
             query,default_title,default_outfile,default_settings = parse_in_file(policy_file)
             if "settings" in rule.keys():
                 settings = Settings(rule["settings"])
