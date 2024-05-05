@@ -1020,7 +1020,7 @@ def dcdoc(args):
             policy_file = rule["file"]
 
             policy_path = pathlib.Path(os.path.join(scenarios_dir,policy_file)).resolve()
-            policy_path = policy_path.relative_to(os.getcwd())
+            policy_path = policy_path.relative_to(args.source_path)
             policy_file = str(policy_path)
 
             
