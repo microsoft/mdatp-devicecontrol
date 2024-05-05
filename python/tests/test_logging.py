@@ -1,7 +1,5 @@
 import logging
 
-import unittest
-import pathlib as pl
 
 from tests import check_path
 

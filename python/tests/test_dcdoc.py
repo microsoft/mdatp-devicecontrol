@@ -4,17 +4,11 @@ import xml.etree.ElementTree as ET
 
 import pathlib as pl
 
-import unittest
-import pathlib as pl
-
+from tests import check_path
 
 
 root_dir = pl.Path(__file__).parent.parent.parent.absolute()
 mac_samples_dir = os.path.join(root_dir,"macOS","policy","samples")
-
-def check_path(path):
-    if not pl.Path(path).resolve().is_file():
-        raise AssertionError("File does not exist: %s" % str(path))
 
 
 class DcDocArgs: 
