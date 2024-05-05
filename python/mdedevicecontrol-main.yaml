@@ -33,9 +33,5 @@ steps:
     pwd
     cd python
     python -m pytest tests/
-    
-  displayName: 'Run pytest'
-
-- script: |
     cat mdedevicecontrol.log
-  displayName: 'Show log'
+  displayName: 'Run pytest'
