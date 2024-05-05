@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 import pathlib as pl
 
-root_dir = pl.Path(__file__).parent.parent.absolute()
+root_dir = pl.Path(__file__).parent.parent.parent.absolute()
 mac_samples_dir = os.path.join(root_dir,"macOS","policy","samples")
 
 class DcDocArgs: 
