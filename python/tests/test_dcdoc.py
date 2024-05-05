@@ -2,6 +2,11 @@ import mdedevicecontrol.dcdoc as doc
 import os
 import xml.etree.ElementTree as ET
 
+import pathlib as pl
+
+root_dir = pl.Path(__file__).parent.parent.absolute()
+mac_samples_dir = os.join(root_dir,"macOS","policy","samples")
+
 class DcDocArgs: 
 
     def __init__(self):
@@ -44,8 +49,8 @@ class DcDocArgs:
 def test_generate_mac_docs():
         
     args = DcDocArgs()
-    args.set_source_path(os.getcwd()+"/../macOS/policy/samples")
-    args.scenarios = os.getcwd()+"/../macOS/policy/samples/scenarios.json"
+    args.set_source_path(str(mac_samples_dir))
+    args.scenarios = os.join(mac_samples_dir,"scenarios.json")
     
 
     doc.dcdoc(args)
