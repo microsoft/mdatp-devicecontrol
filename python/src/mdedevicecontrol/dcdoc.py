@@ -1020,10 +1020,18 @@ def dcdoc(args):
             policy_file = rule["file"]
 
             policy_path = pathlib.Path(os.path.join(scenarios_dir,policy_file)).resolve()
-            policy_path = policy_path.relative_to(args.source_path)
-            policy_file = str(policy_path)
+            policy_file = None
+            for source_path in args.source_path:
+                try:
+                    policy_path = policy_path.relative_to(args.source_path)
+                    policy_file = str(policy_path)
+                    break
+                except(e):
+                    logger.info(str(e))
 
-            
+            if policy_file is None:
+                logger.warning("Policy file in "+rule+" wasn't found in "+str(args.source_path))
+                continue
             
             title = None
             description = None
