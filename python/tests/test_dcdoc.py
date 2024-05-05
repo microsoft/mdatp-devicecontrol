@@ -57,7 +57,7 @@ def test_generate_mac_docs():
     args.scenarios = os.path.join(mac_samples_dir,"scenarios.json")
     
 
-    doc.dcdoc(args)
+    doc.process_args(args)
 
     check_path(os.path.join(str(os.getcwd()),"allow_all_removable_media_except_smi_instaview.md"))
     check_path(os.path.join(str(os.getcwd()),"readme.md"))

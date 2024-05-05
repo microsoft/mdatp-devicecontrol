@@ -1,6 +1,9 @@
 import mdedevicecontrol.dcintune as intune
 
 import os
+import asyncio
+
+    
 
 class DcIntuneArgs: 
 
@@ -8,7 +11,7 @@ class DcIntuneArgs:
 
         self.tenantId = os.environ["AAD_TENANT_ID"]
         self.clientId = os.environ["AAD_CLIENT_ID"]
-        self.loggingConf = doc.file("logging.conf")
+        self.loggingConf = intune.file("logging.conf")
 
 
         self.command = "export"
@@ -21,15 +24,12 @@ class DcIntuneArgs:
         self.readme_template = "readme.j2"
         self.description_template = "description.j2"
         self.readme_file = "readme.md"
-        
-        
 
-def test_rule_xml_1():
 
-    rule = intune.DeviceControlPolicyTemplate.DeviceControlRule()
-    rule.id = "12345"
-    rule.name = "Test"
-    #rule.included_groups = ["group1","group2"]
+def test_intune_export():
+        
+    args = DcIntuneArgs()
     
-    out =str(rule)
-    print(out)
+    asyncio.run(intune.process_args(args))
+    
+

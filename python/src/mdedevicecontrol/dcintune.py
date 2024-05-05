@@ -1326,7 +1326,10 @@ async def main():
 
 
     args = arg_parser.parse_args()
+    process_args(args)
 
+
+async def process_args(args):
 
     import logging.config
     logging.config.fileConfig(args.loggingConf)

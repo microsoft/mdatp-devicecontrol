@@ -1000,7 +1000,7 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
 
     logger.info("Generated README "+str(pathlib.Path(readme_file_path).resolve()))
 
-def dcdoc(args):
+def process_args(args):
 
     import logging.config
     logging.config.fileConfig(args.loggingConf)
@@ -1130,7 +1130,7 @@ def main():
     args = arg_parser.parse_args()
 
     
-    dcdoc(args)
+    process_args(args)
 
 if __name__ == '__main__':
     main()
