@@ -42,9 +42,9 @@ class DcDocArgs:
 def test_generate_mac_docs():
         
     args = DcDocArgs()
-    args.set_source_path(os.getcwd()+"/macOS/policy/samples")
-    args.set_dest(os.getcwd()+"/macOS/policy/samples")
-    args.scenarios = os.getcwd()+"/macOS/policy/samples/scenarios.json"
+    args.set_source_path(os.getcwd()+"../macOS/policy/samples")
+    args.set_dest(os.getcwd()+"../macOS/policy/samples")
+    args.scenarios = os.getcwd()+"../macOS/policy/samples/scenarios.json"
     
 
     doc.main(args)
