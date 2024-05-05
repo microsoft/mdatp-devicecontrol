@@ -1,4 +1,4 @@
-import mdedevicecontrol.dcdoc
+import mdedevicecontrol.dcdoc as doc
 import os
 import xml.etree.ElementTree as ET
 
@@ -10,12 +10,12 @@ class DcDocArgs:
         self.scenarios = None
         self.in_file = None
 
-        self.source_path = dcdoc.dir_path(".")
+        self.source_path = doc.dir_path(".")
         self.format = "text"
         self.out_file = None
-        self.dest = dcdoc.dir(".")
+        self.dest = doc.dir(".")
 
-        self.templates_path = dcdoc.path_array("templates")
+        self.templates_path = doc.path_array("templates")
         self.template = "dcutil.j2"
         self.readme_template = "readme.j2"
         self.description_template = "description.j2"
@@ -25,14 +25,14 @@ class DcDocArgs:
         
         
     def set_source_path(self,path):
-        self.source_path = dcdoc.dir_path(path)
+        self.source_path = doc.dir_path(path)
 
     
     def set_dest(self,dest):
-        self.dest = dcdoc.dir(dest)
+        self.dest = doc.dir(dest)
 
     def set_templates_path(self,templates_path):
-        self.templates_path = dcdoc.path_array(templates_path)
+        self.templates_path = doc.path_array(templates_path)
 
     
         
@@ -47,6 +47,6 @@ def test_generate_mac_docs():
     args.scenarios = os.getcwd()+"/macOS/policy/samples/scenarios.json"
     
 
-    dcdoc.main(args)
+    doc.main(args)
     return True
     
