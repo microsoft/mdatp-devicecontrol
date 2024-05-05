@@ -998,6 +998,9 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
 
 def dcdoc(args):
 
+    import logging.config
+    logging.config.fileConfig(args.loggingConf)
+    
     templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
     templateEnv = jinja2.Environment(loader=templateLoader)
 
@@ -1102,6 +1105,8 @@ def main():
     input_group.add_argument('-s','--scenarios',dest="scenarios",type=file,help='A JSON file that contains a list of scenarios to process')
     input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rule to process')
 
+    arg_parser.add_argument('-l','--loggingConf', type=file,dest="loggingConf",help="path to the logging.conf",default="logging.conf")
+
 
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files.  Defaults to current working directory.',default=".")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output.  Defaults to text.",default="text")
@@ -1117,6 +1122,8 @@ def main():
     
 
     args = arg_parser.parse_args()
+
+    
     dcdoc(args)
 
 if __name__ == '__main__':

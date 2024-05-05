@@ -1305,7 +1305,7 @@ async def main():
 
     arg_parser.add_argument('-t', '--tenantId', type=tenant_id_type, dest="tenantId", help='tenantId for the tenant',required=True)
     arg_parser.add_argument('-c', '--clientId', type=client_id_type, dest="clientId", help='clientId of the application',required=True)
-    arg_parser.add_argument('-l','--loggingConf', type=file,dest="loggingConf",help="path to the logging.conf",default="python"+os.sep+"logging.conf")
+    arg_parser.add_argument('-l','--loggingConf', type=file,dest="loggingConf",help="path to the logging.conf",default="logging.conf")
 
     subparsers = arg_parser.add_subparsers(help='sub-command help')
     parser_export = subparsers.add_parser('export', help='export help')

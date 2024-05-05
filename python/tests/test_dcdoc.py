@@ -15,6 +15,8 @@ class DcDocArgs:
         self.out_file = None
         self.dest = doc.dir(".")
 
+        self.loggingConf = doc.file("logging.conf")
+
         self.templates_path = doc.path_array("templates")
         self.template = "dcutil.j2"
         self.readme_template = "readme.j2"
