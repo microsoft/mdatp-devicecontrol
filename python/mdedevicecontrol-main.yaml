@@ -35,3 +35,7 @@ steps:
     python -m pytest tests/
     
   displayName: 'Run pytest'
+
+- script: |
+    cat mdedevicecontrol.log
+  displayName: 'Show log'
