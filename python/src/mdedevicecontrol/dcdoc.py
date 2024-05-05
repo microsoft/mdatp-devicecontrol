@@ -867,7 +867,7 @@ class Inventory:
             out_file.write(out)
             out_file.close()
 
-        logger.info("Generated documentation "+str(pathlib.Path(out_file).resolve())
+        logger.info("Generated documentation "+str(pathlib.Path(out_file).resolve()))
 
 class Description:
 
