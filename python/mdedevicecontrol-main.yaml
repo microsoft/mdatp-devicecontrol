@@ -33,8 +33,11 @@ steps:
     pwd
     cd python
     python -m pytest tests/
-    ls
-    cd ..
-    pwd
-    ls
+
   displayName: 'Run pytest'
+
+- script: |
+    pwd
+    cd python
+    cat mdedevicecontrol.log
+  displayName: 'Show log'
