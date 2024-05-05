@@ -1193,7 +1193,6 @@ class Group:
         if path is not None:
             p = pathlib.Path(path)
             p = p.resolve()
-            p = p.relative_to(os.getcwd())
             self.path = str(p)
 
     def get_oma_uri(self):
@@ -1429,7 +1428,6 @@ class PolicyRule:
         if path is not None:
             p = pathlib.Path(path)
             p = p.resolve()
-            p = p.relative_to(os.getcwd())
             self.path = str(p)
         
     def get_oma_uri(self):
