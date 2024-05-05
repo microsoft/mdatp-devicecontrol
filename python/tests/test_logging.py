@@ -8,6 +8,10 @@ def check_path(path):
         raise AssertionError("File does not exist: %s" % str(path))
 
 def test_mdedevicecontrol_logging():
+
+    import logging.config
+    logging.config.fileConfig("logging.conf")
+
     logger = logging.getLogger("mdedevicecontrol.devicecontrol")
     logger.info("Info message for mdedevicecontrol.devicecontrol")
     logger.warning("Warning message for mdedevicecontrol.devicecontrol")
