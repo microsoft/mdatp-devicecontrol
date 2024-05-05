@@ -35,11 +35,5 @@ steps:
     python -m pytest tests/
 
   displayName: 'Run pytest'
-  continueOnError: true
 
-- script: |
-    pwd
-    cd python
-    cat mdedevicecontrol.log
-  displayName: 'Show log'
   

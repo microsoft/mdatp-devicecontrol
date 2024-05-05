@@ -65,8 +65,8 @@ def test_generate_mac_docs():
 
     doc.dcdoc(args)
 
-    check_path(os.path.join(str(root_dir),"allow_all_removable_media_except_smi_instaview.md"))
-    check_path(os.path.join(str(root_dir),"readme.md"))
+    check_path(os.path.join(str(os.getcwd()),"allow_all_removable_media_except_smi_instaview.md"))
+    check_path(os.path.join(str(os.getcwd()),"readme.md"))
     
     
     
