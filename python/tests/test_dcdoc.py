@@ -47,6 +47,6 @@ def test_generate_mac_docs():
     args.scenarios = os.getcwd()+"/../macOS/policy/samples/scenarios.json"
     
 
-    doc.main(args)
+    doc.dcdoc(args)
     return True
     
