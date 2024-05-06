@@ -1297,6 +1297,9 @@ def file(path):
     else:
         raise argparse.ArgumentError(None,"Not a file "+path)
 
+async def display_access_token(graph: Graph):
+    token = await graph.get_app_only_token()
+    logger.debug('App-only token:', token, '\n')
 
 async def main():
     
@@ -1338,6 +1341,8 @@ async def process_args(args):
 
     graph: Graph = Graph(args.tenantId,args.clientId,args.clientSecret)
 
+    await display_access_token(graph)
+    
     try:
         if args.command == "export":
 

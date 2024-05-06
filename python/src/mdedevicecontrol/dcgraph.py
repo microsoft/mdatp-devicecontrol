@@ -51,6 +51,11 @@ class Graph:
         self.client_credential = ClientSecretCredential(tenant_id, client_id, client_secret)
         self.graph_client = GraphServiceClient(self.client_credential)
 
+    async def get_app_only_token(self):
+        graph_scope = 'https://graph.microsoft.com/.default'
+        access_token = await self.client_credential.get_token(graph_scope)
+        return access_token.token
+    
 
     async def get_user_token(self):
         graph_scopes = self.settings['graphUserScopes']
