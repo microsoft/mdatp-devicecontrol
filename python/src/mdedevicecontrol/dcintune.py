@@ -19,6 +19,19 @@ from mdedevicecontrol.dcdoc import Inventory, Description
 import logging
 logger = logging.getLogger(__name__)
 
+def full_stack():
+    import traceback, sys
+    exc = sys.exc_info()[0]
+    stack = traceback.extract_stack()[:-1]  # last one would be full_stack()
+    if exc is not None:  # i.e. an exception is present
+        del stack[-1]       # remove call of full_stack, the printed exception
+                            # will contain the caught exception caller instead
+    trc = 'Traceback (most recent call last):\n'
+    stackstr = trc + ''.join(traceback.format_list(stack))
+    if exc is not None:
+         stackstr += '  ' + traceback.format_exc().lstrip(trc)
+    return stackstr
+
 class DeviceControlPolicyTemplate:
 
     class Util:
@@ -1370,7 +1383,9 @@ async def process_args(args):
         logger.error('Error:')
         if odata_error.error:
             logger.error(odata_error.error.code, odata_error.error.message)
-
+        else:
+            logger.error("ODataError "+str(odata_error))
+            full_stack()
 
 
 
