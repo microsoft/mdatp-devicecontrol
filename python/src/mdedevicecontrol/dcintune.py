@@ -1300,7 +1300,7 @@ def file(path):
 async def display_access_token(graph: Graph):
     logger.debug("Display access token")
     token = await graph.get_app_only_token()
-    logger.debug("App-only token: "+token)
+    logger.debug("App-only token: "+str(token))
 
 async def main():
     
@@ -1360,6 +1360,11 @@ async def process_args(args):
                          args.template,
                          args.readme_template,
                          args.description_template)
+        
+        elif not hasattr("command",args):
+            logging.warning("No command")
+        else:
+            logging.warning("Unknown command "+args.command)
             
     except ODataError as odata_error:
         logger.error('Error:')
