@@ -41,6 +41,7 @@ steps:
     TENANT_ID: $(tenantId)
     CLIENT_ID: $(clientId)
     CLIENT_SECRET: $(clientSecret)
+  continueOnError: true
 
 - script: |
     cd python
