@@ -9,9 +9,11 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+env:
+  AAD_TENANT_ID: ${tenantId}
+  AAD_CLIENT_ID: ${clientId}
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
 - task: UsePythonVersion@0
   inputs:
