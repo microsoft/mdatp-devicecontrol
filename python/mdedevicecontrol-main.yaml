@@ -37,7 +37,8 @@ steps:
 
   displayName: 'Run pytest'
   env:
-    AAD_TENANT_ID: $(tenantId)
-    AAD_CLIENT_ID: $(clientId)
+    TENANT_ID: $(tenantId)
+    CLIENT_ID: $(clientId)
+    CLIENT_SECRET: $(clientSecret)
 
   

@@ -9,8 +9,9 @@ class DcIntuneArgs:
 
     def __init__(self):
 
-        self.tenantId = os.environ["AAD_TENANT_ID"]
-        self.clientId = os.environ["AAD_CLIENT_ID"]
+        self.tenantId = os.environ["TENANT_ID"]
+        self.clientId = os.environ["CLIENT_ID"]
+        self.clientSecret = os.environ["CLIENT_SECRET"]
         self.loggingConf = intune.file("logging.conf")
 
 

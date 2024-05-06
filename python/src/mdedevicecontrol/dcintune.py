@@ -1305,6 +1305,7 @@ async def main():
 
     arg_parser.add_argument('-t', '--tenantId', type=tenant_id_type, dest="tenantId", help='tenantId for the tenant',required=True)
     arg_parser.add_argument('-c', '--clientId', type=client_id_type, dest="clientId", help='clientId of the application',required=True)
+    arg_parser.add_argument('-s', '--clientSecret', dest="clientSecret", help='clientSecret of the application',required=True)
     arg_parser.add_argument('-l','--loggingConf', type=file,dest="loggingConf",help="path to the logging.conf",default="logging.conf")
 
     subparsers = arg_parser.add_subparsers(help='sub-command help')
@@ -1335,7 +1336,7 @@ async def process_args(args):
     logging.config.fileConfig(args.loggingConf)
 
 
-    graph: Graph = Graph(args.tenantId,args.clientId)
+    graph: Graph = Graph(args.tenantId,args.clientId,args.clientSecret)
 
     try:
         if args.command == "export":

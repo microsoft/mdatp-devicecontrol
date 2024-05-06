@@ -1,5 +1,6 @@
 from configparser import SectionProxy
 from azure.identity import DeviceCodeCredential
+from azure.identity.aio import ClientSecretCredential
 
 from msgraph_beta import GraphServiceClient
 from msgraph_beta.generated.users.item.user_item_request_builder import UserItemRequestBuilder
@@ -36,15 +37,19 @@ class Graph:
     device_code_credential: DeviceCodeCredential
     user_client: GraphServiceClient
 
-    def __init__(self, tenantId, clientId):
+    def __init__(self, tenantId, clientId, clientSecret):
         
         client_id = clientId
         tenant_id = tenantId
+        client_secret = clientSecret
+
         graph_scopes = scopes.split(' ')
 
         logger.debug("scopes: "+str(graph_scopes))
-        self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
-        self.graph_client = GraphServiceClient(self.device_code_credential, graph_scopes)
+        #self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
+
+        self.client_credential = ClientSecretCredential(tenant_id, client_id, client_secret)
+        self.graph_client = GraphServiceClient(self.client_credential)
 
 
     async def get_user_token(self):
