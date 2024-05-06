@@ -1383,6 +1383,7 @@ async def process_args(args):
         logger.error('Error:')
         if odata_error.error:
             logger.error("Code: " + odata_error.error.code + "Message: " + odata_error.error.message)
+            full_stack()
         else:
             logger.error("ODataError "+str(odata_error))
             full_stack()
