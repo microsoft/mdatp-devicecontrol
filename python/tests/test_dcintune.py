@@ -12,6 +12,9 @@ class DcIntuneArgs:
         self.tenantId = os.environ["TENANT_ID"]
         self.clientId = os.environ["CLIENT_ID"]
         self.clientSecret = os.environ["CLIENT_SECRET"]
+
+        
+
         self.loggingConf = intune.file("logging.conf")
 
 
