@@ -1382,7 +1382,7 @@ async def process_args(args):
     except ODataError as odata_error:
         logger.error('Error:')
         if odata_error.error:
-            logger.error(odata_error.error.code, odata_error.error.message)
+            logger.error("Code: " + odata_error.error.code + "Message: " + odata_error.error.message)
         else:
             logger.error("ODataError "+str(odata_error))
             full_stack()
