@@ -1095,6 +1095,8 @@ class Package:
                 json.dump(policy_json,policy_file,cls=dc.DCJSONEncoder,indent=5)
                 policy_file.close()
 
+                logger.info("Exporting macOS policy "+name+" to "+policy_file_path)
+
                 if policy.description is None:
                     policy.description = ""
                     
@@ -1125,6 +1127,9 @@ class Package:
                     group_file.write(str(group))
                     group_file.close()
 
+                    logger.info("Exporting group "+group.name+" to "+group_file_path)
+
+
                     if group.description is None:
                         group.description = ""
 
@@ -1141,6 +1146,9 @@ class Package:
                     rule_file = open(rule_file_path,"w")
                     rule_file.write(str(rule))
                     rule_file.close()
+
+                    logger.info("Exporting rule "+rule.name+" to "+rule_file_path)
+
 
                     if rule.description is None:
                         rule.description = ""
@@ -1269,6 +1277,10 @@ class Package:
 
         json.dump(package_data,package_file,indent=5)
         package_file.close()
+
+        logger.info("Writing package file to "+str(package_file_path))
+        logger.info("Writing package metadata file to "+str(metadata_file_path))
+
 
         metadata_file.write(str(self.metadata))
         metadata_file.close()
