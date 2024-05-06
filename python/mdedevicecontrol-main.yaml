@@ -34,7 +34,7 @@ steps:
 - script: |
     pwd
     cd python
-    python -m pytest tests/ -W ignore::UserWarning
+    python -m pytest tests/ -W ignore::DeprecationWarning
 
   displayName: 'Run pytest'
   env:
