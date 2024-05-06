@@ -9,11 +9,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-env:
-  AAD_TENANT_ID: ${tenantId}
-  AAD_CLIENT_ID: ${clientId}
 
 steps:
+
 
 - task: UsePythonVersion@0
   inputs:
@@ -30,6 +28,7 @@ steps:
     pip3 install pytest pytest-azurepipelines
     pip3 install -e .
   displayName: 'Build mdedevicecontrol'
+  
 
 - script: |
     pwd
@@ -37,5 +36,8 @@ steps:
     python -m pytest tests/
 
   displayName: 'Run pytest'
+  env:
+    AAD_TENANT_ID: $(tenantId)
+    AAD_CLIENT_ID: $(clientId)
 
   
