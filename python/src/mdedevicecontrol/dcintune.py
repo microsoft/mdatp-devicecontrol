@@ -1298,8 +1298,9 @@ def file(path):
         raise argparse.ArgumentError(None,"Not a file "+path)
 
 async def display_access_token(graph: Graph):
+    logger.debug("Display access token")
     token = await graph.get_app_only_token()
-    logger.debug('App-only token:', token, '\n')
+    logger.debug("App-only token: "+token)
 
 async def main():
     

@@ -58,8 +58,10 @@ class Graph:
         logger.debug("Graph client created.")
 
     async def get_app_only_token(self):
+        logger.debug("get_app_only_token")
         graph_scope = 'https://graph.microsoft.com/.default'
         access_token = await self.client_credential.get_token(graph_scope)
+        logger.debug("access token "+str(access_token.token))
         return access_token.token
     
 
