@@ -28,6 +28,7 @@ steps:
     pip3 install pytest pytest-azurepipelines
     pip3 install -e .
   displayName: 'Build mdedevicecontrol'
+
   
 
 - script: |
@@ -40,5 +41,10 @@ steps:
     TENANT_ID: $(tenantId)
     CLIENT_ID: $(clientId)
     CLIENT_SECRET: $(clientSecret)
+
+- script: |
+    cd python
+    cat mdedevicecontrol.log
+  displayName: 'Show Logs'
 
   
