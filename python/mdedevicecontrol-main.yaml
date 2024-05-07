@@ -23,6 +23,7 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
     cd python
+    mkdir export
     python3 -m pip install --upgrade build
     python3 -m build
     pip3 install pytest pytest-azurepipelines
@@ -48,4 +49,5 @@ steps:
     cat mdedevicecontrol.log
   displayName: 'Show Logs'
 
-  
+- publish: $(System.DefaultWorkingDirectory)/export
+  displayName: 'Intune Export'
