@@ -2105,6 +2105,7 @@ class Entry:
 
         type_xml = ET.SubElement(entry_xml,"Type")
         type_xml.text = self.enforcement.variations["gpo"]
+        logger.debug("Set type text to "+type_xml.text)
 
         access_mask_xml = ET.SubElement(entry_xml,"AccessMask")
 
