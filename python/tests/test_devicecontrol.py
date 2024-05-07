@@ -18,3 +18,10 @@ def test2():
                          properties=properties)
 
     print(str(g1))
+
+
+def test3():
+
+    api = dc.api()
+
+    entry = api.createEntry()

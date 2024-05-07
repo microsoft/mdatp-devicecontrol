@@ -2457,12 +2457,12 @@ class api:
         name = ET.SubElement(group_xml,"Name",{})
         name.text = name
 
-        match_type = ET.SubElement(group_xml,"MatchType")
+        match_type_xml = ET.SubElement(group_xml,"MatchType")
         match match_type:
             case MatchType.Any:
-                match_type.text = MatchType.Any
+                match_type_xml.text = MatchType.Any
             case MatchType.All:
-                match_type.text = MatchType.All
+                match_type_xml.text = MatchType.All
             case _:
                 logger.warn("Unknown MatchType "+match_type)
         
