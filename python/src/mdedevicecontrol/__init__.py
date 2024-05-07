@@ -2496,8 +2496,8 @@ class api:
         oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(id)+"/GroupData")
         group_xml.append(oma_uri_comment)
 
-        name = ET.SubElement(group_xml,"Name")
-        name.text = name
+        name_xml = ET.SubElement(group_xml,"Name")
+        name_xml.text = name
 
         match_type_xml = ET.SubElement(group_xml,"MatchType")
         match match_type:
