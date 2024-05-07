@@ -2521,7 +2521,7 @@ class api:
             id = str(uuid.uuid4())
             logger.debug("Generating UUID="+id+" for entry")
 
-        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement+" permissions="+str(permissions)+" notifications="+str(notifications)+" id="+id)
+        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement.label+" permissions="+str(permissions)+" notifications="+str(notifications)+" id="+id)
         
         entry_xml = ET.Element("Entry", Id=id)
 
@@ -2540,3 +2540,16 @@ class api:
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
         
         return Entry(entry_xml)
+
+
+    def createRule(self,rule_name,
+                   included_groups = [], 
+                   excluded_groups = [], 
+                   entries = [], 
+                   id = None):
+        
+        if id is None:
+            id = str(uuid.uuid4())
+            logger.debug("Generating UUID="+id+" for rule")
+
+        pass
