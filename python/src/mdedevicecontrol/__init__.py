@@ -1,6 +1,7 @@
 __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
+import dcintune as intune
 import json
 import copy
 import os
@@ -2640,3 +2641,20 @@ class api:
         return rule
             
         
+    def save(self,path=os.getcwd(),name="package"):
+
+        package_path = pathlib.PurePath(os.path.join(path,name))
+        if not os.path.isdir(package_path):
+            os.mkdir(package_path)
+
+        path_map = {}
+
+        for layout_path in intune.Package.layout:
+            orig_path = str(layout_path)
+
+            layout_path = layout_path.replace(".",os.sep)
+            layout_path = pathlib.PurePath(os.path.join(package_path,layout_path)) 
+            if not os.path.isdir(layout_path):
+                os.mkdir(layout_path)
+
+            path_map[orig_path] = layout_path

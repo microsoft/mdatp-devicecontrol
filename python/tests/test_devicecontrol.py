@@ -1,5 +1,8 @@
 import mdedevicecontrol as dc
 
+from tests import root_dir
+import os
+
 def test_create_api():
 
     api = dc.api()
@@ -49,3 +52,24 @@ def test_create_rule_1():
     rule = api.createRule("Test Rule 2",
                           included_groups=[all_removable_media_devices],
                           entries=[allow_read_entry])
+    
+
+def test_save():
+
+    api = dc.api()
+    removable_media_devices_family = api.createProperty(dc.Group.WindowsDeviceFamilyProperty,dc.GroupProperty.WindowsRemovableMediaDevices)
+    properties = [removable_media_devices_family]
+
+    all_removable_media_devices = api.createGroup(name="All Removable Media Devices",
+            group_type=dc.Group.WindowsDeviceGroupType,
+            match_type=dc.MatchType.Any,
+            properties=properties)
+    
+    allow_read_entry = api.createEntry()
+
+    rule = api.createRule("Test Rule 2",
+                          included_groups=[all_removable_media_devices],
+                          entries=[allow_read_entry])
+    
+
+    dc.api.save(os.path.join(str(root_dir),"export"),"Test Package 0")
