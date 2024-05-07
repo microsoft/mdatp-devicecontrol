@@ -1,7 +1,7 @@
 __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
-import dcintune as intune
+import mdedevicecontrol.dcintune as intune
 import json
 import copy
 import os
