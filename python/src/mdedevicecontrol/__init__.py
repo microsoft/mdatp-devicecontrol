@@ -1153,7 +1153,7 @@ class Group:
             
             descriptors = root.findall("./DescriptorIdList//")
             for descriptor in descriptors:
-                logger.debug("Getting group property for "+descriptor.tag)
+                logger.debug("Getting group property for "+str(descriptor.tag))
                 group_property = self.group_type.get_property_by_name(descriptor.tag)
                 if group_property is None:
                     #This is the special case where they have the same group type (device),
@@ -2516,7 +2516,7 @@ class api:
             id = str(uuid.uuid4())
             logger.debug("Generating UUID="+id+" for entry")
 
-        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement+" permissions="+str(permissions)+" notifications="+notifications+" id="+id)
+        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement+" permissions="+str(permissions)+" notifications="+str(notifications)+" id="+id)
         
         entry_xml = ET.Element("Entry", Id=id)
 
