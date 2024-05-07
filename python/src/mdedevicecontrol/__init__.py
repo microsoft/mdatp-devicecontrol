@@ -1153,6 +1153,11 @@ class Group:
             
             descriptors = root.findall("./DescriptorIdList//")
             for descriptor in descriptors:
+
+                if descriptor.tag == ET.Comment:
+                    logger.debug("Skipping comment "+str(descriptor.text))
+                    continue
+
                 logger.debug("Getting group property for "+str(descriptor.tag))
                 group_property = self.group_type.get_property_by_name(descriptor.tag)
                 if group_property is None:
@@ -1163,7 +1168,7 @@ class Group:
                         group_property = self.group_type.get_property_by_name(descriptor.tag)
                 
                     else:
-                        raise Exception("Unknown group property"+descriptor.tag+" for "+self.group_type.label)
+                        raise Exception("Unknown group property"+str(descriptor.tag)+" for "+self.group_type.label)
                 
 
                 self._properties.append(Property(group_property, descriptor.text))
