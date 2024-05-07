@@ -2431,7 +2431,7 @@ class api:
                     id = None):
         
         if id is None:
-            id = uuid.uuid4()
+            id = str(uuid.uuid4())
             logger.debug("Generating UUID="+id+" for group")
 
         logger.debug("Creating a group name="+name+" match_type="+match_type+"id="+id)
@@ -2485,3 +2485,21 @@ class api:
         self.groups[group.id] = group
 
         return group
+    
+    def createEntry(self,
+                    entry_type=Entry.WindowsDevice,
+                    enforcement=Enforcement.Allow,
+                    permissions={
+                        WindowsEntryType.DiskReadMask: True,
+                        WindowsEntryType.FileReadMask: True
+                    },
+                    notifications=Notifications(0,Format.OMA_URI),
+                    id=None):
+        '''
+        <Entry Id="{467726b6-a548-4f09-80d0-e8a0efc90bce}">
+		    <Type>Allow</Type>
+		    <AccessMask>63</AccessMask>
+		    <Options>0</Options>
+	    </Entry>
+        '''
+        pass
