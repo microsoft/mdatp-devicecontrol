@@ -2103,6 +2103,8 @@ class Entry:
 
         entry_xml = ET.Element("Entry", Id=id)
 
+        logger.debug("Id="+id)
+
         type_xml = ET.SubElement(entry_xml,"Type")
         type_xml.text = self.enforcement.variations["gpo"]
         logger.debug("Set type text to "+type_xml.text)
