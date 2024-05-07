@@ -31,3 +31,21 @@ def test_create_rule():
     api = dc.api()
 
     rule = api.createRule("Test Rule")
+
+def test_create_rule_1():
+
+    api = dc.api()
+
+    removable_media_devices_family = api.createProperty(dc.Group.WindowsDeviceFamilyProperty,dc.GroupProperty.WindowsRemovableMediaDevices)
+    properties = [removable_media_devices_family]
+
+    all_removable_media_devices = api.createGroup(name="All Removable Media Devices",
+            group_type=dc.Group.WindowsDeviceGroupType,
+            match_type=dc.MatchType.Any,
+            properties=properties)
+    
+    allow_read_entry = api.createEntry()
+
+    rule = api.createRule("Test Rule 2",
+                          included_groups=[all_removable_media_devices],
+                          entries=[allow_read_entry])
