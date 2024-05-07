@@ -1652,7 +1652,14 @@ class WindowsEntryType:
     }
 
 
-    
+    def getAccessMaskForPermissions(permissions):
+
+        access_mask = 0
+        for permission in permissions:
+            if permissions[permission]:
+                access_mask = access_mask + permission
+
+        return access_mask
 
 
     def __init__(self,name, label,access_masks):
@@ -2517,8 +2524,11 @@ class api:
         type_xml.text = enforcement.variations[Format.OMA_URI]
 
         access_mask_xml = ET.SubElement(entry_xml,"AccessMask")
-        access_mask_xml.text = 
+
+        if entry_type in Entry.WindowsEntryTypes:
+            access_mask_xml.text = WindowsEntryType.getAccessMaskForPermissions(permissions)
 
 
-        logger.debug("Creating a group with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
+
+        logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
         pass
