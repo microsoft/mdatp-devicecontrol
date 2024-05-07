@@ -1,4 +1,4 @@
-from ..src import mdedevicecontrol as dc
+import mdedevicecontrol as dc
 
 def test1():
 
