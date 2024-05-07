@@ -2430,6 +2430,10 @@ class api:
                     properties = [],
                     id = None):
         
+        if id is None:
+            id = uuid.uuid4()
+            logger.debug("Generating UUID="+id+" for group")
+
         logger.debug("Creating a group name="+name+" match_type="+match_type+"id="+id)
         
         '''
@@ -2444,9 +2448,7 @@ class api:
 	        </Group>
         '''
 
-        if id is None:
-            id = uuid.uuid4()
-
+        
         group_xml = ET.Element("Group", Id=id, Type=group_type.name)
             
         oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(id)+"/GroupData")
