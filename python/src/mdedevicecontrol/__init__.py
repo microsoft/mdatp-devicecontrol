@@ -2502,7 +2502,7 @@ class api:
     
     def createEntry(self,
                     entry_type=Entry.WindowsDevice,
-                    enforcement=Enforcement.Allow,
+                    enforcement=PolicyRule.Allow,
                     permissions={
                         WindowsEntryType.DiskReadMask: True,
                         WindowsEntryType.FileReadMask: True
@@ -2533,7 +2533,10 @@ class api:
         if entry_type in Entry.WindowsEntryTypes:
             access_mask_xml.text = WindowsEntryType.getAccessMaskForPermissions(permissions)
 
+        options_xml = ET.SubElement(entry_xml,"Options")
+        options_xml.text = str(int(notifications))
 
 
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
-        pass
+        
+        return Entry(entry_xml)
