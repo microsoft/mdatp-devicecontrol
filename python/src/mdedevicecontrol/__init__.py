@@ -2626,7 +2626,7 @@ class api:
 
         for entry in entries:
 
-            entry_xml = entry.getXMLElementTree()
+            entry_xml = entry.getElementTree()
             rule_xml.append(entry_xml)
 
 
