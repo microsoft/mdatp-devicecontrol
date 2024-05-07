@@ -3,7 +3,7 @@ import mdedevicecontrol.dcintune as intune
 import os
 import asyncio
 
-from tests import hash
+from tests import hash, root_dir
     
 
 class DcIntuneArgs: 
@@ -21,7 +21,7 @@ class DcIntuneArgs:
 
         self.command = "export"
 
-        self.dest = os.path.join(os.getcwd(),"export")
+        self.dest = os.path.join(str(root_dir),"export")
         self.package_name = hash(self.tenantId)
 
         self.templates_path = intune.path_array("templates")
