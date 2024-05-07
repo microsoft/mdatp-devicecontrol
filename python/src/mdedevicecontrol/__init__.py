@@ -2455,6 +2455,10 @@ IntuneUXFeature = Feature(
     
 class api:
 
+    def newGUID():
+        return "{"+str(uuid.uuid4())+"}"
+
+
     def __init__(self):
         logger.debug("Created instance of device control api")
         self.groups = {}
@@ -2473,7 +2477,7 @@ class api:
                     id = None):
         
         if id is None:
-            id = str(uuid.uuid4())
+            id = api.newGUID()
             logger.debug("Generating UUID="+id+" for group")
 
         logger.debug("Creating a group name="+name+" match_type="+match_type+" id="+id)
@@ -2547,7 +2551,7 @@ class api:
         '''
 
         if id is None:
-            id = str(uuid.uuid4())
+            id = api.newGUID()
             logger.debug("Generating UUID="+id+" for entry")
 
         logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement.label+" permissions="+str(permissions)+" notifications="+str(notifications)+" id="+id)
@@ -2604,7 +2608,7 @@ class api:
         '''
         
         if id is None:
-            id = str(uuid.uuid4())
+            id = api.newGUID()
             logger.debug("Generating UUID="+id+" for rule")
 
         rule_xml = ET.Element("PolicyRule", Id=id)
@@ -2683,3 +2687,19 @@ class api:
             rule_file.close()
 
             logger.info("Exporting rule "+rule.name+" to "+str(rule_file_path))
+
+    def copy(self,object):
+
+        logger.debug("Creating a copy of "+object.__class__)
+
+        match object.__class__:
+            case "mdedevicecontrol.Group":
+                new_group = copy.deepcopy(object)
+                logger.debug("Changing id of copy id="+object.id)
+                new_group.id = api.newGUID()
+                logger.debug("New id is "+new_group.id)
+                self.groups[new_group.id] = new_group
+                return new_group
+            case _:
+                logger.warning("Can't copy "+object.__class__)
+                return object

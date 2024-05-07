@@ -73,3 +73,19 @@ def test_save():
     
 
     api.save(os.path.join(str(root_dir),"export"),"Test Package 0")
+
+
+def copy_test():
+
+    api = dc.api()
+    removable_media_devices_family = api.createProperty(dc.Group.WindowsDeviceFamilyProperty,dc.GroupProperty.WindowsRemovableMediaDevices)
+    properties = [removable_media_devices_family]
+
+    all_removable_media_devices = api.createGroup(name="All Removable Media Devices",
+            group_type=dc.Group.WindowsDeviceGroupType,
+            match_type=dc.MatchType.Any,
+            properties=properties)
+    
+    all_removable_media_devices_2 = api.copy()
+
+     
