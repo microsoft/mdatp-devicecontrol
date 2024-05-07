@@ -2096,6 +2096,30 @@ class Entry:
         else:
             return []
     
+
+    def getElemetTree(self):
+
+        logger.debug("Returning Element Tree for entry")
+
+        entry_xml = ET.Element("Entry", Id=id)
+
+        type_xml = ET.SubElement(entry_xml,"Type")
+        type_xml.text = self.enforcement.variations["gpo"]
+
+        access_mask_xml = ET.SubElement(entry_xml,"AccessMask")
+
+        access_mask_xml.text = str(self.access_mask)
+        logger.debug("Set access mask text to "+access_mask_xml.text)
+
+        options_xml = ET.SubElement(entry_xml,"Options")
+        options_xml.text = str(int(self.notifications))
+
+        logger.debug("Set options text to "+options_xml.text)
+
+        logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
+     
+        return entry_xml
+
     def toXML(self,indent):
 
         out = indent + "<Entry Id=\""+self.id+"\">\n"
@@ -2430,6 +2454,7 @@ class api:
     def __init__(self):
         logger.debug("Created instance of device control api")
         self.groups = {}
+        self.rules = {}
         pass
 
     
@@ -2582,8 +2607,33 @@ class api:
         oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote(id)+"/RulesData")
         rule_xml.append(oma_uri_comment)
 
-        name_xml = ET.SubElement("Name")
+        name_xml = ET.SubElement(rule_xml,"Name")
         name_xml.text = rule_name
 
+        included_xml = ET.SubElement(rule_xml,"IncludedIdList")
 
-        pass
+        for included_group in included_groups:
+
+            group_xml = ET.SubElement(included_xml,"GroupId")
+            group_xml.text = included_group.id
+
+        excluded_xml = ET.SubElement(rule_xml,"ExcludedIdList")
+
+        for excluded_group in excluded_groups:
+
+            group_xml = ET.SubElement(excluded_xml,"GroupId")
+            group_xml.text = excluded_group.id
+
+        for entry in entries:
+
+            entry_xml = entry.getXMLElementTree()
+            rule_xml.append(entry_xml)
+
+
+        logger.debug("Creating rule with xml="+ET.tostring(rule_xml,method="xml").decode("utf-8"))        
+        rule = PolicyRule(rule_xml,Format.OMA_URI)
+        self.rules[rule.id] = rule
+
+        return rule
+            
+        
