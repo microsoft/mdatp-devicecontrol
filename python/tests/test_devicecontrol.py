@@ -72,4 +72,4 @@ def test_save():
                           entries=[allow_read_entry])
     
 
-    dc.api.save(os.path.join(str(root_dir),"export"),"Test Package 0")
+    api.save(os.path.join(str(root_dir),"export"),"Test Package 0")
