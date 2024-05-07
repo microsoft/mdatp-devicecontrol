@@ -2101,9 +2101,9 @@ class Entry:
 
         logger.debug("Returning Element Tree for entry")
 
-        entry_xml = ET.Element("Entry", Id=id)
+        entry_xml = ET.Element("Entry", Id=self.id)
 
-        logger.debug("Id="+id)
+        logger.debug("Id="+self.id)
 
         type_xml = ET.SubElement(entry_xml,"Type")
         type_xml.text = self.enforcement.variations["gpo"]
@@ -2119,7 +2119,7 @@ class Entry:
 
         logger.debug("Set options text to "+options_xml.text)
 
-        #logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
+        logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
      
         return entry_xml
 
