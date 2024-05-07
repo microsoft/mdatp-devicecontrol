@@ -2531,11 +2531,13 @@ class api:
         access_mask_xml = ET.SubElement(entry_xml,"AccessMask")
 
         if entry_type in Entry.WindowsEntryTypes:
-            access_mask_xml.text = WindowsEntryType.getAccessMaskForPermissions(permissions)
+            access_mask_xml.text = str(WindowsEntryType.getAccessMaskForPermissions(permissions))
+            logger.debug("Set access mask text to "+access_mask_xml.text)
 
         options_xml = ET.SubElement(entry_xml,"Options")
         options_xml.text = str(int(notifications))
 
+        logger.debug("Set options text to "+options_xml.text)
 
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
         
@@ -2548,8 +2550,40 @@ class api:
                    entries = [], 
                    id = None):
         
+
+        '''
+        <PolicyRule Id="{f7e75634-7eec-4e67-bec5-5e7750cb9e02}"> 
+<!-- Allow Any Read activity -->
+<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7bf7e75634-7eec-4e67-bec5-5e7750cb9e02%7d/RuleData -->
+   <Name>Allow Read Activity</Name>
+   <IncludedIdList>
+		<GroupId>{9b28fae8-72f7-4267-a1a5-685f747a7146}</GroupId>
+   </IncludedIdList>
+   <ExcludedIdList>
+   </ExcludedIdList>
+   <Entry Id="{27c79875-25d2-4765-aec2-cb2d1000613f}">
+      <Type>Allow</Type>
+      <Options>0</Options>
+      <AccessMask>9</AccessMask>
+   </Entry>
+    <Entry Id="{b280c2bf-ca5d-46a1-afc9-7e34d8098ca7}">
+      <Type>AuditAllowed</Type>
+      <Options>2</Options>
+      <AccessMask>9</AccessMask>
+   </Entry>
+</PolicyRule>
+        '''
+        
         if id is None:
             id = str(uuid.uuid4())
             logger.debug("Generating UUID="+id+" for rule")
+
+        rule_xml = ET.Element("PolicyRule", Id=id)
+        oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/"+urllib.parse.quote(id)+"/RulesData")
+        rule_xml.append(oma_uri_comment)
+
+        name_xml = ET.SubElement("Name")
+        name_xml.text = rule_name
+
 
         pass
