@@ -9,7 +9,7 @@ def test2():
 
     api = dc.api()
 
-    vid_pid = api.createProperty(dc.GroupProperty.WindowsDeviceVendorProduct,"05AC_12AB")
+    vid_pid = api.createProperty(dc.Group.WindowsDeviceVendorProductProperty,"05AC_12AB")
     properties = [vid_pid]
 
     g1 = api.createGroup("g1",dc.MatchType.ANY,properties)
