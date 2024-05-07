@@ -1153,6 +1153,7 @@ class Group:
             
             descriptors = root.findall("./DescriptorIdList//")
             for descriptor in descriptors:
+                logger.debug("Getting group property for "+descriptor.tag)
                 group_property = self.group_type.get_property_by_name(descriptor.tag)
                 if group_property is None:
                     #This is the special case where they have the same group type (device),
@@ -1162,7 +1163,7 @@ class Group:
                         group_property = self.group_type.get_property_by_name(descriptor.tag)
                 
                     else:
-                        raise Exception("Unknown group property for "+self.group_type.label)
+                        raise Exception("Unknown group property"+descriptor.tag+" for "+self.group_type.label)
                 
 
                 self._properties.append(Property(group_property, descriptor.text))
@@ -2508,5 +2509,16 @@ class api:
             id = str(uuid.uuid4())
             logger.debug("Generating UUID="+id+" for entry")
 
-        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement.label+" permissions="+str(permissions)+" notifications="+notifications+" id="+id)
+        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement+" permissions="+str(permissions)+" notifications="+notifications+" id="+id)
+        
+        entry_xml = ET.Element("Entry", Id=id)
+
+        type_xml = ET.SubElement(entry_xml,"Type")
+        type_xml.text = enforcement.variations[Format.OMA_URI]
+
+        access_mask_xml = ET.SubElement(entry_xml,"AccessMask")
+        access_mask_xml.text = 
+
+
+        logger.debug("Creating a group with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
         pass
