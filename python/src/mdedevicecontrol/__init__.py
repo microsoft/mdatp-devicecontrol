@@ -2117,7 +2117,7 @@ class Entry:
 
         logger.debug("Set options text to "+options_xml.text)
 
-        logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
+        #logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
      
         return entry_xml
 
