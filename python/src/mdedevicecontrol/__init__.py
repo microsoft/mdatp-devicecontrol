@@ -2097,7 +2097,7 @@ class Entry:
             return []
     
 
-    def getElemetTree(self):
+    def getElementTree(self):
 
         logger.debug("Returning Element Tree for entry")
 
