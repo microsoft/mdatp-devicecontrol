@@ -8,6 +8,7 @@ import urllib.parse
 import pathlib
 import xml.etree.ElementTree as ET
 from json import JSONEncoder
+import uuid
 
 import logging
 logger = logging.getLogger(__name__)
@@ -730,6 +731,11 @@ class GroupType:
             return None
 
 
+class MatchType:
+
+    All = "MatchAll"
+    Any = "MatchAny"
+
 class Group:
 
     Types = {
@@ -1091,8 +1097,8 @@ class Group:
     Types[GroupType.PrintJobType] = PrintJobGroupType
 
     supported_match_types = [
-        "MatchAny",
-        "MatchAll"
+        MatchType.Any,
+        MatchType.All
     ]
 
     AllGroupTypes = [
@@ -2067,7 +2073,7 @@ class Entry:
                 condition_match_type = self.parameters.match_type
             else:
                 #This is if there is a user or computer condition
-                condition_match_type = "MatchAll"
+                condition_match_type = MatchType.All
         
         return condition_match_type
     
@@ -2323,7 +2329,7 @@ WindowsFeature = Feature(
                     Group.VPNConnectionGroupType,
                     Group.PrintJobGroupType
                ],
-                "match_types": ["MatchAll","MatchAny"]
+                "match_types": [MatchType.All,MatchType.Any]
             },   
             "entry":{
                 "supported_types":{
@@ -2368,7 +2374,7 @@ IntuneUXFeature = Feature(
                 Group.WindowsDeviceGroupType,
                 Group.WindowsPrinterGroupType
             ],
-            "match_types": ["MatchAll","MatchAny"],
+            "match_types": [MatchType.All,MatchType.Any],
             "unsupported_descriptors": {
                 Group.WindowsDeviceGroupType: [
                     Group.WindowsDeviceEncryptionStateProperty
@@ -2411,3 +2417,65 @@ class api:
     def __init__(self):
         logger.debug("Created instance of device control api")
         pass
+
+    
+    def createProperty(groupProperty,value):
+        logger.debug("Creating property for "+str(groupProperty)+" value="+value)
+        return Property(groupProperty,value)
+
+    def createGroup(name, 
+                    group_type = GroupType.WindowsDeviceGroupType, 
+                    match_type = MatchType.Any,
+                    properties = [],
+                    id = None):
+        
+        logger.debug("Creating a group name="+name+" match_type="+match_type+"id="+id)
+        
+        '''
+            <Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
+		        <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B33e06f08-8787-4219-9dca-5872854f9d79%7D/GroupData -->
+		        <Name>bitlocker encrypted USBs</Name>
+		        <MatchType>MatchAll</MatchType>
+		        <DescriptorIdList>
+			        <PrimaryId>RemovableMediaDevices</PrimaryId>
+			        <DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+		        </DescriptorIdList>
+	        </Group>
+        '''
+
+        if id is None:
+            id = uuid.uuid4()
+
+        group = ET.Element("Group", Id=id, Type=group_type.name)
+            
+        oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(id)+"/GroupData")
+        group.append(oma_uri_comment)
+
+        name = ET.SubElement(group,"Name",{})
+        name.text = name
+
+        match_type = ET.SubElement(group,"MatchType")
+        match match_type:
+            case MatchType.Any:
+                match_type.text = MatchType.Any
+            case MatchType.All:
+                match_type.text = MatchType.All
+            case _:
+                logger.warn("Unknown MatchType "+match_type)
+        
+        descriptorId_list = ET.SubElement(group,"DescriptorIdList")
+        for property in properties:
+            comment = property.label
+            tag_name = property.name
+            tag_text = property.value
+
+            logger.debug("Adding property "+str(property))
+            
+            if comment is not None:
+                descriptorId_list.append(ET.Comment(comment))
+
+            if tag_name is not None:
+                tag = ET.SubElement(descriptorId_list,tag_name)
+                tag.text = tag_text
+
+        return Group(group,Format.OMA_URI)
