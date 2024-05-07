@@ -1,7 +1,7 @@
 __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
-import mdedevicecontrol.dcintune as intune
+
 import json
 import copy
 import os
@@ -2642,6 +2642,8 @@ class api:
             
         
     def save(self,path=os.getcwd(),name="package"):
+
+        import mdedevicecontrol.dcintune as intune
 
         package_path = pathlib.PurePath(os.path.join(path,name))
         if not os.path.isdir(package_path):
