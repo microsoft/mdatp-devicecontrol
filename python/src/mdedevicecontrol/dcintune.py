@@ -13,7 +13,7 @@ import hashlib
 
 import xml.etree.ElementTree as ET
 
-import mdedevicecontrol.devicecontrol as dc
+import mdedevicecontrol as dc
 from mdedevicecontrol.dcdoc import Inventory, Description
 
 import logging

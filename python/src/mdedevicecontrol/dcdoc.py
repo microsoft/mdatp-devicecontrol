@@ -9,7 +9,7 @@ import pathlib
 import copy
 import json
 
-from mdedevicecontrol.devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
+from mdedevicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
 import mdedevicecontrol.convert_dc_policy as mac 
 
 import logging

@@ -8,9 +8,9 @@ def test_mdedevicecontrol_logging():
     import logging.config
     logging.config.fileConfig("logging.conf")
 
-    logger = logging.getLogger("mdedevicecontrol.devicecontrol")
-    logger.info("Info message for mdedevicecontrol.devicecontrol")
-    logger.warning("Warning message for mdedevicecontrol.devicecontrol")
-    logger.error("Error message for mdedevicecontrol.devicecontrol")
+    logger = logging.getLogger("mdedevicecontrol")
+    logger.info("Info message for mdedevicecontrol")
+    logger.warning("Warning message for mdedevicecontrol")
+    logger.error("Error message for mdedevicecontrol")
 
     check_path("mdedevicecontrol.log")
