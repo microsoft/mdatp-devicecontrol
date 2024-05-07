@@ -2661,8 +2661,9 @@ class api:
 
             path_map[orig_path] = layout_path
 
-        for group in self.groups:
+        for group_id in self.groups:
 
+            group = self.groups[group_id]
             group_file_path = pathlib.PurePath(os.path.join(path_map[intune.Package.WINDOWS_GROUPS_PATH],group.name+".xml"))
             group_file = open(group_file_path,"w")
             group_file.write(str(group))
@@ -2670,8 +2671,9 @@ class api:
 
             logger.info("Exporting group "+group.name+" to "+str(group_file_path))
 
-        for rule in self.rules:
+        for rule_id in self.rules:
                 
+            rule = self.rules[rule_id]    
             rule_file_path = pathlib.PurePath(os.path.join(path_map[intune.Package.WINDOWS_RULES_PATH],rule.name+".xml"))
             rule_file = open(rule_file_path,"w")
             rule_file.write(str(rule))
