@@ -2434,7 +2434,7 @@ class api:
             id = str(uuid.uuid4())
             logger.debug("Generating UUID="+id+" for group")
 
-        logger.debug("Creating a group name="+name+" match_type="+match_type+"id="+id)
+        logger.debug("Creating a group name="+name+" match_type="+match_type+" id="+id)
         
         '''
             <Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
@@ -2481,6 +2481,7 @@ class api:
                 tag = ET.SubElement(descriptorId_list,tag_name)
                 tag.text = tag_text
 
+        logger.debug("Creating a group with xml="+ET.tostring(group_xml,method="xml").decode("utf-8"))
         group = Group(group_xml,Format.OMA_URI)
         self.groups[group.id] = group
 
@@ -2502,4 +2503,10 @@ class api:
 		    <Options>0</Options>
 	    </Entry>
         '''
+
+        if id is None:
+            id = str(uuid.uuid4())
+            logger.debug("Generating UUID="+id+" for entry")
+
+        logger.debug("Creating an entry with properties type="+entry_type.label+" enforcement="+enforcement.label+" permissions="+str(permissions)+" notifications="+notifications+" id="+id)
         pass
