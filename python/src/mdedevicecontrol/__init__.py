@@ -2416,14 +2416,15 @@ class api:
 
     def __init__(self):
         logger.debug("Created instance of device control api")
+        self.groups = {}
         pass
 
     
-    def createProperty(groupProperty,value):
+    def createProperty(self,groupProperty,value):
         logger.debug("Creating property for "+str(groupProperty)+" value="+value)
         return Property(groupProperty,value)
 
-    def createGroup(name, 
+    def createGroup(self,name, 
                     group_type = GroupType.WindowsDeviceGroupType, 
                     match_type = MatchType.Any,
                     properties = [],
@@ -2446,15 +2447,15 @@ class api:
         if id is None:
             id = uuid.uuid4()
 
-        group = ET.Element("Group", Id=id, Type=group_type.name)
+        group_xml = ET.Element("Group", Id=id, Type=group_type.name)
             
         oma_uri_comment = ET.Comment("./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/"+urllib.parse.quote(id)+"/GroupData")
-        group.append(oma_uri_comment)
+        group_xml.append(oma_uri_comment)
 
-        name = ET.SubElement(group,"Name",{})
+        name = ET.SubElement(group_xml,"Name",{})
         name.text = name
 
-        match_type = ET.SubElement(group,"MatchType")
+        match_type = ET.SubElement(group_xml,"MatchType")
         match match_type:
             case MatchType.Any:
                 match_type.text = MatchType.Any
@@ -2463,7 +2464,7 @@ class api:
             case _:
                 logger.warn("Unknown MatchType "+match_type)
         
-        descriptorId_list = ET.SubElement(group,"DescriptorIdList")
+        descriptorId_list = ET.SubElement(group_xml,"DescriptorIdList")
         for property in properties:
             comment = property.label
             tag_name = property.name
@@ -2478,4 +2479,7 @@ class api:
                 tag = ET.SubElement(descriptorId_list,tag_name)
                 tag.text = tag_text
 
-        return Group(group,Format.OMA_URI)
+        group = Group(group_xml,Format.OMA_URI)
+        self.groups[group.id] = group
+
+        return group
