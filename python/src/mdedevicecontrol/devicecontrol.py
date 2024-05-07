@@ -2404,4 +2404,8 @@ IntuneUXFeature = Feature(
         }
     )
     
- 
+class api:
+
+    def __init__(self):
+        logger.debug("Created instance of device control api")
+        pass
