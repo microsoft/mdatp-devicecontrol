@@ -2666,7 +2666,7 @@ class api:
             group = self.groups[group_id]
             logger.debug("Saving group "+str(group_id)+" class="+str(group.__class__))
             logger.debug("Name Class="+str(group.name.__class__))
-            logger.debug("Group Name="+group.name) 
+            logger.debug("Group Name="+str(group.name)) 
             group_file_path = pathlib.PurePath(os.path.join(path_map[intune.Package.WINDOWS_GROUPS_PATH],group.name+".xml"))
             group_file = open(group_file_path,"w")
             group_file.write(str(group))
