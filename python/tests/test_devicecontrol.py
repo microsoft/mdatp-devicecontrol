@@ -1,4 +1,4 @@
-import mdedevicecontrol as dc
+from ..src import mdedevicecontrol as dc
 
 def test1():
 
@@ -12,6 +12,6 @@ def test2():
     vid_pid = api.createProperty(dc.Group.WindowsDeviceVendorProductProperty,"05AC_12AB")
     properties = [vid_pid]
 
-    g1 = api.createGroup("g1",dc.MatchType.ANY,properties)
+    g1 = api.createGroup("g1",dc.MatchType.Any,properties)
 
     print(str(g1))

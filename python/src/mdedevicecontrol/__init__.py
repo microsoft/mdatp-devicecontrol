@@ -2421,7 +2421,7 @@ class api:
 
     
     def createProperty(self,groupProperty,value):
-        logger.debug("Creating property for "+str(groupProperty)+" value="+value)
+        logger.debug("Creating property for "+str(groupProperty.name)+" value="+value)
         return Property(groupProperty,value)
 
     def createGroup(self,name, 
