@@ -20,10 +20,11 @@ steps:
       architecture: 'x64'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-    cd python
     mkdir export
+  displayName: "Create export directory"
+
+- script: |
+    cd python
     python3 -m pip install --upgrade build
     python3 -m build
     pip3 install pytest pytest-azurepipelines
