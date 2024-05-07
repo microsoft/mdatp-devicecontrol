@@ -86,7 +86,7 @@ def test_copy_group():
             match_type=dc.MatchType.Any,
             properties=properties)
     
-    all_removable_media_devices_2 = api.copy()
+    all_removable_media_devices_2 = api.copy(all_removable_media_devices)
     if all_removable_media_devices.id == all_removable_media_devices_2.id:
         raise AssertionError("Copy has the same id")
 
@@ -152,7 +152,7 @@ def test_large_setup():
             vid_pid_property = api.createProperty(dc.Group.WindowsDeviceVendorProductProperty, vid_pid)
             vid_pid_group_properties.append(vid_pid_property)
 
-        vid_pid_group = api.createGroup(name=vid_pid_group,
+        vid_pid_group = api.createGroup(name=vid_pid_group_name,
             group_type=dc.Group.WindowsDeviceGroupType,
             match_type=dc.MatchType.Any,
             properties=vid_pid_group_properties)
