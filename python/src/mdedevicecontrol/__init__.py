@@ -2775,7 +2775,7 @@ class api:
         logger.debug("Creating a copy of "+str(object.__class__.__name__))
 
         match str(object.__class__.__name__):
-            case "mdedevicecontrol.Group":
+            case "Group":
                 new_group = copy.deepcopy(object)
                 logger.debug("Changing id of copy id="+object.id)
                 new_group.id = api.newGUID()
