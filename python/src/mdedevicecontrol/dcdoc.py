@@ -322,16 +322,19 @@ class Inventory:
                 root = ET.fromstring(file.read())
                 match root.tag:
                     case "Group":
+                        logger.debug("Found <Group> in "+xml_path)
                         self.addGroup(Group(root,"oma-uri",xml_path))
                     case "Groups":
                         group_index = 1
                         for group in root.findall(".//Group"):
+                            logger.debug("Found <Groups><Group> in "+xml_path)
                             self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyGroups":
                         #This is what Intune UX looks like on disk
                         group_index = 1
                         for group in root.findall(".//Group"):
+                            logger.debug("Found <PolicyGroups><Group> in "+xml_path)
                             self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyRule":
@@ -351,7 +354,8 @@ class Inventory:
 
     def addGroup(self,group, group_index=0):
 
-        
+        logger.debug("Adding group "+str(group)+" to inventory")
+
         path = group.path
         format = group.format
 
@@ -562,11 +566,14 @@ class Inventory:
         }
 
         query = str(query).encode('unicode-escape').decode()
+
+        logger.debug("query returned "+str(rule_frame.index.size+" results."))
         
         rule_frame = self.policy_rules.query(query, engine='python')
         rule_frame = rule_frame.sort_values("rule_index", ascending=True)
         for i in range(0,rule_frame.index.size):
             rule = rule_frame.iloc[i]["object"]
+            logger.debug(">>>"+str(i)+" rule="+str(rule))
             format = rule_frame.iloc[i]["format"]
             rule_index = rule_frame.iloc[i]["rule_index"]
             rule_id = rule.id
@@ -620,6 +627,7 @@ class Inventory:
     
     def process_query(self,query=None):
 
+        logger.debug("query="+query)
         if query is None:
             query="path.str.contains('(.*)')"
 
