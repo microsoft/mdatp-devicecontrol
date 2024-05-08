@@ -296,7 +296,7 @@ def test_large_setup():
         )
 
         policy = api.createPolicy("Policy for "+rule_name,
-                                  description=rule_data["descripgtion"],
+                                  description=rule_data["description"],
                                   rules = [read_only_rule,full_access_rule],
                                   groups= read_only + full_access)
 
