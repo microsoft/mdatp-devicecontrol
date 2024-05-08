@@ -281,7 +281,9 @@ class Inventory:
         
 
     def load_inventory(self):
+
         for path in self.paths:
+            logger.debug("path="+path)
             for dir in os.walk(top=path):
                 files = dir[2]
                 for file in files:
@@ -317,6 +319,7 @@ class Inventory:
             return
     
     def load_xml_file(self,xml_path):
+        logger.debug("xml_path="+xml_path)
         try:
             with open(xml_path) as file:
                 root = ET.fromstring(file.read())
