@@ -844,8 +844,9 @@ class Inventory:
 
         Helper.set_entry_type(result["entry_type"])
 
-        out = template.render(
-            {"intuneCustomSettings":result["oma_uri"],
+        logger.debug("Rendering results with template "+str(template)+" to "+str(dest)+os.sep+str(file))
+
+        params = {"intuneCustomSettings":result["oma_uri"],
              "paths":result["web_paths"],
              "rules":result["rules"],
              "groups":result["groups"], 
@@ -860,7 +861,11 @@ class Inventory:
              "settings": settings,
              "env":os.environ,
              "Helper":Helper,
-             "title":title})
+             "title":title}
+        
+        logger.debug("params="+str(params))
+        out = template.render(
+            params)
         
         out_file_name = dest+os.sep+file
         with open(out_file_name,"w") as out_file:
