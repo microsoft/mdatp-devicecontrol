@@ -2701,5 +2701,5 @@ class api:
                 self.groups[new_group.id] = new_group
                 return new_group
             case _:
-                logger.warning("Can't copy "+object.__class__)
+                logger.warning("Can't copy "+str(object.__class__))
                 return object
