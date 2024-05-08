@@ -14,13 +14,13 @@ def get_graph():
         clientId = os.environ["CLIENT_ID"]
         clientSecret = os.environ["CLIENT_SECRET"]
 
-        graph = asyncio.run(dcgraph.Graph(tenantId,clientId,clientSecret))
+        graph = dcgraph.Graph(tenantId,clientId,clientSecret)
 
         return graph
        
 
 
-def test_intune_oma():
+async def test_intune_oma():
 
     graph = get_graph()
     
@@ -35,7 +35,7 @@ def test_intune_oma():
 
     win10config.oma_settings = [f1]
 
-    result = asyncio.run(graph.create_device_configuration(win10config))
+    result = await graph.create_device_configuration(win10config)
 
     print("Result="+str(result))
     print("Result Class="+result.__class__.name)
