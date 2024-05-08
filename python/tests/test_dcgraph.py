@@ -34,7 +34,7 @@ async def test_intune_oma():
         
     f1 = OmaSettingStringXml()
     test = "<PolicyRule></PolicyRule>"
-    f1.value(str(test).encode("utf-8"))
+    f1.value = str(test).encode("utf-8")
     f1.file_name = "test_file.xml"
 
     win10config.oma_settings = [f1]
