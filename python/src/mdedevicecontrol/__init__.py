@@ -2690,9 +2690,9 @@ class api:
 
     def copy(self,object):
 
-        logger.debug("Creating a copy of "+object.__class__)
+        logger.debug("Creating a copy of "+str(object.__class__))
 
-        match object.__class__:
+        match str(object.__class__):
             case "mdedevicecontrol.Group":
                 new_group = copy.deepcopy(object)
                 logger.debug("Changing id of copy id="+object.id)

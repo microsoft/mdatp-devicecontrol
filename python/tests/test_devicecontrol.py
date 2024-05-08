@@ -256,7 +256,7 @@ def test_large_setup():
         full_access_entry = api.createEntry(permissions=full_access_permissions)
 
         full_access_rule = api.createRule(
-            rule_name="Allow Full Access for "+rule_data,
+            rule_name="Allow Full Access for "+rule_name,
             included_groups=[all_devices_group],
             excluded_groups=read_only,
             entries=[full_access_entry]
