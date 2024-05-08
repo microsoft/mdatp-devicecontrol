@@ -40,10 +40,10 @@ class Graph:
     def __init__(self, tenantId, clientId, clientSecret):
         
         client_id = clientId
-        tenant_id = tenantId
+        self.tenant_id = tenantId
         client_secret = clientSecret
 
-        logger.debug("TenantId=...."+tenant_id[:4])
+        logger.debug("TenantId=...."+self.tenant_id[:4])
         logger.debug("ClientId=...."+client_id[:4])
         logger.debug("ClientSecret=...."+client_secret[:4])
 
@@ -52,7 +52,7 @@ class Graph:
         logger.debug("scopes: "+str(graph_scopes))
         #self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
 
-        self.client_credential = ClientSecretCredential(tenant_id, client_id, client_secret)
+        self.client_credential = ClientSecretCredential(self.tenant_id, client_id, client_secret)
         logger.debug("Client credential created.")
         self.graph_client = GraphServiceClient(self.client_credential)
         logger.debug("Graph client created.")

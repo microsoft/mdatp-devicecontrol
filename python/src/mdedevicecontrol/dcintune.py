@@ -1288,7 +1288,9 @@ class Package:
         metadata_file.close()
 
         
-        
+    def deploy(self,graph):
+        logger.info("Deploying package "+self.name+" to tenantId"+graph.tenant_id)
+        pass    
 
 
 def client_id_type(value):
@@ -1498,6 +1500,8 @@ async def export(graph: Graph, destination,name,
     
 
     package.save(destination,rule_template,readme_template,description_template)
+
+
 
 if __name__ == '__main__':
     # Run main
