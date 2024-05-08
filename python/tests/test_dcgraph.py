@@ -2,11 +2,15 @@ import os
 
 import mdedevicecontrol.dcgraph as dcgraph
 import asyncio
+import pytest
+
 
 from msgraph_beta.generated.device_management.configuration_settings.configuration_settings_request_builder import ConfigurationSettingsRequestBuilder
 from msgraph_beta.generated.models.device_management_configuration_setting_definition import DeviceManagementConfigurationSettingDefinition
 from msgraph_beta.generated.models.windows10_custom_configuration import Windows10CustomConfiguration
 from msgraph_beta.generated.models.oma_setting_string_xml import OmaSettingStringXml
+
+pytest_plugins = ('pytest_asyncio',)
 
 def get_graph():
 
@@ -19,7 +23,7 @@ def get_graph():
         return graph
        
 
-
+@pytest.mark.asyncio
 async def test_intune_oma():
 
     graph = get_graph()

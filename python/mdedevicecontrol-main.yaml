@@ -27,7 +27,7 @@ steps:
     cd python
     python3 -m pip install --upgrade build
     python3 -m build
-    pip3 install pytest pytest-azurepipelines
+    pip3 install pytest pytest-azurepipelines pytest-asyncio  
     pip3 install -e .
   displayName: 'Build mdedevicecontrol'
 
