@@ -71,6 +71,9 @@ class Graph:
         return access_token.token
     
 
+    def get_client(self):
+        return self.graph_client
+    
     async def get_user(self):
         # Only request specific properties using $select
         query_params = UserItemRequestBuilder.UserItemRequestBuilderGetQueryParameters(
@@ -91,7 +94,10 @@ class Graph:
         return configs
     
 
-    
+    async def create_device_configuration(self,device_configuration):
+        
+        result = await self.graph_client.device_management.device_configurations.post(device_configuration)
+        return result
 
     async def get_xml(self,id,secret_reference):
 
