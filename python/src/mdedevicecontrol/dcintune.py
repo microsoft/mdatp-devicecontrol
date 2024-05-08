@@ -928,9 +928,11 @@ class Package:
 
         def addPolicy(self,policy):
             logger.debug(">>>>>Package.Metadata.addPolicy "+str(policy))
-            self.metadata["policies"][policy.name] = {
-                "id": policy.id
-            }
+
+            if hasattr(policy,"id"):
+                self.metadata["policies"][policy.name] = {
+                    "id": policy.id
+                }
 
             if policy.version == "v2":
                 self.metadata["policies"][policy.name]["@odata.context"] = "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity"
