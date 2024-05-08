@@ -2715,7 +2715,8 @@ class api:
         if len(self.policies) > 0:
             self.package = intune.Package(name,self.templateEnv)
 
-            for policy in self.policies:
+            for policy_name in self.policies:
+                policy = self.policies[policy_name]
                 self.package.addPolicy(policy)
 
             self.package.save(path)
