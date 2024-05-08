@@ -224,17 +224,17 @@ def test_large_setup():
     }
     rwx_except_for_unencrypted =  {
         "ro":[
-            vid_pid_groups["Smartphones"],
             plain_group
         ],
         "rwx":[ 
             bitlocker_group,
             trusted_images_group,
+            vid_pid_groups["Smartphones"],
             printers_group,
             vid_pid_groups["Not BitLocker encrypted but has internal encryption"],
             vid_pid_groups["Other Trusted Devices"]
         ],
-        "description": "Allow full access to allowed devices and read-only to un-encrypted devices"
+        "description": "Allow full access to allowed devices including smartphones and read-only to un-encrypted devices"
     }
 
     rules_data = {
