@@ -2792,4 +2792,4 @@ class api:
             logger.info("No package to deploy.")
             return
         
-        self.package.deploy(self.graph)
+        await self.package.deploy(self.graph)
