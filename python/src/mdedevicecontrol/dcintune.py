@@ -1339,7 +1339,7 @@ class Package:
                 logger.debug("No metadata for policy "+policy.name)
             else:
                 logger.debug(str(metadata_for_policy))
-                if "id" in metadata_for_policy:
+                if "id" in metadata_for_policy and metadata_for_policy["id"] is not None:
                     operation = "update"
                     logger.debug("Updating existing policy")
                 else:
