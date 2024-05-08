@@ -1355,11 +1355,11 @@ class Package:
         pass    
 
     
-    def deployMacPolicy(graph,policy,operation="new",metadata_policy_policy=None):
+    def deployMacPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
         pass
 
-    async def deployOMAUriPolicy(graph,policy,operation="new",metadata_policy_policy=None):
+    async def deployOMAUriPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
 
         win10config = Windows10CustomConfiguration()
@@ -1393,7 +1393,7 @@ class Package:
 
         pass
     
-    def deployDCV2Policy(graph,policy,operation="new",metadata_policy_policy=None):
+    def deployDCV2Policy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
         pass
     
