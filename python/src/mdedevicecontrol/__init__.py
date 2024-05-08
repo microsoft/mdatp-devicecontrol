@@ -2463,7 +2463,13 @@ class api:
         logger.debug("Created instance of device control api")
         self.groups = {}
         self.rules = {}
+
+        self.clientId = clientId
+        self.tenantId = tenantId
+        self.clientSecret = clientSecret
+        
         self.graph = None
+
 
             
         pass
@@ -2474,7 +2480,7 @@ class api:
             from mdedevicecontrol.dcgraph import Graph
 
             self.graph = Graph(self.tenantId,self.clientId,self.clientSecret)
-                
+
         else:
             raise Exception("No credentials to connect to graph")
         
