@@ -107,7 +107,8 @@ def test_large_setup():
     api = dc.api(
         clientId=os.environ["CLIENT_ID"],
         tenantId=os.environ["TENANT_ID"],
-        clientSecret=os.environ["CLIENT_SECRET"]
+        clientSecret=os.environ["CLIENT_SECRET"],
+        templates_path=os.path.join(root_dir,"python","src","mdedevicecontrol","templates")
     )
 
     asyncio.run(api.connectToGraph())

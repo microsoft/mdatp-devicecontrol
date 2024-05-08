@@ -2471,6 +2471,7 @@ class api:
         
         logger.debug("Created instance of device control api")
 
+        logger.debug("Templates Path="+templates_path)
         templateLoader = jinja2.FileSystemLoader(searchpath=templates_path)
         self.templateEnv = jinja2.Environment(loader=templateLoader)
 
