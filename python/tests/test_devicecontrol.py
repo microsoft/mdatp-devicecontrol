@@ -299,7 +299,7 @@ def test_large_setup():
         policy = api.createPolicy("Policy for "+rule_name,
                                   description=rule_data["description"],
                                   rules = [read_only_rule,full_access_rule],
-                                  groups= read_only + full_access)
+                                  groups= read_only + full_access + all_devices_group)
 
     api.save(os.path.join(str(root_dir),"export"),"Test Package 1")
 
