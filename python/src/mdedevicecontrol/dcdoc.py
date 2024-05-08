@@ -574,7 +574,7 @@ class Inventory:
         rule_frame = self.policy_rules.query(query, engine='python')
         rule_frame = rule_frame.sort_values("rule_index", ascending=True)
 
-        logger.debug("query returned "+str(rule_frame.index.size+" results."))
+        logger.debug("query returned "+str(rule_frame.index.size)+" results.")
 
         for i in range(0,rule_frame.index.size):
             rule = rule_frame.iloc[i]["object"]
