@@ -2,9 +2,11 @@ import mdedevicecontrol.dcintune as intune
 
 import os
 import asyncio
+import pytest
 
 from tests import hash, root_dir
     
+pytest_plugins = ('pytest_asyncio',)
 
 class DcIntuneArgs: 
 
@@ -30,11 +32,11 @@ class DcIntuneArgs:
         self.description_template = "description.j2"
         self.readme_file = "readme.md"
 
-
-def test_intune_export():
+@pytest.mark.asyncio
+async def test_intune_export():
         
     args = DcIntuneArgs()
     
-    asyncio.run(intune.process_args(args))
+    await intune.process_args(args)
     
 
