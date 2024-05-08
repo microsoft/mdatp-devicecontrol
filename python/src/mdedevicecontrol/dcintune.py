@@ -929,7 +929,7 @@ class Package:
         def getMetadataForPolicy(self,policy):
             
             policy_name = policy.name
-            logger("policy_name: "+policy_name)
+            logger.debug("policy_name: "+policy_name)
 
             policies = self.metadata["policies"]
             
