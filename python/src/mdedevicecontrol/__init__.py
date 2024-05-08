@@ -2786,10 +2786,10 @@ class api:
                 logger.warning("Can't copy "+str(object.__class__.__name__))
                 return object
 
-    def deploy(self):
+    async def deploy(self):
 
         if self.package is None:
             logger.info("No package to deploy.")
             return
         
-        self.package.deploy(self.graph)
+        await self.package.deploy(self.graph)

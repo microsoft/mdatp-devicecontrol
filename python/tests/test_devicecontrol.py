@@ -302,7 +302,7 @@ def test_large_setup():
                                   groups= read_only + full_access + [all_devices_group])
 
     api.save(os.path.join(str(root_dir),"export"),"Test Package 1")
-    api.deploy()
+    asyncio.run(api.deploy())
     
 
     

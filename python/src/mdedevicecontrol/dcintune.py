@@ -3,6 +3,11 @@ import os
 import base64
 import jinja2
 from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
+
+from msgraph_beta.generated.models.windows10_custom_configuration import Windows10CustomConfiguration
+from msgraph_beta.generated.models.oma_setting_string_xml import OmaSettingStringXml
+
+
 from mdedevicecontrol.dcgraph import Graph
 import plistlib
 import argparse
@@ -1307,26 +1312,91 @@ class Package:
         metadata_file.close()
 
         
-    def deploy(self,graph):
+    async def deploy(self,graph):
         logger.info("Deploying package "+self.name+" to tenantId"+graph.tenant_id)
 
         for policy in self.policies:
 
+            operation = "new"
+            version = policy.version
+            os = policy.os
+
             logger.info("name="+policy.name+" version="+policy.version+" os="+policy.os)
+
+            if version not in ["v1","v2"]:
+                logger.error("Unsupported policy version "+version)
+                continue
+
+            if os not in [Package.MAC_OS, Package.WINDOWS_OS]:
+                logger.error("Unsupported os "+os)
+
+            if os == Package.MAC_OS and version == "v2":
+                logger.error("macOS only supports v1")
+                
+
             metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
             if metadata_for_policy is None:
                 logger.debug("No metadata for policy "+policy.name)
-                continue
-
-            logger.debug(str(metadata_for_policy))
-            if "id" in metadata_for_policy:
-                logger.debug("Updating existing policy")
             else:
-                logger.debug("Creating new policy")
+                logger.debug(str(metadata_for_policy))
+                if "id" in metadata_for_policy:
+                    operation = "update"
+                    logger.debug("Updating existing policy")
+                else:
+                    logger.debug("Creating new policy")
 
-            
+            if os == Package.MAC_OS:
+                await self.deployMacPolicy(graph,policy,operation,metadata_for_policy)
+            elif version == "v1":
+                self.deployOMAUriPolicy(graph,policy,operation,metadata_for_policy)
+            else:
+                self.deployDCV2Policy(graph,policy,operation,metadata_for_policy)
 
         pass    
+
+    
+    def deployMacPolicy(graph,policy,operation="new",metadata_policy_policy=None):
+        logger.debug("operation="+operation)
+        pass
+
+    async def deployOMAUriPolicy(graph,policy,operation="new",metadata_policy_policy=None):
+        logger.debug("operation="+operation)
+
+        win10config = Windows10CustomConfiguration()
+        win10config.display_name = policy.name
+        win10config.description = ""
+
+        if policy.description is not None:
+            win10config.description = ""
+
+        settings = []
+        for group in policy.groups:
+
+            setting = OmaSettingStringXml()
+
+            description = ""
+            if group.description is not None:
+                description = group.description
+
+            setting.value = str(group).encode("utf-8")
+            setting.file_name = group.name+".xml"
+            setting.display_name = group.name
+            setting.description = description
+            setting.oma_uri = group.get_oma_uri()
+
+            settings.append(setting)
+
+            
+        win10config.oma_settings = [settings]
+
+        result = await graph.create_device_configuration(win10config)
+
+        pass
+    
+    def deployDCV2Policy(graph,policy,operation="new",metadata_policy_policy=None):
+        logger.debug("operation="+operation)
+        pass
+    
 
 
 def client_id_type(value):
