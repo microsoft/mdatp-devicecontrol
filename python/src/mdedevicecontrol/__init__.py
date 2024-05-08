@@ -2719,7 +2719,11 @@ class api:
                 policy = self.policies[policy_name]
                 self.package.addPolicy(policy)
 
-            self.package.save(path)
+
+            self.package.save(path,
+                 rule_template_name="dcutil.j2",
+                 readme_template_name="readme.j2",
+                 description_template_name="description.j2")
 
             return
 
