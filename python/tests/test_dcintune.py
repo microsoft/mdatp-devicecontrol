@@ -37,6 +37,6 @@ async def test_intune_export():
         
     args = DcIntuneArgs()
     
-    await intune.process_args(args)
+    intune.process_args(args)
     
 
