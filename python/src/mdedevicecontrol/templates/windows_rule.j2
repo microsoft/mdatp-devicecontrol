@@ -6,7 +6,7 @@
         <th rowspan="2" valign="top">Rule Type</th>
         {% if has_printing -%}
         <th colspan="1" valign="top"><center>Access</center></th>
-        {% elif "Generic" in entry_type.label %}
+        {% elif "Generic" in entry_type.label -%}
         <th colspan="7" valign="top"><center>Access</center></th> 
         {%- else -%}
         <th colspan="6" valign="top"><center>Access</center></th>
