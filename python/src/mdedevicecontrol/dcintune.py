@@ -1312,11 +1312,19 @@ class Package:
 
         for policy in self.policies:
 
+            logger.info("name="+policy.name+" version="+policy.version+" os="+policy.os)
             metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
             if metadata_for_policy is None:
+                logger.debug("No metadata for policy "+policy.name)
                 continue
 
             logger.debug(str(metadata_for_policy))
+            if "id" in metadata_for_policy:
+                logger.debug("Updating existing policy")
+            else:
+                logger.debug("Creating new policy")
+
+            
 
         pass    
 
