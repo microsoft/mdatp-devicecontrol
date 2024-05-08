@@ -112,7 +112,7 @@ async def test_large_setup():
         templates_path=os.path.join(root_dir,"python","src","mdedevicecontrol","templates")
     )
 
-    asyncio.run(api.connectToGraph())
+    api.connectToGraph()
 
     from mdedevicecontrol import WindowsEntryType, PolicyRule, Notifications, Format
     
