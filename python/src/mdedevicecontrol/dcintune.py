@@ -926,6 +926,25 @@ class Package:
             }
             pass
 
+        def getMetadataForPolicy(self,policy):
+            
+            policy_name = policy.name
+            logger("policy_name: "+policy_name)
+
+            policies = self.metadata["policies"]
+            
+            if policy_name in policies:
+                logger.debug("metadata contains "+policy_name)
+                policy_meta_data = policies[policy_name]
+                return policy_meta_data
+            else:
+                logger.debug("metadata does not contain "+policy_name)
+                return None
+
+            
+
+
+
         def addPolicy(self,policy):
             logger.debug(">>>>>Package.Metadata.addPolicy "+str(policy))
 
@@ -1290,6 +1309,15 @@ class Package:
         
     def deploy(self,graph):
         logger.info("Deploying package "+self.name+" to tenantId"+graph.tenant_id)
+
+        for policy in self.policies:
+
+            metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
+            if metadata_for_policy is None:
+                continue
+
+            logger.debug(str(metadata_for_policy))
+
         pass    
 
 
