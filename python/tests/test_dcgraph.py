@@ -37,6 +37,7 @@ async def test_intune_oma():
     f1.value = str(test).encode("utf-8")
     f1.file_name = "test_file.xml"
     f1.display_name = "Test XML"
+    f1.oma_uri = "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b783b7807-4516-41cb-b5ad-b460f91629fe%7d/RuleData"
 
     win10config.oma_settings = [f1]
 
