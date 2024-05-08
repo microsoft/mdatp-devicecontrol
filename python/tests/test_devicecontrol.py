@@ -3,6 +3,7 @@ import mdedevicecontrol as dc
 from tests import root_dir
 import os
 import asyncio
+import pytest
 
 def test_create_api():
 
@@ -101,8 +102,8 @@ def test_copy_group():
     if all_removable_media_devices.id == all_removable_media_devices_2.id:
         raise AssertionError("Copy has the same id")
 
-     
-def test_large_setup():
+@pytest.mark.asyncio     
+async def test_large_setup():
 
     api = dc.api(
         clientId=os.environ["CLIENT_ID"],
@@ -302,7 +303,7 @@ def test_large_setup():
                                   groups= read_only + full_access + [all_devices_group])
 
     api.save(os.path.join(str(root_dir),"export"),"Test Package 1")
-    asyncio.run(api.deploy())
+    result = await api.deploy()
     
 
     
