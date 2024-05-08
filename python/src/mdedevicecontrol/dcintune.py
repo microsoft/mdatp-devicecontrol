@@ -1387,7 +1387,7 @@ class Package:
             settings.append(setting)
 
             
-        win10config.oma_settings = [settings]
+        win10config.oma_settings = settings
 
         result = await graph.create_device_configuration(win10config)
 
