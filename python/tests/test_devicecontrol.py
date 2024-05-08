@@ -15,7 +15,7 @@ def test_create_api_with_graph():
         tenantId=os.environ["TENANT_ID"],
         clientSecret=os.environ["CLIENT_SECRET"]
     )
-    
+
     asyncio.run(api.connectToGraph())
 
 
@@ -104,7 +104,13 @@ def test_copy_group():
      
 def test_large_setup():
 
-    api = dc.api()
+    api = dc.api(
+        clientId=os.environ["CLIENT_ID"],
+        tenantId=os.environ["TENANT_ID"],
+        clientSecret=os.environ["CLIENT_SECRET"]
+    )
+
+    asyncio.run(api.connectToGraph())
 
     from mdedevicecontrol import WindowsEntryType, PolicyRule, Notifications, Format
     
@@ -198,7 +204,8 @@ def test_large_setup():
             printers_group,
             vid_pid_groups["Not BitLocker encrypted but has internal encryption"],
             vid_pid_groups["Other Trusted Devices"]
-        ]
+        ],
+        "description": "Allow full access to allowed devices and read-only access to  Smartphones"
     }
     rwx_except_for_smartphones_and_unencrypted = {
         "ro":[
@@ -211,7 +218,8 @@ def test_large_setup():
             printers_group,
             vid_pid_groups["Not BitLocker encrypted but has internal encryption"],
             vid_pid_groups["Other Trusted Devices"]
-        ]
+        ],
+        "description":"Allow full access to allowed devices and read-only to Smartphones and un-encrypted devices "
     }
     rwx_except_for_unencrypted =  {
         "ro":[
@@ -224,7 +232,8 @@ def test_large_setup():
             printers_group,
             vid_pid_groups["Not BitLocker encrypted but has internal encryption"],
             vid_pid_groups["Other Trusted Devices"]
-        ]
+        ],
+        "description": "Allow full access to allowed devices and read-only to un-encrypted devices"
     }
 
     rules_data = {
@@ -285,6 +294,11 @@ def test_large_setup():
             excluded_groups=full_access,
             entries=[deny_write_entry,audit_deny_write_entry,allow_read_entry]
         )
+
+        policy = api.createPolicy("Policy for "+rule_name,
+                                  description=rule_data["descripgtion"],
+                                  rules = [read_only_rule,full_access_rule],
+                                  groups= read_only + full_access)
 
     api.save(os.path.join(str(root_dir),"export"),"Test Package 1")
 

@@ -12,6 +12,8 @@ from json import JSONEncoder
 import uuid
 
 import logging
+
+import jinja2
 logger = logging.getLogger(__name__)
 
 class Util:
@@ -2455,21 +2457,34 @@ IntuneUXFeature = Feature(
     
 class api:
 
+
     def newGUID():
         return "{"+str(uuid.uuid4())+"}"
 
 
-    def __init__(self,clientId=None,tenantId=None,clientSecret=None):
+    def __init__(self,clientId=None,
+                 tenantId=None,
+                 clientSecret=None, 
+                 templates_path = "templates"):
+        
         logger.debug("Created instance of device control api")
+
+        templateLoader = jinja2.FileSystemLoader(searchpath=templates_path)
+        self.templateEnv = jinja2.Environment(loader=templateLoader)
+
+
+
         self.groups = {}
         self.rules = {}
 
         self.clientId = clientId
         self.tenantId = tenantId
         self.clientSecret = clientSecret
-        
+
         self.graph = None
 
+        
+        self.policies = {}
 
             
         pass
@@ -2663,10 +2678,50 @@ class api:
         return rule
             
 
+
+    def createPolicy(self,name, 
+                     version = "v1", 
+                     os = "windows",
+                     description = None,
+                     rules = [],
+                     groups = []):
+
+        import mdedevicecontrol.dcintune as intune
+
+        policy = intune.Package.Policy(self.graph)
+        policy.name = name
+        policy.version = version
+        policy.os = os
+        policy.description = "A policy"
+
+        if description is not None:
+            policy.description = description
+
+        for rule in rules:
+            policy.addRule(rule)
+
+        for group in groups:
+            policy.addGroup(group)
+
+        self.policies[policy.name] = policy
+        return policy
         
+
     def save(self,path=os.getcwd(),name="package"):
 
         import mdedevicecontrol.dcintune as intune
+
+        
+        if len(self.policies) > 0:
+            self.package = intune.Package(name,self.templateEnv)
+
+            for policy in self.policies:
+                self.package.addPolicy(policy)
+
+            self.package.save(path)
+
+            return
+
 
         package_path = pathlib.PurePath(os.path.join(path,name))
         if not os.path.isdir(package_path):
