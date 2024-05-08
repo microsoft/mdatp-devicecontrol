@@ -269,7 +269,7 @@ def test_large_setup():
         allow_read_entry = api.createEntry()
 
         read_only_rule = api.createRule(
-            rule_name="Allow Read Only for "+rule_data,
+            rule_name="Allow Read Only for "+rule_name,
             included_groups=read_only,
             excluded_groups=full_access,
             entries=[deny_write_entry,audit_deny_write_entry,allow_read_entry]
