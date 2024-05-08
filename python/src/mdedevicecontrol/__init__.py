@@ -1129,6 +1129,8 @@ class Group:
         self.group_type = None
         self.group_properties = {}
 
+        self.description = ""
+
         if format == "gpo" or format =="oma-uri":
 
             self.id = root.attrib["Id"]
