@@ -2459,13 +2459,25 @@ class api:
         return "{"+str(uuid.uuid4())+"}"
 
 
-    def __init__(self):
+    def __init__(self,clientId=None,tenantId=None,clientSecret=None):
         logger.debug("Created instance of device control api")
         self.groups = {}
         self.rules = {}
+        self.graph = None
+
+            
         pass
 
-    
+    async def connectToGraph(self):
+
+        if self.clientId is not None and self.tenantId is not None and self.clientSecret is not None:
+            from mdedevicecontrol.dcgraph import Graph
+
+            self.graph = Graph(self.tenantId,self.clientId,self.clientSecret)
+                
+        else:
+            raise Exception("No credentials to connect to graph")
+        
     def createProperty(self,groupProperty,value):
         logger.debug("Creating property for "+str(groupProperty.name)+" value="+value)
         return Property(groupProperty,value)
@@ -2644,6 +2656,7 @@ class api:
 
         return rule
             
+
         
     def save(self,path=os.getcwd(),name="package"):
 

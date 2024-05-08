@@ -2,10 +2,21 @@ import mdedevicecontrol as dc
 
 from tests import root_dir
 import os
+import asyncio
 
 def test_create_api():
 
     api = dc.api()
+
+def test_create_api_with_graph():
+
+    api = dc.api(
+        clientId=os.environ["CLIENT_ID"],
+        tenantId=os.environ["TENANT_ID"],
+        clientSecret=os.environ["CLIENT_SECRET"]
+    )
+    
+    asyncio.run(api.connectToGraph())
 
 
 def test_create_group():
