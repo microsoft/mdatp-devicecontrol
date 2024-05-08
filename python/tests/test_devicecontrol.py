@@ -265,7 +265,7 @@ def test_large_setup():
         #create a rule which is deny write and execute unless full_access
 
         deny_write_entry = api.createEntry(permissions=write_and_execute_permissions,enforcement=PolicyRule.Deny)
-        audit_deny_write_entry = api.createEntry(permissions=write_and_execute_permissions,enforcement=PolicyRule.AuditDenied,notifications=Notifications(3,format=Format))
+        audit_deny_write_entry = api.createEntry(permissions=write_and_execute_permissions,enforcement=PolicyRule.AuditDenied,notifications=Notifications(3,format=Format.OMA_URI))
         allow_read_entry = api.createEntry()
 
         read_only_rule = api.createRule(
