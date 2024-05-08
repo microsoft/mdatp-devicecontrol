@@ -1348,9 +1348,9 @@ class Package:
             if os == Package.MAC_OS:
                 await self.deployMacPolicy(graph,policy,operation,metadata_for_policy)
             elif version == "v1":
-                self.deployOMAUriPolicy(graph,policy,operation,metadata_for_policy)
+                await self.deployOMAUriPolicy(graph,policy,operation,metadata_for_policy)
             else:
-                self.deployDCV2Policy(graph,policy,operation,metadata_for_policy)
+                await self.deployDCV2Policy(graph,policy,operation,metadata_for_policy)
 
         pass    
 
