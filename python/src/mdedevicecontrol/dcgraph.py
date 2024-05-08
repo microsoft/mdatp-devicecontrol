@@ -95,9 +95,12 @@ class Graph:
     
 
     async def create_device_configuration(self,device_configuration):
-        
+
+        logger.debug("configuration="+str(device_configuration))
         result = await self.graph_client.device_management.device_configurations.post(device_configuration)
+        logger.debug("result="+str(result))
         return result
+        
 
     async def get_xml(self,id,secret_reference):
 
