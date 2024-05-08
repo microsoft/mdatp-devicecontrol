@@ -516,6 +516,7 @@ class Inventory:
             logger.warning("No group found for "+group_id)
             return None
         else:
+            logger.debug("Found "+str(group_frame.size)+" group(s) for "+group_id)
             groups = {
                 "gpo":[],
                 "oma-uri":[],
@@ -529,6 +530,7 @@ class Inventory:
                 if group in groups[format]:
                     continue
                 elif len(groups[format]) == 0:
+                    logger.debug("Adding group "+str(group)+" to format")
                     groups[format].append(group)
                 else:
                     logger.warning("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
