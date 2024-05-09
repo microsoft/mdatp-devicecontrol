@@ -985,6 +985,7 @@ class Package:
                         "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies('"+policy.id+"')/settings",
                     }
 
+                settings = {}
                 for setting in policy.settings:
                     logger.debug("setting="+str(setting))
                     settings[setting.setting.name] = {
