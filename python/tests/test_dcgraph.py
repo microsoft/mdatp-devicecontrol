@@ -152,6 +152,10 @@ async def test_v2_group():
         #This is an entry
         rule_data_entry = DeviceManagementConfigurationGroupSettingCollectionInstance()
         rule_data_entry.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
+        
+        #Add it to the list
+        rule_data_group_setting_value_children.append(rule_data_entry)
+        
         rule_data_group_setting_collection_value = DeviceManagementConfigurationGroupSettingValue()
         rule_data_entry.group_setting_collection_value = rule_data_group_setting_collection_value
 
