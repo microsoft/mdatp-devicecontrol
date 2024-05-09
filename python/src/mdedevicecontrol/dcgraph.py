@@ -106,8 +106,23 @@ class Graph:
             logger.debug("result="+str(result))
             return result
         except RuntimeError as e:
-            logger.error(str(e))    
-            
+            logger.error(str(e))   
+            return e 
+
+    async def update_device_configuration(self,device_configuration,id):
+        logger.debug("configuration="+str(device_configuration)+" id="+id)
+        loop = asyncio.get_event_loop()
+        logger.debug("loop="+str(loop))
+        try:
+            result = await self.graph_client.device_management.device_configurations.by_device_configuration_id(id).patch(device_configuration)
+            logger.debug("result="+str(result))
+            return result
+        except RuntimeError as e:
+            logger.error(str(e))   
+            return e 
+
+
+    
 
     async def get_xml(self,id,secret_reference):
 

@@ -2464,13 +2464,15 @@ class api:
         return "{"+str(uuid.uuid4())+"}"
 
 
-    def __init__(self,clientId=None,
+    def __init__(self,path=os.getcwd(),
+                 clientId=None,
                  tenantId=None,
                  clientSecret=None, 
                  templates_path = "templates"):
         
         logger.debug("Created instance of device control api")
 
+        logger.debug("localpath="+path)
         logger.debug("Templates Path="+templates_path)
         templateLoader = jinja2.FileSystemLoader(searchpath=templates_path)
         self.templateEnv = jinja2.Environment(loader=templateLoader)
@@ -2486,6 +2488,7 @@ class api:
 
         self.graph = None
 
+        self.path = path
         
         self.policies = {}
 
@@ -2710,7 +2713,7 @@ class api:
         return policy
         
 
-    def save(self,path=os.getcwd(),name="package"):
+    def save(self,name="package"):
 
         import mdedevicecontrol.dcintune as intune
 
@@ -2723,7 +2726,7 @@ class api:
                 self.package.addPolicy(policy)
 
 
-            self.package.save(path,
+            self.package.save(self.path,
                  rule_template_name="dcutil.j2",
                  readme_template_name="readme.j2",
                  description_template_name="description.j2")
@@ -2731,7 +2734,7 @@ class api:
             return
 
 
-        package_path = pathlib.PurePath(os.path.join(path,name))
+        package_path = pathlib.PurePath(os.path.join(self.path,name))
         if not os.path.isdir(package_path):
             os.mkdir(package_path)
 
@@ -2793,3 +2796,4 @@ class api:
             return
         
         await self.package.deploy(self.graph)
+        self.package.save_metadata(self.path)

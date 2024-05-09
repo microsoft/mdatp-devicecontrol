@@ -743,6 +743,25 @@ class Package:
         return hash_result
         
 
+    class IntuneResult:
+
+        def __init__(self,operation, result, meta_data_for_policy):
+
+            self.operation = operation
+            self.result = result
+            self.meta_data_for_policy = meta_data_for_policy
+
+
+        def was_successful(self):
+
+            if isinstance(self.result,RuntimeError):
+                return False
+            else:
+                logger.debug("result="+self.result)
+                return True
+
+            
+
     class IntuneSetting:
 
         def __init__(self,dc_setting,name = None,description = None):
@@ -950,8 +969,8 @@ class Package:
 
 
 
-        def addPolicy(self,policy):
-            logger.debug(">>>>>Package.Metadata.addPolicy "+str(policy))
+        def updateMetadataForPolicy(self,policy):
+            logger.debug(">>>>>Package.Metadata.Policy "+str(policy))
 
             if hasattr(policy,"id"):
                 self.metadata["policies"][policy.name] = {
@@ -1084,11 +1103,21 @@ class Package:
 
     def addPolicy(self,policy):
         self.policies.append(policy)
-        self.metadata.addPolicy(policy)
+        self.metadata.updateMetadataForPolicy(policy)
+
+
+    def save_metadata(self,destination):
+        
+        package_path = pathlib.PurePath(os.path.join(destination,self.name))
+        metadata_file_path = pathlib.PurePath(os.path.join(package_path,"metadata.json"))
+        metadata_file = open(metadata_file_path,"w")
+        logger.info("Writing package metadata file to "+str(metadata_file_path))
+        metadata_file.write(str(self.metadata))
+        metadata_file.close()
+
 
     def save(self,destination,rule_template_name,readme_template_name,description_template_name):
 
-        
         package_path = pathlib.PurePath(os.path.join(destination,self.name))
         if not os.path.isdir(package_path):
             os.mkdir(package_path)
@@ -1235,10 +1264,9 @@ class Package:
 
 
         package_file_path = pathlib.PurePath(os.path.join(package_path,"package.json"))
-        metadata_file_path = pathlib.PurePath(os.path.join(package_path,"metadata.json"))
         
         package_file = open(package_file_path,"w")    
-        metadata_file = open(metadata_file_path,"w")
+        
 
         package_data = {
             "policies":policy_data
@@ -1303,18 +1331,15 @@ class Package:
 
         json.dump(package_data,package_file,indent=5)
         package_file.close()
-
         logger.info("Writing package file to "+str(package_file_path))
-        logger.info("Writing package metadata file to "+str(metadata_file_path))
 
-
-        metadata_file.write(str(self.metadata))
-        metadata_file.close()
+        self.save_metadata(destination)
 
         
     async def deploy(self,graph):
         logger.info("Deploying package "+self.name+" to tenantId"+graph.tenant_id)
 
+        results = {}
         for policy in self.policies:
 
             operation = "new"
@@ -1323,18 +1348,35 @@ class Package:
 
             logger.info("name="+policy.name+" version="+policy.version+" os="+policy.os)
 
+            metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
+
             if version not in ["v1","v2"]:
                 logger.error("Unsupported policy version "+version)
+                results[policy.name] = Package.IntuneAssignment(
+                    operation="?",
+                    error=RuntimeError("Unsupported policy version "+version),
+                    metadata_for_policy=metadata_for_policy
+                )
                 continue
 
             if os not in [Package.MAC_OS, Package.WINDOWS_OS]:
                 logger.error("Unsupported os "+os)
+                results[policy.name] = Package.IntuneAssignment(
+                    operation="?",
+                    error=RuntimeError("Unsupported os "+os),
+                    metadata_for_policy=metadata_for_policy
+                )
+                continue
 
             if os == Package.MAC_OS and version == "v2":
                 logger.error("macOS only supports v1")
-                
-
-            metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
+                results[policy.name] = Package.IntuneAssignment(
+                    operation="?",
+                    error=RuntimeError("macOS only supports v1"),
+                    metadata_for_policy=metadata_for_policy
+                )              
+                continue
+            
             if metadata_for_policy is None:
                 logger.debug("No metadata for policy "+policy.name)
             else:
@@ -1346,15 +1388,34 @@ class Package:
                     logger.debug("Creating new policy")
 
             if os == Package.MAC_OS:
-                await self.deployMacPolicy(graph,policy,operation,metadata_for_policy)
+                result = await self.deployMacPolicy(graph,policy,operation,metadata_for_policy)
+                results[policy.name] = result
             elif version == "v1":
-                await self.deployOMAUriPolicy(graph,policy,operation,metadata_for_policy)
+                result = await self.deployOMAUriPolicy(graph,policy,operation,metadata_for_policy)
+                results[policy.name] = result
             else:
-                await self.deployDCV2Policy(graph,policy,operation,metadata_for_policy)
+                result = await self.deployDCV2Policy(graph,policy,operation,metadata_for_policy)
+                results[policy.name] = result
+        
+        self.process_results(results)
 
-        pass    
+        return results
 
     
+    def process_results(self,results):
+        logger.debug(str(results))
+
+        for policy_name in results:
+
+            policy = self.policies[policy_name]
+            result = result[policy_name]
+
+            if result.was_successful():
+                self.metadata.updateMetadataForPolicy(policy)
+
+            logger.info("Policy="+policy_name+"operation="+result.operation+" result="+result.was_successful())
+
+
     def deployMacPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
         pass
@@ -1389,9 +1450,13 @@ class Package:
             
         win10config.oma_settings = settings
 
-        result = await graph.create_device_configuration(win10config)
+        if operation == "new":
+            result = await graph.create_device_configuration(win10config)
+        else:
+            result = await graph.update_device_configuration(win10config,metadata_policy_policy["id"])
 
-        pass
+        return Package.IntuneResult(operation,result,metadata_policy_policy)
+        
     
     def deployDCV2Policy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
