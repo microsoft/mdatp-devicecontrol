@@ -16,6 +16,8 @@ from msgraph_beta.generated.models.device_management_configuration_group_setting
 from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
 from msgraph_beta.generated.models.device_management_configuration_simple_setting_instance import DeviceManagementConfigurationSimpleSettingInstance
 from msgraph_beta.generated.models.device_management_configuration_string_setting_value import DeviceManagementConfigurationStringSettingValue
+from msgraph_beta.generated.models.device_management_configuration_choice_setting_instance import DeviceManagementConfigurationChoiceSettingInstance
+from msgraph_beta.generated.models.device_management_configuration_choice_setting_value import DeviceManagementConfigurationChoiceSettingValue
 
 pytest_plugins = ('pytest_asyncio',)
 
@@ -145,6 +147,36 @@ async def test_v2_group():
 
          #Add it to the list
         rule_data_group_setting_value_children.append(included_groups_configuration_group_setting_collection_instance)
+        
+
+        #This is an entry
+        rule_data_entry = DeviceManagementConfigurationGroupSettingCollectionInstance()
+        rule_data_entry.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
+        rule_data_group_setting_collection_value = DeviceManagementConfigurationGroupSettingValue()
+        rule_data_entry.group_setting_collection_value = rule_data_group_setting_collection_value
+
+        rule_data_group_setting_collection_value.children = []
+
+        rule_data_entry_type = DeviceManagementConfigurationChoiceSettingInstance()
+        rule_data_entry_type.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type"
+
+        rule_data_group_setting_collection_value.children.append(rule_data_entry_type) 
+        
+        rule_data_entry_type_value = DeviceManagementConfigurationChoiceSettingValue()
+        rule_data_entry_type.choice_setting_value = rule_data_entry_type_value
+        rule_data_entry_type_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_deny"
+
+
+        rule_data_entry_options = DeviceManagementConfigurationChoiceSettingInstance()
+        rule_data_entry_options.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options"
+
+        rule_data_entry_options_value = DeviceManagementConfigurationChoiceSettingValue()
+        rule_data_entry_options.choice_setting_value = rule_data_entry_options_value
+        rule_data_entry_options_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options_0"
+
+        # The options are a child to the allow/deny
+        rule_data_entry_type_value.children.append(rule_data_entry_options)
+
         
         logger.info(str(rule))
       
