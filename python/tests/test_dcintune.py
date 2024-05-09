@@ -32,11 +32,11 @@ class DcIntuneArgs:
         self.description_template = "description.j2"
         self.readme_file = "readme.md"
 
-@pytest.mark.asyncio
-async def test_intune_export():
+
+def test_intune_export():
         
     args = DcIntuneArgs()
     
-    result = await intune.process_args(args)
+    asyncio.run(intune.process_args(args))
     
 
