@@ -85,12 +85,11 @@ async def test_v2_group():
 
         rule_value_children.append(rule_data)
 
-
         rule_data_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
         rule_data.group_setting_collection_value = [rule_data_group_setting_value]
 
         rule_data_group_setting_value_children = []
-        rule_data.children = rule_data_group_setting_value_children
+        rule_data_group_setting_value.children = rule_data_group_setting_value_children
 
         #Create the rule id
         rule_id_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
