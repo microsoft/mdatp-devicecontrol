@@ -69,7 +69,7 @@ async def test_v2_group():
         #This is an example rule for dcv2 https://graph.microsoft.com/beta/deviceManagement/configurationPolicies/4f633fc5-0e54-45bd-ba81-f81d88c1ddc2?$expand=settings
 
         rule = DeviceManagementConfigurationGroupSettingCollectionInstance()
-        rule.definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}"
+        rule.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}"
       
         rule_group_setting_collection_value = []
         rule.group_setting_collection_value = rule_group_setting_collection_value
@@ -82,6 +82,8 @@ async def test_v2_group():
 
         rule_data = DeviceManagementConfigurationGroupSettingCollectionInstance()
         rule_data.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
+
+        rule_value_children.append(rule_data)
 
 
         rule_data_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
