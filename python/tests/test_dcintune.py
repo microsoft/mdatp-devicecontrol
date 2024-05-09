@@ -6,7 +6,7 @@ import pytest
 
 from tests import hash, root_dir
     
-pytest_plugins = ('pytest_asyncio',)
+
 
 class DcIntuneArgs: 
 
