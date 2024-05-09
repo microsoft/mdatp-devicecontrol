@@ -56,45 +56,50 @@ async def test_intune_oma():
 
 @pytest.mark.asyncio
 async def test_v2_group():
+
+        import logging.config
+        logging.config.fileConfig("logging.conf")
+
+        logger = logging.getLogger("mdedevicecontrol")
       
-      graph = get_graph()
+        graph = get_graph()
 
-      #This is the template for dcv2 https://graph.microsoft.com/beta/deviceManagement/configurationPolicyTemplates/0f2034c6-3cd6-4ee1-bd37-f3c0693e9548_1?$expand=settingTemplates
+        #This is the template for dcv2 https://graph.microsoft.com/beta/deviceManagement/configurationPolicyTemplates/0f2034c6-3cd6-4ee1-bd37-f3c0693e9548_1?$expand=settingTemplates
 
-      #This is an example rule for dcv2 https://graph.microsoft.com/beta/deviceManagement/configurationPolicies/4f633fc5-0e54-45bd-ba81-f81d88c1ddc2?$expand=settings
+        #This is an example rule for dcv2 https://graph.microsoft.com/beta/deviceManagement/configurationPolicies/4f633fc5-0e54-45bd-ba81-f81d88c1ddc2?$expand=settings
 
-      rule = DeviceManagementConfigurationGroupSettingCollectionInstance()
-      rule.definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}"
+        rule = DeviceManagementConfigurationGroupSettingCollectionInstance()
+        rule.definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}"
       
-      rule_group_setting_collection_value = []
-      rule.group_setting_collection_value = rule_group_setting_collection_value
+        rule_group_setting_collection_value = []
+        rule.group_setting_collection_value = rule_group_setting_collection_value
 
-      rule_value = DeviceManagementConfigurationGroupSettingValue() 
-      rule_value_children = []
-      rule_value.children = rule_value_children
+        rule_value = DeviceManagementConfigurationGroupSettingValue() 
+        rule_value_children = []
+        rule_value.children = rule_value_children
 
-      rule_group_setting_collection_value.append(rule_value)
+        rule_group_setting_collection_value.append(rule_value)
 
-      rule_data = DeviceManagementConfigurationGroupSettingCollectionInstance()
-      rule_data.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
+        rule_data = DeviceManagementConfigurationGroupSettingCollectionInstance()
+        rule_data.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
 
 
-      rule_data_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
-      rule_data.group_setting_collection_value = [rule_data_group_setting_value]
+        rule_data_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
+        rule_data.group_setting_collection_value = [rule_data_group_setting_value]
 
-      rule_data_group_setting_value_children = []
+        rule_data_group_setting_value_children = []
 
-      #Create the rule id
-      rule_id_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
-      rule_id_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_id"
+        #Create the rule id
+        rule_id_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+        rule_id_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_id"
 
-      rule_id_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
-      rule_id_simple_setting_instance.simple_setting_value = rule_id_simple_setting_instance_value
+        rule_id_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
+        rule_id_simple_setting_instance.simple_setting_value = rule_id_simple_setting_instance_value
 
-      #This is the rule id value
-      rule_id_simple_setting_instance_value.value = "{f1a6460e-e3ff-4e54-a878-3e4e02ec19d7}"
+        #This is the rule id value
+        rule_id_simple_setting_instance_value.value = "{f1a6460e-e3ff-4e54-a878-3e4e02ec19d7}"
       
-      rule_data_group_setting_value_children.append(rule_id_simple_setting_instance)
+        rule_data_group_setting_value_children.append(rule_id_simple_setting_instance)
       
-      print(str(rule))
+        logger.info(str(rule))
       
