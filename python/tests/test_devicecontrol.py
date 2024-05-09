@@ -68,7 +68,8 @@ def test_create_rule_1():
 
 def test_save():
 
-    api = dc.api()
+    api = dc.api(path=os.path.join(str(root_dir),"export"))
+    
     removable_media_devices_family = api.createProperty(dc.Group.WindowsDeviceFamilyProperty,dc.GroupProperty.WindowsRemovableMediaDevices)
     properties = [removable_media_devices_family]
 
@@ -84,7 +85,7 @@ def test_save():
                           entries=[allow_read_entry])
     
 
-    api.save(os.path.join(str(root_dir),"export"),"Test Package 0")
+    api.save("Test Package 0")
 
 
 def test_copy_group():
@@ -106,6 +107,7 @@ def test_copy_group():
 async def test_large_setup():
 
     api = dc.api(
+        path=os.path.join(str(root_dir),"export"),
         clientId=os.environ["CLIENT_ID"],
         tenantId=os.environ["TENANT_ID"],
         clientSecret=os.environ["CLIENT_SECRET"],
@@ -302,7 +304,7 @@ async def test_large_setup():
                                   rules = [read_only_rule,full_access_rule],
                                   groups= read_only + full_access + [all_devices_group])
 
-    api.save(os.path.join(str(root_dir),"export"),"Test Package 1")
+    api.save("Test Package 1")
     result = await api.deploy()
     
 
