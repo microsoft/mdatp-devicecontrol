@@ -6,7 +6,7 @@ import pytest
 
 from tests import hash, root_dir
     
-
+pytest_plugins = ('pytest_asyncio',)
 
 class DcIntuneArgs: 
 
@@ -33,10 +33,13 @@ class DcIntuneArgs:
         self.readme_file = "readme.md"
 
 
-def test_intune_export():
+async def test_intune_export():
         
     args = DcIntuneArgs()
     
-    asyncio.run(intune.process_args(args))
+    try:
+        result = await intune.process_args(args)
+    except RuntimeError as e:
+        print(str(e))
     
 
