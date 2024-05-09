@@ -101,10 +101,13 @@ class Graph:
         logger.debug("configuration="+str(device_configuration))
         loop = asyncio.get_event_loop()
         logger.debug("loop="+str(loop))
-        result = loop.run_until_complete(self.graph_client.device_management.device_configurations.post(device_configuration))
-        logger.debug("result="+str(result))
-        return result
-        
+        try:
+            result = await self.graph_client.device_management.device_configurations.post(device_configuration)
+            logger.debug("result="+str(result))
+            return result
+        except RuntimeError as e:
+            logger.error(str(e))    
+            
 
     async def get_xml(self,id,secret_reference):
 
