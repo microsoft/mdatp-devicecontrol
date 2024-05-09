@@ -47,3 +47,8 @@ async def test_intune_oma():
     print("Result="+str(result))
     print("Result Class="+result.__class__.__name__)
 
+@pytest.mark.asyncio
+async def test_v2_group():
+      
+      graph = get_graph()
+
