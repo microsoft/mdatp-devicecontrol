@@ -1452,6 +1452,23 @@ class Package:
 
             settings.append(setting)
 
+        for rule in policy.rules:
+
+            setting = OmaSettingStringXml()
+
+            description = ""
+            if rule.description is not None:
+                description = rule.description
+
+            setting.value = str(rule).encode("utf-8")
+            setting.file_name = rule.name+".xml"
+            setting.display_name = rule.name
+            setting.description = description
+            setting.oma_uri = rule.get_oma_uri()
+
+            settings.append(setting)
+
+
             
         win10config.oma_settings = settings
 
