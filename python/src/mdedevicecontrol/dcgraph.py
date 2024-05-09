@@ -107,7 +107,7 @@ class Graph:
             return result
         except RuntimeError as e:
             logger.error(str(e))   
-            return e 
+             
 
     async def update_device_configuration(self,device_configuration,id):
         logger.debug("configuration="+str(device_configuration)+" id="+id)
