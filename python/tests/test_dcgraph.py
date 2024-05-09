@@ -135,7 +135,7 @@ async def test_v2_group():
                 included_group_id_configuration_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist_groupid"
 
                 included_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
-                included_group_id_configuration_simple_setting_instance.included_group_id_configuration_simple_setting_instance_value
+                included_group_id_configuration_simple_setting_instance.simple_setting_value = included_group_id_configuration_simple_setting_instance_value
                 included_group_id_configuration_simple_setting_instance_value.value = included_group_id
 
                 included_groups_configuration_group_setting_collection_instance_value.children.append(
