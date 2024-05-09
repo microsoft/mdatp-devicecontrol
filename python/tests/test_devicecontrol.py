@@ -88,6 +88,31 @@ def test_save():
     api.save("Test Package 0")
 
 
+def test_v2_save():
+
+    api = dc.api(path=os.path.join(str(root_dir),"export"))
+    
+    removable_media_devices_family = api.createProperty(dc.Group.WindowsDeviceFamilyProperty,dc.GroupProperty.WindowsRemovableMediaDevices)
+    properties = [removable_media_devices_family]
+
+    all_removable_media_devices = api.createGroup(name="All Removable Media Devices",
+            group_type=dc.Group.WindowsDeviceGroupType,
+            match_type=dc.MatchType.Any,
+            properties=properties)
+    
+    allow_read_entry = api.createEntry()
+
+    rule = api.createRule("Test Rule 3",
+                          included_groups=[all_removable_media_devices],
+                          entries=[allow_read_entry])
+    
+
+    v2policy = api.createPolicy("Test v2 Save Policy",
+                                version="v2",
+                                description="Test v2 policy",rules=[rule],groups=[all_removable_media_devices])
+    
+    api.save("Test Package 2")
+
 def test_copy_group():
 
     api = dc.api()
