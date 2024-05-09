@@ -143,7 +143,8 @@ async def test_v2_group():
                 )
 
 
-
+         #Add it to the list
+        rule_data_group_setting_value_children.append(included_groups_configuration_group_setting_collection_instance)
         
         logger.info(str(rule))
       
