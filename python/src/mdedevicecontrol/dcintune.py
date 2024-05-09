@@ -980,29 +980,34 @@ class Package:
             if policy.version == "v2":
                 self.metadata["policies"][policy.name]["@odata.context"] = "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity"
 
-                settings = {
+                if policy.id is not None:
+                    settings = {
                         "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies('"+policy.id+"')/settings",
-                }                
+                    }
+
                 for setting in policy.settings:
                     logger.debug("setting="+str(setting))
                     settings[setting.setting.name] = {
                         "id":setting.metadata_id
-                    }
-
-
-                settings["ruleid"] = {
-                    "id":policy.rules_metadata_id
                 }
+
+                if hasattr(policy,"rules_metadata_id"):
+                    settings["ruleid"] = {
+                        "id":policy.rules_metadata_id
+                    }
                     
                 self.metadata["policies"][policy.name]["settings"] = settings
 
                 groups_metadata = {}
                 for group in policy.groups:
+
                     groups_metadata[group.name] = {
                         "groupdata_id":group.id,
-                        "id":group.metadata_id,
                         "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"
                     }
+
+                    if hasattr(group,"metadata_id"):
+                        groups_metadata[group.name]["id"] = group.metadata_id
                 
                 if len(groups_metadata) > 0:
                     self.metadata["policies"][policy.name]["groups"] = groups_metadata
