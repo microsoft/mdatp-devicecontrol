@@ -116,5 +116,34 @@ async def test_v2_group():
         #Add it to the list
         rule_data_group_setting_value_children.append(rule_name_simple_setting_instance_value)
 
+        #Create the included groups
+        included_groups_configuration_group_setting_collection_instance = DeviceManagementConfigurationGroupSettingCollectionInstance()
+        included_groups_configuration_group_setting_collection_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist"
+
+        included_groups_configuration_group_setting_collection_instance_value = DeviceManagementConfigurationGroupSettingValue()
+        included_groups_configuration_group_setting_collection_instance_group_setting_collection_value = [included_groups_configuration_group_setting_collection_instance_value]
+        
+        included_groups_configuration_group_setting_collection_instance.group_setting_collection_value = included_groups_configuration_group_setting_collection_instance_group_setting_collection_value
+
+        included_groups_configuration_group_setting_collection_instance_value.children = []
+
+        included_group_ids = ["0c1529ef-6565-4441-a6d3-afb66709f66b"]
+
+        for included_group_id in included_group_ids:
+               
+                included_group_id_configuration_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+                included_group_id_configuration_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist_groupid"
+
+                included_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
+                included_group_id_configuration_simple_setting_instance.included_group_id_configuration_simple_setting_instance_value
+                included_group_id_configuration_simple_setting_instance_value.value = included_group_id
+
+                included_groups_configuration_group_setting_collection_instance_value.children.append(
+                       included_group_id_configuration_simple_setting_instance
+                )
+
+
+
+        
         logger.info(str(rule))
       
