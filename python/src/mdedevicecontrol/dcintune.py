@@ -1405,15 +1405,20 @@ class Package:
     def process_results(self,results):
         logger.debug(str(results))
 
+        i = 0
         for policy_name in results:
 
-            policy = self.policies[policy_name]
-            result = result[policy_name]
+            policy = self.policies[i]
+            graph_result = results[policy_name]
 
-            if result.was_successful():
-                self.metadata.updateMetadataForPolicy(policy)
+            if graph_result.was_successful():
+                result = graph_result.result
+                if hasattr(result,"id"):
+                    policy.id = result.id
+                    self.metadata.updateMetadataForPolicy(policy)
 
-            logger.info("Policy="+policy_name+"operation="+result.operation+" result="+result.was_successful())
+            i=i+1
+            logger.info("Policy="+policy_name+"operation="+graph_result.operation+" result="+result.was_successful())
 
 
     def deployMacPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
