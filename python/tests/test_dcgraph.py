@@ -181,6 +181,32 @@ async def test_v2_group():
         # The options are a child to the allow/deny
         rule_data_entry_type_value.children.append(rule_data_entry_options)
 
+
+        rule_data_entry_access_mask = DeviceManagementConfigurationChoiceSettingInstance()
+        rule_data_entry_access_mask.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask"
+
+        #Add it to the list
+        rule_data_group_setting_value_children.append(rule_data_entry_access_mask)
+        rule_data_entry_access_mask_choice_setting_value = DeviceManagementConfigurationChoiceSettingValue()
+
+        rule_data_entry_access_mask.choice_setting_value = rule_data_entry_access_mask_choice_setting_value
+
+
+        masks = [
+               "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_1",
+               "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_2",
+               "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_4"
+        ]
+
+        rule_data_entry_access_mask_choice_setting_value.value = []
+        for mask in masks:
+               
+               mask_value = DeviceManagementConfigurationChoiceSettingValue()
+               mask_value.value = mask
+
+               rule_data_entry_access_mask_choice_setting_value.value.append(mask_value)
+
+
         
         logger.info(str(rule))
       
