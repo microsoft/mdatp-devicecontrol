@@ -1418,7 +1418,7 @@ class Package:
                     self.metadata.updateMetadataForPolicy(policy)
 
             i=i+1
-            logger.info("Policy="+policy_name+"operation="+graph_result.operation+" result="+graph_result.was_successful())
+            logger.info("Policy="+policy_name+"operation="+graph_result.operation+" result="+str(graph_result.was_successful()))
 
 
     def deployMacPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
