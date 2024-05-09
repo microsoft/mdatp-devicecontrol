@@ -97,11 +97,24 @@ async def test_v2_group():
 
         rule_id_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
         rule_id_simple_setting_instance.simple_setting_value = rule_id_simple_setting_instance_value
-
         #This is the rule id value
         rule_id_simple_setting_instance_value.value = "{f1a6460e-e3ff-4e54-a878-3e4e02ec19d7}"
       
+        #Add it to the list
         rule_data_group_setting_value_children.append(rule_id_simple_setting_instance)
+
+        #Create the name
+        rule_name_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+        rule_name_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_name"
+        
+        rule_name_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
+        rule_name_simple_setting_instance.simple_setting_value = rule_name_simple_setting_instance_value
+
+        #This is the rule name
+        rule_name_simple_setting_instance_value.value = "Deny All Removable Media"
       
+        #Add it to the list
+        rule_data_group_setting_value_children.append(rule_name_simple_setting_instance_value)
+
         logger.info(str(rule))
       
