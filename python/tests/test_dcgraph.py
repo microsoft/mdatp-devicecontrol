@@ -165,7 +165,7 @@ async def test_v2_group():
         rule_data_entry_type_value = DeviceManagementConfigurationChoiceSettingValue()
         rule_data_entry_type.choice_setting_value = rule_data_entry_type_value
         rule_data_entry_type_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_deny"
-
+        rule_data_entry_type_value.children = []
 
         rule_data_entry_options = DeviceManagementConfigurationChoiceSettingInstance()
         rule_data_entry_options.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options"
