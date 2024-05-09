@@ -90,7 +90,10 @@ def test_save():
 
 def test_v2_save():
 
-    api = dc.api(path=os.path.join(str(root_dir),"export"))
+    api = dc.api(
+        path=os.path.join(str(root_dir),"export"),
+        templates_path=os.path.join(root_dir,"python","src","mdedevicecontrol","templates")
+    )
     
     removable_media_devices_family = api.createProperty(dc.Group.WindowsDeviceFamilyProperty,dc.GroupProperty.WindowsRemovableMediaDevices)
     properties = [removable_media_devices_family]
