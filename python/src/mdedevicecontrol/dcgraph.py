@@ -2,6 +2,8 @@ from configparser import SectionProxy
 from azure.identity import DeviceCodeCredential
 from azure.identity.aio import ClientSecretCredential
 
+import asyncio
+
 from msgraph_beta import GraphServiceClient
 from msgraph_beta.generated.users.item.user_item_request_builder import UserItemRequestBuilder
 from msgraph_beta.generated.users.item.mail_folders.item.messages.messages_request_builder import (
@@ -97,7 +99,9 @@ class Graph:
     async def create_device_configuration(self,device_configuration):
 
         logger.debug("configuration="+str(device_configuration))
-        result = await self.graph_client.device_management.device_configurations.post(device_configuration)
+        loop = asyncio.get_event_loop()
+        logger.debug("loop="+str(loop))
+        result = loop.run_until_complete(self.graph_client.device_management.device_configurations.post(device_configuration))
         logger.debug("result="+str(result))
         return result
         
