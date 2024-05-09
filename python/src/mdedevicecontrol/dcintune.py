@@ -757,7 +757,7 @@ class Package:
             if isinstance(self.result,RuntimeError):
                 return False
             else:
-                logger.debug("result="+self.result)
+                logger.debug("result="+str(self.result))
                 return True
 
             
