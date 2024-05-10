@@ -30,6 +30,7 @@ from msgraph_beta.generated.device_management.reusable_settings.reusable_setting
 
 from msgraph_beta.generated.models.device_management_configuration_policy import DeviceManagementConfigurationPolicy
 from msgraph_beta.generated.models.device_management_configuration_setting import DeviceManagementConfigurationSetting
+from msgraph_beta.generated.models.device_management_configuration_policy_template_reference import DeviceManagementConfigurationPolicyTemplateReference
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -286,11 +287,16 @@ class Graph:
         policy.name = "My Imported Policy"
         policy.description = "A policy that I created with graph API"
         policy.platforms = "windows10"
-        policy.setting_count = 1
         policy.role_scope_tag_ids = ["0"]
 
+        policy.technologies = "mdm"
+        policy.template_reference = DeviceManagementConfigurationPolicyTemplateReference()
+        policy.template_reference.template_display_name = "Device Control"
+        policy.template_reference.template_display_version = "Version 1"
+        policy.template_reference.template_family = "endpointSecurityAttackSurfaceReduction"
+        policy.id = "0f2034c6-3cd6-4ee1-bd37-f3c0693e9548_1"
+
         setting = DeviceManagementConfigurationSetting()
-        setting.id = "0"
         setting.setting_instance = rule
         policy.settings = [setting]
         
