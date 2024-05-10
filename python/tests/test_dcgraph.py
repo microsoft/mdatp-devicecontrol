@@ -19,6 +19,7 @@ from msgraph_beta.generated.models.device_management_configuration_string_settin
 from msgraph_beta.generated.models.device_management_configuration_choice_setting_instance import DeviceManagementConfigurationChoiceSettingInstance
 from msgraph_beta.generated.models.device_management_configuration_choice_setting_value import DeviceManagementConfigurationChoiceSettingValue
 from msgraph_beta.generated.models.device_management_configuration_reference_setting_value import DeviceManagementConfigurationReferenceSettingValue
+from msgraph_beta.generated.models.device_management_configuration_choice_setting_collection_instance import DeviceManagementConfigurationChoiceSettingCollectionInstance
 
 pytest_plugins = ('pytest_asyncio',)
 
@@ -158,7 +159,7 @@ async def test_v2_group():
         rule_data_entry_options.choice_setting_value = rule_data_entry_options_value
         rule_data_entry_options_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options_0"
         rule_data_entry_options_value.children = []
-        
+
         # The options are a child to the allow/deny
         rule_data_entry_type_value.children.append(rule_data_entry_options)
 
@@ -168,7 +169,7 @@ async def test_v2_group():
 
         #Add it to the list
         rule_data_group_setting_collection_value.children.append(rule_data_entry_access_mask)
-        rule_data_entry_access_mask_choice_setting_value = DeviceManagementConfigurationChoiceSettingValue()
+        rule_data_entry_access_mask_choice_setting_value = DeviceManagementConfigurationChoiceSettingCollectionInstance()
 
         rule_data_entry_access_mask.choice_setting_value = rule_data_entry_access_mask_choice_setting_value
 
@@ -179,7 +180,7 @@ async def test_v2_group():
                "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_4"
         ]
 
-        rule_data_entry_access_mask_choice_setting_value.value = []
+        rule_data_entry_access_mask_choice_setting_value.choice_setting_collection_value = []
         for mask in masks:
                
                mask_value = DeviceManagementConfigurationChoiceSettingValue()
