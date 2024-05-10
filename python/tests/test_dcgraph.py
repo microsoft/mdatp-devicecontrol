@@ -118,6 +118,7 @@ async def test_v2_group():
                 included_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationReferenceSettingValue()
                 included_group_id_configuration_simple_setting_instance.simple_setting_value = included_group_id_configuration_simple_setting_instance_value
                 included_group_id_configuration_simple_setting_instance_value.value = included_group_id
+                included_group_id_configuration_simple_setting_instance_value.note = None
 
                 included_groups_configuration_group_setting_collection_instance_value.children.append(
                        included_group_id_configuration_simple_setting_instance
@@ -156,7 +157,7 @@ async def test_v2_group():
         rule_data_entry_options_value = DeviceManagementConfigurationChoiceSettingValue()
         rule_data_entry_options.choice_setting_value = rule_data_entry_options_value
         rule_data_entry_options_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options_0"
-
+        rule_data_entry_options_value.children = []
         # The options are a child to the allow/deny
         rule_data_entry_type_value.children.append(rule_data_entry_options)
 
