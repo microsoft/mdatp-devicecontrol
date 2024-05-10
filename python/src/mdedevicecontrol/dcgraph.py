@@ -106,7 +106,7 @@ class Graph:
 
         logger.debug("Client credential created.")
         self.graph_client =  GraphServiceClient(
-            self.client_credential_credential,
+            self.client_credential,
             scopes=["https://graph.microsoft.com/.default"],
             request_adapter=_adapter,
 )
