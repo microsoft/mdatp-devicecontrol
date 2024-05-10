@@ -285,6 +285,9 @@ class Graph:
         policy = DeviceManagementConfigurationPolicy()
         policy.name = "My Imported Policy"
         policy.description = "A policy that I created with graph API"
+        policy.platforms = "windows10"
+        policy.setting_count = 1
+        policy.role_scope_tag_ids = ["0"]
 
         setting = DeviceManagementConfigurationSetting()
         setting.id = "0"
