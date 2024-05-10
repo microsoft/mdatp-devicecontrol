@@ -135,7 +135,7 @@ async def test_v2_group():
         rule_data_group_setting_value_children.append(rule_data_entry)
         
         rule_data_group_setting_collection_value = DeviceManagementConfigurationGroupSettingValue()
-        rule_data_entry.group_setting_collection_value = rule_data_group_setting_collection_value
+        rule_data_entry.group_setting_collection_value = [rule_data_group_setting_collection_value]
 
         rule_data_group_setting_collection_value.children = []
 
