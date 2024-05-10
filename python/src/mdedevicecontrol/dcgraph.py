@@ -292,7 +292,7 @@ class Graph:
         policy.role_scope_tag_ids = ["0"]
     
 
-        policy.technologies = DeviceManagementConfigurationTechnologies.MicrosoftSense
+        policy.technologies = DeviceManagementConfigurationTechnologies.Mdm
         policy.template_reference = DeviceManagementConfigurationPolicyTemplateReference()
         policy.template_reference.template_display_name = "Device Control"
         policy.template_reference.template_display_version = "Version 1"
