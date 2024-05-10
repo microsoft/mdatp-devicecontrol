@@ -288,14 +288,14 @@ class Graph:
         policy.description = "A policy that I created with graph API"
         policy.platforms = "windows10"
         policy.role_scope_tag_ids = ["0"]
-        policy.id = "0"
+    
 
         policy.technologies = "mdm"
         policy.template_reference = DeviceManagementConfigurationPolicyTemplateReference()
         policy.template_reference.template_display_name = "Device Control"
         policy.template_reference.template_display_version = "Version 1"
         policy.template_reference.template_family = "endpointSecurityAttackSurfaceReduction"
-        policy.id = "0f2034c6-3cd6-4ee1-bd37-f3c0693e9548_1"
+        policy.template_reference.template_id = "0f2034c6-3cd6-4ee1-bd37-f3c0693e9548_1"
 
         setting = DeviceManagementConfigurationSetting()
         setting.setting_instance = rule
