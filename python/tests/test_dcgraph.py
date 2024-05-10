@@ -207,6 +207,16 @@ async def test_v2_group():
                rule_data_entry_access_mask_choice_setting_value.value.append(mask_value)
 
 
-        
+        entry_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
+        entry_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_id"
+
+        entry_id_setting_value = DeviceManagementConfigurationStringSettingValue()
+        entry_id_setting_value.value = "{6f9df57a-aadb-4b41-9e35-3634dc3857e6}"
+
+        entry_id_setting.simple_setting_value = entry_id_setting_value
+
+        #Add it to the list
+        rule_data_group_setting_value_children.append(entry_id_setting)
+
         logger.info(str(rule))
       
