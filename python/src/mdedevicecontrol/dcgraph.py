@@ -22,6 +22,7 @@ from msgraph_beta.generated.device_management.configuration_settings.item.device
 from msgraph_beta.generated.device_management.reusable_policy_settings.item.device_management_reusable_policy_setting_item_request_builder import DeviceManagementReusablePolicySettingItemRequestBuilder
 from msgraph_beta.generated.device_management.reusable_settings.reusable_settings_request_builder import ReusableSettingsRequestBuilder
 
+from msgraph_beta.generated.models.device_management_configuration_policy import DeviceManagementConfigurationPolicy
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -223,4 +224,14 @@ class Graph:
         )
 
         result = await self.graph_client.device_management.reusable_settings.get(request_configuration = request_configuration)
+        return result
+    
+
+    async def create_rule_v2(self,rule):
+
+        policy = DeviceManagementConfigurationPolicy()
+        policy.name = "My Imported Policy"
+        policy.description = "A policy that I created with graph API"
+        policy.settings = [rule]
+        result = await self.graph_client.device_management.configuration_policies.post(policy)
         return result

@@ -219,4 +219,6 @@ async def test_v2_group():
         rule_data_group_setting_value_children.append(entry_id_setting)
 
         logger.info(str(rule))
+
+        await graph.create_rule_v2(rule)
       
