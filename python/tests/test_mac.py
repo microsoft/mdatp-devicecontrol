@@ -15,10 +15,10 @@ def test_mac_convert():
         path=os.path.join(str(root_dir),"export")
     )
 
-    sn1 = api.createProperty(dc.Group.WindowsDeviceSerialNumberProperty,"11111111111")
-    sn2 = api.createProperty(dc.Group.WindowsDeviceSerialNumberProperty,"11111111111")
+    serialNumbers = ["111111111","222222222"]
     
-    allowedSerialNumbersGroup = api.createGroup(properties=[sn1,sn2])
+    allowedSerialNumbersGroup = api.createGroupOfWindowsDevicesBySerialNumber("Allowed USBs",serialNumbers)
+    
 
     permissions = {
         dc.WindowsEntryType.DiskReadMask: True,
