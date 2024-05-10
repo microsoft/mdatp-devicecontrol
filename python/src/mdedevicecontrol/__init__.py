@@ -2572,6 +2572,28 @@ class api:
 
         return group
     
+
+    def createGroupOfWindowsDevicesBySerialNumber(self,name,values = [], id=None):
+        return self.createGroupOfWindowsDevices(name,property=Group.WindowsDeviceSerialNumberProperty, values=values,id=id)
+
+
+    def createGroupOfWindowsDevices(self,name, 
+                    property = Group.WindowsDeviceVendorProductProperty,
+                    values = [],
+                    id = None):
+        
+        group_type = GroupType.WindowsDeviceGroupType, 
+        match_type = MatchType.Any
+
+        properties = []
+
+        for value in values:
+            property = self.createProperty(property,value)
+            properties.append(property)
+
+        return self.createGroup(properties=properties,group_type=group_type,match_type=match_type,id=id)
+
+
     def createEntry(self,
                     entry_type=Entry.WindowsDevice,
                     enforcement=PolicyRule.Allow,
