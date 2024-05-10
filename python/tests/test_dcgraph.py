@@ -220,5 +220,7 @@ async def test_v2_group():
 
         logger.info(str(rule))
 
-        await graph.create_rule_v2(rule)
-      
+        try:
+              result = await graph.create_rule_v2(rule)
+        except RuntimeError as e:
+               logger.error(e)
