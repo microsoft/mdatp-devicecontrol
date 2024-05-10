@@ -187,7 +187,7 @@ async def test_v2_group():
                mask_value.value = mask
                mask_value.children = []
 
-               rule_data_entry_access_mask_choice_setting_value.value.append(mask_value)
+               rule_data_entry_access_mask_choice_setting_value.choice_setting_collection_value.append(mask_value)
 
 
         entry_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
