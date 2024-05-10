@@ -18,6 +18,7 @@ from msgraph_beta.generated.models.device_management_configuration_simple_settin
 from msgraph_beta.generated.models.device_management_configuration_string_setting_value import DeviceManagementConfigurationStringSettingValue
 from msgraph_beta.generated.models.device_management_configuration_choice_setting_instance import DeviceManagementConfigurationChoiceSettingInstance
 from msgraph_beta.generated.models.device_management_configuration_choice_setting_value import DeviceManagementConfigurationChoiceSettingValue
+from msgraph_beta.generated.models.device_management_configuration_reference_setting_value import DeviceManagementConfigurationReferenceSettingValue
 
 pytest_plugins = ('pytest_asyncio',)
 
@@ -114,7 +115,7 @@ async def test_v2_group():
                 included_group_id_configuration_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
                 included_group_id_configuration_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist_groupid"
 
-                included_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
+                included_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationReferenceSettingValue()
                 included_group_id_configuration_simple_setting_instance.simple_setting_value = included_group_id_configuration_simple_setting_instance_value
                 included_group_id_configuration_simple_setting_instance_value.value = included_group_id
 
