@@ -2591,7 +2591,7 @@ class api:
             property = self.createProperty(property,value)
             properties.append(property)
 
-        return self.createGroup(properties=properties,group_type=group_type,match_type=match_type,id=id)
+        return self.createGroup(name,properties=properties,group_type=group_type,match_type=match_type,id=id)
 
 
     def createEntry(self,
