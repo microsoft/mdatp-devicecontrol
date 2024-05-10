@@ -164,14 +164,14 @@ async def test_v2_group():
         rule_data_entry_type_value.children.append(rule_data_entry_options)
 
 
-        rule_data_entry_access_mask = DeviceManagementConfigurationChoiceSettingInstance()
+        rule_data_entry_access_mask = DeviceManagementConfigurationChoiceSettingCollectionInstance()
         rule_data_entry_access_mask.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask"
 
         #Add it to the list
         rule_data_group_setting_collection_value.children.append(rule_data_entry_access_mask)
-        rule_data_entry_access_mask_choice_setting_value = DeviceManagementConfigurationChoiceSettingCollectionInstance()
+        
 
-        rule_data_entry_access_mask.choice_setting_value = rule_data_entry_access_mask_choice_setting_value
+        rule_data_entry_access_mask.choice_setting_value = []
 
 
         masks = [
@@ -180,14 +180,14 @@ async def test_v2_group():
                "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_4"
         ]
 
-        rule_data_entry_access_mask_choice_setting_value.choice_setting_collection_value = []
+        
         for mask in masks:
                
                mask_value = DeviceManagementConfigurationChoiceSettingValue()
                mask_value.value = mask
                mask_value.children = []
 
-               rule_data_entry_access_mask_choice_setting_value.choice_setting_collection_value.append(mask_value)
+               rule_data_entry_access_mask.choice_setting_value.append(mask_value)
 
 
         entry_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
