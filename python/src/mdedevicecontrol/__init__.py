@@ -2510,7 +2510,7 @@ class api:
         return Property(groupProperty,value)
 
     def createGroup(self,name, 
-                    group_type = GroupType.WindowsDeviceGroupType, 
+                    group_type = Group.WindowsDeviceGroupType, 
                     match_type = MatchType.Any,
                     properties = [],
                     id = None):
@@ -2582,7 +2582,7 @@ class api:
                     values = [],
                     id = None):
         
-        group_type = GroupType.WindowsDeviceGroupType
+        group_type = Group.WindowsDeviceGroupType
         match_type = MatchType.Any
 
         properties = []
