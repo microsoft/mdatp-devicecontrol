@@ -31,6 +31,8 @@ from msgraph_beta.generated.device_management.reusable_settings.reusable_setting
 from msgraph_beta.generated.models.device_management_configuration_policy import DeviceManagementConfigurationPolicy
 from msgraph_beta.generated.models.device_management_configuration_setting import DeviceManagementConfigurationSetting
 from msgraph_beta.generated.models.device_management_configuration_policy_template_reference import DeviceManagementConfigurationPolicyTemplateReference
+from msgraph_beta.generated.models.device_management_configuration_technologies import DeviceManagementConfigurationTechnologies
+
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -290,7 +292,7 @@ class Graph:
         policy.role_scope_tag_ids = ["0"]
     
 
-        policy.technologies = "mdm"
+        policy.technologies = DeviceManagementConfigurationTechnologies.Mdm
         policy.template_reference = DeviceManagementConfigurationPolicyTemplateReference()
         policy.template_reference.template_display_name = "Device Control"
         policy.template_reference.template_display_version = "Version 1"
