@@ -2582,7 +2582,7 @@ class api:
                     values = [],
                     id = None):
         
-        group_type = GroupType.WindowsDeviceGroupType, 
+        group_type = GroupType.WindowsDeviceGroupType
         match_type = MatchType.Any
 
         properties = []
