@@ -34,7 +34,7 @@ def get_graph():
 
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio(scope="session")
 async def test_v2_group():
 
         import logging.config
@@ -203,7 +203,7 @@ async def test_v2_group():
         except RuntimeError as e:
                logger.error(e)
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio(scope="session")
 async def test_intune_oma():
 
     graph = get_graph()
