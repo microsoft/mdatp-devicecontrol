@@ -32,7 +32,7 @@ from msgraph_beta.generated.models.device_management_configuration_policy import
 from msgraph_beta.generated.models.device_management_configuration_setting import DeviceManagementConfigurationSetting
 from msgraph_beta.generated.models.device_management_configuration_policy_template_reference import DeviceManagementConfigurationPolicyTemplateReference
 from msgraph_beta.generated.models.device_management_configuration_technologies import DeviceManagementConfigurationTechnologies
-
+from msgraph_beta.generated.models.device_management_configuration_platforms import DeviceManagementConfigurationPlatforms
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -288,7 +288,7 @@ class Graph:
         policy = DeviceManagementConfigurationPolicy()
         policy.name = "My Imported Policy"
         policy.description = "A policy that I created with graph API"
-        policy.platforms = "windows10"
+        policy.platforms = DeviceManagementConfigurationPlatforms.Windows10
         policy.role_scope_tag_ids = ["0"]
     
 
