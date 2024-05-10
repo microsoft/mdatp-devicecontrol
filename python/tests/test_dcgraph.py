@@ -32,29 +32,7 @@ def get_graph():
         return graph
        
 
-@pytest.mark.asyncio
-async def test_intune_oma():
 
-    graph = get_graph()
-    
-    win10config = Windows10CustomConfiguration()
-    win10config.display_name = "This is imported"
-    win10config.description = "This is the description"
-        
-    f1 = OmaSettingStringXml()
-    test = "<PolicyRule></PolicyRule>"
-    f1.value = str(test).encode("utf-8")
-    f1.file_name = "test_file.xml"
-    f1.display_name = "Test XML"
-    f1.description = "This is the description of the file"
-    f1.oma_uri = "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b783b7807-4516-41cb-b5ad-b460f91629fe%7d/RuleData"
-
-    win10config.oma_settings = [f1]
-
-    result = await graph.create_device_configuration(win10config)
-
-    print("Result="+str(result))
-    print("Result Class="+result.__class__.__name__)
 
 @pytest.mark.asyncio
 async def test_v2_group():
@@ -224,3 +202,27 @@ async def test_v2_group():
               result = await graph.create_rule_v2(rule)
         except RuntimeError as e:
                logger.error(e)
+
+@pytest.mark.asyncio
+async def test_intune_oma():
+
+    graph = get_graph()
+    
+    win10config = Windows10CustomConfiguration()
+    win10config.display_name = "This is imported"
+    win10config.description = "This is the description"
+        
+    f1 = OmaSettingStringXml()
+    test = "<PolicyRule></PolicyRule>"
+    f1.value = str(test).encode("utf-8")
+    f1.file_name = "test_file.xml"
+    f1.display_name = "Test XML"
+    f1.description = "This is the description of the file"
+    f1.oma_uri = "./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7b783b7807-4516-41cb-b5ad-b460f91629fe%7d/RuleData"
+
+    win10config.oma_settings = [f1]
+
+    result = await graph.create_device_configuration(win10config)
+
+    print("Result="+str(result))
+    print("Result Class="+result.__class__.__name__)
