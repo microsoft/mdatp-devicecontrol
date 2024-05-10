@@ -171,7 +171,7 @@ async def test_v2_group():
         rule_data_group_setting_collection_value.children.append(rule_data_entry_access_mask)
         
 
-        rule_data_entry_access_mask.choice_setting_value = []
+        rule_data_entry_access_mask.choice_setting_collection_value = []
 
 
         masks = [
