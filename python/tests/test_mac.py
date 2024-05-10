@@ -15,8 +15,8 @@ def test_mac_convert():
         path=os.path.join(str(root_dir),"export")
     )
 
-    sn1 = api.createProperty(dc.GroupProperty.WindowsDeviceSerialNumber,"11111111111")
-    sn2 = api.createProperty(dc.GroupProperty.WindowsDeviceSerialNumber,"11111111111")
+    sn1 = api.createProperty(dc.Group.WindowsDeviceSerialNumberProperty,"11111111111")
+    sn2 = api.createProperty(dc.Group.WindowsDeviceSerialNumberProperty,"11111111111")
     
     allowedSerialNumbersGroup = api.createGroup(properties=[sn1,sn2])
 
