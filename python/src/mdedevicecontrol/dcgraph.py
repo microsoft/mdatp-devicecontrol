@@ -3,7 +3,7 @@ from azure.identity import DeviceCodeCredential
 from azure.identity.aio import ClientSecretCredential
 
 from msgraph_beta import GraphServiceClient, GraphRequestAdapter
-from msgraph_beta import GraphClientFactory
+from msgraph_core import GraphClientFactory
 from kiota_authentication_azure.azure_identity_authentication_provider import (
     AzureIdentityAuthenticationProvider
 )
