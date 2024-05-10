@@ -158,6 +158,7 @@ async def test_v2_group():
         rule_data_entry_options.choice_setting_value = rule_data_entry_options_value
         rule_data_entry_options_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options_0"
         rule_data_entry_options_value.children = []
+        
         # The options are a child to the allow/deny
         rule_data_entry_type_value.children.append(rule_data_entry_options)
 
@@ -183,6 +184,7 @@ async def test_v2_group():
                
                mask_value = DeviceManagementConfigurationChoiceSettingValue()
                mask_value.value = mask
+               mask_value.children = []
 
                rule_data_entry_access_mask_choice_setting_value.value.append(mask_value)
 
