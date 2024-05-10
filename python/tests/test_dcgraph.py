@@ -94,7 +94,7 @@ async def test_v2_group():
         rule_name_simple_setting_instance_value.value = "Deny All Removable Media"
       
         #Add it to the list
-        rule_data_group_setting_value_children.append(rule_name_simple_setting_instance_value)
+        rule_data_group_setting_value_children.append(rule_name_simple_setting_instance)
 
         #Create the included groups
         included_groups_configuration_group_setting_collection_instance = DeviceManagementConfigurationGroupSettingCollectionInstance()
