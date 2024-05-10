@@ -34,5 +34,5 @@ def test_mac_convert():
 
     logger.info(str(allowReadToAllowedSerialNumbers))
 
-    convert.convert_rule(allowReadToAllowedSerialNumbers)
+    convert.convert_rule(allowReadToAllowedSerialNumbers,True)
 
