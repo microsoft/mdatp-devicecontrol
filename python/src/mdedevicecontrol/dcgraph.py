@@ -29,6 +29,7 @@ from msgraph_beta.generated.device_management.reusable_policy_settings.item.devi
 from msgraph_beta.generated.device_management.reusable_settings.reusable_settings_request_builder import ReusableSettingsRequestBuilder
 
 from msgraph_beta.generated.models.device_management_configuration_policy import DeviceManagementConfigurationPolicy
+from msgraph_beta.generated.models.device_management_configuration_setting import DeviceManagementConfigurationSetting
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -284,6 +285,11 @@ class Graph:
         policy = DeviceManagementConfigurationPolicy()
         policy.name = "My Imported Policy"
         policy.description = "A policy that I created with graph API"
-        policy.settings = [rule]
+
+        setting = DeviceManagementConfigurationSetting()
+        setting.id = "0"
+        setting.setting_instance = rule
+        policy.settings = [setting]
+        
         result = await self.graph_client.device_management.configuration_policies.post(policy)
         return result
