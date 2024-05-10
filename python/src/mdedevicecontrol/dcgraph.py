@@ -288,6 +288,7 @@ class Graph:
         policy.description = "A policy that I created with graph API"
         policy.platforms = "windows10"
         policy.role_scope_tag_ids = ["0"]
+        policy.id = "0"
 
         policy.technologies = "mdm"
         policy.template_reference = DeviceManagementConfigurationPolicyTemplateReference()
