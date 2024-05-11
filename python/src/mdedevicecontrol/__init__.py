@@ -2,6 +2,7 @@ __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
 
+import asyncio
 import json
 import copy
 import os
@@ -2819,3 +2820,13 @@ class api:
         
         await self.package.deploy(self.graph)
         self.package.save_metadata(self.path)
+
+
+async def dc():
+    pass
+
+def main():
+    asyncio.run(dc())
+
+if __name__ == "main":
+    main()
