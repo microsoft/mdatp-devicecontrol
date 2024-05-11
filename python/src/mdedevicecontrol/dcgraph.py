@@ -289,9 +289,10 @@ class Graph:
         setting = DeviceManagementReusablePolicySetting()
         setting.setting_instance = group
         
-
+        logger.debug("Create Group v2 "+str(group))
         result = await self.graph_client.device_management.reusable_policy_settings.post(setting)
-       
+        logger.debug(str(result))
+        return result
 
 
 
