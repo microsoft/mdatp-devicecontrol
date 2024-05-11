@@ -284,7 +284,7 @@ class Graph:
         return result
     
 
-    async def create_gorup_v2(self,group):
+    async def create_group_v2(self,group):
 
         setting = DeviceManagementReusablePolicySetting()
         setting.setting_instance = group
