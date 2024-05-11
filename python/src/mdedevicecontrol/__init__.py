@@ -2,6 +2,7 @@ __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
 
+import argparse
 import asyncio
 import json
 import copy
@@ -2822,11 +2823,18 @@ class api:
         self.package.save_metadata(self.path)
 
 
-async def dc():
+async def dc(args):
     pass
 
 def main():
-    asyncio.run(dc())
+    
+    arg_parser = argparse.ArgumentParser(
+    description='Utility for device control')
+
+
+    args = arg_parser.parse_args()
+
+    asyncio.run(dc(args))
 
 if __name__ == "main":
     main()
