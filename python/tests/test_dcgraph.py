@@ -21,6 +21,7 @@ from msgraph_beta.generated.models.device_management_configuration_choice_settin
 from msgraph_beta.generated.models.device_management_configuration_reference_setting_value import DeviceManagementConfigurationReferenceSettingValue
 from msgraph_beta.generated.models.device_management_configuration_choice_setting_collection_instance import DeviceManagementConfigurationChoiceSettingCollectionInstance
 from msgraph_beta.generated.models.device_management_configuration_setting_instance_template_reference import DeviceManagementConfigurationSettingInstanceTemplateReference
+from msgraph_beta.generated.models.device_management_configuration_simple_setting_instance import DeviceManagementConfigurationSimpleSettingInstance
 
 pytest_plugins = ('pytest_asyncio',)
 
@@ -35,10 +36,78 @@ def get_graph():
         return graph
        
 
+@pytest.mark.asyncio(scope="session")
+async def test_v2_group():
+
+       import logging.config
+       logging.config.fileConfig("logging.conf")
+
+       logger = logging.getLogger("mdedevicecontrol")
+      
+       graph = get_graph()
+
+       #https://graph.microsoft.com/beta/deviceManagement/reusablePolicySettings/260025de-b493-4b31-abf9-0c310854657f?$select=settingInstance
+
+       groupdata = DeviceManagementConfigurationGroupSettingCollectionInstance()
+       groupdata.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+       groupdata.group_setting_collection_value = []
+
+       groupdata_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
+       groupdata.group_setting_collection_value.append(groupdata_group_setting_value)
+ 
+       groupdata_group_setting_value.children = []
+
+       #group id
+       groupdata_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
+       groupdata_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_id"
+
+       groupdata_id_value = DeviceManagementConfigurationStringSettingValue()
+       groupdata_id_value.value = "{9d8c5f1a-8171-4aed-80da-e2703cca37c5}"
+
+       groupdata_id_setting.simple_setting_value = groupdata_id_value
+       groupdata_group_setting_value.children.append(groupdata_id_setting)
+
+       #id list
+       groupdata_list = DeviceManagementConfigurationGroupSettingCollectionInstance()
+       groupdata_list.setting_instance_template_reference = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist"
+
+       groupdata_list_value = DeviceManagementConfigurationGroupSettingValue()
+       groupdata_list.group_setting_collection_value = groupdata_list_value
+
+       groupdata_list_value.children = []
+
+       #printer name
+       printer_name_setting = DeviceManagementConfigurationSimpleSettingInstance()
+       printer_name_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist_name"
+
+       printer_name_setting_value = DeviceManagementConfigurationStringSettingValue()
+       printer_name_setting_value.value = "Test 4"
+
+       groupdata_list_value.append(printer_name_setting)
+
+       printer_connection_id_setting = DeviceManagementConfigurationChoiceSettingInstance()
+       printer_connection_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist_printerconnectionid"
+       printer_connection_id_setting_choice_setting_value = DeviceManagementConfigurationChoiceSettingValue 
+       printer_connection_id_setting.choice_setting_value = printer_connection_id_setting_choice_setting_value
+
+       printer_connection_id_setting_choice_setting_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist_printerconnectionid_2"
+       groupdata_list_value.append(printer_connection_id_setting)
+
+       groupdata_group_setting_value.children.append(groupdata_list)
+
+       #match type
+       match_type_setting = DeviceManagementConfigurationChoiceSettingInstance()
+       match_type_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype"
+       match_type_setting.choice_setting_value = DeviceManagementConfigurationChoiceSettingValue()
+       match_type_setting.choice_setting_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype_matchany"
+
+       groupdata_group_setting_value.children.append(match_type_setting)
+
+
 
 
 @pytest.mark.asyncio(scope="session")
-async def test_v2_group():
+async def test_v2_rule():
 
         import logging.config
         logging.config.fileConfig("logging.conf")

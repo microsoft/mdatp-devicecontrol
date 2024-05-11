@@ -33,6 +33,7 @@ from msgraph_beta.generated.models.device_management_configuration_setting impor
 from msgraph_beta.generated.models.device_management_configuration_policy_template_reference import DeviceManagementConfigurationPolicyTemplateReference
 from msgraph_beta.generated.models.device_management_configuration_technologies import DeviceManagementConfigurationTechnologies
 from msgraph_beta.generated.models.device_management_configuration_platforms import DeviceManagementConfigurationPlatforms
+from msgraph_beta.generated.models.device_management_reusable_policy_setting import DeviceManagementReusablePolicySetting
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -282,6 +283,17 @@ class Graph:
         result = await self.graph_client.device_management.reusable_settings.get(request_configuration = request_configuration)
         return result
     
+
+    async def create_gorup_v2(self,group):
+
+        setting = DeviceManagementReusablePolicySetting()
+        setting.setting_instance = group
+        
+
+        result = await self.graph_client.device_management.reusable_policy_settings.post(setting)
+       
+
+
 
     async def create_rule_v2(self,rule):
 

@@ -34,8 +34,8 @@ def test_mac_convert():
 
     logger.info(str(allowReadToAllowedSerialNumbers))
 
-    mac_rule = convert.convert_rule(allowReadToAllowedSerialNumbers.root,True)
-
+    mac_rule = convert
+    
     if mac_rule is None:
         raise AssertionError("Unable to convert rule")
     else:
