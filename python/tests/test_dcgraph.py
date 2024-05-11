@@ -83,7 +83,7 @@ async def test_v2_group():
        printer_name_setting_value = DeviceManagementConfigurationStringSettingValue()
        printer_name_setting_value.value = "Test 4"
 
-       groupdata_list_value.append(printer_name_setting)
+       groupdata_list_value.children.append(printer_name_setting)
 
        printer_connection_id_setting = DeviceManagementConfigurationChoiceSettingInstance()
        printer_connection_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_printerdevicesidlist_printerconnectionid"
