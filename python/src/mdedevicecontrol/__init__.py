@@ -2873,8 +2873,10 @@ class CommandLine:
         match args.operation:
             case "init":
                 CommandLine.init(args)
-            case "test-graph":
-                CommandLine.test_graph(ar)
+            case "validate":
+                if args.validate_options == "graph":
+                    token = await CommandLine.validate_graph(args,config)
+
 
         pass
 
@@ -2896,6 +2898,36 @@ class CommandLine:
 
 
         pass
+
+    async def validate_graph(args,config):
+
+        logger.debug("authentication_type="+args.authentication_type)
+        from mdedevicecontrol.dcintune import Graph
+
+        tenantId = None
+        clientId = None
+        clientSecret = None
+
+
+        if "DC_TENANT_ID" in os.environ:
+            tenantId = os.environ["DC_TENANT_ID"]
+
+        if "DC_CLIENT_ID" in os.environ:
+            clientId = os.environ["DC_CLIENT_ID"]
+
+        if "DC_CLIENT_SECRET" in os.environ:
+            clientSecret = os.environ["DC_CLIENT_SECRET"]
+
+        
+        scopes = config["graph"]["scopes"]
+
+        if args.authentication_type == "user":
+            graph = Graph(tenantId=tenantId,clientId=clientId,clientSecret=None,scopes=scopes)
+            token = await graph.get_user_token()
+        else:
+            graph = Graph(tenantId=tenantId,clientId=clientId,clientSecret=clientSecret,scopes=scopes)
+            token = await graph.get_app_only_token()
+
 
 def main():
     

@@ -85,34 +85,47 @@ class Graph:
     device_code_credential: DeviceCodeCredential
     user_client: GraphServiceClient
 
-    def __init__(self, tenantId, clientId, clientSecret):
+    def __init__(self, tenantId, clientId, clientSecret, scopes = None):
         
         client_id = clientId
         self.tenant_id = tenantId
         client_secret = clientSecret
 
-        logger.debug("TenantId=...."+self.tenant_id[:4])
-        logger.debug("ClientId=...."+client_id[:4])
-        logger.debug("ClientSecret=...."+client_secret[:4])
+        if self.tenant_id is not None:
+            logger.debug("TenantId=...."+self.tenant_id[:4])
 
-        graph_scopes = scopes.split(' ')
+        if client_id is not None:
+            logger.debug("ClientId=...."+client_id[:4])
 
-        logger.debug("scopes: "+str(graph_scopes))
-        #self.device_code_credential = DeviceCodeCredential(client_id, tenant_id = tenant_id)
+        if client_secret is not None:
+            logger.debug("ClientSecret=...."+client_secret[:4])
 
+        self.graph_scopes = scopes.split(' ')
+
+        if self.graph_scopes is not None:
+            logger.debug("scopes: "+str(self.graph_scopes))
+
+        
         _middleware = GraphClientFactory.get_default_middleware(None)
         _middleware.append(DebugHandler())
         _http_client = GraphClientFactory.create_with_custom_middleware(
             _middleware
         )
-        self.client_credential = ClientSecretCredential(self.tenant_id, client_id, client_secret)
+
+        if client_secret is not None:
+            self.client_credential = ClientSecretCredential(self.tenant_id, client_id, client_secret)
+            self.graph_scopes = ["https://graph.microsoft.com/.default"]
+        else:
+            self.client_credential = DeviceCodeCredential(client_id, tenant_id = self.tenant_id)
+
         _auth_provider = AzureIdentityAuthenticationProvider(self.client_credential)
+
         _adapter = GraphRequestAdapter(_auth_provider, _http_client)
 
         logger.debug("Client credential created.")
         self.graph_client =  GraphServiceClient(
             self.client_credential,
-            scopes=["https://graph.microsoft.com/.default"],
+            scopes=self.graph_scopes,
             request_adapter=_adapter,
 )
         logger.debug("Graph client created.")
@@ -126,8 +139,7 @@ class Graph:
     
 
     async def get_user_token(self):
-        graph_scopes = self.settings['graphUserScopes']
-        access_token = self.device_code_credential.get_token(graph_scopes)
+        access_token = self.client_credential.get_token(' '.join(self.graph_scopes))
         return access_token.token
     
 
