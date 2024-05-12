@@ -696,13 +696,15 @@ class GroupProperty:
     MacFileType = "fileType"
 
 
-
+    properties_by_name = {}
 
     def __init__(self,name,label,description,allowed_values = None):
         self.name = name
         self.label = label
         self.description = description
         self.allowed_values = allowed_values
+
+        GroupProperty.properties_by_name[name] = self
 
 class GroupType:
 
@@ -2947,8 +2949,32 @@ class CommandLine:
         
         import pandas as pd
 
-        xslx_file = pd.read_excel(xlsx_file_path)
-        logger.debug(str(xslx_file))
+        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
+        logger.debug(str(xslx_groups))
+
+        dc = api()
+
+        for index, row in xslx_groups.iterrows():
+            group_name = row['Name']
+            group_type = row['Type']
+            group_match = row['Match']
+
+            xslx_group = pd.read_excel(xlsx_file_path,sheet_name=group_name)
+            logger.debug(str(xslx_group))
+
+            property_name = list(xslx_group.columns)[0]
+            logger.debug("Property="+property_name)
+
+            group_property = GroupProperty.properties_by_name[property_name]
+
+            property_values = list(xslx_group[property_name])
+            logger.debug("Property_Values="+str(property_values))
+            
+            group = dc.createGroupOfWindowsDevices(
+                name=group_name,
+                property=group_property,
+                values=property_values)
+
 
 def main():
     
