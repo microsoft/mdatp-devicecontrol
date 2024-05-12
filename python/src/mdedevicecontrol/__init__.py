@@ -2470,6 +2470,46 @@ IntuneUXFeature = Feature(
     
 class api:
 
+    '''
+                    entry_type=Entry.WindowsDevice,
+                    enforcement=PolicyRule.Allow,
+                    permissions={
+                        WindowsEntryType.DiskReadMask: True,
+                        WindowsEntryType.FileReadMask: True
+                    },
+                    notifications=Notifications(0,Format.OMA_URI),
+    '''
+
+    entriesByName = {
+        "Allow full access":{
+            "entry_type": Enforcement.Allow,
+            "permissions": {
+                WindowsEntryType.DiskReadMask: True,
+                WindowsEntryType.DiskWriteMask: True,
+                WindowsEntryType.DiskExecuteMask: True,
+                WindowsEntryType.FileReadMask: True,
+                WindowsEntryType.FileWriteMask: True,
+                WindowsEntryType.FileExecuteMask: True
+            },
+            "notifications": Notifications(0,Format.OMA_URI)
+        },
+        "Audit write access":{
+            "entry_type":Enforcement.AuditAllowed,
+            "AccessMask":18,
+            "Options": 2
+        },
+        "Allow read access":
+        {
+            "Type":Enforcement.Allow,
+            "AccessMask":9,
+            "Options":0
+        },
+        "Deny write and execute access":{
+            "Type":Enforcement.Deny,
+            "AccessMask":54,
+            "Options":3
+        }
+    }
 
     def newGUID():
         return "{"+str(uuid.uuid4())+"}"
@@ -2604,6 +2644,9 @@ class api:
 
         return self.createGroup(name,properties=properties,group_type=group_type,match_type=match_type,id=id)
 
+
+    def createEntryByName(self,entry_name):
+        pass
 
     def createEntry(self,
                     entry_type=Entry.WindowsDevice,
@@ -2811,6 +2854,12 @@ class api:
         logger.debug("Creating a copy of "+str(object.__class__.__name__))
 
         match str(object.__class__.__name__):
+            case "Entry":
+                new_entry = copy.deepcopy(object)
+                logger.debug("Changing id of copy id="+object.id)
+                new_entry.id = api.newGUID()
+                logger.debug("New id is "+new_entry.id)
+                return new_entry
             case "Group":
                 new_group = copy.deepcopy(object)
                 logger.debug("Changing id of copy id="+object.id)
@@ -2949,11 +2998,56 @@ class CommandLine:
         
         import pandas as pd
 
-        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
-        logger.debug(str(xslx_groups))
+        xslx_entries =pd.read_excel(xlsx_file_path,sheet_name="Entries")
+
+        logger.debug(str(xslx_entries))
+
+        entries = {}
 
         dc = api()
 
+        for index,row in xslx_entries.iterrows():
+
+            name = str(row["Name"]).strip()
+            type = row["Type"]
+            notification = row["Notification"]
+
+            permissions = {
+
+            }
+
+            permissions[WindowsEntryType.DiskReadMask] = (row["Disk Read"] == "X")
+            permissions[WindowsEntryType.DiskWriteMask] = (row["Disk Write"] == "X")
+            permissions[WindowsEntryType.DiskExecuteMask] = (row["Disk Execute"] == "X")
+            permissions[WindowsEntryType.FileReadMask] = (row["File Read"] == "X")
+            permissions[WindowsEntryType.FileWriteMask] = (row["File Write"] == "X")
+            permissions[WindowsEntryType.FileExecuteMask] = (row["File Execute"] == "X")
+
+            enforcement = None
+
+            match type:
+                case "Allow":
+                    enforcement = PolicyRule.Allow
+                case "Deny":
+                    enforcement = PolicyRule.Deny
+                case "AuditAllowed":
+                    enforcement = PolicyRule.AuditAllowed
+                case "AuditDenied":
+                    enforcement = PolicyRule.AuditDenied
+
+            entries[name] = api.createEntry(
+                Entry.WindowsDevice,
+                enforcement=enforcement,
+                permissions=permissions,
+                notifications=Notifications(notification,Format.OMA_URI)
+            )
+
+        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
+        logger.debug(str(xslx_groups))
+
+        
+
+        groups = {}
         for index, row in xslx_groups.iterrows():
             group_name = row['Name']
             group_type = row['Type']
@@ -2974,6 +3068,77 @@ class CommandLine:
                 name=group_name,
                 property=group_property,
                 values=property_values)
+            
+            groups[group_name] = group
+
+
+        xslx_rules =pd.read_excel(xlsx_file_path,sheet_name="Rules")
+
+        rules = {}
+        for index,row in xslx_rules.iterrows():
+
+            rule_name = row["Name"]
+            rule_description = row["Description"]
+
+            included_group_names = str(row["Included Groups"]).split(",")
+            excluded_group_names = str(row["Excluded Groups"]).split(",")
+
+            entry_names = str(row["Entries"]).split(",")
+
+            included_groups = []
+            for included_group_name in included_group_names:
+                if included_group_name in groups:
+                    included_groups.append(groups[included_group_name])
+                else:
+                    raise RuntimeError(included_group_name+" not found.")
+                
+            excluded_groups = []
+            for excluded_group_name in excluded_group_names:
+                if excluded_group_name in groups:
+                    excluded_groups.append(groups[excluded_group_name])
+                elif excluded_group_name != "nan":
+                    raise RuntimeError(excluded_group_name+" not found.")
+                
+
+            entries_for_rule = []
+            for entry_name in entry_names:
+
+                entry_name = str(entry_name).strip()
+                if entry_name not in entries:
+                    raise RuntimeError("No entry named "+str(entry_name)+" found.")
+                
+                entry_with_new_id = dc.copy(object=entries[entry_name])
+                entries_for_rule.append(entry_with_new_id)
+
+            rule = dc.createRule(rule_name=rule_name,
+                          included_groups=included_groups,
+                          excluded_groups=excluded_groups,
+                          entries=entries_for_rule)
+
+            rule.description = rule_description
+
+            rules[rule_name] = rule
+
+        policy = dc.createPolicy(
+            os=args.os,
+            name=args.name,
+            version=args.version,
+            rules=list(rules.values()),
+            groups=list(groups.values())
+        )
+         
+        from mdedevicecontrol.dcintune import Package
+
+        cwd = pathlib.Path(os.getcwd())
+        
+        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+        p.addPolicy(policy)
+
+        p.save(str(cwd.parent),
+               CommandLine.rule_template_name,
+               CommandLine.readme_template_name,
+               CommandLine.description_template_name)
+
 
 
 def main():
@@ -2990,7 +3155,13 @@ def main():
     intune_source_parser.add_argument("-p","--policies",dest="policies",help="comma separated list of policies")
 
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
-    xlsx_source_parser.add_argument("-f","--file",dest="file",help="xlsx file to import")
+    xlsx_source_parser.add_argument("-f","--file",dest="file",help="xlsx file to import",required=True)
+    xlsx_source_parser.add_argument("-n","--name",dest="name",help="name of the policy",required=True)
+    xlsx_source_parser.add_argument("-d","--description",dest="description",help="description of the policy",required=False)
+    xlsx_source_parser.add_argument("-o","--os",dest="os",default="windows",required=True)
+    xlsx_source_parser.add_argument("-v","--version",dest="version",default="v1",required=True)
+
+    
     
     update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
     
