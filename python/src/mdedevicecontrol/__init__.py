@@ -1,8 +1,14 @@
+#!/usr/bin/env python
+
+
+
 __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
 
 import argparse
+import argcomplete
+from configparser import SafeConfigParser, ConfigParser
 import asyncio
 import json
 import copy
@@ -2823,18 +2829,110 @@ class api:
         self.package.save_metadata(self.path)
 
 
-async def dc(args):
-    pass
+class CommandLine:
+
+    async def process_args(args):     
+        print(str(args))
+        if not "operation" in args or args.operation is None:
+            return
+    
+        if "DC_CONFIG_PATH" in os.environ:
+            dc_config_path = os.environ["DC_CONFIG_PATH"]
+        else: 
+            dc_config_path = str(pathlib.Path(os.path.join(os.getcwd(),"mdedevicecontrol.conf")).resolve())
+
+        if not os.path.exists(dc_config_path):
+            print("Error: No DC Config found at "+dc_config_path)
+            return
+    
+
+        if "DC_LOG_PATH" in os.environ:
+            dc_log_path = os.environ["DC_LOG_PATH"]
+        else:
+            dc_log_path = "dc.log"
+        
+        config = ConfigParser()
+        config.read(dc_config_path)
+
+        import logging.config
+        logging.config.fileConfig(dc_config_path,defaults={
+            "args":"('"+dc_log_path+"',)"
+        })
+
+        #set up templat env
+        templates_path=os.path.join(pathlib.Path(__file__).parent,"templates")
+        templateLoader = jinja2.FileSystemLoader(templates_path)
+        CommandLine.templateEnv = jinja2.Environment(loader=templateLoader)
+        CommandLine.rule_template_name = config["templates"]["rule"]
+        CommandLine.readme_template_name = config["templates"]["readme"]
+        CommandLine.description_template_name = config["templates"]["description"]
+
+
+        logger.info("Operation="+args.operation)
+
+        match args.operation:
+            case "init":
+                CommandLine.init(args)
+            case "test-graph":
+                CommandLine.test_graph(ar)
+
+        pass
+
+    def init(args):
+        
+        from mdedevicecontrol.dcintune import Package
+
+        cwd = pathlib.Path(os.getcwd())
+        
+        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+
+        
+
+        p.save(str(cwd.parent),
+               CommandLine.rule_template_name,
+               CommandLine.readme_template_name,
+               CommandLine.description_template_name)
+
+
+
+        pass
 
 def main():
     
+   
     arg_parser = argparse.ArgumentParser(
     description='Utility for device control')
+    subparsers = arg_parser.add_subparsers(help='The operation',dest="operation")
+    init_arg_parser = subparsers.add_parser('init',help="Initialize the directory")
+    init_arg_parser.add_argument("-n","--name",dest="name",help="The name of the package")
+    
+    init_sources_parser = init_arg_parser.add_subparsers(help='source',required=False, dest="init_source")
+    intune_source_parser = init_sources_parser.add_parser('intune')
+    intune_source_parser.add_argument("-p","--policies",dest="policies",help="comma separated list of policies")
+
+    xlsx_source_parser = init_sources_parser.add_parser('xlsx')
+    xlsx_source_parser.add_argument("file",help="xlsx file to import")
+    
+    update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
+    
+    deploy_arg_parser = subparsers.add_parser('apply', help='Apply the configuraion to Intune')
+    
+    validate_arg_parser = subparsers.add_parser('validate', help='Validate the configuration')
+    validate_options_sub_parser = validate_arg_parser.add_subparsers(help='options',dest="validate_options")
+    validate_graph_options = validate_options_sub_parser.add_parser('graph')
+    validate_graph_options_auth_type = validate_graph_options.add_subparsers(help="The type of authentication to the graph",dest="authentication_type")
+    validate_graph_options_auth_type.add_parser("user")
+    validate_graph_options_auth_type.add_parser("application")
+    
 
 
+
+    
+    
     args = arg_parser.parse_args()
 
-    asyncio.run(dc(args))
+
+    asyncio.run(CommandLine.process_args(args))
 
 if __name__ == "main":
     main()

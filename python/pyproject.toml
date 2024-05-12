@@ -26,6 +26,7 @@ dependencies = [
     "jinja2",
     "azure-identity",
     "msgraph-beta-sdk",
+    "argcomplete",
     "pytest"
 ]
 
