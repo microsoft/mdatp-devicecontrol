@@ -2901,7 +2901,11 @@ class CommandLine:
 
     async def validate_graph(args,config):
 
-        logger.debug("authentication_type="+args.authentication_type)
+        cred_type = "user"
+        if args.authentication_type is not None:
+            logger.debug("authentication_type="+args.authentication_type)
+            cred_type = args.authentication_type
+
         from mdedevicecontrol.dcintune import Graph
 
         tenantId = None
@@ -2921,7 +2925,7 @@ class CommandLine:
         
         scopes = config["graph"]["scopes"]
 
-        if args.authentication_type == "user":
+        if cred_type == "user":
             graph = Graph(tenantId=tenantId,clientId=clientId,clientSecret=None,scopes=scopes)
             token = await graph.get_user_token()
         else:
