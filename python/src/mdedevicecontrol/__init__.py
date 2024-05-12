@@ -18,6 +18,7 @@ import pathlib
 import xml.etree.ElementTree as ET
 from json import JSONEncoder
 import uuid
+import pandas
 
 import logging
 
@@ -2872,7 +2873,10 @@ class CommandLine:
 
         match args.operation:
             case "init":
-                CommandLine.init(args)
+                if args.init_source is None:
+                    CommandLine.init(args)
+                elif args.init_source == "xlsx":
+                    CommandLine.init_with_xlsx(args,config)
             case "validate":
                 if args.validate_options == "graph":
                     token = await CommandLine.validate_graph(args,config)
@@ -2932,6 +2936,19 @@ class CommandLine:
             graph = Graph(tenantId=tenantId,clientId=clientId,clientSecret=clientSecret,scopes=scopes)
             token = await graph.get_app_only_token()
 
+    def init_with_xlsx(args,config):
+
+        xlsx_file_path = str(pathlib.Path(args.file).resolve())
+        if os.path.exists(xlsx_file_path):
+            logger.info("file="+xlsx_file_path)
+        else:
+            logger.error(xlsx_file_path+" not found")
+            return
+        
+        import pandas as pd
+
+        xslx_file = pd.read_excel(xlsx_file_path)
+        logger.debug(str(xslx_file))
 
 def main():
     
@@ -2947,7 +2964,7 @@ def main():
     intune_source_parser.add_argument("-p","--policies",dest="policies",help="comma separated list of policies")
 
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
-    xlsx_source_parser.add_argument("file",help="xlsx file to import")
+    xlsx_source_parser.add_argument("-f","--file",dest="file",help="xlsx file to import")
     
     update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
     

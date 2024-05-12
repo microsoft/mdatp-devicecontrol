@@ -27,6 +27,7 @@ dependencies = [
     "azure-identity",
     "msgraph-beta-sdk",
     "argcomplete",
+    "openpyxl",
     "pytest"
 ]
 
