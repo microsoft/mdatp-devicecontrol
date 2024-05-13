@@ -1,0 +1,25 @@
+	<PolicyRule Id="{b5ed42d8-4ac3-4dc8-8771-cef0891e15ab}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb5ed42d8-4ac3-4dc8-8771-cef0891e15ab%7D/RuleData -->
+		<Name>Allow unencrypted removable media devices read access only</Name>
+		<IncludedIdList>
+			<GroupId>{d817ae9e-ce99-468d-a145-2527c7b166cd}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{ecc0323b-9c95-4d2a-9a68-2abb3a07b4bc}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{f1d41e5d-f3ed-4fda-8454-60343ef45004}">
+			<Type>Allow</Type>
+			<AccessMask>9</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{12138964-0efb-424f-994c-3f3c17b168ab}">
+			<Type>Deny</Type>
+			<AccessMask>54</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{d346f712-fc3d-4184-ba9c-b40512054887}">
+			<Type>AuditDenied</Type>
+			<AccessMask>54</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>

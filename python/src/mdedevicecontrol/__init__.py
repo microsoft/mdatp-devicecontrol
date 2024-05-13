@@ -3164,6 +3164,8 @@ class CommandLine:
         p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
         p.addPolicy(policy)
 
+        p.setSource(xlsx_file_path)
+
         p.save(str(cwd.parent),
                CommandLine.rule_template_name,
                CommandLine.readme_template_name,

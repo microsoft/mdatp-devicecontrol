@@ -290,6 +290,223 @@ class DeviceControlPolicyTemplate:
     class DeviceControlRule:
 
 
+        def createSettingsFromRule(rule,groups_map):
+
+
+            #rule_setting = DeviceManagementConfigurationGroupSettingCollectionInstance()
+            #rule_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
+            #rule_setting.setting_instance_template_reference = DeviceManagementConfigurationSettingInstanceTemplateReference()
+            #rule_setting.setting_instance_template_reference.setting_instance_template_id = "a5c5409c-886a-4909-81c7-28156aee9419"
+
+            #rule_group_setting_collection_value = []
+            #rule_setting.group_setting_collection_value = rule_group_setting_collection_value
+
+            #rule_value = DeviceManagementConfigurationGroupSettingValue() 
+            #rule_value_children = []
+            #rule_value.children = rule_value_children
+
+            #rule_group_setting_collection_value.append(rule_value)
+
+            rule_data = DeviceManagementConfigurationGroupSettingCollectionInstance()
+            rule_data.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata"
+
+            #rule_value_children.append(rule_data)
+
+            rule_data_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
+            rule_data.group_setting_collection_value = [rule_data_group_setting_value]
+
+            rule_data_group_setting_value_children = []
+            rule_data_group_setting_value.children = rule_data_group_setting_value_children
+
+            #Create the rule id
+            rule_id_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+            rule_id_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_id"
+
+            rule_id_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
+            rule_id_simple_setting_instance.simple_setting_value = rule_id_simple_setting_instance_value
+            #This is the rule id value
+            rule_id_simple_setting_instance_value.value = rule.id
+
+            #Add it to the list
+            rule_data_group_setting_value_children.append(rule_id_simple_setting_instance)
+
+            #Create the name
+            rule_name_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+            rule_name_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_name"
+
+            rule_name_simple_setting_instance_value = DeviceManagementConfigurationStringSettingValue()
+            rule_name_simple_setting_instance.simple_setting_value = rule_name_simple_setting_instance_value
+
+            #This is the rule name
+            rule_name_simple_setting_instance_value.value = rule.name
+
+            #Add it to the list
+            rule_data_group_setting_value_children.append(rule_name_simple_setting_instance)
+
+            #Create the included groups
+            if len(rule.included_groups) > 0:
+                included_groups_configuration_group_setting_collection_instance = DeviceManagementConfigurationGroupSettingCollectionInstance()
+                included_groups_configuration_group_setting_collection_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist"
+
+                included_groups_configuration_group_setting_collection_instance_value = DeviceManagementConfigurationGroupSettingValue()
+                included_groups_configuration_group_setting_collection_instance_group_setting_collection_value = [included_groups_configuration_group_setting_collection_instance_value]
+
+                included_groups_configuration_group_setting_collection_instance.group_setting_collection_value = included_groups_configuration_group_setting_collection_instance_group_setting_collection_value
+
+                included_groups_configuration_group_setting_collection_instance_value.children = []
+
+                logger.debug("Included Groups="+str(rule.included_groups)) 
+                included_group_ids = rule.included_groups
+
+                for included_group_id in included_group_ids:
+
+                        included_group_id_configuration_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+                        included_group_id_configuration_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_includedidlist_groupid"
+
+                        included_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationReferenceSettingValue()
+                        included_group_id_configuration_simple_setting_instance.simple_setting_value = included_group_id_configuration_simple_setting_instance_value
+
+
+                        included_reusable_setting_id = groups_map[included_group_id]
+                        logger.debug(included_group_id+"=>"+included_reusable_setting_id)
+
+                        included_group_id_configuration_simple_setting_instance_value.value = included_reusable_setting_id
+                        included_group_id_configuration_simple_setting_instance_value.note = None
+
+                        included_groups_configuration_group_setting_collection_instance_value.children.append(
+                               included_group_id_configuration_simple_setting_instance
+                        )
+
+
+                 #Add it to the list
+                rule_data_group_setting_value_children.append(included_groups_configuration_group_setting_collection_instance)
+
+            #Create the excluded groups
+            if len(rule.excluded_groups) > 0:
+                excluded_groups_configuration_group_setting_collection_instance = DeviceManagementConfigurationGroupSettingCollectionInstance()
+                excluded_groups_configuration_group_setting_collection_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_excludedidlist"
+
+                excluded_groups_configuration_group_setting_collection_instance_value = DeviceManagementConfigurationGroupSettingValue()
+                excluded_groups_configuration_group_setting_collection_instance_group_setting_collection_value = [excluded_groups_configuration_group_setting_collection_instance_value]
+
+                excluded_groups_configuration_group_setting_collection_instance.group_setting_collection_value = excluded_groups_configuration_group_setting_collection_instance_group_setting_collection_value
+
+                excluded_groups_configuration_group_setting_collection_instance_value.children = []
+
+                logger.debug("Excluded Groups="+str(rule.excluded_groups)) 
+                excluded_group_ids = rule.excluded_groups
+
+                for excluded_group_id in excluded_group_ids:
+
+                       excluded_group_id_configuration_simple_setting_instance = DeviceManagementConfigurationSimpleSettingInstance()
+                       excluded_group_id_configuration_simple_setting_instance.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_excludedidlist_groupid"
+
+                       excluded_group_id_configuration_simple_setting_instance_value = DeviceManagementConfigurationReferenceSettingValue()
+                       excluded_group_id_configuration_simple_setting_instance.simple_setting_value = excluded_group_id_configuration_simple_setting_instance_value
+
+                       excluded_reusable_setting_id = groups_map[excluded_group_id]
+                       logger.debug(excluded_group_id+"=>"+excluded_reusable_setting_id)
+
+
+                       excluded_group_id_configuration_simple_setting_instance_value.value = excluded_reusable_setting_id
+                       excluded_group_id_configuration_simple_setting_instance_value.note = None
+
+                       excluded_groups_configuration_group_setting_collection_instance_value.children.append(
+                              excluded_group_id_configuration_simple_setting_instance
+                       )
+
+
+                #Add it to the list
+                rule_data_group_setting_value_children.append(excluded_groups_configuration_group_setting_collection_instance)
+
+
+            for entry in rule.entries:
+                 #This is an entry
+                 rule_data_entry = DeviceManagementConfigurationGroupSettingCollectionInstance()
+                 rule_data_entry.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry"
+
+                 #Add it to the list
+                 rule_data_group_setting_value_children.append(rule_data_entry)
+
+                 rule_data_group_setting_collection_value = DeviceManagementConfigurationGroupSettingValue()
+                 rule_data_entry.group_setting_collection_value = [rule_data_group_setting_collection_value]
+
+                 rule_data_group_setting_collection_value.children = []
+
+                 rule_data_entry_type = DeviceManagementConfigurationChoiceSettingInstance()
+                 rule_data_entry_type.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type"
+
+                 rule_data_group_setting_collection_value.children.append(rule_data_entry_type) 
+
+                 rule_data_entry_type_value = DeviceManagementConfigurationChoiceSettingValue()
+                 rule_data_entry_type.choice_setting_value = rule_data_entry_type_value
+
+                 match entry.enforcement: 
+                     case dc.PolicyRule.Allow:
+                         entry_value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_allow"
+                     case dc.PolicyRule.Deny:
+                         entry_value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_deny"
+                     case dc.PolicyRule.AuditAllowed:
+                         entry_value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_auditallowed"
+                     case dc.PolicyRule.AuditDenied:
+                         entry_value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_type_auditdenied"
+
+                 rule_data_entry_type_value.value = entry_value
+                 rule_data_entry_type_value.children = []
+
+                 rule_data_entry_options = DeviceManagementConfigurationChoiceSettingInstance()
+                 rule_data_entry_options.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options"
+
+                 rule_data_entry_options_value = DeviceManagementConfigurationChoiceSettingValue()
+                 rule_data_entry_options.choice_setting_value = rule_data_entry_options_value
+
+                 #Append with the options mask
+                 rule_data_entry_options_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_options_"+str(int(entry.notifications))
+                 rule_data_entry_options_value.children = []
+
+                 # The options are a child to the allow/deny
+                 rule_data_entry_type_value.children.append(rule_data_entry_options)
+
+
+                 rule_data_entry_access_mask = DeviceManagementConfigurationChoiceSettingCollectionInstance()
+                 rule_data_entry_access_mask.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask"
+
+                 #Add it to the list
+                 rule_data_group_setting_collection_value.children.append(rule_data_entry_access_mask)
+
+
+                 rule_data_entry_access_mask.choice_setting_collection_value = []
+
+                 for permission in entry.permissions:
+
+                        if entry.permissions[permission]:
+                        
+                             mask_value = DeviceManagementConfigurationChoiceSettingValue()
+                             mask_value.value =  "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_accesmask_"+str(permission)
+                             mask_value.children = []
+
+                             rule_data_entry_access_mask.choice_setting_collection_value.append(mask_value)
+
+
+                 entry_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
+                 entry_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}_ruledata_entry_id"
+
+                 entry_id_setting_value = DeviceManagementConfigurationStringSettingValue()
+                 entry_id_setting_value.value = "{6f9df57a-aadb-4b41-9e35-3634dc3857e6}"
+
+                 entry_id_setting.simple_setting_value = entry_id_setting_value
+
+                 #Add it to the list
+                 rule_data_group_setting_collection_value.children.append(entry_id_setting)
+
+            logger.info(str(rule_data))
+            return rule_data
+
+
+
+
+
+
         def createRulesFromSetting(setting):
 
             rules = []
@@ -816,6 +1033,7 @@ class Package:
     MAC_DEVICE_CONTROL = "macOS.devicecontrol"
     MAC_DEVICE_CONTROL_POLICIES = "macOS.devicecontrol.policies"
 
+    SOURCE_PATH = "src"
 
     layout = [
         MAC_OS,
@@ -824,36 +1042,70 @@ class Package:
         WINDOWS_OS,
         WINDOWS_DEVICE_CONTROL,
         WINDOWS_GROUPS_PATH,
-        WINDOWS_RULES_PATH
+        WINDOWS_RULES_PATH,
+        SOURCE_PATH
     ]
 
-    def getSHA256Hash(filename):
+    def getSHA256Hash(filename, mode = "r"):
 
-        file = open(filename)
+        file = open(filename,mode)
         contents = file.read()
-        hashed_object = hashlib.sha256(contents.encode())
+
+        if mode == "rb":
+            hashed_object = hashlib.sha256(contents)
+        else:
+            hashed_object = hashlib.sha256(contents.encode())
         hash_result = hashed_object.hexdigest()
         file.close()
         return hash_result
         
 
-    class IntuneResult:
+    class IntuneResults:
 
-        def __init__(self,operation, result, meta_data_for_policy):
+        def was_successful_result(result):
+            
+            if result is None:
+                return False
+            elif isinstance(result,RuntimeError):
+                return False
+            else:
+                logger.debug("result="+str(result))
+                return True
+
+        def __init__(self,operation, meta_data_for_policy):
 
             self.operation = operation
-            self.result = result
+
+            self.results =  {
+                "groups":[],
+                "policy": None
+            }
+
             self.meta_data_for_policy = meta_data_for_policy
 
 
+        def setResultForPolicy(self,result):
+            self.results["policy"] = result
+
+        def addResultForGroup(self,result):
+            self.results["groups"].append(result)
+
+        def getPolicyResult(self):
+            return self.results["policy"]
+
         def was_successful(self):
 
-            if isinstance(self.result,RuntimeError):
-                return False
-            else:
-                logger.debug("result="+str(self.result))
-                return True
+            was_successful = True
 
+            was_successful = was_successful & Package.IntuneResults.was_successful_result(self.results["policy"])
+
+            for group_result in self.results["groups"]:
+                was_successful = was_successful & Package.IntuneResults.was_successful_result(was_successful & Package.IntuneResults.was_successful_result(group_result))
+
+            return was_successful
+    
+
+        
             
 
     class IntuneSetting:
@@ -897,6 +1149,7 @@ class Package:
             self.metadata_id = None
             self.metadata_source_id = None
             self.metadata_additional_data = None
+
 
             if hasattr(assignments,"id"):
                 self.metadata_id = assignments.id
@@ -1283,6 +1536,7 @@ class Package:
             self.templateEnv = jinja2.Environment(loader=templateLoader)
 
         self.metadata = Package.Metadata()
+        self.source_path = None
         
 
 
@@ -1291,7 +1545,8 @@ class Package:
         self.metadata.updateMetadataForPolicy(policy)
 
 
-    def save_metadata(self,destination):
+    def save_metadata(self,
+                      destination=str(pathlib.Path(os.getcwd()).parent)):
         
         package_path = pathlib.PurePath(os.path.join(destination,self.name))
         metadata_file_path = pathlib.PurePath(os.path.join(package_path,"metadata.json"))
@@ -1310,6 +1565,7 @@ class Package:
         path_map = {}
 
         for layout_path in Package.layout:
+
             orig_path = str(layout_path)
 
             layout_path = layout_path.replace(".",os.sep)
@@ -1323,6 +1579,25 @@ class Package:
 
         mac_policy_file_paths = []
         windows_policy_file_paths = {}
+
+        if self.source_path is not None:
+
+            import shutil
+
+            source_file_name = pathlib.Path(self.source_path).name
+
+            source_path_in_package=os.path.join(path_map[Package.SOURCE_PATH],source_file_name)
+
+            shutil.copyfile(self.source_path,source_path_in_package)
+
+            sha256Hash = Package.getSHA256Hash(source_path_in_package,"rb")
+
+            self.metadata.metadata["source"] = {
+                "file": {
+                    "path": "source"+os.sep+source_file_name,
+                    "sha256": sha256Hash
+                }
+            }
 
         for policy in self.policies:
             name = policy.name
@@ -1597,14 +1872,17 @@ class Package:
             graph_result = results[policy_name]
 
             if graph_result.was_successful():
-                result = graph_result.result
-                if hasattr(result,"id"):
-                    policy.id = result.id
+                policy_result = graph_result.getPolicyResult()
+                logger.debug("policy_result_keys="+str(policy_result.__dict__.keys()))
+
+                if "id" in policy_result.__dict__.keys():
+                    policy.id = policy_result.id
+                    logger.debug("Updating metadata to id="+policy.id)
                     self.metadata.updateMetadataForPolicy(policy)
 
             i=i+1
-            logger.info("Policy="+policy_name+"operation="+graph_result.operation+" result="+str(graph_result.was_successful()))
-
+            logger.info("Policy="+policy_name+" operation="+graph_result.operation+" result="+str(graph_result.was_successful()))
+            self.save_metadata()
 
     def deployMacPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
@@ -1619,6 +1897,7 @@ class Package:
 
         if policy.description is not None:
             win10config.description = ""
+
 
         settings = []
         for group in policy.groups:
@@ -1657,23 +1936,27 @@ class Package:
             
         win10config.oma_settings = settings
 
+        results = Package.IntuneResults(operation,metadata_policy_policy)
+        
+
         if operation == "new":
             result = await graph.create_device_configuration(win10config)
         else:
             result = await graph.update_device_configuration(win10config,metadata_policy_policy["id"])
 
-        return Package.IntuneResult(operation,result,metadata_policy_policy)
+        results.setResultForPolicy(result)
+        return results
         
     
     async def deployDCV2Policy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
 
-        results = {
-            "groups":[],
-            "rules":[]
-        }
+        results = Package.IntuneResults(operation,metadata_policy_policy)
 
         
+        groups_map = {
+
+        }
 
         groups = policy.groups
         for group in groups:
@@ -1683,15 +1966,33 @@ class Package:
             result = await graph.create_group_v2(group_setting,group.name)
             logger.debug("Result="+str(result))
 
-            results["groups"].append(Package.IntuneResult(operation,result,metadata_policy_policy))
+            if result.__class__.__name__ == "DeviceManagementReusablePolicySetting":
+                groups_map[group.id] = result.id
 
+            results.addResultForGroup(result)
         
+        rule_settings = []
         for rule in policy.rules:
+
+            rule_setting = DeviceControlPolicyTemplate.DeviceControlRule.createSettingsFromRule(rule,groups_map)
+            logger.debug("Setting="+str(rule_setting))
+            rule_settings.append(rule_setting)
+
+            
+        result = await graph.create_policy_v2(policy.name, policy.description,rule_settings)
+        
+        logger.debug("Result="+str(result))
+
+        results.setResultForPolicy(result)
             
 
         return results
     
+    def setSource(self,sourcePath):
+        self.source_path = sourcePath
 
+
+        
 
 def client_id_type(value):
     return value

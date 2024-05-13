@@ -1,0 +1,8 @@
+	<Group Id="{8176213b-c135-4758-9728-6cbfa376d4ce}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8176213b-c135-4758-9728-6cbfa376d4ce%7D/GroupData -->
+		<Name>BitLocker Encrypted</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+		</DescriptorIdList>
+	</Group>

@@ -1,0 +1,11 @@
+	<Group Id="{d817ae9e-ce99-468d-a145-2527c7b166cd}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd817ae9e-ce99-468d-a145-2527c7b166cd%7D/GroupData -->
+		<Name>All Devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<PrimaryId>PrinterDevices</PrimaryId>
+		</DescriptorIdList>
+	</Group>

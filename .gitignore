@@ -361,3 +361,4 @@ dcutil.md
 python/config.cfg
 python/dist
 *.egg-info
+metadata.json

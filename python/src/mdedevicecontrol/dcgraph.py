@@ -34,7 +34,9 @@ from msgraph_beta.generated.models.device_management_configuration_policy_templa
 from msgraph_beta.generated.models.device_management_configuration_technologies import DeviceManagementConfigurationTechnologies
 from msgraph_beta.generated.models.device_management_configuration_platforms import DeviceManagementConfigurationPlatforms
 from msgraph_beta.generated.models.device_management_reusable_policy_setting import DeviceManagementReusablePolicySetting
-
+from msgraph_beta.generated.models.device_management_configuration_group_setting_collection_instance import DeviceManagementConfigurationGroupSettingCollectionInstance
+from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
+from msgraph_beta.generated.models.device_management_configuration_setting_instance_template_reference import DeviceManagementConfigurationSettingInstanceTemplateReference
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
 '''
@@ -311,11 +313,11 @@ class Graph:
 
 
 
-    async def create_rule_v2(self,rule):
+    async def create_policy_v2(self,name,description,rules):
 
         policy = DeviceManagementConfigurationPolicy()
-        policy.name = "My Imported Policy"
-        policy.description = "A policy that I created with graph API"
+        policy.name = name
+        policy.description = description
         policy.platforms = DeviceManagementConfigurationPlatforms.Windows10
         policy.role_scope_tag_ids = ["0"]
     
@@ -328,7 +330,23 @@ class Graph:
         policy.template_reference.template_id = "0f2034c6-3cd6-4ee1-bd37-f3c0693e9548_1"
 
         setting = DeviceManagementConfigurationSetting()
-        setting.setting_instance = rule
+        setting.setting_instance = DeviceManagementConfigurationGroupSettingCollectionInstance()
+        setting.setting_instance.setting_definition_id =  "device_vendor_msft_defender_configuration_devicecontrol_policyrules_{ruleid}"
+        setting.setting_instance.setting_instance_template_reference = DeviceManagementConfigurationSettingInstanceTemplateReference()
+        setting.setting_instance.setting_instance_template_reference.setting_instance_template_id = "a5c5409c-886a-4909-81c7-28156aee9419"
+
+        rules_settings = []
+
+        setting.setting_instance.group_setting_collection_value = rules_settings
+
+        
+        for rule in rules:
+            
+            rule_setting = DeviceManagementConfigurationGroupSettingValue()
+            rule_setting.children = [rule]
+
+            rules_settings.append(rule_setting)
+            
         policy.settings = [setting]
         
         result = await self.graph_client.device_management.configuration_policies.post(policy)

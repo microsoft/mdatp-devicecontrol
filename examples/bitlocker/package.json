@@ -1,0 +1,57 @@
+{
+     "policies": {
+          "BitLocker example": {
+               "os": "windows",
+               "version": "v1",
+               "description": "A policy",
+               "assignments": [],
+               "groups": {
+                    "Full Access Exception": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Full Access Exception.xml",
+                              "sha256": "ea93da2db2d38792edc2171b28160d53479ca7e2a043635c598e2ab7d87da8c5"
+                         }
+                    },
+                    "All Devices": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Devices.xml",
+                              "sha256": "0095c118af35eda8fa725b3f077c66957978827c9d0d97a910078b10cb124df2"
+                         }
+                    },
+                    "BitLocker Encrypted": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/BitLocker Encrypted.xml",
+                              "sha256": "858a64da5d3f4b3c8d727ecca6e724a81749d453d2db4dcc00a562c80b1a10b4"
+                         }
+                    }
+               },
+               "rules": {
+                    "Allow BitLocker encrypted removable media devices full access": {
+                         "description": "Allow full access and audit write",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Allow BitLocker encrypted removable media devices full access.xml",
+                              "sha256": "5e1a54ddbde7157d58bfb0fa3ab1e74171ca4d874bad9fd3f825b34ad153ef66"
+                         }
+                    },
+                    "Allow unencrypted removable media devices with an exception full access": {
+                         "description": "Allow full access and audit write",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Allow unencrypted removable media devices with an exception full access.xml",
+                              "sha256": "ee184366dd0b875e7061a1680a0ef7dd782ae63cde751cf86a090be74bb51fb3"
+                         }
+                    },
+                    "Allow unencrypted removable media devices read access only": {
+                         "description": "Allow read access, otherwise deny, audit and block",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Allow unencrypted removable media devices read access only.xml",
+                              "sha256": "7809c25d693ac4dc369d96403f087efe783835f873dc64ac696ea9753b1f3576"
+                         }
+                    }
+               },
+               "settings": {}
+          }
+     }
+}

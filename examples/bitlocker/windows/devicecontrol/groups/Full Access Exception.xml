@@ -1,0 +1,8 @@
+	<Group Id="{ecc0323b-9c95-4d2a-9a68-2abb3a07b4bc}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Becc0323b-9c95-4d2a-9a68-2abb3a07b4bc%7D/GroupData -->
+		<Name>Full Access Exception</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<SerialNumberId>6EA9150055800605</SerialNumberId>
+		</DescriptorIdList>
+	</Group>
