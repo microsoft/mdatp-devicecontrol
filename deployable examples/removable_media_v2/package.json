@@ -1,0 +1,43 @@
+{
+     "policies": {
+          "Removable Media Example v2": {
+               "os": "windows",
+               "version": "v2",
+               "description": "A policy",
+               "assignments": [],
+               "groups": {
+                    "Allowed USBs": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Allowed USBs.xml",
+                              "sha256": "5b62a048960916adc76e1687e328b160c9a20c74749c3070d6f175db82a5df81"
+                         }
+                    },
+                    "All Removable Media Devices": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Removable Media Devices.xml",
+                              "sha256": "3acb0b045fb827d32d1296febae97d479b35bebfd8b61da9de3b6a773f5c74ee"
+                         }
+                    }
+               },
+               "rules": {
+                    "Allow access to allowed USBs": {
+                         "description": "Allow full access and audit write",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Allow access to allowed USBs.xml",
+                              "sha256": "1cd78327d500591884db62dbce881ae57d4392d6bdc2feb00ab0a26ec768bc73"
+                         }
+                    },
+                    "Deny access to all non-approved devices": {
+                         "description": "deny, audit and block",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Deny access to all non-approved devices.xml",
+                              "sha256": "0b3724b35a9c6826f496a0814408f992c31486a0981f19c5d8ed245702394c10"
+                         }
+                    }
+               },
+               "settings": {}
+          }
+     }
+}

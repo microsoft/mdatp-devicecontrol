@@ -1,0 +1,19 @@
+	<PolicyRule Id="{a1402a48-2da2-4000-81e9-95852c0446c8}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Ba1402a48-2da2-4000-81e9-95852c0446c8%7D/RuleData -->
+		<Name>Allow access to allowed USBs</Name>
+		<IncludedIdList>
+			<GroupId>{81fab100-8595-404e-b372-4ae763aa7693}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{77dff383-ec2b-4c02-ae55-e92e1b228932}">
+			<Type>Allow</Type>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{71fb6a33-2f9a-438d-a8b4-793b8aa837ad}">
+			<Type>AuditAllowed</Type>
+			<AccessMask>2</AccessMask>
+			<Options>2</Options>
+		</Entry>
+	</PolicyRule>
