@@ -1,8 +1,19 @@
 # Device control - Python
 
-Useful python scripts for interacting with Device Control
+Utilities for Device Control
 
-## Getting started
+## Getting Started
+
+- Clone the repo
+- [Install and Configure] ```dc``` including configuring the connection to the graph API.
+- To deploy an example, go to one of the directories in the ```deployable examples```, and type ```dc apply```
+- To import a configuration from an Excel file *<xlsx-file>* and deploy it to Intune:
+    -   Create a directory for the project called *<package-dir>*
+    -   ```cd package-dir```
+    -   ```dc init xlsx --file <xlsx-file> --name <name of the project> --description <description for the project> --os [windows|macOs] --version [v1|v2]```
+    -  ```dc apply --user```
+
+## Installation and Configuration
 
 1. Install [python 3.10](https://www.python.org/downloads/release/python-3100/) or greater
 2. Install the package locally
@@ -13,7 +24,193 @@ python3 -m build
 pip3 install -e
 ```
 
-This will create the link to the command line tools
+3. Set-up the environment
+
+| Environment Variable | Description |
+|---                   |---
+| DC_CONFIG_PATH       | Path to the ```mdedevicecontrol.conf```
+| DC_LOG_PATH          | Path to for the ```dc.log```
+| DC_CLIENT_ID         | The ```client_id``` used to connect to the Graph API |
+| DC_TENANT_ID         | The ```tenant_id``` of the tenant |
+| DC_CLIENT_SECRET     | The ```client_secret_id ``` used by the application to authenticate to the Graph API|
+
+Note:
+- ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
+- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentails) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
+- ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.
+- ```dc``` reads the credentials information from the environment variables.
+
+
+
+## dc
+```
+usage: dc [-h] {init,update,apply,validate} ...
+
+Utility for device control
+
+positional arguments:
+  {init,update,apply,validate}
+                        The operation
+    init                Initialize the directory
+    update              Update the configuration from
+                        the source
+    apply               Apply the configuraion to
+                        Intune
+    validate            Validate the configuration
+
+options:
+  -h, --help            show this help message and exit
+```
+
+
+### dc init
+
+Initializes the directory optionally from an external source.
+
+```
+usage: dc init [-h] [-n NAME] {intune,xlsx} ...
+
+positional arguments:
+  {intune,xlsx}         source
+
+options:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  The name of the package
+```
+
+```dc``` uses a standard directory structure for organizing a device control deployment
+
+```
+   .
+   |-package.json
+   |-metadata.json
+   |-src
+   |-macOS
+   |---devicecontrol
+   |-----policies
+   |-windows
+   |---devicecontrol
+   |-----groups
+   |-----rules
+```
+
+| Path | Description |
+|----  |----
+| .    | The root directory of the package
+| package.json | Information about the ```policies``` and ```settings``` |
+| metadata.json | Information about the deployment in Intune |
+| src | A directory containing files that was used to create the directory |
+| macOS/devicecontrol/policies | A directory containing the ```.json``` policy files for macOS | 
+| windows/devicecontrol/groups | A directory contaning the ```.xml``` files for groups |
+| windows/devicecontrol/rules | A directory contaning the ```.xml``` files for rules |
+
+### dc init xlsx
+
+Initializes a directory from an Excel spreadsheet
+
+```
+usage: dc init xlsx [-h] -f FILE -n NAME
+                    [-d DESCRIPTION] -o OS -v VERSION
+
+options:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE  xlsx file to import
+  -n NAME, --name NAME  name of the policy
+  -d DESCRIPTION, --description DESCRIPTION
+                        description of the policy
+  -o OS, --os OS
+  -v VERSION, --version VERSION
+```
+Notes:
+-   The sheets of the Excel spreadsheet contains information about the rules, groups, and entries to be imported.
+-   The ```--os``` value is either ```windows``` or ```macOS```
+-   The ```--version``` values is either ```v1``` or ```v2```.  ```v1``` for macOS is custom mobilconfig.  ```v1``` for windows is OMA-URI.  ```v2``` is the settings catalog that the Intune UX uses.   
+-   Not all features are supported on all OS and versions
+
+The xlsx import uses the following sheets:
+
+| Sheet | Description |
+|---    |---
+| Entries | Rows of entries to be used in rules |
+| Groups  | Rows of groups to be used in rules.  |
+| Rules   | Rows of the information used by rules |
+| *<group name>*| A sheet that contains the group data for a group |
+
+#### Example Group Data sheet
+
+| VID_PID |
+|---
+| 0000_1111
+| 1111_2222
+
+Note
+- The column names are **exactly** the descriptorIds for the groups XML
+
+#### Example Rules sheet
+
+
+| Name | Description | Included Groups | Excluded Groups | Entries |
+|---   |---          |---              |---              |---      |
+| Allow access to allowed USBs | Allow full access and audit write |Allowed USBs||Allow full access,Audit write access |
+| Allowed USBs | Allow full access,Audit write access |All Removable Media Devices|Allowed USBs|Deny all access, Audit deny  all access and block|
+
+Note:  
+- The name of the groups are comman delimited and **must** match the name of the sheet containing the group data
+- The values in the entries are comma delimited and **must** match the name inf the Entries sheet
+
+
+#### Example Entries sheet
+
+
+| Name |Type |Disk Read | Disk Write | Disk Execute| File Read| File Write |File Execute |Notification|
+|---   |---  |---       |---         |---          |---       |---        |---          |---
+Allow full access| Allow |X |X |X |  |  |  |0|
+Audit write access| AuditAllowed| | X| | | | |2|
+
+#### Example Groups sheet
+| Name | Type | Match |
+|---   |---   |---
+| Allowed USBs | Device | MatchAll |
+| All Removable Media | Device | MatchAll|
+
+ Note:  the name of the group **must** match the name of the sheet containing the group data
+
+A example spreadsheet is [here](../examples/bitlocker/src/bitllocker_dc_example.xlsx/)
+
+
+### dc validate graph
+
+Validates the connection to the graph API
+
+```
+usage: dc validate graph [-h] (-u | -a) {user,application} ...
+
+positional arguments:
+  {user,application}  The type of authentication to the graph
+
+options:
+  -h, --help          show this help message and exit
+  -u, --user
+  -a, --application
+```
+
+Note:
+-  The ```--user``` option will test connectivity for the logged in user.
+-  The ```---application``` option will test connectivity for the configure application.
+
+### dc apply
+
+Applies the configuration to Intune
+
+```
+usage: dc apply [-h] (-u | -a)
+
+options:
+  -h, --help         show this help message and exit
+  -u, --user         authenticate as the logged in user to the graph API
+  -a, --application  authenticate as the application to the graph API
+```
+
 
 ## dcconvert
 
@@ -217,7 +414,3 @@ The example are [VS Code Python configurations](https://code.visualstudio.com/do
         
 </details>
 
-
-## devicecontrol.py
-
-Python API for device control files.
