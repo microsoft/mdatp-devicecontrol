@@ -4,7 +4,7 @@ Utilities for Device Control
 
 ## Getting Started
 
-- Clone the repo
+- Fork the repo
 - [Install and Configure] ```dc``` including configuring the connection to the graph API.
 - To deploy an example, go to one of the directories in the ```deployable examples```, and type ```dc apply```
 - To import a configuration from an Excel file *<xlsx-file>* and deploy it to Intune:
@@ -36,7 +36,7 @@ pip3 install -e
 
 Note:
 - ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
-- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentails) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
+- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
 - ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.
 - ```dc``` reads the credentials information from the environment variables.
 
