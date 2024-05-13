@@ -62,6 +62,7 @@ class DebugHandler(BaseMiddleware):
             print()
             print("Request body:")
             print(request.content.decode())
+            logger.debug("BODY="+request.content.decode())
 
         response: httpx.Response = await super().send(request, transport)
 
@@ -296,10 +297,12 @@ class Graph:
         return result
     
 
-    async def create_group_v2(self,group):
+    async def create_group_v2(self,group,name):
 
         setting = DeviceManagementReusablePolicySetting()
         setting.setting_instance = group
+        setting.display_name = name
+        setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
         
         logger.debug("Create Group v2 "+str(group))
         result = await self.graph_client.device_management.reusable_policy_settings.post(setting)

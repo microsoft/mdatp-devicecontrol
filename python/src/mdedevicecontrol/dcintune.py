@@ -7,6 +7,17 @@ from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 from msgraph_beta.generated.models.windows10_custom_configuration import Windows10CustomConfiguration
 from msgraph_beta.generated.models.oma_setting_string_xml import OmaSettingStringXml
 
+from msgraph_beta.generated.models.device_management_configuration_group_setting_collection_instance import DeviceManagementConfigurationGroupSettingCollectionInstance
+from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
+from msgraph_beta.generated.models.device_management_configuration_simple_setting_instance import DeviceManagementConfigurationSimpleSettingInstance
+from msgraph_beta.generated.models.device_management_configuration_string_setting_value import DeviceManagementConfigurationStringSettingValue
+from msgraph_beta.generated.models.device_management_configuration_choice_setting_instance import DeviceManagementConfigurationChoiceSettingInstance
+from msgraph_beta.generated.models.device_management_configuration_choice_setting_value import DeviceManagementConfigurationChoiceSettingValue
+from msgraph_beta.generated.models.device_management_configuration_reference_setting_value import DeviceManagementConfigurationReferenceSettingValue
+from msgraph_beta.generated.models.device_management_configuration_choice_setting_collection_instance import DeviceManagementConfigurationChoiceSettingCollectionInstance
+from msgraph_beta.generated.models.device_management_configuration_setting_instance_template_reference import DeviceManagementConfigurationSettingInstanceTemplateReference
+from msgraph_beta.generated.models.device_management_configuration_simple_setting_instance import DeviceManagementConfigurationSimpleSettingInstance
+from msgraph_beta.generated.models.device_management_configuration_setting_instance import DeviceManagementConfigurationSettingInstance
 
 from mdedevicecontrol.dcgraph import Graph
 import plistlib
@@ -136,6 +147,89 @@ class DeviceControlPolicyTemplate:
 
 
 
+        def createSettingFromGroup(group):
+
+            groupdata = DeviceManagementConfigurationGroupSettingCollectionInstance()
+            groupdata.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+            groupdata.group_setting_collection_value = []
+
+            groupdata_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
+            groupdata.group_setting_collection_value.append(groupdata_group_setting_value)
+
+            groupdata_group_setting_value.children = []
+
+            #group id"settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+            groupdata_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
+            groupdata_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_id"
+
+            groupdata_id_value = DeviceManagementConfigurationStringSettingValue()
+            groupdata_id_value.value = group.id
+
+            groupdata_id_setting.simple_setting_value = groupdata_id_value
+            groupdata_group_setting_value.children.append(groupdata_id_setting)
+
+            for property in group._properties:
+
+                descriptorId = DeviceManagementConfigurationGroupSettingCollectionInstance()
+                descriptorId.setting_definition_id = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist'
+                descriptor_id_value = DeviceManagementConfigurationGroupSettingValue()
+                descriptorId.group_setting_collection_value = [descriptor_id_value]
+                descriptor_id_value.children = []
+
+                #One item for the name
+                name = DeviceManagementConfigurationSimpleSettingInstance()
+                name.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name"
+                name.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
+                name.simple_setting_value.value = property.name
+                descriptor_id_value.children.append(name)
+
+                #One item for the value
+                value = DeviceManagementConfigurationSimpleSettingInstance()
+                value.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_"+str(property.name).lower()
+                value.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
+                value.simple_setting_value.value = property.value
+                descriptor_id_value.children.append(value)
+
+                groupdata_group_setting_value.children.append(descriptorId)
+
+            '''
+            For each element in the list 
+                    {
+                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance",
+                        "groupSettingCollectionValue": [
+                            {
+                                "children": [
+                                    {
+                                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingInstance",
+                                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name",
+                                        "simpleSettingValue": {
+                                            "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
+                                            "value": "Serial Number 1"
+                                        }
+                                    },
+                                    {
+                                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingInstance",
+                                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_serialnumberid",
+                                        "simpleSettingValue": {
+                                            "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
+                                            "value": "11111111"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist"
+                    }
+            '''
+            #match type
+            match_type_setting = DeviceManagementConfigurationChoiceSettingInstance()
+            match_type_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype"
+            match_type_setting.choice_setting_value = DeviceManagementConfigurationChoiceSettingValue()
+            match_type_setting.choice_setting_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype_matchany"
+
+            groupdata_group_setting_value.children.append(match_type_setting)
+
+            return groupdata
 
         def createGroupfromSetting(setting):
             group = DeviceControlPolicyTemplate.DeviceControlGroup()
@@ -1094,6 +1188,91 @@ class Package:
         def __str__(self):
             return json.dumps(self.metadata,indent=5)
 
+    def load(environment,api):
+
+        cwd = pathlib.Path(os.getcwd())
+        p = Package(cwd.name,templateEnv=environment)
+
+        package_file_name = os.path.join(str(cwd),"package.json")
+        metadata_file_name = os.path.join(str(cwd),"metadata.json")
+
+        package_file = open(package_file_name,"r") 
+        package_json = json.load(package_file)
+
+        logger.debug("package_file="+str(package_json))
+
+        policies_json = package_json["policies"]
+
+        for policy_name in policies_json:
+            logger.info("loading policy "+policy_name)
+            policy_json = policies_json[policy_name]
+
+            policy_os = policy_json["os"]
+            policy_version = policy_json["version"]
+            policy_description = policy_json["description"]
+
+            groups = []
+            for group_name in policy_json["groups"]:
+                group_json = policy_json["groups"][group_name]
+                logger.info("Loading group "+group_name)
+
+                file = group_json["file"]
+
+                path = file["path"]
+                sha256 = file["sha256"]
+
+                group_file = open(path,"r")
+                group_xml = group_file.read()
+
+                logger.debug("group_xml="+group_xml)
+                group = dc.Group(
+                    ET.fromstring(group_xml),dc.Format.OMA_URI,
+                    str(pathlib.Path(path).resolve()))
+
+                groups.append(group)
+                group_file.close()
+
+            rules = []
+            for rule_name in policy_json["rules"]:
+                rule_json = policy_json["rules"][rule_name]
+                logger.info("Loading rule "+rule_name)
+
+                file = rule_json["file"]
+                description = rule_json["description"]
+
+                path = file["path"]
+                sha256 = file["sha256"]
+
+                rule_file = open(path,"r")
+                rule_xml = rule_file.read()
+
+                logger.debug("rule_xml="+rule_xml)
+                rule = dc.PolicyRule(
+                    ET.fromstring(rule_xml),dc.Format.OMA_URI,
+                    str(pathlib.Path(path).resolve()))
+                
+                rule.description = description
+                rules.append(rule)
+                rule_file.close()
+
+            policy = api.createPolicy(
+                name=policy_name,
+                os=policy_os,
+                version=policy_version,
+                description=policy_description,
+                rules=rules,
+                groups=groups)
+            
+            p.addPolicy(policy=policy)
+            
+        metadata_file = open(metadata_file_name,"r")
+        p.metadata.metadata = json.load(metadata_file)
+
+        package_file.close()
+        metadata_file.close()
+        
+        return p
+        
     def __init__(self,name,templateEnv=None):
 
         self.name = name
@@ -1486,9 +1665,31 @@ class Package:
         return Package.IntuneResult(operation,result,metadata_policy_policy)
         
     
-    def deployDCV2Policy(self,graph,policy,operation="new",metadata_policy_policy=None):
+    async def deployDCV2Policy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
-        pass
+
+        results = {
+            "groups":[],
+            "rules":[]
+        }
+
+        
+
+        groups = policy.groups
+        for group in groups:
+            logger.debug("Creating a reusable setting for "+str(group))
+            group_setting = DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromGroup(group)
+            logger.debug("Setting="+str(group_setting))
+            result = await graph.create_group_v2(group_setting,group.name)
+            logger.debug("Result="+str(result))
+
+            results["groups"].append(Package.IntuneResult(operation,result,metadata_policy_policy))
+
+        
+        for rule in policy.rules:
+            
+
+        return results
     
 
 

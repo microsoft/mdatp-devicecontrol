@@ -2546,15 +2546,22 @@ class api:
             
         pass
 
-    async def connectToGraph(self):
+    async def connectToGraph(self, authentication_type = "user", scopes = ""):
 
-        if self.clientId is not None and self.tenantId is not None and self.clientSecret is not None:
-            from mdedevicecontrol.dcgraph import Graph
+        from mdedevicecontrol.dcgraph import Graph
 
-            self.graph = Graph(self.tenantId,self.clientId,self.clientSecret)
+        if self.clientId is not None and self.tenantId is not None and authentication_type == "user":
+            
+            self.graph = Graph(self.tenantId,self.clientId,None,scopes)
+
+        elif self.clientId is not None and self.tenantId is not None and self.clientSecret is not None:
+
+            self.graph = Graph(self.tenantId,self.clientId,self.clientSecret,scopes)
 
         else:
             raise Exception("No credentials to connect to graph")
+        
+        return self.graph
         
     def createProperty(self,groupProperty,value):
         logger.debug("Creating property for "+str(groupProperty.name)+" value="+value)
@@ -2919,6 +2926,26 @@ class CommandLine:
         CommandLine.readme_template_name = config["templates"]["readme"]
         CommandLine.description_template_name = config["templates"]["description"]
 
+        if "DC_TENANT_ID" in os.environ:
+            CommandLine.tenantId = os.environ["DC_TENANT_ID"]
+        else:
+            CommandLine.tenantId = None
+
+        if "DC_CLIENT_ID" in os.environ:
+            CommandLine.clientId = os.environ["DC_CLIENT_ID"]
+        else:
+            CommandLine.clientId = None
+
+        if "DC_CLIENT_SECRET" in os.environ:
+            CommandLine.clientSecret = os.environ["DC_CLIENT_SECRET"]
+        else:
+            CommandLine.clientId = None
+
+        CommandLine.api = api(os.getcwd(),
+                              clientId=CommandLine.clientId,
+                              tenantId=CommandLine.tenantId,
+                              clientSecret=CommandLine.clientSecret,
+                              templates_path=templates_path)
 
         logger.info("Operation="+args.operation)
 
@@ -2931,7 +2958,9 @@ class CommandLine:
             case "validate":
                 if args.validate_options == "graph":
                     token = await CommandLine.validate_graph(args,config)
-
+            case "apply":
+                result = await CommandLine.apply(args,config)
+                    
 
         pass
 
@@ -2957,9 +2986,10 @@ class CommandLine:
     async def validate_graph(args,config):
 
         cred_type = "user"
-        if args.authentication_type is not None:
-            logger.debug("authentication_type="+args.authentication_type)
-            cred_type = args.authentication_type
+        if args.user_authentication:
+            cred_type = "user"
+        else:
+            cred_type = "application"
 
         from mdedevicecontrol.dcintune import Graph
 
@@ -3139,7 +3169,22 @@ class CommandLine:
                CommandLine.readme_template_name,
                CommandLine.description_template_name)
 
+    async def apply(args,config):
 
+        from mdedevicecontrol.dcintune import Package
+        package = Package.load(os.getcwd(),CommandLine.api)
+
+        authentication_type = "user"
+        if args.application_authentication:
+            authentication_type = "application"
+
+        
+        scopes=config["graph"]["scopes"]
+        graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
+        result = await package.deploy(graph=graph)
+
+
+        pass
 
 def main():
     
@@ -3166,10 +3211,22 @@ def main():
     update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
     
     deploy_arg_parser = subparsers.add_parser('apply', help='Apply the configuraion to Intune')
+    apply_auth_type_choice_group = deploy_arg_parser.add_mutually_exclusive_group(required=True)
+    apply_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    apply_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+   
     
     validate_arg_parser = subparsers.add_parser('validate', help='Validate the configuration')
     validate_options_sub_parser = validate_arg_parser.add_subparsers(help='options',dest="validate_options")
     validate_graph_options = validate_options_sub_parser.add_parser('graph')
+
+    auth_type_choice_group = validate_graph_options.add_mutually_exclusive_group(required=True)
+    auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true")
+    auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true")
+    
+
+    auth_type_choice_group.add_argument
+
     validate_graph_options_auth_type = validate_graph_options.add_subparsers(help="The type of authentication to the graph",dest="authentication_type")
     validate_graph_options_auth_type.add_parser("user")
     validate_graph_options_auth_type.add_parser("application")
