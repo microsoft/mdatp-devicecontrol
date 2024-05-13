@@ -6,7 +6,7 @@ Utilities for Device Control
 
 - Fork the repo
 - [Install and Configure](#installation-and-configuration) ```dc``` including configuring the connection to the graph API.
-- To deploy an example, go to one of the directories in the ```deployable examples```, and type ```dc apply```
+- To deploy an example, go to one of the directories in the [deployable examples](../deployable%20examples/), and type ```dc apply```
 - To import a configuration from an Excel file *<xlsx-file>* and deploy it to Intune:
     -   Create a directory for the project called *<package-dir>*
     -   ```cd package-dir```
