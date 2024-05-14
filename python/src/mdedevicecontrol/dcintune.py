@@ -2,6 +2,9 @@ import asyncio
 import os
 import base64
 import jinja2
+from datetime import datetime
+import time
+
 from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 
 from msgraph_beta.generated.models.windows10_custom_configuration import Windows10CustomConfiguration
@@ -180,7 +183,7 @@ class DeviceControlPolicyTemplate:
                 name = DeviceManagementConfigurationSimpleSettingInstance()
                 name.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name"
                 name.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
-                name.simple_setting_value.value = property.name
+                name.simple_setting_value.value = property.name+"("+property.value+")"
                 descriptor_id_value.children.append(name)
 
                 #One item for the value
@@ -1068,8 +1071,14 @@ class Package:
     class IntuneResults:
 
 
-        class NoChangesNeeded:
-            def __init__(self):
+        class UpdateApplied:
+            def __init__(self,id):
+                self.id = id
+                pass
+
+        class NoChangesNeeded():
+            def __init__(self,id):
+                self.id = id
                 pass
 
         def was_successful_result(result):
@@ -1102,12 +1111,16 @@ class Package:
 
         def getResultForGroup(self,group):
             logger.debug("group_name=("+group.name+")")
+            logger.debug("group dict="+str(group.__dict__))
             group_name = str(group.name).strip()
             logger.debug("results="+str(self.results))
             keys = list(self.results["groups"].keys())
             logger.debug("keys="+str(keys))
             if group_name not in keys:
-                return Package.IntuneResults.NoChangesNeeded()
+                if "metadata_id" in group.__dict__:
+                    return Package.IntuneResults.NoChangesNeeded(group.__dict__["metadata_id"])
+                else:
+                    return Package.IntuneResults.NoChangesNeeded(None)
             else:
                 return self.results["groups"][group.name]
 
@@ -1404,8 +1417,14 @@ class Package:
                     }
 
                     if hasattr(group,"metadata_id"):
+                        logger.debug("Setting id="+str(group.metadata_id)+" from metadata for group="+(group.name))
                         groups_metadata[group.name]["id"] = group.metadata_id
-                        groups_metadata[group.name]["last_update"] = now
+                        if hasattr(group,"last_update"):
+                            logger.debug("Setting last update from group")
+                            groups_metadata[group.name]["last_update"] = group.last_update
+                        else:
+                            logger.debug("Setting last update to now")
+                            groups_metadata[group.name]["last_update"] = now
 
                 if len(groups_metadata) > 0:
                     self.metadata["policies"][policy.name]["groups"] = groups_metadata
@@ -1501,16 +1520,24 @@ class Package:
         metadata_file_name = os.path.join(str(cwd),"metadata.json")
 
         package_file = open(package_file_name,"r") 
-        package_json = json.load(package_file)
+        p.package_json = json.load(package_file)
 
-        logger.debug("package_file="+str(package_json))
+        metadata_file = open(metadata_file_name,"r")
+        p.metadata.metadata = json.load(metadata_file)
 
-        policies_json = package_json["policies"]
+
+        logger.debug("package_json="+str(p.package_json))
+        logger.debug("metadata_json="+str(p.metadata.metadata))
+
+        policies_json = p.package_json["policies"]
+        
 
         for policy_name in policies_json:
             logger.info("loading policy "+policy_name)
             policy_json = policies_json[policy_name]
 
+
+            
             policy_os = policy_json["os"]
             policy_version = policy_json["version"]
             policy_description = policy_json["description"]
@@ -1535,6 +1562,15 @@ class Package:
 
                 groups.append(group)
                 group_file.close()
+
+                group_meta_data = p.metadata.getMetadataForGroup(policy_name,group_name)
+                if "id" in group_meta_data:
+                    logger.debug("Setting metadata_id to "+str(group_meta_data["id"]))
+                    group.__dict__["metadata_id"] = group_meta_data["id"]
+                
+                if "last_update" in group_meta_data:
+                    group.__dict__["last_update"] = group_meta_data["last_update"]
+
 
             rules = []
             for rule_name in policy_json["rules"]:
@@ -1567,10 +1603,16 @@ class Package:
                 rules=rules,
                 groups=groups)
             
+            policies_metadata_json = p.metadata.getMetadataForPolicy(policy)
+            policy_id = policies_metadata_json["id"]
+
+            if policy_id is not None:
+                policy.id = policy_id
+
             p.addPolicy(policy=policy)
+
             
-        metadata_file = open(metadata_file_name,"r")
-        p.metadata.metadata = json.load(metadata_file)
+
 
         package_file.close()
         metadata_file.close()
@@ -1588,6 +1630,7 @@ class Package:
 
         self.metadata = Package.Metadata()
         self.source_path = None
+        self.package_json = None
         
 
 
@@ -1923,6 +1966,10 @@ class Package:
 
             save_metadata = False
             policy = self.policies[i]
+            if policy.id is None:
+                logger.debug("policy_id is None")
+            else:
+                logger.debug("policy_id="+policy.id)
             graph_result = results[policy_name]
 
             if graph_result.was_successful():
@@ -1941,15 +1988,21 @@ class Package:
 
                     if isinstance(group_result,Package.IntuneResults.NoChangesNeeded):
                         logger.info("No changes to apply for "+group.name)
+                    elif isinstance(group_result,Package.IntuneResults.UpdateApplied):
+                        now = str(datetime.now())
+                        logger.info("Updating last_update time for "+group.name+" to "+now)
+                        group.__dict__["last_update"] = now
+                        save_metadata = True
                     else:
                         save_metadata = True
 
                     if hasattr(group_result,"id"):
+                        logger.debug("Setting metadata_id to "+str(group_result.id))
                         group.__dict__["metadata_id"] = group_result.id
 
 
 
-                if "id" in policy_result.__dict__.keys():
+                if "id" in policy_result.__dict__.keys() and policy_result.id is not None:
                     if policy.id != policy_result.id:
                         policy.id = policy_result.id
                         logger.debug("Updating metadata to id="+policy.id)
@@ -2043,34 +2096,60 @@ class Package:
         for group in groups:
 
             metadata_for_group = self.metadata.getMetadataForGroup(policy.name,group.name)
+            if id in metadata_for_group:
+                logger.debug("Setting metadata_id to "+str(metadata_for_group["id"]))
+                group.__dict__["metadata_id"] = metadata_for_group["id"]
 
             result = None
-            create_group = False
+            group_operation = None
             if metadata_for_group is None:
                 logger.debug("No metadata found for group "+group.name+".  Creating group")
-                create_group = True
+                group_operation = "new"
             else:
                 logger.debug("Found metadata for group "+group.name+" metadata="+str(metadata_for_group))
                 if "id" in metadata_for_group:
+                    last_update_str = metadata_for_group["last_update"]
+                    #2024-05-14 10:55:06.943441
+                    last_update = datetime.fromisoformat(last_update_str)
+
+                    group_file_name = self.getFileForGroup(policy,group)
+                    #Tue May 14 10:54:58 2024
+                    file_last_update=datetime.strptime(time.ctime(os.path.getmtime(group_file_name)),"%c")
+                    logger.debug("package last update="+str(last_update)+" file_last_update="+str(file_last_update))
+
+                    if file_last_update > last_update:
+                        logger.info(group_file_name+" has been updated")
+                        group_operation = "update"
+                    
+
                     groups_map[metadata_for_group["groupdata_id"]] = metadata_for_group["id"]
                 else:
                     logger.debug("No id found for "+group.name+".  Creatining group")
-                    create_group = True
+                    group_operation = "new"
 
-            if create_group:
+            if group_operation is not None:
+
                 logger.debug("Creating a reusable setting for "+str(group))
                 group_setting = DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromGroup(group)
                 logger.debug("Setting="+str(group_setting))
-                result = await graph.create_group_v2(group_setting,group.name)
+
+                if group_operation == "new":
+                    result = await graph.create_group_v2(group_setting,group.name)
+                elif group_operation == "update":
+                    result = await graph.update_group_v2(group_setting,group.name,metadata_for_group["id"])
+
                 logger.debug("Result="+str(result))
                 if result is not None and result.__class__.__name__ == "DeviceManagementReusablePolicySetting":
                     groups_map[group.id] = result.id
                     logger.debug("Adding result for "+group.name)
                     results.addResultForGroup(result,group)
                 elif result is None:
-                    logger.debug("No results for "+group.name)
+                    if operation == "update":
+                        results.addResultForGroup(Package.IntuneResults.UpdateApplied(metadata_for_group["id"]),group)
+                    else:
+                        logger.debug("No results for "+group.name)
                 else:
-                    logger.warning("Unexpected result class "+result.__class__.__name__+" for group "+group_name)
+                    logger.warning("Unexpected result class "+result.__class__.__name__+" for group "+group.name)
 
         
         rule_settings = []
@@ -2088,7 +2167,7 @@ class Package:
             logger.debug("Setting="+str(rule_setting))
             rule_settings.append(rule_setting)
 
-        result = Package.IntuneResults.NoChangesNeeded()
+        result = Package.IntuneResults.NoChangesNeeded(policy.id)
 
         if any_rule_changes or operation == "new":
             result = await graph.create_policy_v2(policy.name, policy.description,rule_settings)
@@ -2101,6 +2180,19 @@ class Package:
     
     def setSource(self,sourcePath):
         self.source_path = sourcePath
+
+
+    def getFileForGroup(self,policy,group):
+
+        policies_json = self.package_json["policies"]
+        policy_json = policies_json[policy.name]
+        group_json = policy_json["groups"][group.name]
+
+        group_path = group_json["file"]["path"]
+
+        logger.debug("policy="+policy.name+" group="+group.name+" file="+group_path)
+
+        return group_path
 
 
         

@@ -2773,7 +2773,8 @@ class api:
                      os = "windows",
                      description = None,
                      rules = [],
-                     groups = []):
+                     groups = [],
+                     id = None):
 
         import mdedevicecontrol.dcintune as intune
 
@@ -2782,6 +2783,7 @@ class api:
         policy.version = version
         policy.os = os
         policy.description = "A policy"
+        policy.id = id
 
         if description is not None:
             policy.description = description
@@ -2960,6 +2962,8 @@ class CommandLine:
                     token = await CommandLine.validate_graph(args,config)
             case "apply":
                 result = await CommandLine.apply(args,config)
+            case "update":
+                result = CommandLine.update(args,config)
                     
 
         pass
@@ -3185,6 +3189,13 @@ class CommandLine:
         graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
         result = await package.deploy(graph=graph)
 
+
+        pass
+
+    def update(args,config):
+
+        #update checks the files on disk and see if the information
+        #in the package needs to be updated
 
         pass
 

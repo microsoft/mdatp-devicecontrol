@@ -297,6 +297,18 @@ class Graph:
         result = await self.graph_client.device_management.reusable_settings.get(request_configuration = request_configuration)
         return result
     
+    async def update_group_v2(self,group,name,group_id):
+
+        setting = DeviceManagementReusablePolicySetting()
+        setting.setting_instance = group
+        setting.display_name = name
+        setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+        
+        logger.debug("Update Group v2 "+str(group))
+        result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).put(setting)
+        logger.debug(str(result))
+        return result
+
 
     async def create_group_v2(self,group,name):
 

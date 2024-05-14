@@ -83,8 +83,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{a27c38a4-e8b2-419f-8a14-09896ea93bfe}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Ba27c38a4-e8b2-419f-8a14-09896ea93bfe%7D/GroupData -->
+<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
 	<Name>Allowed USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -200,8 +200,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{a27c38a4-e8b2-419f-8a14-09896ea93bfe}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Ba27c38a4-e8b2-419f-8a14-09896ea93bfe%7D/GroupData -->
+	<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
 		<Name>Allowed USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -220,20 +220,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{11aad6d1-1fb5-4281-801e-1c1adf3280e4}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B11aad6d1-1fb5-4281-801e-1c1adf3280e4%7D/RuleData -->
+	<PolicyRule Id="{972f35ef-c2aa-420b-bc36-87045c08a350}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B972f35ef-c2aa-420b-bc36-87045c08a350%7D/RuleData -->
 		<Name>Allow access to allowed USBs</Name>
 		<IncludedIdList>
-			<GroupId>{a27c38a4-e8b2-419f-8a14-09896ea93bfe}</GroupId>
+			<GroupId>{8c10f5fb-a902-474c-b12f-4f6846f2ef03}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{0e7f1790-1cf2-4a4b-8d51-ed47d519d304}">
+		<Entry Id="{fa42c94a-8c78-41d9-b62e-6435e5b938fe}">
 			<Type>Allow</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{3d422389-de55-4658-9f97-db43d1186cce}">
+		<Entry Id="{0f82aad6-9110-496c-a0e7-4c3912e062aa}">
 			<Type>AuditAllowed</Type>
 			<AccessMask>2</AccessMask>
 			<Options>2</Options>
@@ -265,7 +265,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allow access to allowed USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B11aad6d1-1fb5-4281-801e-1c1adf3280e4%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B972f35ef-c2aa-420b-bc36-87045c08a350%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
@@ -280,7 +280,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allowed USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Ba27c38a4-e8b2-419f-8a14-09896ea93bfe%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         

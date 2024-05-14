@@ -10,14 +10,14 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed USBs.xml",
-                              "sha256": "0047ba5a80d7dc1eb1d634b5c9b1b51a3bd01b286faf05b47db5dcd3afe3a231"
+                              "sha256": "ae8b622e85f09bcdc6f1877cdae13982beb8f945fd1c993173de4f9a5b29425a"
                          }
                     },
                     "All Removable Media Devices": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Removable Media Devices.xml",
-                              "sha256": "565fe7fd08a092e8f865a51886d9ccf969b8cc93f19d91eedccdccc8f013b61f"
+                              "sha256": "cd255413b75fe7861b41e27274ced564d33d3edc22280d126152fc074b0df45a"
                          }
                     }
                },
@@ -26,14 +26,14 @@
                          "description": "Allow full access and audit write",
                          "file": {
                               "path": "windows/devicecontrol/rules/Allow access to allowed USBs.xml",
-                              "sha256": "e46b2a807a83f38477512ecb32c6246c1beba6f291ce489b04cda4bd4910ebed"
+                              "sha256": "11344028dccac01c0aebfcc26bf10f7c1bd10f832292ca29927e86c47248cca8"
                          }
                     },
                     "Deny access to all non-approved devices": {
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Deny access to all non-approved devices.xml",
-                              "sha256": "ee677da6833147dbb84e59c296ea1bb042c653570a738d9afe3e6e7f8987427c"
+                              "sha256": "4922f2a1c66a9f4dd69b81adf061a45a9715a2f6e910fc81b04c2969614d0edc"
                          }
                     }
                },
