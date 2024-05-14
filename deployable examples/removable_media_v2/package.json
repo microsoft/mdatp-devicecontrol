@@ -1,6 +1,6 @@
 {
      "policies": {
-          "Removable Media Example v2": {
+          "Removable Media v2": {
                "os": "windows",
                "version": "v2",
                "description": "A policy",
@@ -10,14 +10,14 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed USBs.xml",
-                              "sha256": "5b62a048960916adc76e1687e328b160c9a20c74749c3070d6f175db82a5df81"
+                              "sha256": "0047ba5a80d7dc1eb1d634b5c9b1b51a3bd01b286faf05b47db5dcd3afe3a231"
                          }
                     },
                     "All Removable Media Devices": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Removable Media Devices.xml",
-                              "sha256": "3acb0b045fb827d32d1296febae97d479b35bebfd8b61da9de3b6a773f5c74ee"
+                              "sha256": "565fe7fd08a092e8f865a51886d9ccf969b8cc93f19d91eedccdccc8f013b61f"
                          }
                     }
                },
@@ -26,14 +26,14 @@
                          "description": "Allow full access and audit write",
                          "file": {
                               "path": "windows/devicecontrol/rules/Allow access to allowed USBs.xml",
-                              "sha256": "1cd78327d500591884db62dbce881ae57d4392d6bdc2feb00ab0a26ec768bc73"
+                              "sha256": "e46b2a807a83f38477512ecb32c6246c1beba6f291ce489b04cda4bd4910ebed"
                          }
                     },
                     "Deny access to all non-approved devices": {
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Deny access to all non-approved devices.xml",
-                              "sha256": "0b3724b35a9c6826f496a0814408f992c31486a0981f19c5d8ed245702394c10"
+                              "sha256": "ee677da6833147dbb84e59c296ea1bb042c653570a738d9afe3e6e7f8987427c"
                          }
                     }
                },

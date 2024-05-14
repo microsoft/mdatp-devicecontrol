@@ -56,28 +56,27 @@ class DebugHandler(BaseMiddleware):
     async def send(
         self, request: httpx.Request, transport: httpx.AsyncBaseTransport
     ) -> httpx.Response:
-        print()
-        print(f"{request.method} {request.url}")
+        #print()
+        logger.debug(f"{request.method} {request.url}")
         for key, value in request.headers.items():
-            print(f"{key}: {value}")
+            logger.debug(f"{key}: {value}")
         if request.content:
-            print()
-            print("Request body:")
-            print(request.content.decode())
+            #print()
+            logger.debug("Request body:")
             logger.debug("BODY="+request.content.decode())
 
         response: httpx.Response = await super().send(request, transport)
 
-        print()
-        print(f"Response: {response.status_code} {response.reason_phrase}")
-        print("Response headers:")
+        #print()
+        logger.debug(f"Response: {response.status_code} {response.reason_phrase}")
+        logger.debug("Response headers:")
         for key, value in response.headers.items():
-            print(f"{key}: {value}")
+            logger.debug(f"{key}: {value}")
 
-        print()
-        print("Response body:")
+        #print()
+        logger.debug("Response body:")
         response_content = await response.aread()
-        print(f"Response content: {response_content.decode()}")
+        logger.debug(f"Response content: {response_content.decode()}")
 
         return response
 

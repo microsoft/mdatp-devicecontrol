@@ -504,7 +504,7 @@ class DeviceControlPolicyTemplate:
                  rule_data_group_setting_collection_value.children.append(entry_id_setting)
 
             rule_data_group_setting_value_children.append(rule_data_entry)
-            logger.info(str(rule_data))
+            logger.debug(str(rule_data))
             return rule_data
 
 
@@ -1067,6 +1067,11 @@ class Package:
 
     class IntuneResults:
 
+
+        class NoChangesNeeded:
+            def __init__(self):
+                pass
+
         def was_successful_result(result):
             
             if result is None:
@@ -1082,7 +1087,7 @@ class Package:
             self.operation = operation
 
             self.results =  {
-                "groups":[],
+                "groups":{},
                 "policy": None
             }
 
@@ -1092,8 +1097,19 @@ class Package:
         def setResultForPolicy(self,result):
             self.results["policy"] = result
 
-        def addResultForGroup(self,result):
-            self.results["groups"].append(result)
+        def addResultForGroup(self,result,group):
+            self.results["groups"][group.name] =result
+
+        def getResultForGroup(self,group):
+            logger.debug("group_name=("+group.name+")")
+            group_name = str(group.name).strip()
+            logger.debug("results="+str(self.results))
+            keys = list(self.results["groups"].keys())
+            logger.debug("keys="+str(keys))
+            if group_name not in keys:
+                return Package.IntuneResults.NoChangesNeeded()
+            else:
+                return self.results["groups"][group.name]
 
         def getPolicyResult(self):
             return self.results["policy"]
@@ -1104,7 +1120,8 @@ class Package:
 
             was_successful = was_successful & Package.IntuneResults.was_successful_result(self.results["policy"])
 
-            for group_result in self.results["groups"]:
+            for group_name in self.results["groups"]:
+                group_result = self.results["groups"][group_name]
                 was_successful = was_successful & Package.IntuneResults.was_successful_result(was_successful & Package.IntuneResults.was_successful_result(group_result))
 
             return was_successful
@@ -1302,6 +1319,28 @@ class Package:
             }
             pass
 
+        
+        def getMetadataForGroup(self,policy_name,group_name):
+            logger.debug("policy_name="+policy_name+" group_name="+group_name)
+
+            if policy_name in self.metadata["policies"]:
+                if group_name in self.metadata["policies"][policy_name]["groups"]:
+                    return self.metadata["policies"][policy_name]["groups"][group_name]
+                
+            logger.debug("No metadata for policy_name="+policy_name+" group_name="+group_name)
+            return None
+        
+        def getMetadataForRule(self,policy_name,rule_name):
+            logger.debug("policy_name="+policy_name+" rule_name="+rule_name)
+
+            if policy_name in self.metadata["policies"]:
+                if rule_name in self.metadata["policies"][policy_name]["rules"]:
+                    return self.metadata["policies"][policy_name]["rules"][rule_name]
+                
+            logger.debug("No metadata for policy_name="+policy_name+" rule_name="+rule_name)
+            return None
+
+
         def getMetadataForPolicy(self,policy):
             
             policy_name = policy.name
@@ -1322,11 +1361,16 @@ class Package:
 
 
         def updateMetadataForPolicy(self,policy):
-            logger.debug(">>>>>Package.Metadata.Policy "+str(policy))
+
+            from datetime import datetime
+
+            now = str(datetime.now())
+            logger.debug(">>>>>Package.Metadata.Policy "+str(policy)+" now="+now)
 
             if hasattr(policy,"id"):
                 self.metadata["policies"][policy.name] = {
-                    "id": policy.id
+                    "id": policy.id,
+                    "last_update": now
                 }
 
             if policy.version == "v2":
@@ -1361,14 +1405,16 @@ class Package:
 
                     if hasattr(group,"metadata_id"):
                         groups_metadata[group.name]["id"] = group.metadata_id
-                
+                        groups_metadata[group.name]["last_update"] = now
+
                 if len(groups_metadata) > 0:
                     self.metadata["policies"][policy.name]["groups"] = groups_metadata
 
                 rules_metadata = {}
                 for rule in policy.rules:
                     rules_metadata[rule.name] = {
-                        "ruledata_id":rule.id
+                        "ruledata_id":rule.id,
+                        "last_update":now
                     }
                 
                 if len(rules_metadata) > 0:
@@ -1871,23 +1917,52 @@ class Package:
         logger.debug(str(results))
 
         i = 0
+        
+    
         for policy_name in results:
 
+            save_metadata = False
             policy = self.policies[i]
             graph_result = results[policy_name]
 
             if graph_result.was_successful():
                 policy_result = graph_result.getPolicyResult()
-                logger.debug("policy_result_keys="+str(policy_result.__dict__.keys()))
+
+                if isinstance(policy_result,Package.IntuneResults.NoChangesNeeded):
+                    logger.info("No changes to apply for "+policy.name)
+                else:
+                    logger.debug("policy_result_keys="+str(policy_result.__dict__.keys()))
+                    save_metadata = True
+
+                for group in policy.groups:
+                    group_name = group.name
+                    group_result = graph_result.getResultForGroup(group)
+                    logger.debug("group_result="+str(group_result))
+
+                    if isinstance(group_result,Package.IntuneResults.NoChangesNeeded):
+                        logger.info("No changes to apply for "+group.name)
+                    else:
+                        save_metadata = True
+
+                    if hasattr(group_result,"id"):
+                        group.__dict__["metadata_id"] = group_result.id
+
+
 
                 if "id" in policy_result.__dict__.keys():
-                    policy.id = policy_result.id
-                    logger.debug("Updating metadata to id="+policy.id)
-                    self.metadata.updateMetadataForPolicy(policy)
+                    if policy.id != policy_result.id:
+                        policy.id = policy_result.id
+                        logger.debug("Updating metadata to id="+policy.id)
+                        save_metadata = True
+
+           
+                    
 
             i=i+1
-            logger.info("Policy="+policy_name+" operation="+graph_result.operation+" result="+str(graph_result.was_successful()))
-            self.save_metadata()
+            logger.info("Policy="+policy_name+" operation="+graph_result.operation+" result="+str(graph_result.was_successful())+" update_metadata="+str(save_metadata))
+            if save_metadata:
+                self.metadata.updateMetadataForPolicy(policy)
+                self.save_metadata()
 
     def deployMacPolicy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
@@ -1956,6 +2031,7 @@ class Package:
     async def deployDCV2Policy(self,graph,policy,operation="new",metadata_policy_policy=None):
         logger.debug("operation="+operation)
 
+        metadata = self.metadata
         results = Package.IntuneResults(operation,metadata_policy_policy)
 
         
@@ -1965,28 +2041,58 @@ class Package:
 
         groups = policy.groups
         for group in groups:
-            logger.debug("Creating a reusable setting for "+str(group))
-            group_setting = DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromGroup(group)
-            logger.debug("Setting="+str(group_setting))
-            result = await graph.create_group_v2(group_setting,group.name)
-            logger.debug("Result="+str(result))
 
-            if result.__class__.__name__ == "DeviceManagementReusablePolicySetting":
-                groups_map[group.id] = result.id
+            metadata_for_group = self.metadata.getMetadataForGroup(policy.name,group.name)
 
-            results.addResultForGroup(result)
+            result = None
+            create_group = False
+            if metadata_for_group is None:
+                logger.debug("No metadata found for group "+group.name+".  Creating group")
+                create_group = True
+            else:
+                logger.debug("Found metadata for group "+group.name+" metadata="+str(metadata_for_group))
+                if "id" in metadata_for_group:
+                    groups_map[metadata_for_group["groupdata_id"]] = metadata_for_group["id"]
+                else:
+                    logger.debug("No id found for "+group.name+".  Creatining group")
+                    create_group = True
+
+            if create_group:
+                logger.debug("Creating a reusable setting for "+str(group))
+                group_setting = DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromGroup(group)
+                logger.debug("Setting="+str(group_setting))
+                result = await graph.create_group_v2(group_setting,group.name)
+                logger.debug("Result="+str(result))
+                if result is not None and result.__class__.__name__ == "DeviceManagementReusablePolicySetting":
+                    groups_map[group.id] = result.id
+                    logger.debug("Adding result for "+group.name)
+                    results.addResultForGroup(result,group)
+                elif result is None:
+                    logger.debug("No results for "+group.name)
+                else:
+                    logger.warning("Unexpected result class "+result.__class__.__name__+" for group "+group_name)
+
         
         rule_settings = []
+        any_rule_changes = False
         for rule in policy.rules:
+
+            metadata_for_rule = self.metadata.getMetadataForRule(policy.name,rule.name)
+
+            if metadata_for_rule is None:
+                any_rule_changes = True
+            else:
+                logger.debug("Found metadata for rule rule_name="+rule.name)
 
             rule_setting = DeviceControlPolicyTemplate.DeviceControlRule.createSettingsFromRule(rule,groups_map)
             logger.debug("Setting="+str(rule_setting))
             rule_settings.append(rule_setting)
 
-            
-        result = await graph.create_policy_v2(policy.name, policy.description,rule_settings)
-        
-        logger.debug("Result="+str(result))
+        result = Package.IntuneResults.NoChangesNeeded()
+
+        if any_rule_changes or operation == "new":
+            result = await graph.create_policy_v2(policy.name, policy.description,rule_settings)
+            logger.debug("Result="+str(result))
 
         results.setResultForPolicy(result)
             

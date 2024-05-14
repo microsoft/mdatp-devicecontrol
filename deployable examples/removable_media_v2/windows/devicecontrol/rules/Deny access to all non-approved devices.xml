@@ -1,18 +1,18 @@
-	<PolicyRule Id="{d22ec182-cd2f-46c8-9854-07f8b3659471}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd22ec182-cd2f-46c8-9854-07f8b3659471%7D/RuleData -->
+	<PolicyRule Id="{b98182cd-16cf-4ed4-96ce-81297b3a014f}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb98182cd-16cf-4ed4-96ce-81297b3a014f%7D/RuleData -->
 		<Name>Deny access to all non-approved devices</Name>
 		<IncludedIdList>
-			<GroupId>{5021e80b-02bf-4169-8c95-4d1041169200}</GroupId>
+			<GroupId>{9ff099cb-706b-49cb-a290-3005de8cfad5}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
-			<GroupId>{81fab100-8595-404e-b372-4ae763aa7693}</GroupId>
+			<GroupId>{a27c38a4-e8b2-419f-8a14-09896ea93bfe}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{a30b2e53-79c9-465a-a2d4-0020721da80f}">
+		<Entry Id="{117dee30-4b15-4041-b368-2ca53aa37230}">
 			<Type>Deny</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{65ba4d1c-f365-4853-83b2-3191c01c6ee7}">
+		<Entry Id="{ce5ec0b0-9310-4b18-ab11-cafe98219715}">
 			<Type>AuditDenied</Type>
 			<AccessMask>7</AccessMask>
 			<Options>3</Options>
