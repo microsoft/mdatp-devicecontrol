@@ -1,8 +1,8 @@
 {
      "policies": {
-          "Removable Media Example": {
+          "sample2": {
                "os": "windows",
-               "version": "v1",
+               "version": "v2",
                "description": "A policy",
                "assignments": [],
                "groups": {
@@ -10,14 +10,14 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed USBs.xml",
-                              "sha256": "9dc78abda9a8d1bc3fb62aa3b1377e324447609619a183099c9b30c74bb035e7"
+                              "sha256": "c068dc7f1d202ca5a8aeeabe905bed7b33d2d85c17c272a0b7f92852f20b32ec"
                          }
                     },
                     "All Removable Media Devices": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Removable Media Devices.xml",
-                              "sha256": "29f426a4d9fdf535c35bf84164b64ca41f63f2638cacef5e0127c24af3032154"
+                              "sha256": "77b973b954f2f04df132f5c308776562de09d80040a191065191ca0e5941cbe3"
                          }
                     }
                },
@@ -26,14 +26,14 @@
                          "description": "Allow full access and audit write",
                          "file": {
                               "path": "windows/devicecontrol/rules/Allow access to allowed USBs.xml",
-                              "sha256": "e3e09ca494075595bf31c1acb56c2b69ef886b869d930e78d3b7edb1add921de"
+                              "sha256": "1800a0eb7e75886f835b8ffc8f7aecb354e9d2215bd3c7d4e2806669bf44d5c2"
                          }
                     },
                     "Deny access to all non-approved devices": {
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Deny access to all non-approved devices.xml",
-                              "sha256": "dd60d79a6dc76fa3c80994acd9e9fefe9d987dad5d2b4fb4cc2237cfc57fe050"
+                              "sha256": "8de66c6e4150a3a0114e2162ce64ad0ed26abfd13c00dadb8080bf6dd6223ee0"
                          }
                     }
                },

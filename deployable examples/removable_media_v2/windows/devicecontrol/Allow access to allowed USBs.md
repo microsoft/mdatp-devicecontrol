@@ -83,8 +83,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
+<Group Id="{5e233630-f613-483a-92d9-290d44b84ca2}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData -->
 	<Name>Allowed USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -125,6 +125,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 
+## Mac
+- [Mac Deployment with Intune](#mac-deployment-with-intune)
+- [Mac Deployment with JAMF](#mac-deployment-with-jamf)
+- [Manual Mac Deployment](#manual-mac-deployment)
+
 
 
 ## Intune UX
@@ -135,11 +140,21 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Allowed USBs for the name.  
+   4. Enter the *Allowed USBs* for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
-   7. Set the match type toggle to MatchAny
    
+   1. Create an entry for  *SerialNumberId* = *6EA9150055800605* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *SerialNumberId( 6EA9150055800605 )* for Name
+        5. Enter *6EA9150055800605* for SerialNumberId
+        6. Click "Save"
+
+
+   
+   7. Set the match type drop down to MatchAny
    8. Click "Next"
    9. Click "Add"
 </details>
@@ -200,8 +215,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
+	<Group Id="{5e233630-f613-483a-92d9-290d44b84ca2}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData -->
 		<Name>Allowed USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -220,20 +235,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{972f35ef-c2aa-420b-bc36-87045c08a350}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B972f35ef-c2aa-420b-bc36-87045c08a350%7D/RuleData -->
+	<PolicyRule Id="{6386d325-ae35-470e-b164-2f301dad4ac7}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6386d325-ae35-470e-b164-2f301dad4ac7%7D/RuleData -->
 		<Name>Allow access to allowed USBs</Name>
 		<IncludedIdList>
-			<GroupId>{8c10f5fb-a902-474c-b12f-4f6846f2ef03}</GroupId>
+			<GroupId>{5e233630-f613-483a-92d9-290d44b84ca2}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{fa42c94a-8c78-41d9-b62e-6435e5b938fe}">
+		<Entry Id="{b205909b-1052-40f3-ab5d-7c14a0c83c7a}">
 			<Type>Allow</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{0f82aad6-9110-496c-a0e7-4c3912e062aa}">
+		<Entry Id="{4b40cfbd-64e7-43f9-a75e-308e514bb24c}">
 			<Type>AuditAllowed</Type>
 			<AccessMask>2</AccessMask>
 			<Options>2</Options>
@@ -265,7 +280,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allow access to allowed USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B972f35ef-c2aa-420b-bc36-87045c08a350%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6386d325-ae35-470e-b164-2f301dad4ac7%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
@@ -280,7 +295,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allowed USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
@@ -290,5 +305,234 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    7. Click "Save"
 </details>
 
+
+
+
+## Mac Policy
+### Mac Deployment with Intune
+
+1. Create the .mobileconfig file
+
+<details>
+    <summary>Copy the contents below into a file, and save it.</summary>       
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+    <dict>
+        <key>PayloadUUID</key>
+        <string>C4E6A782-0C8D-44AB-A025-EB893987A295</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadOrganization</key>
+        <string>Microsoft</string>
+        <key>PayloadIdentifier</key>
+        <string>com.microsoft.wdav</string>
+        <key>PayloadDisplayName</key>
+        <string>Microsoft Defender settings</string>
+        <key>PayloadDescription</key>
+        <string>Microsoft Defender configuration settings</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true/>
+        <key>PayloadRemovalDisallowed</key>
+        <true/>
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadUUID</key>
+                <string>99DBC2BC-3B3A-46A2-A413-C8F9BB9A7295</string>
+                <key>PayloadType</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadOrganization</key>
+                <string>Microsoft</string>
+                <key>PayloadIdentifier</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadDisplayName</key>
+                <string>Microsoft Defender configuration settings</string>
+                <key>PayloadDescription</key>
+                <string/>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadEnabled</key>
+                <true/>
+                <key>dlp</key>
+                <dict>
+                  <key>features</key>
+                    <array>
+                        <dict>
+                            <key>name</key>
+                            <string>DC_in_dlp</string>
+                            <key>state</key>
+                            <string>enabled</string>
+                        </dict>
+                    </array>
+                </dict>
+                <key>deviceControl</key>
+                <dict>
+                    <key>policy</key>
+                    <string>
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "5e233630-f613-483a-92d9-290d44b84ca2",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "serialNumber",
+                        "value": "6EA9150055800605"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "6386d325-ae35-470e-b164-2f301dad4ac7",
+            "name": "Allow access to allowed USBs",
+            "includeGroups": [
+                "5e233630-f613-483a-92d9-290d44b84ca2"
+            ],
+            "excludeGroups": [],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "id": "b205909b-1052-40f3-ab5d-7c14a0c83c7a",
+                    "enforcement": {
+                        "$type": "allow"
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                },
+                {
+                    "$type": "generic",
+                    "id": "4b40cfbd-64e7-43f9-a75e-308e514bb24c",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "generic_write"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {}
+}
+                    </string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
+```
+</details>
+
+
+
+2. Deploy the .mobileconfig file using Intune
+
+    1.   Navigate to https://endpoint.microsoft.com/ > **Devices** > **macOS** > ** Configuration profiles
+    2.   Click on create + New Policy
+    3.   Select Profile type Templates
+    4.   Select Custom profile
+    5.   Enter the name of the policy, optionally a description, and then click Next
+    6.   Select the device deployment channel
+    7.   Choose the .mobileconfig that you created
+    8.   Click "Next"
+    9.   Scope, assign and deploy the policy.
+
+
+
+### Manual Mac Deployment
+
+
+1. Create the .json file
+
+<details>
+     <summary>Save the .json to a file</summary>
+
+```json
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "5e233630-f613-483a-92d9-290d44b84ca2",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "serialNumber",
+                        "value": "6EA9150055800605"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "6386d325-ae35-470e-b164-2f301dad4ac7",
+            "name": "Allow access to allowed USBs",
+            "includeGroups": [
+                "5e233630-f613-483a-92d9-290d44b84ca2"
+            ],
+            "excludeGroups": [],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "id": "b205909b-1052-40f3-ab5d-7c14a0c83c7a",
+                    "enforcement": {
+                        "$type": "allow"
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                },
+                {
+                    "$type": "generic",
+                    "id": "4b40cfbd-64e7-43f9-a75e-308e514bb24c",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "generic_write"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {}
+}
+```
+</details>
+
+
+2. Use ```mdatp config device-control policy set --path <full-path-to-policy.json>``` to apply the policy.
+
+
+
+### Mac Deployment with JAMF
+
+Instructions on how to deploy the policy with JAMF can be found [here](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-jamf?view=o365-worldwide#deploy-policy-by-using-jamf)
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 
 

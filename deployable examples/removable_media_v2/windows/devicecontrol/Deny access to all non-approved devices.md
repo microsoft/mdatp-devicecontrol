@@ -64,37 +64,6 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### All Removable Media Devices
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrimaryId | RemovableMediaDevices |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{46e10430-31ed-42c4-903e-26e1507594cd}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B46e10430-31ed-42c4-903e-26e1507594cd%7D/GroupData -->
-	<Name>All Removable Media Devices</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 ### Allowed USBs
 
 
@@ -115,12 +84,43 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
+<Group Id="{5e233630-f613-483a-92d9-290d44b84ca2}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData -->
 	<Name>Allowed USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<SerialNumberId>6EA9150055800605</SerialNumberId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### All Removable Media Devices
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrimaryId | RemovableMediaDevices |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{b7e99129-3e3c-44aa-b71e-f95e3f65336f}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bb7e99129-3e3c-44aa-b71e-f95e3f65336f%7D/GroupData -->
+	<Name>All Removable Media Devices</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -141,9 +141,9 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [groups/Allowed USBs.xml](groups/Allowed%20USBs.xml)
-- [groups/All Removable Media Devices.xml](groups/All%20Removable%20Media%20Devices.xml)
 - [rules/Deny access to all non-approved devices.xml](rules/Deny%20access%20to%20all%20non-approved%20devices.xml)
+- [groups/All Removable Media Devices.xml](groups/All%20Removable%20Media%20Devices.xml)
+- [groups/Allowed USBs.xml](groups/Allowed%20USBs.xml)
 
 
 # Deployment Instructions
@@ -158,35 +158,60 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 
+## Mac
+- [Mac Deployment with Intune](#mac-deployment-with-intune)
+- [Mac Deployment with JAMF](#mac-deployment-with-jamf)
+- [Manual Mac Deployment](#manual-mac-deployment)
+
 
 
 ## Intune UX
 
-<details>
-<summary>Create a reusable setting for All Removable Media Devices</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the All Removable Media Devices for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   7. Set the match type toggle to MatchAny
-   
-   8. Click "Next"
-   9. Click "Add"
-</details>
 <details>
 <summary>Create a reusable setting for Allowed USBs</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
    2. Click on Reusable Settings
    3. Click (+) Add
-   4. Enter the Allowed USBs for the name.  
+   4. Enter the *Allowed USBs* for the name.  
    5. Optionally, enter a description
    6. Click on "Next"
-   7. Set the match type toggle to MatchAny
    
+   1. Create an entry for  *SerialNumberId* = *6EA9150055800605* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *SerialNumberId( 6EA9150055800605 )* for Name
+        5. Enter *6EA9150055800605* for SerialNumberId
+        6. Click "Save"
+
+
+   
+   7. Set the match type drop down to MatchAny
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for All Removable Media Devices</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the *All Removable Media Devices* for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   
+   1. Create an entry for  *PrimaryId* = *RemovableMediaDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( RemovableMediaDevices )* for Name
+        5. Enter *RemovableMediaDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   7. Set the match type drop down to MatchAny
    8. Click "Next"
    9. Click "Add"
 </details>
@@ -253,20 +278,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{46e10430-31ed-42c4-903e-26e1507594cd}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B46e10430-31ed-42c4-903e-26e1507594cd%7D/GroupData -->
-		<Name>All Removable Media Devices</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrimaryId>RemovableMediaDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
+	<Group Id="{5e233630-f613-483a-92d9-290d44b84ca2}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData -->
 		<Name>Allowed USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<SerialNumberId>6EA9150055800605</SerialNumberId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{b7e99129-3e3c-44aa-b71e-f95e3f65336f}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bb7e99129-3e3c-44aa-b71e-f95e3f65336f%7D/GroupData -->
+		<Name>All Removable Media Devices</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -281,21 +306,21 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{ddf428f0-5247-4a3c-b227-3690389627bc}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bddf428f0-5247-4a3c-b227-3690389627bc%7D/RuleData -->
+	<PolicyRule Id="{0632485f-12e0-491a-b9f4-1d8ca7d555a3}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B0632485f-12e0-491a-b9f4-1d8ca7d555a3%7D/RuleData -->
 		<Name>Deny access to all non-approved devices</Name>
 		<IncludedIdList>
-			<GroupId>{46e10430-31ed-42c4-903e-26e1507594cd}</GroupId>
+			<GroupId>{b7e99129-3e3c-44aa-b71e-f95e3f65336f}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
-			<GroupId>{8c10f5fb-a902-474c-b12f-4f6846f2ef03}</GroupId>
+			<GroupId>{5e233630-f613-483a-92d9-290d44b84ca2}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{515778d1-4e92-4440-9b5f-10a04236b49a}">
+		<Entry Id="{69f48608-0272-465b-81cc-ed63d56f84fa}">
 			<Type>Deny</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{ed9e0ebf-c250-4b62-840c-e7e3b1bd78b9}">
+		<Entry Id="{5612f935-3175-48bb-ab49-cc2c811ad3b9}">
 			<Type>AuditDenied</Type>
 			<AccessMask>7</AccessMask>
 			<Options>3</Options>
@@ -327,7 +352,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Deny access to all non-approved devices*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bddf428f0-5247-4a3c-b227-3690389627bc%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B0632485f-12e0-491a-b9f4-1d8ca7d555a3%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
@@ -342,7 +367,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *All Removable Media Devices*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B46e10430-31ed-42c4-903e-26e1507594cd%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bb7e99129-3e3c-44aa-b71e-f95e3f65336f%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
@@ -357,7 +382,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allowed USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
@@ -367,5 +392,270 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    7. Click "Save"
 </details>
 
+
+
+
+## Mac Policy
+### Mac Deployment with Intune
+
+1. Create the .mobileconfig file
+
+<details>
+    <summary>Copy the contents below into a file, and save it.</summary>       
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+    <dict>
+        <key>PayloadUUID</key>
+        <string>C4E6A782-0C8D-44AB-A025-EB893987A295</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadOrganization</key>
+        <string>Microsoft</string>
+        <key>PayloadIdentifier</key>
+        <string>com.microsoft.wdav</string>
+        <key>PayloadDisplayName</key>
+        <string>Microsoft Defender settings</string>
+        <key>PayloadDescription</key>
+        <string>Microsoft Defender configuration settings</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true/>
+        <key>PayloadRemovalDisallowed</key>
+        <true/>
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadUUID</key>
+                <string>99DBC2BC-3B3A-46A2-A413-C8F9BB9A7295</string>
+                <key>PayloadType</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadOrganization</key>
+                <string>Microsoft</string>
+                <key>PayloadIdentifier</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadDisplayName</key>
+                <string>Microsoft Defender configuration settings</string>
+                <key>PayloadDescription</key>
+                <string/>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadEnabled</key>
+                <true/>
+                <key>dlp</key>
+                <dict>
+                  <key>features</key>
+                    <array>
+                        <dict>
+                            <key>name</key>
+                            <string>DC_in_dlp</string>
+                            <key>state</key>
+                            <string>enabled</string>
+                        </dict>
+                    </array>
+                </dict>
+                <key>deviceControl</key>
+                <dict>
+                    <key>policy</key>
+                    <string>
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "5e233630-f613-483a-92d9-290d44b84ca2",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "serialNumber",
+                        "value": "6EA9150055800605"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "b7e99129-3e3c-44aa-b71e-f95e3f65336f",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "0632485f-12e0-491a-b9f4-1d8ca7d555a3",
+            "name": "Deny access to all non-approved devices",
+            "includeGroups": [
+                "b7e99129-3e3c-44aa-b71e-f95e3f65336f"
+            ],
+            "excludeGroups": [
+                "5e233630-f613-483a-92d9-290d44b84ca2"
+            ],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "id": "69f48608-0272-465b-81cc-ed63d56f84fa",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                },
+                {
+                    "$type": "generic",
+                    "id": "5612f935-3175-48bb-ab49-cc2c811ad3b9",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "show_notification",
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {}
+}
+                    </string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
+```
+</details>
+
+
+
+2. Deploy the .mobileconfig file using Intune
+
+    1.   Navigate to https://endpoint.microsoft.com/ > **Devices** > **macOS** > ** Configuration profiles
+    2.   Click on create + New Policy
+    3.   Select Profile type Templates
+    4.   Select Custom profile
+    5.   Enter the name of the policy, optionally a description, and then click Next
+    6.   Select the device deployment channel
+    7.   Choose the .mobileconfig that you created
+    8.   Click "Next"
+    9.   Scope, assign and deploy the policy.
+
+
+
+### Manual Mac Deployment
+
+
+1. Create the .json file
+
+<details>
+     <summary>Save the .json to a file</summary>
+
+```json
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "5e233630-f613-483a-92d9-290d44b84ca2",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "serialNumber",
+                        "value": "6EA9150055800605"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "b7e99129-3e3c-44aa-b71e-f95e3f65336f",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "removable_media_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "0632485f-12e0-491a-b9f4-1d8ca7d555a3",
+            "name": "Deny access to all non-approved devices",
+            "includeGroups": [
+                "b7e99129-3e3c-44aa-b71e-f95e3f65336f"
+            ],
+            "excludeGroups": [
+                "5e233630-f613-483a-92d9-290d44b84ca2"
+            ],
+            "entries": [
+                {
+                    "$type": "generic",
+                    "id": "69f48608-0272-465b-81cc-ed63d56f84fa",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                },
+                {
+                    "$type": "generic",
+                    "id": "5612f935-3175-48bb-ab49-cc2c811ad3b9",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "show_notification",
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "generic_read",
+                        "generic_write",
+                        "generic_execute"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {}
+}
+```
+</details>
+
+
+2. Use ```mdatp config device-control policy set --path <full-path-to-policy.json>``` to apply the policy.
+
+
+
+### Mac Deployment with JAMF
+
+Instructions on how to deploy the policy with JAMF can be found [here](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-jamf?view=o365-worldwide#deploy-policy-by-using-jamf)
+
+Learn more
+- [Mac device control examples](../Removable%20Storage%20Access%20Control%20Samples/macOS/policy/examples/README.md)
 
 

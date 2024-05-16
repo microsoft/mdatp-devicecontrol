@@ -1,5 +1,5 @@
-	<Group Id="{e2461b64-bc0b-4d85-8cb8-424cabe97f55}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be2461b64-bc0b-4d85-8cb8-424cabe97f55%7D/GroupData -->
+	<Group Id="{0ba930fb-b471-4d30-8f1d-4b4ac4784a51}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B0ba930fb-b471-4d30-8f1d-4b4ac4784a51%7D/GroupData -->
 		<Name>All Removable Media Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>

@@ -1,10 +1,8 @@
-	<Group Id="{8c10f5fb-a902-474c-b12f-4f6846f2ef03}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8c10f5fb-a902-474c-b12f-4f6846f2ef03%7D/GroupData -->
+	<Group Id="{5e233630-f613-483a-92d9-290d44b84ca2}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B5e233630-f613-483a-92d9-290d44b84ca2%7D/GroupData -->
 		<Name>Allowed USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<SerialNumberId>6EA9150055800605</SerialNumberId>
-			<SerialNumberId>6EA9150055800606</SerialNumberId>
-			<SerialNumberId>6EA9150055800607</SerialNumberId>
 		</DescriptorIdList>
 	</Group>

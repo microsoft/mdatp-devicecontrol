@@ -75,6 +75,37 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
+### Full Access Exception
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| SerialNumberId | 6EA9150055800605 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{7c4e7b65-3321-4d3c-8710-13d3ace0eb2f}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7c4e7b65-3321-4d3c-8710-13d3ace0eb2f%7D/GroupData -->
+	<Name>Full Access Exception</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<SerialNumberId>6EA9150055800605</SerialNumberId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
 ### All Devices
 
 
@@ -98,8 +129,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{d817ae9e-ce99-468d-a145-2527c7b166cd}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd817ae9e-ce99-468d-a145-2527c7b166cd%7D/GroupData -->
+<Group Id="{e6f8010d-01c9-4744-979f-0f544c2826d1}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be6f8010d-01c9-4744-979f-0f544c2826d1%7D/GroupData -->
 	<Name>All Devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -107,37 +138,6 @@ The match type for the group is *MatchAny*.
 		<PrimaryId>CdRomDevices</PrimaryId>
 		<PrimaryId>WpdDevices</PrimaryId>
 		<PrimaryId>PrinterDevices</PrimaryId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
-### Full Access Exception
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| SerialNumberId | 6EA9150055800605 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{ecc0323b-9c95-4d2a-9a68-2abb3a07b4bc}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Becc0323b-9c95-4d2a-9a68-2abb3a07b4bc%7D/GroupData -->
-	<Name>Full Access Exception</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<SerialNumberId>6EA9150055800605</SerialNumberId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -158,9 +158,9 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
+- [groups/All Devices.xml](groups/All%20Devices.xml)
 - [groups/Full Access Exception.xml](groups/Full%20Access%20Exception.xml)
 - [rules/Allow unencrypted removable media devices read access only.xml](rules/Allow%20unencrypted%20removable%20media%20devices%20read%20access%20only.xml)
-- [groups/All Devices.xml](groups/All%20Devices.xml)
 
 
 # Deployment Instructions
@@ -180,9 +180,9 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
+- File Execute (32) is an unsupported access mask
 - File Read (8) is an unsupported access mask
 - File Write (16) is an unsupported access mask
-- File Execute (32) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -195,8 +195,16 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{d817ae9e-ce99-468d-a145-2527c7b166cd}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd817ae9e-ce99-468d-a145-2527c7b166cd%7D/GroupData -->
+	<Group Id="{7c4e7b65-3321-4d3c-8710-13d3ace0eb2f}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7c4e7b65-3321-4d3c-8710-13d3ace0eb2f%7D/GroupData -->
+		<Name>Full Access Exception</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<SerialNumberId>6EA9150055800605</SerialNumberId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{e6f8010d-01c9-4744-979f-0f544c2826d1}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be6f8010d-01c9-4744-979f-0f544c2826d1%7D/GroupData -->
 		<Name>All Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -204,14 +212,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<PrimaryId>CdRomDevices</PrimaryId>
 			<PrimaryId>WpdDevices</PrimaryId>
 			<PrimaryId>PrinterDevices</PrimaryId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{ecc0323b-9c95-4d2a-9a68-2abb3a07b4bc}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Becc0323b-9c95-4d2a-9a68-2abb3a07b4bc%7D/GroupData -->
-		<Name>Full Access Exception</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<SerialNumberId>6EA9150055800605</SerialNumberId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -226,26 +226,26 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{b5ed42d8-4ac3-4dc8-8771-cef0891e15ab}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb5ed42d8-4ac3-4dc8-8771-cef0891e15ab%7D/RuleData -->
+	<PolicyRule Id="{bf00562f-6bbe-4666-9369-da4d190368ce}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bbf00562f-6bbe-4666-9369-da4d190368ce%7D/RuleData -->
 		<Name>Allow unencrypted removable media devices read access only</Name>
 		<IncludedIdList>
-			<GroupId>{d817ae9e-ce99-468d-a145-2527c7b166cd}</GroupId>
+			<GroupId>{e6f8010d-01c9-4744-979f-0f544c2826d1}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
-			<GroupId>{ecc0323b-9c95-4d2a-9a68-2abb3a07b4bc}</GroupId>
+			<GroupId>{7c4e7b65-3321-4d3c-8710-13d3ace0eb2f}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{f1d41e5d-f3ed-4fda-8454-60343ef45004}">
+		<Entry Id="{a77445b0-b0dc-472c-a771-f851cb9fd601}">
 			<Type>Allow</Type>
 			<AccessMask>9</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{12138964-0efb-424f-994c-3f3c17b168ab}">
+		<Entry Id="{46e1a05f-acae-4542-8d96-877213179379}">
 			<Type>Deny</Type>
 			<AccessMask>54</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{d346f712-fc3d-4184-ba9c-b40512054887}">
+		<Entry Id="{d3647cca-068e-4684-85e2-26d21a0882b0}">
 			<Type>AuditDenied</Type>
 			<AccessMask>54</AccessMask>
 			<Options>3</Options>
@@ -277,11 +277,11 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    1. Click "Add"
    2. For Name, enter *Allow unencrypted removable media devices read access only*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb5ed42d8-4ac3-4dc8-8771-cef0891e15ab%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bbf00562f-6bbe-4666-9369-da4d190368ce%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/examples/bitlocker/windows/devicecontrol/rules/Allow unencrypted removable media devices read access only.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/rules/Allow unencrypted removable media devices read access only.xml*
          
    
    7. Click "Save"
@@ -292,11 +292,11 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    1. Click "Add"
    2. For Name, enter *All Devices*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bd817ae9e-ce99-468d-a145-2527c7b166cd%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be6f8010d-01c9-4744-979f-0f544c2826d1%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/examples/bitlocker/windows/devicecontrol/groups/All Devices.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/groups/All Devices.xml*
          
    
    7. Click "Save"
@@ -307,11 +307,11 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    1. Click "Add"
    2. For Name, enter *Full Access Exception*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Becc0323b-9c95-4d2a-9a68-2abb3a07b4bc%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7c4e7b65-3321-4d3c-8710-13d3ace0eb2f%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/examples/bitlocker/windows/devicecontrol/groups/Full Access Exception.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/groups/Full Access Exception.xml*
          
    
    7. Click "Save"

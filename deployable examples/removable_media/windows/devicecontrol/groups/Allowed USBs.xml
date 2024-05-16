@@ -1,5 +1,5 @@
-	<Group Id="{00b72954-e837-4523-8186-ad7cb4075584}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B00b72954-e837-4523-8186-ad7cb4075584%7D/GroupData -->
+	<Group Id="{af19f2da-4cd4-4c27-8c31-00aad629f7a6}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Baf19f2da-4cd4-4c27-8c31-00aad629f7a6%7D/GroupData -->
 		<Name>Allowed USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>

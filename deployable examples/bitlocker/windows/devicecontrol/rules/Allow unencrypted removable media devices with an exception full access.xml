@@ -1,17 +1,17 @@
-	<PolicyRule Id="{7f2f8712-4dd6-4a16-bcd8-7c692852b353}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7f2f8712-4dd6-4a16-bcd8-7c692852b353%7D/RuleData -->
+	<PolicyRule Id="{42371a40-7589-4991-9deb-00c610683fe0}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B42371a40-7589-4991-9deb-00c610683fe0%7D/RuleData -->
 		<Name>Allow unencrypted removable media devices with an exception full access</Name>
 		<IncludedIdList>
-			<GroupId>{ecc0323b-9c95-4d2a-9a68-2abb3a07b4bc}</GroupId>
+			<GroupId>{7c4e7b65-3321-4d3c-8710-13d3ace0eb2f}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{e56ea2f4-96a0-46a6-a66a-54724fa49bdd}">
+		<Entry Id="{df826fce-13b5-4443-bd63-9ac02c4a7181}">
 			<Type>Allow</Type>
 			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{c0e3cb28-2f01-4e54-8732-cfb49780360c}">
+		<Entry Id="{e26630ec-dd5c-4356-abd7-20ba59ae5da8}">
 			<Type>AuditAllowed</Type>
 			<AccessMask>18</AccessMask>
 			<Options>2</Options>

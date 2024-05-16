@@ -1,17 +1,17 @@
-	<PolicyRule Id="{e35010ff-7f0b-433d-8735-50c102fa0c62}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be35010ff-7f0b-433d-8735-50c102fa0c62%7D/RuleData -->
+	<PolicyRule Id="{6a5a1462-80c6-4a84-a5b4-1627c34b10ab}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6a5a1462-80c6-4a84-a5b4-1627c34b10ab%7D/RuleData -->
 		<Name>Allow BitLocker encrypted removable media devices full access</Name>
 		<IncludedIdList>
-			<GroupId>{8176213b-c135-4758-9728-6cbfa376d4ce}</GroupId>
+			<GroupId>{88de708f-9802-4845-ac01-bdfe58371d79}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{54bfe9d0-13ae-4b23-82e2-c6882ed179a4}">
+		<Entry Id="{b5e1f3ad-ccf1-4fb6-8fa7-b25366241e3b}">
 			<Type>Allow</Type>
 			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{3f40781a-cf4f-4aec-aa6b-fe56a76666ae}">
+		<Entry Id="{ee9cef93-ed55-48a3-8431-f5362ca6876e}">
 			<Type>AuditAllowed</Type>
 			<AccessMask>18</AccessMask>
 			<Options>2</Options>

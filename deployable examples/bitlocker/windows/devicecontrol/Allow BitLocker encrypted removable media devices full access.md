@@ -83,8 +83,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{8176213b-c135-4758-9728-6cbfa376d4ce}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8176213b-c135-4758-9728-6cbfa376d4ce%7D/GroupData -->
+<Group Id="{88de708f-9802-4845-ac01-bdfe58371d79}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B88de708f-9802-4845-ac01-bdfe58371d79%7D/GroupData -->
 	<Name>BitLocker Encrypted</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -109,8 +109,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [rules/Allow BitLocker encrypted removable media devices full access.xml](rules/Allow%20BitLocker%20encrypted%20removable%20media%20devices%20full%20access.xml)
 - [groups/BitLocker Encrypted.xml](groups/BitLocker%20Encrypted.xml)
+- [rules/Allow BitLocker encrypted removable media devices full access.xml](rules/Allow%20BitLocker%20encrypted%20removable%20media%20devices%20full%20access.xml)
 
 
 # Deployment Instructions
@@ -130,10 +130,10 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 Intune UX is not supported for this policy because:
-- File Read (8) is an unsupported access mask
-- DeviceEncryptionStateId not supported
-- File Write (16) is an unsupported access mask
 - File Execute (32) is an unsupported access mask
+- DeviceEncryptionStateId not supported
+- File Read (8) is an unsupported access mask
+- File Write (16) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -146,8 +146,8 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{8176213b-c135-4758-9728-6cbfa376d4ce}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8176213b-c135-4758-9728-6cbfa376d4ce%7D/GroupData -->
+	<Group Id="{88de708f-9802-4845-ac01-bdfe58371d79}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B88de708f-9802-4845-ac01-bdfe58371d79%7D/GroupData -->
 		<Name>BitLocker Encrypted</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -166,20 +166,20 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{e35010ff-7f0b-433d-8735-50c102fa0c62}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be35010ff-7f0b-433d-8735-50c102fa0c62%7D/RuleData -->
+	<PolicyRule Id="{6a5a1462-80c6-4a84-a5b4-1627c34b10ab}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6a5a1462-80c6-4a84-a5b4-1627c34b10ab%7D/RuleData -->
 		<Name>Allow BitLocker encrypted removable media devices full access</Name>
 		<IncludedIdList>
-			<GroupId>{8176213b-c135-4758-9728-6cbfa376d4ce}</GroupId>
+			<GroupId>{88de708f-9802-4845-ac01-bdfe58371d79}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{54bfe9d0-13ae-4b23-82e2-c6882ed179a4}">
+		<Entry Id="{b5e1f3ad-ccf1-4fb6-8fa7-b25366241e3b}">
 			<Type>Allow</Type>
 			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{3f40781a-cf4f-4aec-aa6b-fe56a76666ae}">
+		<Entry Id="{ee9cef93-ed55-48a3-8431-f5362ca6876e}">
 			<Type>AuditAllowed</Type>
 			<AccessMask>18</AccessMask>
 			<Options>2</Options>
@@ -211,11 +211,11 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    1. Click "Add"
    2. For Name, enter *Allow BitLocker encrypted removable media devices full access*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be35010ff-7f0b-433d-8735-50c102fa0c62%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6a5a1462-80c6-4a84-a5b4-1627c34b10ab%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/examples/bitlocker/windows/devicecontrol/rules/Allow BitLocker encrypted removable media devices full access.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/rules/Allow BitLocker encrypted removable media devices full access.xml*
          
    
    7. Click "Save"
@@ -226,11 +226,11 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    1. Click "Add"
    2. For Name, enter *BitLocker Encrypted*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B8176213b-c135-4758-9728-6cbfa376d4ce%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B88de708f-9802-4845-ac01-bdfe58371d79%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/examples/bitlocker/windows/devicecontrol/groups/BitLocker Encrypted.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/groups/BitLocker Encrypted.xml*
          
    
    7. Click "Save"
