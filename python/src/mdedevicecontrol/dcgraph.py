@@ -101,11 +101,15 @@ class Graph:
 
         if client_secret is not None:
             logger.debug("ClientSecret=...."+client_secret[:4])
+        else:
+            logger.debug("No client secret provided")
 
-        self.graph_scopes = scopes.split(' ')
-
-        if self.graph_scopes is not None:
+        if scopes is None:
+            logger.debug("No scopes")
+        else:
             logger.debug("scopes: "+str(self.graph_scopes))
+            self.graph_scopes = scopes.split(' ')
+
 
         
         _middleware = GraphClientFactory.get_default_middleware(None)

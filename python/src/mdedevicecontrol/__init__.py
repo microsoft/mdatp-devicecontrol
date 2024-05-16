@@ -2552,10 +2552,12 @@ class api:
 
         if self.clientId is not None and self.tenantId is not None and authentication_type == "user":
             
+            logger.debug("Connecting as user")
             self.graph = Graph(self.tenantId,self.clientId,None,scopes)
 
         elif self.clientId is not None and self.tenantId is not None and self.clientSecret is not None:
 
+            logger.debug("Connecting as application")
             self.graph = Graph(self.tenantId,self.clientId,self.clientSecret,scopes)
 
         else:

@@ -32,6 +32,8 @@ def get_graph():
         clientSecret = os.environ["CLIENT_SECRET"]
 
         graph = dcgraph.Graph(tenantId,clientId,clientSecret)
+        
+
 
         return graph
        

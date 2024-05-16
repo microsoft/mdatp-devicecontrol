@@ -142,7 +142,7 @@ async def test_large_setup():
         templates_path=os.path.join(root_dir,"python","src","mdedevicecontrol","templates")
     )
 
-    await api.connectToGraph()
+    await api.connectToGraph(authentication_type="application")
 
     from mdedevicecontrol import WindowsEntryType, PolicyRule, Notifications, Format
     
