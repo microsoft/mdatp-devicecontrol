@@ -278,7 +278,7 @@ async def test_v2_rule():
         logger.info(str(rule))
 
         try:
-              result = await graph.create_rule_v2(rule)
+              result = await graph.create_policy_v2(rule)
         except RuntimeError as e:
                logger.error(e)
 

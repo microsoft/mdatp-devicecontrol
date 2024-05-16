@@ -92,6 +92,7 @@ class Graph:
         client_id = clientId
         self.tenant_id = tenantId
         client_secret = clientSecret
+        self.graph_scopes = None
 
         if self.tenant_id is not None:
             logger.debug("TenantId=...."+self.tenant_id[:4])
