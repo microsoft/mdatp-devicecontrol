@@ -1892,7 +1892,7 @@ class Package:
         package_file.close()
         logger.info("Writing package file to "+str(package_file_path))
 
-        self.save_metadata(destination)
+        self.save_metadata()
 
         
     async def deploy(self,graph):

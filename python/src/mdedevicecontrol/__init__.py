@@ -2889,7 +2889,7 @@ class api:
             return
         
         await self.package.deploy(self.graph)
-        self.package.save_metadata(self.path)
+        self.package.save_metadata()
 
 
 class CommandLine:
