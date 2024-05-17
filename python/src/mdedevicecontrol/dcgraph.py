@@ -21,6 +21,7 @@ from msgraph_beta.generated.models.item_body import ItemBody
 from msgraph_beta.generated.models.body_type import BodyType
 from msgraph_beta.generated.models.recipient import Recipient
 from msgraph_beta.generated.models.email_address import EmailAddress
+from msgraph_beta.generated.device_management.device_configurations.device_configurations_request_builder import DeviceConfigurationsRequestBuilder
 
 from msgraph_beta.generated.device_management.configuration_policy_templates.configuration_policy_templates_request_builder import ConfigurationPolicyTemplatesRequestBuilder
 from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
@@ -201,6 +202,20 @@ class Graph:
 
     
 
+    async def get_v1_policies_by_name(self,name):
+
+        query_params = DeviceConfigurationsRequestBuilder.DeviceConfigurationsRequestBuilderGetQueryParameters(
+		    filter = "displayName eq 'Policy for Special User'",
+        )
+
+        request_configuration = DeviceConfigurationsRequestBuilder.DeviceConfigurationsRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.device_configurations.get(request_configuration = request_configuration)
+
+        return result
+    
     async def get_xml(self,id,secret_reference):
 
         logger.debug(">>>> get_xml id="+id+" secret_reference="+secret_reference)

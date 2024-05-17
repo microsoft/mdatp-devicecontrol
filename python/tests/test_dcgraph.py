@@ -108,6 +108,20 @@ async def test_v2_group():
        groupdata_group_setting_value.children.append(match_type_setting)
 
 
+@pytest.mark.asyncio(scope="session")
+async def get_v1_polices():
+
+       import logging.config
+       logging.config.fileConfig("logging.conf")
+
+       logger = logging.getLogger("mdedevicecontrol")
+      
+       graph = get_graph()
+
+       result = graph.get_v1_policies_by_name('Policy for Special User')
+
+       logger.debug(result)
+
 
 
 @pytest.mark.asyncio(scope="session")

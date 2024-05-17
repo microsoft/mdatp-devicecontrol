@@ -3205,7 +3205,8 @@ class CommandLine:
         from mdedevicecontrol.dcintune import Package
 
         package_name = pathlib.Path(os.getcwd()).name
-        package = Package.load(os.getcwd(),package_name,CommandLine.templateEnv,CommandLine.api)
+        package_root = str(pathlib.Path(os.getcwd()).parent)
+        package = Package.load(package_root,package_name,CommandLine.templateEnv,CommandLine.api)
 
         authentication_type = "user"
         if args.application_authentication:
