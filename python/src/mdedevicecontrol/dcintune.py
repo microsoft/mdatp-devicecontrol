@@ -1511,13 +1511,16 @@ class Package:
         def __str__(self):
             return json.dumps(self.metadata,indent=5)
 
-    def load(environment,api):
+    def load(root_path,package_name,environment,api):
 
-        cwd = pathlib.Path(os.getcwd())
-        p = Package(cwd.name,templateEnv=environment)
+    
+        p = Package(package_name,templateEnv=environment)
+        p.package_root = root_path
 
-        package_file_name = os.path.join(str(cwd),"package.json")
-        metadata_file_name = os.path.join(str(cwd),"metadata.json")
+        package_path = os.path.join(root_path,package_name)
+
+        package_file_name = os.path.join(package_path,"package.json")
+        metadata_file_name = os.path.join(package_path,"metadata.json")
 
         package_file = open(package_file_name,"r") 
         p.package_json = json.load(package_file)
@@ -1632,6 +1635,7 @@ class Package:
         self.source_path = None
         self.package_json = None
         
+        self.package_root = None
 
 
     def addPolicy(self,policy):
@@ -1639,10 +1643,9 @@ class Package:
         self.metadata.updateMetadataForPolicy(policy)
 
 
-    def save_metadata(self,
-                      destination=str(pathlib.Path(os.getcwd()).parent)):
+    def save_metadata(self):
         
-        package_path = pathlib.PurePath(os.path.join(destination,self.name))
+        package_path = pathlib.PurePath(os.path.join(self.package_root,self.name))
         metadata_file_path = pathlib.PurePath(os.path.join(package_path,"metadata.json"))
         metadata_file = open(metadata_file_path,"w")
         logger.info("Writing package metadata file to "+str(metadata_file_path))
@@ -1651,6 +1654,8 @@ class Package:
 
 
     def save(self,destination,rule_template_name,readme_template_name,description_template_name):
+
+        self.package_root = pathlib.Path(destination).resolve()
 
         package_path = pathlib.PurePath(os.path.join(destination,self.name))
         if not os.path.isdir(package_path):

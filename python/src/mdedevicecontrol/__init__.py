@@ -3180,7 +3180,9 @@ class CommandLine:
     async def apply(args,config):
 
         from mdedevicecontrol.dcintune import Package
-        package = Package.load(os.getcwd(),CommandLine.api)
+
+        package_name = pathlib.Path(os.getcwd()).name
+        package = Package.load(os.getcwd(),package_name,CommandLine.templateEnv,CommandLine.api)
 
         authentication_type = "user"
         if args.application_authentication:
