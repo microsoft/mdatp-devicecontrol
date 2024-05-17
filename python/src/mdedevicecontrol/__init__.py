@@ -2495,18 +2495,29 @@ class api:
         },
         "Audit write access":{
             "entry_type":Enforcement.AuditAllowed,
-            "AccessMask":18,
+            "permissions": {
+                WindowsEntryType.DiskWriteMask: True,
+                WindowsEntryType.FileWriteMask: True
+            },
             "Options": 2
         },
         "Allow read access":
         {
             "Type":Enforcement.Allow,
-            "AccessMask":9,
+            "permissions": {
+                WindowsEntryType.DiskReadMask: True,
+                WindowsEntryType.FileReadMask: True
+            },
             "Options":0
         },
         "Deny write and execute access":{
             "Type":Enforcement.Deny,
-            "AccessMask":54,
+            "permissions": {
+                WindowsEntryType.DiskWriteMask: True,
+                WindowsEntryType.DiskExecuteMask: True,
+                WindowsEntryType.FileReadMask: True,
+                WindowsEntryType.FileWriteMask: True,
+            },
             "Options":3
         }
     }
@@ -2655,7 +2666,19 @@ class api:
 
 
     def createEntryByName(self,entry_name):
-        pass
+
+        entry_data = api.entriesByName[entry_name]
+
+        return self.createEntry(
+            enforcement=entry_data["enforcement"],
+            permissions=entry_data["permissions"],
+            notifications=entry_data["notifications"]
+
+        )
+
+    def createReadOnlyEntry(self):
+
+        return self.createEntryByName("Allow read access")
 
     def createEntry(self,
                     entry_type=Entry.WindowsDevice,
