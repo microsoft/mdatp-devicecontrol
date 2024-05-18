@@ -33,6 +33,7 @@ class DcIntuneArgs:
         self.readme_file = "readme.md"
 
 
+@pytest.mark.asyncio(scope="session")
 async def test_intune_export():
         
     args = DcIntuneArgs()
