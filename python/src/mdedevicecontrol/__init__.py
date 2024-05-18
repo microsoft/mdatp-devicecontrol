@@ -2470,6 +2470,84 @@ IntuneUXFeature = Feature(
     
 class api:
 
+    class Mode:
+
+        def __init__(self,version,os,entries_map):
+            self.version = version
+            self.os = os
+            self.entries_map = entries_map
+
+        def getEntryData(self,entry_name):
+            return self.entries_map[entry_name]
+        
+
+        def __str__(self):
+            return "version="+self.version+" os="+self.os+" entries="+str(self.entries)
+
+    MODE_WINDOWS_V1 = Mode(
+        version="v1",
+        os="windows",
+        entries_map={
+            "+RWX":{
+                "enforcement": PolicyRule.Allow,
+                "permissions": {
+                    WindowsEntryType.DiskReadMask: True,
+                    WindowsEntryType.DiskWriteMask: True,
+                    WindowsEntryType.DiskExecuteMask: True,
+                    WindowsEntryType.FileReadMask: True,
+                    WindowsEntryType.FileWriteMask: True,
+                    WindowsEntryType.FileExecuteMask: True
+                },
+                "notifications": Notifications(0,Format.OMA_URI)
+            },
+            "(+)R":{
+                "enforcement":PolicyRule.AuditAllowed,
+                "permissions": {
+                    WindowsEntryType.DiskWriteMask: True,
+                    WindowsEntryType.FileWriteMask: True
+                },
+                "notifications": Notifications(2,Format.OMA_URI)
+            },
+            "+R":
+            {
+                "enforcement":PolicyRule.Allow,
+                "permissions": {
+                    WindowsEntryType.DiskReadMask: True,
+                    WindowsEntryType.FileReadMask: True
+                },
+                "notifications":Notifications(0,Format.OMA_URI)
+            },
+            "-WX":{
+                "enforcement":PolicyRule.Deny,
+                "permissions": {
+                    WindowsEntryType.DiskWriteMask: True,
+                    WindowsEntryType.DiskExecuteMask: True,
+                    WindowsEntryType.FileReadMask: True,
+                    WindowsEntryType.FileWriteMask: True,
+                },
+                "notifications":Notifications(3,Format.OMA_URI)
+            }
+        }
+    )
+
+    MODE_WINDOWS_V2 = Mode(
+        version="v2",
+        os="windows",
+        entries_map={    
+            "+R":
+            {
+                "enforcement":PolicyRule.Allow,
+                "permissions": {
+                    WindowsEntryType.DiskReadMask: True
+                },
+                "notifications":Notifications(0,Format.OMA_URI)
+            }
+        })
+    
+    
+    
+
+
     '''
                     entry_type=Entry.WindowsDevice,
                     enforcement=PolicyRule.Allow,
@@ -2480,48 +2558,7 @@ class api:
                     notifications=Notifications(0,Format.OMA_URI),
     '''
 
-    entriesByName = {
-        "Allow full access":{
-            "enforcement": PolicyRule.Allow,
-            "permissions": {
-                WindowsEntryType.DiskReadMask: True,
-                WindowsEntryType.DiskWriteMask: True,
-                WindowsEntryType.DiskExecuteMask: True,
-                WindowsEntryType.FileReadMask: True,
-                WindowsEntryType.FileWriteMask: True,
-                WindowsEntryType.FileExecuteMask: True
-            },
-            "notifications": Notifications(0,Format.OMA_URI)
-        },
-        "Audit write access":{
-            "enforcement":PolicyRule.AuditAllowed,
-            "permissions": {
-                WindowsEntryType.DiskWriteMask: True,
-                WindowsEntryType.FileWriteMask: True
-            },
-            "notifications": Notifications(2,Format.OMA_URI)
-        },
-        "Allow read access":
-        {
-            "enforcement":PolicyRule.Allow,
-            "permissions": {
-                WindowsEntryType.DiskReadMask: True,
-                WindowsEntryType.FileReadMask: True
-            },
-            "notifications":Notifications(0,Format.OMA_URI)
-        },
-        "Deny write and execute access":{
-            "enforcement":PolicyRule.Deny,
-            "permissions": {
-                WindowsEntryType.DiskWriteMask: True,
-                WindowsEntryType.DiskExecuteMask: True,
-                WindowsEntryType.FileReadMask: True,
-                WindowsEntryType.FileWriteMask: True,
-            },
-            "notifications":Notifications(3,Format.OMA_URI)
-        }
-    }
-
+    
     def newGUID():
         return "{"+str(uuid.uuid4())+"}"
 
@@ -2530,7 +2567,8 @@ class api:
                  clientId=None,
                  tenantId=None,
                  clientSecret=None, 
-                 templates_path = "templates"):
+                 templates_path = "templates",
+                 mode = MODE_WINDOWS_V1):
         
         logger.debug("Created instance of device control api")
 
@@ -2554,8 +2592,14 @@ class api:
         
         self.policies = {}
 
+        self.mode = mode
+
             
         pass
+
+    def setMode(self, mode):
+        logger.debug("mode="+str(mode))
+        self.mode = mode
 
     async def connectToGraph(self, authentication_type = "user", scopes = ""):
 
@@ -2667,7 +2711,7 @@ class api:
 
     def createEntryByName(self,entry_name):
 
-        entry_data = api.entriesByName[entry_name]
+        entry_data = self.mode.getEntryData(entry_name)
 
         return self.createEntry(
             enforcement=entry_data["enforcement"],
@@ -2678,7 +2722,7 @@ class api:
 
     def createReadOnlyEntry(self):
 
-        return self.createEntryByName("Allow read access")
+        return self.createEntryByName("+R")
 
     def createEntry(self,
                     entry_type=Entry.WindowsDevice,

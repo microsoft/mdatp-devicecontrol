@@ -144,6 +144,8 @@ async def test_v2_rule():
               tenantId=os.environ["TENANT_ID"]
        )
 
+       api.setMode(dc.api.MODE_WINDOWS_V2)
+
        g1 = api.createGroupOfWindowsDevicesBySerialNumber("allowed USBs",["1111111"])
 
        group_setting = intune.DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromGroup(g1)
