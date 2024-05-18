@@ -1411,6 +1411,10 @@ class Package:
                 groups_metadata = {}
                 for group in policy.groups:
 
+                    if isinstance(group,str):
+                        logger.debug("group="+group+" for policy="+policy.name+".  No metadata")
+                        continue
+
                     groups_metadata[group.name] = {
                         "groupdata_id":group.id,
                         "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"
