@@ -2482,7 +2482,7 @@ class api:
 
     entriesByName = {
         "Allow full access":{
-            "enforcement": Enforcement.Allow,
+            "enforcement": PolicyRule.Allow,
             "permissions": {
                 WindowsEntryType.DiskReadMask: True,
                 WindowsEntryType.DiskWriteMask: True,
@@ -2494,7 +2494,7 @@ class api:
             "notifications": Notifications(0,Format.OMA_URI)
         },
         "Audit write access":{
-            "enforcement":Enforcement.AuditAllowed,
+            "enforcement":PolicyRule.AuditAllowed,
             "permissions": {
                 WindowsEntryType.DiskWriteMask: True,
                 WindowsEntryType.FileWriteMask: True
@@ -2503,7 +2503,7 @@ class api:
         },
         "Allow read access":
         {
-            "enforcement":Enforcement.Allow,
+            "enforcement":PolicyRule.Allow,
             "permissions": {
                 WindowsEntryType.DiskReadMask: True,
                 WindowsEntryType.FileReadMask: True
@@ -2511,7 +2511,7 @@ class api:
             "notifications":Notifications(0,Format.OMA_URI)
         },
         "Deny write and execute access":{
-            "enforcement":Enforcement.Deny,
+            "enforcement":PolicyRule.Deny,
             "permissions": {
                 WindowsEntryType.DiskWriteMask: True,
                 WindowsEntryType.DiskExecuteMask: True,
