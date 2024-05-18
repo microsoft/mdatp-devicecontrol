@@ -2388,9 +2388,13 @@ async def export(graph: Graph, destination,name,
                     xml = await graph.get_xml(id,secret_reference_value_id)
                     root = ET.fromstring(xml.value)
 
+                    logger.debug("xml="+str(xml.value))
+                    
+
                     #file name without .xml
                     name = str(oma_setting.file_name).split(".")[0]
                     if root.tag == "PolicyRule":
+                        
                         rule = dc.PolicyRule(root,dc.Format.OMA_URI)
                         policy.addRule(rule)
                         policy.name = name
