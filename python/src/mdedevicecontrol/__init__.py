@@ -1389,7 +1389,7 @@ class PolicyRule:
         if format == "gpo" or format =="oma-uri":
 
             if "Id" not in root.attrib:
-                raise RuntimeError("No id attribute in xml="+str(root))
+                raise RuntimeError("No Id attribute in xml="+str(root))
 
             self.id = root.attrib["Id"]
             name_node = root.find(".//Name")
