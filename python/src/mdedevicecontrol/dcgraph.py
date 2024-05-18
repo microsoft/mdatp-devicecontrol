@@ -332,12 +332,13 @@ class Graph:
 
     async def create_group_v2(self,group,name):
 
+        logger.debug("name="+name+" group="+str(group))
+
         setting = DeviceManagementReusablePolicySetting()
         setting.setting_instance = group
         setting.display_name = name
         setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
         
-        logger.debug("Create Group v2 "+str(group))
         result = await self.graph_client.device_management.reusable_policy_settings.post(setting)
         logger.debug(str(result))
         return result

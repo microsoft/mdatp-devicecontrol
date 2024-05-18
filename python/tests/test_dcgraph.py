@@ -148,7 +148,7 @@ async def test_v2_rule():
 
        group_setting = intune.DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromGroup(g1)
 
-       group_result = graph.create_group_v2(group_setting,"g1")
+       group_result = await graph.create_group_v2(group_setting,"g1")
        group_id = group_result.id
 
        group_maps = {}
