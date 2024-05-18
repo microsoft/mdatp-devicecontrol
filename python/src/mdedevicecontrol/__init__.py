@@ -2482,7 +2482,7 @@ class api:
         
 
         def __str__(self):
-            return "version="+self.version+" os="+self.os+" entries="+str(self.entries)
+            return "version="+self.version+" os="+self.os+" entries="+str(self.entries_map)
 
     MODE_WINDOWS_V1 = Mode(
         version="v1",
