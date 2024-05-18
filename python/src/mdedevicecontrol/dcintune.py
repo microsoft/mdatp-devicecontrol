@@ -1674,6 +1674,8 @@ class Package:
         if not os.path.isdir(package_path):
             os.mkdir(package_path)
 
+        logger.info("Saving package name="+self.name+" to "+str(self.package_root))
+
         path_map = {}
 
         for layout_path in Package.layout:
@@ -1711,8 +1713,29 @@ class Package:
                 }
             }
 
+        policies_by_name = {}
+
+        logger.info("Saving "+str(len(self.policies))+" policies.")
+
         for policy in self.policies:
             name = policy.name
+
+            if name in policies_by_name:
+                count = policies_by_name[name]
+                count = count + 1
+                
+                oldname = str(name)
+                name = name+"_"+str(count)
+                policy.name = name
+
+                logger.info("Renamed policy "+oldname+" to "+name)
+                policies_by_name[oldname] = count
+            else:
+                count = 0
+                policies_by_name[name] = count
+
+            
+
             version = policy.version
             if policy.os == Package.MAC_OS:
                 policy_json = policy.getPolicyJSON()
@@ -1751,6 +1774,12 @@ class Package:
                 
                 for group in policy.groups:
                     if not isinstance(group,str):
+                        if count > 0:
+                            old_group_name = group.name
+                            group_name = old_group_name+"_"+str(count)
+                            group.name = group_name
+                            logger.info("Renamed group "+old_group_name+" to "+group_name)
+
                         group_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_GROUPS_PATH],group.name+".xml"))
                         group_file = open(group_file_path,"w")
                         group_file.write(str(group))
@@ -1774,6 +1803,12 @@ class Package:
 
                     
                 for rule in policy.rules:
+                    if count > 0:
+                        old_rule_name = rule.name
+                        rule_name = old_rule_name+"_"+str(count)
+                        rule.name = rule_name
+                        logger.info("Renamed rule "+old_rule_name+" to "+rule_name)
+                        
                     rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],rule.name+".xml"))
                     rule_file = open(rule_file_path,"w")
                     rule_file.write(str(rule))
@@ -1833,6 +1868,9 @@ class Package:
                     "rules": rules_data,
                     "settings": settings_data
                 }
+
+                if count > 0:
+                    self.metadata.updateMetadataForPolicy(policy)
 
                 for rule_name in policy_data[name]["rules"]:
                     rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],rule_name+".xml"))
