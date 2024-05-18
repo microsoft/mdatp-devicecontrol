@@ -140,7 +140,7 @@ async def test_v2_rule():
 
        api = dc.api(
               clientId=os.environ["CLIENT_ID"],
-              clientId=os.environ["CLIENT_SECRET"],
+              clientSecret=os.environ["CLIENT_SECRET"],
               clientSecret=os.environ["TENANT_ID"]
        )
 
