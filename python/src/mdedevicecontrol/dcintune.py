@@ -663,13 +663,19 @@ class DeviceControlPolicyTemplate:
             includedid_list = ET.SubElement(rule,"IncludedIdList")
             for included_group in self.included_groups:
                 group_id = ET.SubElement(includedid_list,"GroupId")
-                group_id.text = included_group.id
+                if isinstance(included_group,str):
+                    group_id.text = included_group
+                else:
+                    group_id.text = included_group.id
 
 
             excludedid_list = ET.SubElement(rule,"ExcludedIdList")
             for excluded_group in self.excluded_groups:
                 group_id = ET.SubElement(excludedid_list,"GroupId")
-                group_id.text = excluded_group.id
+                if isinstance(excluded_group,str):
+                    group_id.text = excluded_group
+                else:    
+                    group_id.text = excluded_group.id
 
                 
             for entry in self.entries:
@@ -793,6 +799,7 @@ class DeviceControlPolicyTemplate:
 
         #get the device control configuration policies
         dc_policies = await self.graph.get_device_control_policies()
+        logger.info("v2 policies retrieved="+str(len(dc_policies.value))+" policies.")
         for dc_policy in dc_policies.value:
 
             id = dc_policy.id
@@ -824,6 +831,8 @@ class DeviceControlPolicyTemplate:
             policy = DeviceControlPolicyTemplate.DeviceControlPolicy("v2",id,name,settings_value_for_policy,assignments)
             await policy.proces_data(self.graph)
             policy.description = description
+
+            logger.info("Retrieved policy name="+policy.name+" id=("+policy.id+")")
             policies.append(policy)
 
         return policies    
@@ -1738,27 +1747,32 @@ class Package:
                 rules_data = {}
                 settings_data = {}
 
+                logger.info("Exporting windows policy "+name)
                 
                 for group in policy.groups:
-                    group_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_GROUPS_PATH],group.name+".xml"))
-                    group_file = open(group_file_path,"w")
-                    group_file.write(str(group))
-                    group_file.close()
+                    if not isinstance(group,str):
+                        group_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_GROUPS_PATH],group.name+".xml"))
+                        group_file = open(group_file_path,"w")
+                        group_file.write(str(group))
+                        group_file.close()
 
-                    logger.info("Exporting group "+group.name+" to "+str(group_file_path))
+                        if group.description is None:
+                            group.description = ""
 
-
-                    if group.description is None:
-                        group.description = ""
-
-                    groups_data [group.name] = {
-                        "description": group.description,
-                        "file": {
-                            "path": str(group_file_path.relative_to(package_path)),
-                            "sha256": Package.getSHA256Hash(group_file_path)
+                        groups_data [group.name] = {
+                            "description": group.description,
+                            "file": {
+                                "path": str(group_file_path.relative_to(package_path)),
+                                "sha256": Package.getSHA256Hash(group_file_path)
+                            }
                         }
-                    }
 
+
+                        logger.info("Exporting group "+group.name+" to "+str(group_file_path))
+                    else:
+                        logger.warn("Group "+group+" is missing metadata.")
+
+                    
                 for rule in policy.rules:
                     rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],rule.name+".xml"))
                     rule_file = open(rule_file_path,"w")
@@ -1867,8 +1881,10 @@ class Package:
             json_file.close()
             
 
-            mac_inventory.generate_text(result,rule_template,str(path_map[Package.MAC_DEVICE_CONTROL]),outfile,title,mac_settings)
-            
+            try:
+                mac_inventory.generate_text(result,rule_template,str(path_map[Package.MAC_DEVICE_CONTROL]),outfile,title,mac_settings)
+            except Exception as e:
+                logger.warn("Could not generate documentation for "+mac_policy_file_name+" error="+str(e))
 
         #generate documentation for windows
         windows_src_paths = [str(path_map[Package.WINDOWS_DEVICE_CONTROL])]
@@ -1889,7 +1905,11 @@ class Package:
             result["description"] = Description(result,self.templateEnv,description_template_name)
 
             settings_data_for_path = windows_policy_file_paths[windows_policy_file_path]
-            windows_inventory.generate_text(result,rule_template,str(path_map[Package.WINDOWS_DEVICE_CONTROL]),outfile,title,settings_data_for_path)
+
+            try:
+                 windows_inventory.generate_text(result,rule_template,str(path_map[Package.WINDOWS_DEVICE_CONTROL]),outfile,title,settings_data_for_path)
+            except Exception as e:
+                logger.warn("Could not generate documentation for "+windows_policy_file_name+" error="+str(e))
             
 
         json.dump(package_data,package_file,indent=5)
@@ -2333,6 +2353,8 @@ async def export(graph: Graph, destination,name,
         package.addPolicy(dc_policy)
     
     configs = await graph.export_device_configurations()
+    logger.info("v1 policies retrieved="+str(len(configs.value))+" policies.")
+       
     for device_config in configs.value:
         if device_config.odata_type == "#microsoft.graph.macOSCustomConfiguration":
             payload_bytes = device_config.payload
@@ -2358,6 +2380,7 @@ async def export(graph: Graph, destination,name,
 
                 await policy.setAssignments(assignments)
 
+                logger.info("Retrieved policy name="+policy.name+" id="+policy.id)
                 package.addPolicy(policy)
 
         if device_config.odata_type == "#microsoft.graph.windows10CustomConfiguration":
@@ -2417,6 +2440,8 @@ async def export(graph: Graph, destination,name,
                         dc_setting = dc.Setting(dc_setting_name,setting_value)
                         intune_settings = Package.IntuneSetting(dc_setting,oma_setting.display_name,description)
                         policy.addSetting(intune_settings)
+
+            logger.info("Retrieved policy name="+policy.name+" id="+policy.id)
 
             package.addPolicy(policy)
     
