@@ -2388,23 +2388,28 @@ async def export(graph: Graph, destination,name,
                     xml = await graph.get_xml(id,secret_reference_value_id)
                     root = ET.fromstring(xml.value)
 
-                    logger.debug("xml="+str(xml.value))
+                    #logger.debug("xml="+str(xml.value))
                     
 
                     #file name without .xml
                     name = str(oma_setting.file_name).split(".")[0]
                     if root.tag == "PolicyRule":
-                        
-                        rule = dc.PolicyRule(root,dc.Format.OMA_URI)
-                        policy.addRule(rule)
-                        policy.name = name
-                        policy.description = description
+                        try:
+                            rule = dc.PolicyRule(root,dc.Format.OMA_URI)
+                            policy.addRule(rule)
+                            policy.name = name
+                            policy.description = description
+                        except RuntimeError as e:
+                            logger.error("Error loading policy rule from xml: "+str(e))
+
                     elif root.tag == "Group":
-                        group = dc.Group(root,dc.Format.OMA_URI)
-                        policy.addGroup(group)
-                        group.name = name
-                        group.description = description
-            
+                        try:
+                            group = dc.Group(root,dc.Format.OMA_URI)
+                            policy.addGroup(group)
+                            group.name = name
+                            group.description = description
+                        except RuntimeError as e:
+                            logger.error("Error loading group from xml: "+str(e))
                 else:
                     dc_setting_name = dc.Setting.getSettingNameFor(oma_uri)
                     if dc_setting_name is not None:

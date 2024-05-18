@@ -3029,6 +3029,8 @@ class CommandLine:
                     CommandLine.init(args)
                 elif args.init_source == "xlsx":
                     CommandLine.init_with_xlsx(args,config)
+                elif args.init_source == "intune":
+                    result = await CommandLine.init_with_intune(args,config)
             case "validate":
                 if args.validate_options == "graph":
                     token = await CommandLine.validate_graph(args,config)
@@ -3247,6 +3249,28 @@ class CommandLine:
                CommandLine.readme_template_name,
                CommandLine.description_template_name)
 
+    async def init_with_intune(args,config):
+
+        from mdedevicecontrol import dcintune as intune
+
+        package_name = pathlib.Path(os.getcwd()).name
+        package_root = str(pathlib.Path(os.getcwd()).parent)
+        
+        authentication_type = "user"
+        if args.application_authentication:
+            authentication_type = "application"
+
+        
+        scopes=config["graph"]["scopes"]
+        graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
+
+        result = await intune.export(graph,package_root,package_name,
+                         CommandLine.templateEnv,
+                         config["templates"]["rule"],
+                         config["templates"]["readme"],
+                         config["templates"]["description"])
+
+
     async def apply(args,config):
 
         from mdedevicecontrol.dcintune import Package
@@ -3289,12 +3313,23 @@ def main():
 
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
     xlsx_source_parser.add_argument("-f","--file",dest="file",help="xlsx file to import",required=True)
-    xlsx_source_parser.add_argument("-n","--name",dest="name",help="name of the policy",required=True)
-    xlsx_source_parser.add_argument("-d","--description",dest="description",help="description of the policy",required=False)
+    xlsx_source_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
+    xlsx_source_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
     xlsx_source_parser.add_argument("-o","--os",dest="os",default="windows",required=True)
     xlsx_source_parser.add_argument("-v","--version",dest="version",default="v1",required=True)
 
-    
+    intune_source_parser = init_sources_parser.add_parser('intune')
+    intune_source_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
+    intune_source_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
+    intune_source_parser.add_argument("-o","--os",dest="os",default="windows",required=False)
+    intune_source_parser.add_argument("-v","--version",dest="version",default="v1",required=False)
+    intune_source_parser.add_argument("-p","--policies",dest="policies",default="",required=False,help="command separated list of policy names to export")
+    intune_source_auth_type_choice_group = intune_source_parser.add_mutually_exclusive_group(required=True)
+    intune_source_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    intune_source_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+   
+
+
     
     update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
     
