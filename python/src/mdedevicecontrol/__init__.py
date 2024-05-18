@@ -2499,7 +2499,7 @@ class api:
                 WindowsEntryType.DiskWriteMask: True,
                 WindowsEntryType.FileWriteMask: True
             },
-            "Options": 2
+            "notifications": Notifications(2,Format.OMA_URI)
         },
         "Allow read access":
         {
@@ -2508,7 +2508,7 @@ class api:
                 WindowsEntryType.DiskReadMask: True,
                 WindowsEntryType.FileReadMask: True
             },
-            "Options":0
+            "notifications":Notifications(0,Format.OMA_URI)
         },
         "Deny write and execute access":{
             "enforcement":Enforcement.Deny,
@@ -2518,7 +2518,7 @@ class api:
                 WindowsEntryType.FileReadMask: True,
                 WindowsEntryType.FileWriteMask: True,
             },
-            "Options":3
+            "notifications":Notifications(3,Format.OMA_URI)
         }
     }
 
