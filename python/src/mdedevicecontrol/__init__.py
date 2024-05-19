@@ -3038,6 +3038,8 @@ class CommandLine:
                 result = await CommandLine.apply(args,config)
             case "update":
                 result = CommandLine.update(args,config)
+            case "delete":
+                result = await CommandLine.delete(args,config)
                     
 
         pass
@@ -3306,6 +3308,44 @@ class CommandLine:
 
         pass
 
+    async def delete(args,config):
+
+        from mdedevicecontrol.dcintune import Package
+
+        package_name = pathlib.Path(os.getcwd()).name
+        package_root = str(pathlib.Path(os.getcwd()).parent)
+        package = Package.load(package_root,package_name,CommandLine.templateEnv,CommandLine.api)
+
+        intuneIds = package.getIntuneObjectIds()
+
+        for context in intuneIds:
+            logger.info(intuneIds[context]["label"]+": "+str(len(intuneIds[context]["ids"])))
+
+
+        authentication_type = "user"
+        if args.application_authentication:
+            authentication_type = "application"
+
+        
+        scopes=config["graph"]["scopes"]
+        graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
+        
+        confirm_delete = None
+        if not args.silent_delete:
+            while confirm_delete is None:
+                user_input = input("Enter Y to confirm delete: ")
+                if user_input == "Y" or user_input == "y":
+                    confirm_delete = True
+                else:
+                    confirm_delete = False    
+        else:
+            confirm_delete = True
+
+        if confirm_delete:
+            logger.info("Deleting")
+        else:
+            logger.info("Aborting")
+
 def main():
     
    
@@ -3337,7 +3377,11 @@ def main():
     intune_source_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
    
 
-
+    delete_arg_parser = subparsers.add_parser('delete',help="Delete the package from Intune")
+    delete_auth_type_choice_group = delete_arg_parser.add_mutually_exclusive_group(required=True)
+    delete_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    delete_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+    delete_arg_parser.add_argument("-s","--silent",dest="silent_delete",action="store_true",help="don't prompt the user to confirm delete",default=False)
     
     update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
     

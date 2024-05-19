@@ -1963,7 +1963,55 @@ class Package:
 
         self.save_metadata()
 
-        
+    def getIntuneObjectIds(self):
+
+        ids = {
+            "https://graph.microsoft.com/beta/$metadata#deviceManagement/deviceConfigurations/$entity":{
+                "ids":[],
+                "label":"v1 policies"
+            },
+            "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity":{
+                "ids":[],
+                "label":"v2 policies"
+            },
+            "https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity":{
+                "ids":[],
+                "label":"reusable settings"
+            }
+
+        }
+
+        for policy in self.policies:
+            policy_metadata = self.metadata.getMetadataForPolicy(policy)
+
+            odata_context = policy_metadata["@odata.context"]
+            ids_for_odata_context = ids[odata_context]["ids"]
+
+            if not "id" in policy_metadata:
+                logger.error(policy.name+" has no id in metadata.")
+                continue
+
+            ids_for_odata_context.append(policy_metadata["id"])
+
+            for group_name in policy_metadata["groups"]:
+
+                group_metadata = policy_metadata["groups"][group_name]
+                if "@odata.context" in group_metadata:
+                    group_odata_context = group_metadata["@odata.context"]
+                    ids_for_group_odata_context = ids[group_odata_context]["ids"]
+                    ids_for_group_odata_context.append(group_metadata["id"])
+
+            
+
+        return ids 
+
+
+
+
+
+
+
+    
     async def deploy(self,graph):
         logger.info("Deploying package "+self.name+" to tenantId"+graph.tenant_id)
 
@@ -2501,6 +2549,13 @@ async def export(graph: Graph, destination,name,
     package.save(destination,rule_template,readme_template,description_template)
 
 
+    package.metadata.metadata["source"] = {
+        "intune":{
+            "policies": policy_filter.included_policies
+        }
+    }
+
+    package.save_metadata()
 
 if __name__ == '__main__':
     # Run main
