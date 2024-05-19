@@ -793,7 +793,7 @@ class DeviceControlPolicyTemplate:
         self.graph = graph
 
 
-    async def getPolicies(self):
+    async def getPolicies(self,policyFilter):
 
         policies = []
 
@@ -804,6 +804,13 @@ class DeviceControlPolicyTemplate:
 
             id = dc_policy.id
             name = dc_policy.name
+
+            if policyFilter.included_policies is not None:
+                if name not in policyFilter.included_policies:
+                    logger.debug("Not including policy name="+name)
+                    continue
+
+
             description = dc_policy.description
 
             settings = await self.graph.get_device_control_policy_settings(id)
@@ -2262,7 +2269,12 @@ class Package:
         return group_path
 
 
-        
+class PolicyFilter:
+
+    def __init__(self, included_policies = None, versions = None, os=None):
+        self.included_policies = included_policies
+        self.os = os
+        self.versions = versions      
 
 def client_id_type(value):
     return value
@@ -2381,16 +2393,18 @@ async def export(graph: Graph, destination,name,
                  templateEnv, 
                  rule_template="dcutil.j2",
                  readme_template="readme.j2",
-                 description_template="description.j2"):
+                 description_template="description.j2",
+                 policy_filter = None):
 
     package = Package(name,templateEnv)
 
     dc_policy_template = await DeviceControlPolicyTemplate.getTemplate(graph)
-    dc_policies = await dc_policy_template.getPolicies()
+    dc_policies = await dc_policy_template.getPolicies(policy_filter)
     for dc_policy in dc_policies:
         package.addPolicy(dc_policy)
     
-    configs = await graph.export_device_configurations()
+    configs = await graph.export_device_configurations(policy_filter)
+
     logger.info("v1 policies retrieved="+str(len(configs.value))+" policies.")
        
     for device_config in configs.value:

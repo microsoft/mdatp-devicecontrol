@@ -38,6 +38,8 @@ from msgraph_beta.generated.models.device_management_reusable_policy_setting imp
 from msgraph_beta.generated.models.device_management_configuration_group_setting_collection_instance import DeviceManagementConfigurationGroupSettingCollectionInstance
 from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
 from msgraph_beta.generated.models.device_management_configuration_setting_instance_template_reference import DeviceManagementConfigurationSettingInstanceTemplateReference
+from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
+
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
 '''
@@ -168,9 +170,29 @@ class Graph:
         user = await self.graph_client.me().get(request_configuration=request_config)
         return user
 
-    async def export_device_configurations(self):
+    async def export_device_configurations(self,policyFilter):
         
-        configs = await self.graph_client.device_management.device_configurations.get()
+        filter_str = ""
+        if policyFilter.included_policies is None:
+            filter_str = 'displayName ne null'
+        else:
+            for policy_name in policyFilter.included_policies:
+                filter_str += "or displayName eq '"+policy_name+"'"
+
+            filter_str = filter_str[3:]
+
+        logger.debug("filter_str="+filter_str)
+
+        query_params = ConfigurationPoliciesRequestBuilder.ConfigurationPoliciesRequestBuilderGetQueryParameters(
+		    filter = filter_str,
+        )
+
+        request_configuration = ConfigurationPoliciesRequestBuilder.ConfigurationPoliciesRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+
+        configs = await self.graph_client.device_management.device_configurations.get(request_configuration=request_configuration)
         return configs
     
 

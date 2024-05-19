@@ -3259,16 +3259,24 @@ class CommandLine:
         authentication_type = "user"
         if args.application_authentication:
             authentication_type = "application"
-
         
         scopes=config["graph"]["scopes"]
         graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
+
+        included_policies = None
+
+        if args.policies is not None:
+            included_policies = str(args.policies).split(",")
+
+
+        policy_filter = intune.PolicyFilter(included_policies=included_policies)
 
         result = await intune.export(graph,package_root,package_name,
                          CommandLine.templateEnv,
                          config["templates"]["rule"],
                          config["templates"]["readme"],
-                         config["templates"]["description"])
+                         config["templates"]["description"],
+                         policy_filter)
 
 
     async def apply(args,config):
