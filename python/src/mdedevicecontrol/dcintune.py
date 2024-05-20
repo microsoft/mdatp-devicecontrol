@@ -1963,7 +1963,33 @@ class Package:
 
         self.save_metadata()
 
-    def getIntuneObjectIds(self):
+    async def delete(self,graph):
+
+        intune_metadata = self.getIntuneObjectMetadata()
+
+        logger.debug("intune_metadata="+str(intune_metadata))
+
+        all_v1_policy_metadata = intune_metadata["https://graph.microsoft.com/beta/$metadata#deviceManagement/deviceConfigurations/$entity"]
+
+        for v1_policy_metadata in all_v1_policy_metadata["ids"]:
+            logger.debug("Setting id="+v1_policy_metadata["id"]+" to None")
+            v1_policy_metadata["id"] = None
+
+        all_v2_policy_metadata = intune_metadata["https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity"]
+        
+        for v2_policy_metadata in all_v2_policy_metadata["ids"]:
+            logger.debug("Setting id="+v2_policy_metadata["id"]+" to None")            
+            v2_policy_metadata["id"] = None
+
+        
+        all_reusable_settings_metadata = intune_metadata["https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"]
+        for reusable_setting_metadata in all_reusable_settings_metadata["ids"]:
+            logger.debug("Setting id="+reusable_setting_metadata["id"]+" to None")
+            reusable_setting_metadata["id"] = None
+
+        self.save_metadata()
+
+    def getIntuneObjectMetadata(self):
 
         ids = {
             "https://graph.microsoft.com/beta/$metadata#deviceManagement/deviceConfigurations/$entity":{
@@ -1991,7 +2017,7 @@ class Package:
                 logger.error(policy.name+" has no id in metadata.")
                 continue
 
-            ids_for_odata_context.append(policy_metadata["id"])
+            ids_for_odata_context.append(policy_metadata)
 
             for group_name in policy_metadata["groups"]:
 
@@ -1999,7 +2025,7 @@ class Package:
                 if "@odata.context" in group_metadata:
                     group_odata_context = group_metadata["@odata.context"]
                     ids_for_group_odata_context = ids[group_odata_context]["ids"]
-                    ids_for_group_odata_context.append(group_metadata["id"])
+                    ids_for_group_odata_context.append(group_metadata)
 
             
 

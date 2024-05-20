@@ -3316,7 +3316,7 @@ class CommandLine:
         package_root = str(pathlib.Path(os.getcwd()).parent)
         package = Package.load(package_root,package_name,CommandLine.templateEnv,CommandLine.api)
 
-        intuneIds = package.getIntuneObjectIds()
+        intuneIds = package.getIntuneObjectMetadata()
 
         for context in intuneIds:
             logger.info(intuneIds[context]["label"]+": "+str(len(intuneIds[context]["ids"])))
@@ -3343,8 +3343,14 @@ class CommandLine:
 
         if confirm_delete:
             logger.info("Deleting")
+            result = await package.delete(graph)
         else:
             logger.info("Aborting")
+            return
+
+
+
+        
 
 def main():
     
