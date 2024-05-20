@@ -3132,6 +3132,7 @@ class CommandLine:
             permissions[WindowsEntryType.FileReadMask] = (row["File Read"] == "X")
             permissions[WindowsEntryType.FileWriteMask] = (row["File Write"] == "X")
             permissions[WindowsEntryType.FileExecuteMask] = (row["File Execute"] == "X")
+            permissions[WindowsEntryType.PrintMask] = (row["Print"] == "X")
 
             enforcement = None
 

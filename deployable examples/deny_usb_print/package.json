@@ -1,0 +1,29 @@
+{
+     "policies": {
+          "Deny USB Printers Examples": {
+               "os": "windows",
+               "version": "v1",
+               "description": "A policy",
+               "assignments": [],
+               "groups": {
+                    "USB Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/USB Printers.xml",
+                              "sha256": "ed3039aecb28ed16503dc22a82387ab32df2ad92799389f3821ff35673141625"
+                         }
+                    }
+               },
+               "rules": {
+                    "Deny USB Printing": {
+                         "description": "Deny printing for USB printers",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Deny USB Printing.xml",
+                              "sha256": "beb6717758278d1c8e99491e9cf8bf5c0bd7769ea60e84c48c8339334b3e7116"
+                         }
+                    }
+               },
+               "settings": {}
+          }
+     }
+}
