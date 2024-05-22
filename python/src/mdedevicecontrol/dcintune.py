@@ -1092,10 +1092,17 @@ class Package:
                 self.id = id
                 pass
 
-        class NoChangesNeeded():
+        class NoChangesNeeded:
             def __init__(self,id):
                 self.id = id
                 pass
+
+        class ObjectDeleted:
+
+            def __init__(self,id):
+                logger.debug("id="+id)
+                self.id = id
+
 
         def was_successful_result(result):
             
@@ -1123,7 +1130,12 @@ class Package:
             self.results["policy"] = result
 
         def addResultForGroup(self,result,group):
-            self.results["groups"][group.name] =result
+            if isinstance(group,str):
+                self.results["groups"][group] =result
+            elif hasattr(group,"name"):
+                self.results["groups"][group.name] =result
+            else:
+                raise Exception("Unsupported object "+str(group)+" passed to addResultToGroup")
 
         def getResultForGroup(self,group):
             logger.debug("group_name=("+group.name+")")
@@ -1378,8 +1390,8 @@ class Package:
             policies = self.metadata["policies"]
             
             if policy_name in policies:
-                logger.debug("metadata contains "+policy_name)
                 policy_meta_data = policies[policy_name]
+                logger.debug("policy_name="+policy_name+" metadata="+str(policy_meta_data))
                 return policy_meta_data
             else:
                 logger.debug("metadata does not contain "+policy_name)
@@ -1965,31 +1977,36 @@ class Package:
 
     async def delete(self,graph):
 
-        intune_metadata = self.getIntuneObjectMetadata()
+        results = {}
+        for policy in self.policies:
 
-        logger.debug("intune_metadata="+str(intune_metadata))
+            
+            metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
+            
+            result = Package.IntuneResults("delete",meta_data_for_policy=metadata_for_policy)
+            
+            logger.debug("policy @odata.context="+metadata_for_policy["@odata.context"])
 
-        all_v1_policy_metadata = intune_metadata["https://graph.microsoft.com/beta/$metadata#deviceManagement/deviceConfigurations/$entity"]
+            
+            result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
 
-        for v1_policy_metadata in all_v1_policy_metadata["ids"]:
-            logger.debug("Setting id="+v1_policy_metadata["id"]+" to None")
-            v1_policy_metadata["id"] = None
 
-        all_v2_policy_metadata = intune_metadata["https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity"]
-        
-        for v2_policy_metadata in all_v2_policy_metadata["ids"]:
-            logger.debug("Setting id="+v2_policy_metadata["id"]+" to None")            
-            v2_policy_metadata["id"] = None
+            for group_name in metadata_for_policy["groups"]:
+                group = metadata_for_policy["groups"][group_name]
+                if "id" in group:
+                    logger.debug("group @odata.context="+group["@odata.context"])
+                    result.addResultForGroup(Package.IntuneResults.ObjectDeleted(group["id"]),group_name)
+                else:
+                    logger.debug("No id in group "+group_name)
+            
+            results[policy.name] = result
+            
+        self.process_results(results)
 
-        
-        all_reusable_settings_metadata = intune_metadata["https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"]
-        for reusable_setting_metadata in all_reusable_settings_metadata["ids"]:
-            logger.debug("Setting id="+reusable_setting_metadata["id"]+" to None")
-            reusable_setting_metadata["id"] = None
+    def getIntuneObjectMetadata(self, policy_param = None):
 
-        self.save_metadata()
-
-    def getIntuneObjectMetadata(self):
+        if policy_param is not None:
+            logger.debug("policy_param="+policy_param)
 
         ids = {
             "https://graph.microsoft.com/beta/$metadata#deviceManagement/deviceConfigurations/$entity":{
@@ -2008,6 +2025,10 @@ class Package:
         }
 
         for policy in self.policies:
+
+            if policy_param is not None and policy != policy_param:
+                continue
+
             policy_metadata = self.metadata.getMetadataForPolicy(policy)
 
             odata_context = policy_metadata["@odata.context"]
@@ -2105,7 +2126,7 @@ class Package:
 
     
     def process_results(self,results):
-        logger.debug(str(results))
+        logger.debug("results="+str(results))
 
         i = 0
         
@@ -2118,6 +2139,7 @@ class Package:
                 logger.debug("policy_id is None")
             else:
                 logger.debug("policy_id="+policy.id)
+
             graph_result = results[policy_name]
 
             if graph_result.was_successful():
