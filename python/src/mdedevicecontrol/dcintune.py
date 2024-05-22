@@ -1100,7 +1100,10 @@ class Package:
         class ObjectDeleted:
 
             def __init__(self,id):
-                logger.debug("id="+id)
+                if id is not None:
+                    logger.debug("id="+id)
+                else:
+                    logger.debug("id=None")
                 self.id = id
 
 
@@ -2147,6 +2150,10 @@ class Package:
 
                 if isinstance(policy_result,Package.IntuneResults.NoChangesNeeded):
                     logger.info("No changes to apply for "+policy.name)
+                elif isinstance(policy_result,Package.IntuneResults.ObjectDeleted):
+                    logger.info(policy.name+" deleted.")
+                    policy.id = None
+                    save_metadata = True
                 else:
                     logger.debug("policy_result_keys="+str(policy_result.__dict__.keys()))
                     save_metadata = True
@@ -2158,6 +2165,12 @@ class Package:
 
                     if isinstance(group_result,Package.IntuneResults.NoChangesNeeded):
                         logger.info("No changes to apply for "+group.name)
+                    elif isinstance(group_result,Package.IntuneResults.ObjectDeleted):
+                        now = str(datetime.now())
+                        logger.info(group.name+" deleted.")
+                        group.__dict__["last_update"] = now
+                        group.__dict__["metadata_id"] = None
+                        save_metadata = True
                     elif isinstance(group_result,Package.IntuneResults.UpdateApplied):
                         now = str(datetime.now())
                         logger.info("Updating last_update time for "+group.name+" to "+now)
@@ -2166,16 +2179,16 @@ class Package:
                     else:
                         save_metadata = True
 
-                    if hasattr(group_result,"id"):
+                    if hasattr(group_result,"id") and not isinstance(group_result,Package.IntuneResults.ObjectDeleted):
                         logger.debug("Setting metadata_id to "+str(group_result.id))
                         group.__dict__["metadata_id"] = group_result.id
 
 
 
-                if "id" in policy_result.__dict__.keys() and policy_result.id is not None:
+                if "id" in policy_result.__dict__.keys() and policy_result.id is not None and not isinstance(policy_result,Package.IntuneResults.ObjectDeleted):
                     if policy.id != policy_result.id:
                         policy.id = policy_result.id
-                        logger.debug("Updating metadata to id="+policy.id)
+                        logger.debug("Updating policy metadata to id="+policy.id)
                         save_metadata = True
 
            
