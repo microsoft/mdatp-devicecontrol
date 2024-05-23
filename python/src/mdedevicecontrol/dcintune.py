@@ -2004,18 +2004,19 @@ class Package:
             else:
                 result.setResultForPolicy(graph_result)
 
-            for group_name in metadata_for_policy["groups"]:
-                group = metadata_for_policy["groups"][group_name]
-                if "id" in group and "@odata.context" in group:
-                    logger.debug("group @odata.context="+group["@odata.context"])
-                    group_result = await graph.delete_group_v2(group["id"])
-                    if isinstance(group_result,ODataError):
-                        result.addResultForGroup(group_result,group_name)
+            if "groups" in metadata_for_policy:
+                for group_name in metadata_for_policy["groups"]:
+                    group = metadata_for_policy["groups"][group_name]
+                    if "id" in group and "@odata.context" in group:
+                        logger.debug("group @odata.context="+group["@odata.context"])
+                        group_result = await graph.delete_group_v2(group["id"])
+                        if isinstance(group_result,ODataError):
+                            result.addResultForGroup(group_result,group_name)
+                        else:
+                            result.addResultForGroup(Package.IntuneResults.ObjectDeleted(group["id"]),group_name)
                     else:
-                        result.addResultForGroup(Package.IntuneResults.ObjectDeleted(group["id"]),group_name)
-                else:
-                    logger.debug("No id in group "+group_name)
-            
+                        logger.debug("No id in group "+group_name)
+                
             results[policy.name] = result
             
         self.process_results(results)
@@ -2056,6 +2057,9 @@ class Package:
                 continue
 
             ids_for_odata_context.append(policy_metadata)
+
+            if "groups" not in policy_metadata:
+                continue
 
             for group_name in policy_metadata["groups"]:
 
