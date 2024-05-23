@@ -3358,8 +3358,8 @@ def main():
    
     arg_parser = argparse.ArgumentParser(
     description='Utility for device control')
-    subparsers = arg_parser.add_subparsers(help='The operation',dest="operation")
-    init_arg_parser = subparsers.add_parser('init',help="Initialize the directory")
+    subparsers = arg_parser.add_subparsers(help='The operation to perform on the package',dest="operation")
+    init_arg_parser = subparsers.add_parser('init',help="Initialize the package")
     init_arg_parser.add_argument("-n","--name",dest="name",help="The name of the package")
     
     init_sources_parser = init_arg_parser.add_subparsers(help='source',required=False, dest="init_source")
@@ -3384,20 +3384,6 @@ def main():
     intune_source_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
    
 
-    delete_arg_parser = subparsers.add_parser('delete',help="Delete the package from Intune")
-    delete_auth_type_choice_group = delete_arg_parser.add_mutually_exclusive_group(required=True)
-    delete_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
-    delete_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
-    delete_arg_parser.add_argument("-s","--silent",dest="silent_delete",action="store_true",help="don't prompt the user to confirm delete",default=False)
-    
-    update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
-    
-    deploy_arg_parser = subparsers.add_parser('apply', help='Apply the configuraion to Intune')
-    apply_auth_type_choice_group = deploy_arg_parser.add_mutually_exclusive_group(required=True)
-    apply_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
-    apply_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
-   
-    
     validate_arg_parser = subparsers.add_parser('validate', help='Validate the configuration')
     validate_options_sub_parser = validate_arg_parser.add_subparsers(help='options',dest="validate_options")
     validate_graph_options = validate_options_sub_parser.add_parser('graph')
@@ -3412,6 +3398,23 @@ def main():
     validate_graph_options_auth_type = validate_graph_options.add_subparsers(help="The type of authentication to the graph",dest="authentication_type")
     validate_graph_options_auth_type.add_parser("user")
     validate_graph_options_auth_type.add_parser("application")
+
+    deploy_arg_parser = subparsers.add_parser('apply', help='Apply the package to Intune')
+    apply_auth_type_choice_group = deploy_arg_parser.add_mutually_exclusive_group(required=True)
+    apply_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    apply_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+   
+
+    delete_arg_parser = subparsers.add_parser('delete',help="Delete the package from Intune")
+    delete_auth_type_choice_group = delete_arg_parser.add_mutually_exclusive_group(required=True)
+    delete_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    delete_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+    delete_arg_parser.add_argument("-s","--silent",dest="silent_delete",action="store_true",help="don't prompt the user to confirm delete",default=False)
+    
+    #update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
+    
+   
+    
     
 
 

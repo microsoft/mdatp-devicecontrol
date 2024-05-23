@@ -44,19 +44,17 @@ Note:
 
 ## dc
 ```
-usage: dc [-h] {init,update,apply,validate} ...
+usage: dc [-h] {init,validate,apply,delete} ...
 
 Utility for device control
 
 positional arguments:
-  {init,update,apply,validate}
-                        The operation
-    init                Initialize the directory
-    update              Update the configuration from
-                        the source
-    apply               Apply the configuraion to
-                        Intune
+  {init,validate,apply,delete}
+                        The operation to perform on the package
+    init                Initialize the package
     validate            Validate the configuration
+    apply               Apply the package to Intune
+    delete              Delete the package from Intune
 
 options:
   -h, --help            show this help message and exit
