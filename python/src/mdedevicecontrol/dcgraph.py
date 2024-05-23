@@ -221,7 +221,17 @@ class Graph:
             logger.error(str(e))   
             return e 
 
-    async def delete_device_configuration(self,)
+    async def delete_device_configuration(self,policy_id):
+        
+        logger.debug("policy id="+policy_id)
+        try:
+            result = await self.graph_client.device_management.device_configurations.by_device_configuration_id(policy_id).delete()
+            logger.debug("result="+str(result))
+            return result
+        except RuntimeError as e:
+            logger.error(str(e))   
+            return e 
+
 
     
 
@@ -264,6 +274,16 @@ class Graph:
         result = await self.graph_client.device_management.configuration_policy_templates.get(request_configuration = request_configuration)
         return result
     
+
+    async def delete_device_control_policy(self,policy_id):
+
+        try:
+            result = await self.graph_client.device_management.configuration_policies.by_device_management_configuration_policy_id(policy_id).delete()
+            return result
+        except RuntimeError as e:
+            logger.error(str(e))   
+            return e 
+
 
     async def get_device_control_policies(self):
 
@@ -354,10 +374,13 @@ class Graph:
 
     async def delete_group_v2(self,group_id):
 
-        logger.debug("Deleteing Group v2 "+str(group_id))
-        result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).delete()
-        return result
-
+        try:
+            logger.debug("Deleteing Group v2 "+str(group_id))
+            result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).delete()
+            return result
+        except RuntimeError as e:
+            logger.error(str(e))   
+            return e 
 
     async def create_group_v2(self,group,name):
 
