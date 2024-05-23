@@ -26,6 +26,14 @@ stages:
           pip3 install pytest pytest-azurepipelines pytest-asyncio  
           pip3 install -e .
         displayName: 'Build mdedevicecontrol'
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(System.DefaultWorkingDirectory)/python/dist'
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: mdedevicecontrol-0.0.1
 
 - stage: test
   jobs:
