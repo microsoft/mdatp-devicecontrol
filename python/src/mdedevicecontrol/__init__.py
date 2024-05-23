@@ -3383,6 +3383,18 @@ def main():
     intune_source_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
     intune_source_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
    
+    file_source_parser = init_sources_parser.add_parser('file')
+    
+
+    file_os_parser = file_source_parser.add_subparsers(dest="file_input_os",required=True,description="The operating system of device control")
+    windows_arg_group = file_os_parser.add_parser("windows")
+    windows_arg_group.add_argument("-g","--groups",dest="group_file",required=True)
+    windows_arg_group.add_argument("-r","--rules",dest="rules_file",required=True)
+    mac_arg_group = file_os_parser.add_parser("mac")
+    mac_arg_group.add_argument("-p","--policy",dest="policy_file",required=True)
+
+    
+   
 
     validate_arg_parser = subparsers.add_parser('validate', help='Validate the configuration')
     validate_options_sub_parser = validate_arg_parser.add_subparsers(help='options',dest="validate_options")
