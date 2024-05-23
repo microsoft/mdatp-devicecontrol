@@ -1985,20 +1985,32 @@ class Package:
 
             
             metadata_for_policy = self.metadata.getMetadataForPolicy(policy)
-            
             result = Package.IntuneResults("delete",meta_data_for_policy=metadata_for_policy)
+
             
             logger.debug("policy @odata.context="+metadata_for_policy["@odata.context"])
 
-            
-            result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
+            if metadata_for_policy["@odata.context"] == "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity":
+                graph_result = await graph.delete_device_control_policy(metadata_for_policy["id"])
+            else:
+                graph_result = await graph.delete_device_configuration(metadata_for_policy["id"])
+                
 
+
+            if not isinstance(graph_result,RuntimeError):
+                result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
+            else:
+                result.setResultForPolicy(graph_result)
 
             for group_name in metadata_for_policy["groups"]:
                 group = metadata_for_policy["groups"][group_name]
                 if "id" in group:
                     logger.debug("group @odata.context="+group["@odata.context"])
-                    result.addResultForGroup(Package.IntuneResults.ObjectDeleted(group["id"]),group_name)
+                    group_result = await graph.delete_v2_group(group["id"])
+                    if isinstance(group_result,RuntimeError):
+                        result.addResultForGroup(group_result,group_name)
+                    else:
+                        result.addResultForGroup(Package.IntuneResults.ObjectDeleted(group["id"]),group_name)
                 else:
                     logger.debug("No id in group "+group_name)
             

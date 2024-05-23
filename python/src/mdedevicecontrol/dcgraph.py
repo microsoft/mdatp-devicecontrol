@@ -221,6 +221,7 @@ class Graph:
             logger.error(str(e))   
             return e 
 
+    async def delete_device_configuration(self,)
 
     
 
@@ -349,6 +350,12 @@ class Graph:
         logger.debug("Update Group v2 "+str(group))
         result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).put(setting)
         logger.debug(str(result))
+        return result
+
+    async def delete_group_v2(self,group_id):
+
+        logger.debug("Deleteing Group v2 "+str(group_id))
+        result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).delete()
         return result
 
 
