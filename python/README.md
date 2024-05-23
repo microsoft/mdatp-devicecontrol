@@ -177,6 +177,26 @@ Audit write access| AuditAllowed| | X| | | | |2|
 
 A example spreadsheet is [here](../examples/bitlocker/src/bitllocker_dc_example.xlsx/)
 
+### dc init intune
+
+Initializes a directory from Intune
+
+```
+usage: dc init intune [-h] -n NAME [-d DESCRIPTION] [-o OS] [-v VERSION] [-p POLICIES]
+                      (-u | -a)
+
+options:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  name of the package
+  -d DESCRIPTION, --description DESCRIPTION
+                        description of the package
+  -o OS, --os OS
+  -v VERSION, --version VERSION
+  -p POLICIES, --policies POLICIES
+                        command separated list of policy names to export
+  -u, --user            authenticate as the logged in user to the graph API
+  -a, --application     authenticate as the application to the graph API
+```
 
 ### dc validate graph
 
@@ -211,6 +231,19 @@ options:
   -a, --application  authenticate as the application to the graph API
 ```
 
+## dc delete
+
+Deletes the objects from Intune
+
+```
+usage: dc delete [-h] (-u | -a) [-s]
+
+options:
+  -h, --help         show this help message and exit
+  -u, --user         authenticate as the logged in user to the graph API
+  -a, --application  authenticate as the application to the graph API
+  -s, --silent       don't prompt the user to confirm delete
+```
 
 ## dcconvert
 
