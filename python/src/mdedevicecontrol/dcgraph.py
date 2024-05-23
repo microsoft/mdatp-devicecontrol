@@ -39,6 +39,7 @@ from msgraph_beta.generated.models.device_management_configuration_group_setting
 from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
 from msgraph_beta.generated.models.device_management_configuration_setting_instance_template_reference import DeviceManagementConfigurationSettingInstanceTemplateReference
 from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
+from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
@@ -207,6 +208,8 @@ class Graph:
             return result
         except RuntimeError as e:
             logger.error(str(e))   
+        except ODataError as e:
+            logger.error(str(e))
              
 
     async def update_device_configuration(self,device_configuration,id):
@@ -220,9 +223,12 @@ class Graph:
         except RuntimeError as e:
             logger.error(str(e))   
             return e 
+        except ODataError as e:
+            logger.error(str(e))   
+            return e 
 
     async def delete_device_configuration(self,policy_id):
-        
+
         logger.debug("policy id="+policy_id)
         try:
             result = await self.graph_client.device_management.device_configurations.by_device_configuration_id(policy_id).delete()
@@ -231,6 +237,9 @@ class Graph:
         except RuntimeError as e:
             logger.error(str(e))   
             return e 
+        except ODataError as e:
+            logger.error(str(e))   
+            return e
 
 
     
@@ -283,6 +292,9 @@ class Graph:
         except RuntimeError as e:
             logger.error(str(e))   
             return e 
+        except ODataError as e:
+            logger.error(str(e))   
+            return e
 
 
     async def get_device_control_policies(self):
@@ -381,6 +393,9 @@ class Graph:
         except RuntimeError as e:
             logger.error(str(e))   
             return e 
+        except ODataError as e:
+            logger.error(str(e))   
+            return e
 
     async def create_group_v2(self,group,name):
 

@@ -1113,6 +1113,8 @@ class Package:
                 return False
             elif isinstance(result,RuntimeError):
                 return False
+            elif isinstance(result,ODataError):
+                return False
             else:
                 logger.debug("result="+str(result))
                 return True
@@ -1997,17 +1999,17 @@ class Package:
                 
 
 
-            if not isinstance(graph_result,RuntimeError):
+            if not isinstance(graph_result,RuntimeError) and not isinstance(graph_result,ODataError):
                 result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
             else:
                 result.setResultForPolicy(graph_result)
 
             for group_name in metadata_for_policy["groups"]:
                 group = metadata_for_policy["groups"][group_name]
-                if "id" in group:
+                if "id" in group and "@odata.context" in group:
                     logger.debug("group @odata.context="+group["@odata.context"])
-                    group_result = await graph.delete_v2_group(group["id"])
-                    if isinstance(group_result,RuntimeError):
+                    group_result = await graph.delete_group_v2(group["id"])
+                    if isinstance(group_result,ODataError):
                         result.addResultForGroup(group_result,group_name)
                     else:
                         result.addResultForGroup(Package.IntuneResults.ObjectDeleted(group["id"]),group_name)
