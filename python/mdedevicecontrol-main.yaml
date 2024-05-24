@@ -45,6 +45,7 @@ stages:
     - script: |
         pwd
         cd python
+        pip3 install pytest pytest-azurepipelines pytest-asyncio  
         python -m pytest tests/ -W ignore::DeprecationWarning
       displayName: 'Run pytest'
       env:
