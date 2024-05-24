@@ -174,7 +174,7 @@ class Graph:
     async def export_device_configurations(self,policyFilter):
         
         filter_str = ""
-        if policyFilter.included_policies is None:
+        if policyFilter is None or policyFilter.included_policies is None:
             filter_str = 'displayName ne null'
         else:
             for policy_name in policyFilter.included_policies:
