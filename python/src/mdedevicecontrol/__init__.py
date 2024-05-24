@@ -3027,6 +3027,8 @@ class CommandLine:
             case "init":
                 if args.init_source is None:
                     CommandLine.init(args)
+                elif args.init_source == "file":
+                    CommandLine.init_from_file(args,config)
                 elif args.init_source == "xlsx":
                     CommandLine.init_with_xlsx(args,config)
                 elif args.init_source == "intune":
@@ -3062,6 +3064,55 @@ class CommandLine:
 
 
         pass
+
+    def init_from_file(args,config):
+        
+        
+        from mdedevicecontrol.dcintune import Package
+
+        cwd = pathlib.Path(os.getcwd())
+        
+        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+
+        if args.file_input_os == "windows":
+            
+            logger.debug("Loading from windows source")
+
+            from mdedevicecontrol.dcdoc import Inventory
+
+            if args.file_input_format == "oma-uri":
+
+                inventory = Inventory(args.source_dir)
+                
+                groups = []
+                rules = []
+
+               
+                for ind in inventory.groups.index:
+                    logger.debug("group="+str(inventory.groups["object"][ind]))
+                    groups.append(inventory.groups["object"][ind])
+                
+                for ind in inventory.policy_rules.index:
+                    logger.debug("rules="+str(inventory.policy_rules["object"][ind]))
+                    rules.append(inventory.policy_rules["object"][ind])
+                
+                logger.info("Found "+str(len(groups))+" groups.")
+                logger.info("Found "+str(len(rules))+" rules.")
+
+                policy = CommandLine.api.createPolicy(args.name,args.version,args.os,args.description,rules,groups)
+                p.addPolicy(policy)
+
+
+        else:
+            #this is mac
+            pass
+
+        p.save(str(cwd.parent),
+               CommandLine.rule_template_name,
+               CommandLine.readme_template_name,
+               CommandLine.description_template_name)
+
+
 
     async def validate_graph(args,config):
 
@@ -3360,36 +3411,40 @@ def main():
     description='Utility for device control')
     subparsers = arg_parser.add_subparsers(help='The operation to perform on the package',dest="operation")
     init_arg_parser = subparsers.add_parser('init',help="Initialize the package")
-    init_arg_parser.add_argument("-n","--name",dest="name",help="The name of the package")
-    
-    init_sources_parser = init_arg_parser.add_subparsers(help='source',required=False, dest="init_source")
+    init_arg_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
+    init_arg_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
+    init_arg_parser.add_argument("-o","--os",dest="os",default="windows")
+    init_arg_parser.add_argument("-v","--version",dest="version",default="v1")
+
+
+    init_sources_parser = init_arg_parser.add_subparsers(help='source',required=True, dest="init_source")
     intune_source_parser = init_sources_parser.add_parser('intune')
     intune_source_parser.add_argument("-p","--policies",dest="policies",help="comma separated list of policies")
 
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
     xlsx_source_parser.add_argument("-f","--file",dest="file",help="xlsx file to import",required=True)
-    xlsx_source_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
-    xlsx_source_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
-    xlsx_source_parser.add_argument("-o","--os",dest="os",default="windows",required=True)
-    xlsx_source_parser.add_argument("-v","--version",dest="version",default="v1",required=True)
-
+   
     intune_source_parser = init_sources_parser.add_parser('intune')
-    intune_source_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
-    intune_source_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
-    intune_source_parser.add_argument("-o","--os",dest="os",default="windows",required=False)
-    intune_source_parser.add_argument("-v","--version",dest="version",default="v1",required=False)
     intune_source_parser.add_argument("-p","--policies",dest="policies",default="",required=False,help="command separated list of policy names to export")
     intune_source_auth_type_choice_group = intune_source_parser.add_mutually_exclusive_group(required=True)
     intune_source_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
     intune_source_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
    
     file_source_parser = init_sources_parser.add_parser('file')
-    
+   
 
     file_os_parser = file_source_parser.add_subparsers(dest="file_input_os",required=True,description="The operating system of device control")
     windows_arg_group = file_os_parser.add_parser("windows")
-    windows_arg_group.add_argument("-g","--groups",dest="group_file",required=True)
-    windows_arg_group.add_argument("-r","--rules",dest="rules_file",required=True)
+    windows_format_arg_group = windows_arg_group.add_subparsers(dest="file_input_format",required=True,description="oma-uri or gpo format") 
+    gpo_format = windows_format_arg_group.add_parser("gpo")
+    gpo_format.add_argument("-g","--groups",dest="group_file",required=True)
+    gpo_format.add_argument("-r","--rules",dest="rules_file",required=True)
+
+    from mdedevicecontrol.dcdoc import dir_path
+
+    oma_uri_format = windows_format_arg_group.add_parser("oma-uri")
+    oma_uri_format.add_argument("-s","--source",type=dir_path,dest="source_dir",required=True,default="src")
+
     mac_arg_group = file_os_parser.add_parser("mac")
     mac_arg_group.add_argument("-p","--policy",dest="policy_file",required=True)
 

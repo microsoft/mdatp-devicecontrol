@@ -282,6 +282,7 @@ class Inventory:
 
     def load_inventory(self):
 
+        logger.debug("paths="+str(self.paths))
         for path in self.paths:
             logger.debug("path="+path)
             for dir in os.walk(top=path):
@@ -341,10 +342,12 @@ class Inventory:
                             self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyRule":
+                        logger.debug("Adding a PolicyRule - format OMA-URI")
                         self.addPolicyRule(PolicyRule(root,"oma-uri",xml_path))
                     case "PolicyRules":
                         rule_index = 1
                         for policyRule in root.findall(".//PolicyRule"):
+                            logger.debug("Adding a policy rule - format GPO")
                             self.addPolicyRule(PolicyRule(policyRule,"gpo",xml_path,rule_index))
                             rule_index= rule_index + 1
 
@@ -385,12 +388,18 @@ class Inventory:
 
     def addPolicyRule(self,rule):
 
+        if rule.id is None:
+            logger.debug("rule.id is None")
+            return
+        
+        logger.debug("path="+rule.path+" format="+rule.format+" index="+str(rule.rule_index)+" id="+rule.id)
+        
         path = rule.path
         format = rule.format
         rule_index = rule.rule_index
 
-        if rule.id is None:
-            return
+        
+
 
         new_row = pd.DataFrame([{
             "path":path,
