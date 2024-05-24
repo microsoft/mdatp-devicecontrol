@@ -2630,9 +2630,12 @@ async def export(graph: Graph, destination,name,
 
     package.metadata.metadata["source"] = {
         "intune":{
-            "policies": policy_filter.included_policies
+            
         }
     }
+
+    if policy_filter is not None and policy_filter.included_policies is not None:
+        package.metadata.metadata["source"]["intune"]["policies"] = policy_filter.included_policies
 
     package.save_metadata()
 
