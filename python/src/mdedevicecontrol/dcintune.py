@@ -1726,8 +1726,11 @@ class Package:
 
             source_path_in_package=os.path.join(path_map[Package.SOURCE_PATH],source_file_name)
 
-            shutil.copyfile(self.source_path,source_path_in_package)
-
+            try:
+                shutil.copyfile(self.source_path,source_path_in_package)
+            except shutil.SameFileError as e:
+                logger.debug("Same file")
+                
             sha256Hash = Package.getSHA256Hash(source_path_in_package,"rb")
 
             self.metadata.metadata["source"] = {
