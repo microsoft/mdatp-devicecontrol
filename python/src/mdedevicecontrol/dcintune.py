@@ -805,7 +805,7 @@ class DeviceControlPolicyTemplate:
             id = dc_policy.id
             name = dc_policy.name
 
-            if policyFilter.included_policies is not None:
+            if policyFilter is not None and policyFilter.included_policies is not None:
                 if name not in policyFilter.included_policies:
                     logger.debug("Not including policy name="+name)
                     continue
