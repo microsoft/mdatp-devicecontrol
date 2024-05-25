@@ -459,6 +459,6 @@ class Graph:
         body = RunHuntingQueryPostRequestBody()
         body.query = query
 
-        result = await self.graph_client.security.microsoft_graph_security_run_hunting_query.post(query)
+        result = await self.graph_client.security.microsoft_graph_security_run_hunting_query.post(body=body)
 
         return result
