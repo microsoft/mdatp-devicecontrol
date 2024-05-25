@@ -195,9 +195,26 @@ async def test_intune_oma():
     print("Result="+str(result))
     print("Result Class="+result.__class__.__name__)
 
-
 @pytest.mark.asyncio(scope="session")
 async def test_ah_1():
+
+       import logging.config
+       logging.config.fileConfig("logging.conf")
+
+       logger = logging.getLogger("mdedevicecontrol")
+
+       graph = get_graph()
+
+       query = '''
+DeviceRegistryEvents
+               '''
+              
+       
+       result = await graph.query_ah(query)
+       logger.debug("ah2 result=result")
+
+@pytest.mark.asyncio(scope="session")
+async def test_ah_2():
 
        import logging.config
        logging.config.fileConfig("logging.conf")
@@ -214,6 +231,6 @@ DeviceRegistryEvents
 | project ReportId, DeviceName ,RegistryValueData, Timestamp
                '''
               
-
+       
        result = await graph.query_ah(query)
-       logger.debug("ah1 result=result")
+       logger.debug("ah2 result=result")
