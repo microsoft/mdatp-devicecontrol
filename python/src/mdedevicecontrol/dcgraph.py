@@ -457,6 +457,7 @@ class Graph:
     async def query_ah(self,query):
 
         query = str(query).replace("\n","")
+        query = str(query).replace("\\","\\\\")
         logger.debug("query="+query)
         body = RunHuntingQueryPostRequestBody()
         body.query = query
