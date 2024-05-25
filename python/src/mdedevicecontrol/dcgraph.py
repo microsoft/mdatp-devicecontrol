@@ -41,6 +41,8 @@ from msgraph_beta.generated.models.device_management_configuration_setting_insta
 from msgraph_beta.generated.device_management.configuration_policies.configuration_policies_request_builder import ConfigurationPoliciesRequestBuilder
 from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 
+from msgraph_beta.generated.security.microsoft_graph_security_run_hunting_query.run_hunting_query_post_request_body import RunHuntingQueryPostRequestBody
+
 scopes = "DeviceManagementConfiguration.Read.All DeviceManagementConfiguration.ReadWrite.All Directory.Read.All"
 
 '''
@@ -449,4 +451,14 @@ class Graph:
         policy.settings = [setting]
         
         result = await self.graph_client.device_management.configuration_policies.post(policy)
+        return result
+
+
+    async def query_ah(self,query):
+
+        body = RunHuntingQueryPostRequestBody()
+        body.query = query
+
+        result = await self.graph_client.security.microsoft_graph_security_run_hunting_query.post(query)
+
         return result

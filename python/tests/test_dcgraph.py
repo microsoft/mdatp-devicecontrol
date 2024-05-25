@@ -194,3 +194,26 @@ async def test_intune_oma():
 
     print("Result="+str(result))
     print("Result Class="+result.__class__.__name__)
+
+
+@pytest.mark.asyncio(scope="session")
+async def test_ah_1():
+
+       import logging.config
+       logging.config.fileConfig("logging.conf")
+
+       logger = logging.getLogger("mdedevicecontrol")
+
+       graph = get_graph()
+
+       query = '''
+DeviceRegistryEvents
+| where RegistryKey == "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Policy Manager"
+| where RegistryValueName == "PolicyRules"
+| where RegistryValueData  !=  PreviousRegistryValueData
+| project ReportId, DeviceName ,RegistryValueData, Timestamp
+               '''
+              
+
+       result = await graph.query_ah(query)
+       logger.debug("ah1 result=result")
