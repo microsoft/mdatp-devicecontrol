@@ -1,0 +1,78 @@
+let connected_devices = materialize(DeviceEvents
+| extend parsed=parse_json(AdditionalFields)
+| extend MediaClass = tostring(parsed.ClassName)
+| extend MediaDeviceId = tostring(parsed.DeviceId)
+| extend MediaDescription = tostring(parsed.DeviceDescription)
+| extend MediaSerialNumber = tostring(parsed.SerialNumber)
+| where ActionType contains "PnPDeviceConnected"
+| project DeviceName, MediaDeviceId,Timestamp ,MediaClass,  MediaDescription, parsed, AdditionalFields, DeviceId, ReportId
+| summarize LastSeen=max(Timestamp),FirstSeen=min(Timestamp), ReportId=max(ReportId) by DeviceName, DeviceId, Timestamp, MediaDeviceId, MediaClass, MediaDescription, AdditionalFields
+| extend  SerialNumber = split(MediaDeviceId,"\\",2)[0]
+| sort by DeviceName, MediaClass, MediaDescription);
+let connected_devices_with_sn_parts = connected_devices |
+extend serial_number_parts = split(SerialNumber,"&") |
+mv-expand serial_number_parts  |
+extend serial_number_parts_2 = split(serial_number_parts,"#") |
+mv-expand serial_number_parts_2 |
+extend len_of_serial_number_parts_2 = strlen(serial_number_parts_2) |
+where SerialNumber == tostring(serial_number_parts_2) or len_of_serial_number_parts_2 < 20;
+let max_sn_lens=connected_devices_with_sn_parts
+| summarize max(len_of_serial_number_parts_2) by tostring(SerialNumber), DeviceName;
+let connected_devices_with_best_guess_sn = connected_devices_with_sn_parts
+| extend SerialNumber = tostring(SerialNumber)
+| join max_sn_lens on $left.len_of_serial_number_parts_2 == $right.max_len_of_serial_number_parts_2 and $left.DeviceName == $right.DeviceName and $left.SerialNumber == $right.SerialNumber
+| project DeviceName, DeviceId, ReportId, Timestamp, MediaDeviceId, MediaClass, MediaDescription, AdditionalFields, LastSeen, FirstSeen, SerialNumber=serial_number_parts_2;
+let mounted_usbs = DeviceEvents
+| where ActionType contains "UsbDriveMounted"
+| extend parsed=parse_json(AdditionalFields)
+| extend ProductName = tostring(parsed.ProductName)
+| extend SerialNumber = tostring(parsed.SerialNumber)
+| extend DriveLetter = tostring(parsed.DriveLetter)
+| extend Manufacturer = tostring(parsed.Manufacturer)
+| extend ProductRevision = tostring(parsed.ProductRevision)
+| project Timestamp,DeviceName, DeviceId, ReportId, DriveLetter,  Manufacturer, ProductName, ProductRevision, SerialNumber, MountedAdditionalFields = AdditionalFields 
+| summarize max(Timestamp),ReportId=max(ReportId) by DeviceName, DeviceId, DriveLetter,  Manufacturer, ProductName, ProductRevision, SerialNumber 
+| extend Timestamp=max_Timestamp;
+let unmounted_usbs = DeviceEvents
+| where ActionType contains "UsbDriveUnmounted"
+| extend parsed=parse_json(AdditionalFields)
+| extend ProductName = tostring(parsed.ProductName)
+| extend SerialNumber = tostring(parsed.SerialNumber)
+| extend DriveLetter = tostring(parsed.DriveLetter)
+| extend Manufacturer = tostring(parsed.Manufacturer)
+| extend ProductRevision = tostring(parsed.ProductRevision)
+| project Timestamp,DeviceName, DeviceId, ReportId, DriveLetter,  Manufacturer, ProductName, ProductRevision, SerialNumber,UnmountedAdditionalFields=AdditionalFields
+| summarize max(Timestamp),ReportId=max(ReportId) by DeviceName, DeviceId, DriveLetter,  Manufacturer, ProductName, ProductRevision, SerialNumber
+| extend Timestamp=max_Timestamp;
+let usb_drive_history = mounted_usbs
+| join kind=leftouter  unmounted_usbs on DeviceName, Manufacturer, ProductName, ProductRevision, SerialNumber
+| extend ReportId=iff(isempty(ReportId),ReportId1,ReportId)
+| extend Timestamp=iff(isempty(max_Timestamp),max_Timestamp1,max_Timestamp)
+| project  ReportId, Timestamp,  DeviceName,DeviceId, DriveLetter, Manufacturer, ProductName, ProductRevision, SerialNumber, MountTime=max_Timestamp, UnmountTime=max_Timestamp1;
+let device_control_denies = DeviceEvents |
+extend parsed=parse_json(AdditionalFields) |
+extend Verdict=tostring(parsed.RemovableStoragePolicyVerdict) |
+extend DeviceInstanceId=tostring(parsed.DeviceInstanceId) |
+extend SerialNumber=tostring(parsed.SerialNumber) |
+extend PolicyName = tostring(parsed.RemovableStoragePolicy) |
+extend Access = tostring(parsed.RemovableStorageAccess) |
+extend PID = tostring(parsed.ProductId) |
+extend VID = tostring(parsed.VendorId) |
+where ActionType contains "Trigg" |
+where Verdict == "Deny" and Access == "Read" |
+summarize LastBlock=max(Timestamp), ReportId=max(ReportId) by DeviceName, DeviceId, DeviceInstanceId, SerialNumber, VID, PID, PolicyName |
+extend Timestamp=LastBlock;
+let report =
+connected_devices_with_best_guess_sn |
+extend SerialNumber = tostring(SerialNumber) |
+join kind=fullouter  usb_drive_history on $left.SerialNumber == $right.SerialNumber, $left.DeviceName == $right.DeviceName |
+join kind=fullouter     device_control_denies on $left.SerialNumber == $right.SerialNumber, $left.DeviceName == $right.DeviceName |
+extend Connected = isnotempty(DeviceName) |
+extend Mounted = isnotempty(DeviceName1) | 
+extend Blocked = isnotempty(DeviceName2) |
+extend DeviceId = max_of(DeviceId,DeviceId1,DeviceId2) |
+extend Timestamp = max_of(Timestamp,Timestamp1,Timestamp2) |
+extend ReportId = max_of(ReportId,ReportId1,ReportId2) |
+extend MachineName = iff(Connected,DeviceName,iff(Mounted,DeviceName1,DeviceName2)) |
+extend DeviceSerialNumber = iff(isnotempty(SerialNumber),SerialNumber,iff(isnotempty(SerialNumber1),SerialNumber1,SerialNumber2)) |
+project Timestamp, MachineName, DeviceId, ReportId, DeviceSerialNumber, MediaDeviceId, MediaClass, MediaDescription, Manufacturer, ProductName, ProductRevision, DeviceInstanceId, VID, PID, Connected, FirstSeen, LastSeen, Mounted, DriveLetter ,MountTime, UnmountTime, Blocked, LastBlock, PolicyName, AdditionalFields ;
