@@ -285,15 +285,26 @@ class Inventory:
         logger.debug("paths="+str(self.paths))
         for path in self.paths:
             logger.debug("path="+path)
+            
+            if str(path).endswith(".xml"):
+                self.load_xml_file(path)
+            elif str(path).endswith(".json"):
+                self.load_json_file(path)
+
+
             for dir in os.walk(top=path):
+                logger.debug("dir="+str(dir))
                 files = dir[2]
                 for file in files:
+                    logger.debug("Attempting to load file "+str(file))
                     if str(file).endswith(".xml"):
                         xml_path = dir[0]+os.sep+file
                         self.load_xml_file(xml_path)
-                    if str(file).endswith(".json"):
+                    elif str(file).endswith(".json"):
                         json_path = dir[0]+os.sep+file
                         self.load_json_file(json_path)
+                    else:
+                        logger.warn("Unable to process file "+str(file))
 
     
     
@@ -579,7 +590,9 @@ class Inventory:
 
         query = str(query).encode('unicode-escape').decode()
 
-        
+        logger.debug("query="+str(query)+" class="+str(query.__class__))
+        logger.debug("policy_rules="+str(self.policy_rules))
+
         rule_frame = self.policy_rules.query(query, engine='python')
         rule_frame = rule_frame.sort_values("rule_index", ascending=True)
 
@@ -641,9 +654,11 @@ class Inventory:
     
     def process_query(self,query=None):
 
-        logger.debug("query="+query)
+        
         if query is None:
             query="path.str.contains('(.*)')"
+
+        logger.debug("query="+query)
 
         filtered_rules = self.query_policy_rules(query)
 
@@ -851,6 +866,7 @@ class Inventory:
                 mac_policy["settings"] = settings.get_mac_settings()
                 result["mac_policy"] = mac_policy
 
+
         
         if result["mac_policy"] is not None:
             result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
@@ -891,6 +907,7 @@ class Inventory:
         out = template.render(
             params)
         
+        logger.debug("out="+str(out))
         out_file_name = dest+os.sep+file
         with open(out_file_name,"w") as out_file:
             out_file.write(out)

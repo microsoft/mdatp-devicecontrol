@@ -3243,7 +3243,9 @@ class CommandLine:
             rule_description = row["Description"]
 
             included_group_names = str(row["Included Groups"]).split(",")
+            included_group_names = map(str.strip,included_group_names)
             excluded_group_names = str(row["Excluded Groups"]).split(",")
+            excluded_group_names = map(str.strip, excluded_group_names)
 
             entry_names = str(row["Entries"]).split(",")
 

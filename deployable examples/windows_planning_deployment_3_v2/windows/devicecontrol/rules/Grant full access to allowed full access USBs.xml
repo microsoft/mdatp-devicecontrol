@@ -1,0 +1,14 @@
+	<PolicyRule Id="{e66bf0e8-185e-4b6b-9606-8ced80673b6a}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be66bf0e8-185e-4b6b-9606-8ced80673b6a%7D/RuleData -->
+		<Name>Grant full access to allowed full access USBs</Name>
+		<IncludedIdList>
+			<GroupId>{185b629e-15c3-4346-943d-9f542606eac3}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{32a5de1d-0885-4772-8d89-30fb6a5cb6de}">
+			<Type>Allow</Type>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+		</Entry>
+	</PolicyRule>

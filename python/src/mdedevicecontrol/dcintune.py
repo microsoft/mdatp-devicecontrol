@@ -1715,9 +1715,10 @@ class Package:
 
         policy_data = {}
 
-        mac_policy_file_paths = []
-        windows_policy_file_paths = {}
-
+        #This is where the documentation gets generated
+        windows_dest_paths = str(path_map[Package.WINDOWS_DEVICE_CONTROL])
+       
+        
         if self.source_path is not None:
 
             import shutil
@@ -1742,6 +1743,12 @@ class Package:
 
         policies_by_name = {}
 
+        #load_templates
+        rule_template = self.templateEnv.get_template(rule_template_name)
+        readme_template = self.templateEnv.get_template(readme_template_name)
+        description_template = self.templateEnv.get_template(description_template_name)
+
+
         logger.info("Saving "+str(len(self.policies))+" policies.")
 
         for policy in self.policies:
@@ -1761,6 +1768,13 @@ class Package:
                 count = 0
                 policies_by_name[name] = count
 
+
+            #These are the paths for the documentations     
+            mac_policy_file_paths = []
+            windows_policy_file_paths = {}
+            doc_src = []
+
+            #generate documentation for windows
             
 
             version = policy.version
@@ -1811,6 +1825,9 @@ class Package:
                         group_file = open(group_file_path,"w")
                         group_file.write(str(group))
                         group_file.close()
+
+                        #Add the group to the inventory
+                        doc_src.append(str(group_file_path))
 
                         if group.description is None:
                             group.description = ""
@@ -1903,6 +1920,40 @@ class Package:
                     rule_file_path = pathlib.PurePath(os.path.join(path_map[Package.WINDOWS_RULES_PATH],rule_name+".xml"))
                     windows_policy_file_paths[rule_file_path] = dc.Settings(settings_data)
 
+            #generate documentation
+            logger.debug("generating_doc src="+str(windows_policy_file_paths.keys()))
+
+            
+            for src_path in windows_policy_file_paths.keys():
+                doc_src.append(str(src_path))
+
+            windows_inventory = Inventory(doc_src,None,windows_dest_paths)
+            windows_inventory.load_inventory()
+
+            query = None
+            title = policy.name
+            outfile = title+".md"
+
+            result = windows_inventory.process_query(query)
+
+            result["description"] = policy.description
+
+            #settings_data_for_path =[windows_policy_file_path]
+
+            try:
+                
+                settings = dc.Settings(settings_data)
+                windows_inventory.generate_text(result,rule_template,str(path_map[Package.WINDOWS_DEVICE_CONTROL]),outfile,title,settings)
+            except Exception as e:
+                logger.warn(full_stack())
+                logger.warn("Could not generate documentation error="+str(e))
+                
+            
+
+            for windows_policy_file_path in windows_policy_file_paths.keys():
+                windows_policy_file_name = str(windows_policy_file_path).split(os.sep)[-1]
+
+            
 
 
         package_file_path = pathlib.PurePath(os.path.join(package_path,"package.json"))
@@ -1914,11 +1965,7 @@ class Package:
             "policies":policy_data
         }
 
-        #load_templates
-        rule_template = self.templateEnv.get_template(rule_template_name)
-        readme_template = self.templateEnv.get_template(readme_template_name)
-        description_template = self.templateEnv.get_template(description_template_name)
-
+        
 
         #generate documentation for mac
         mac_src_paths = [str(path_map[Package.MAC_DEVICE_CONTROL_POLICIES])]
@@ -1951,32 +1998,8 @@ class Package:
             except Exception as e:
                 logger.warn("Could not generate documentation for "+mac_policy_file_name+" error="+str(e))
 
-        #generate documentation for windows
-        windows_src_paths = [str(path_map[Package.WINDOWS_DEVICE_CONTROL])]
-        windows_dest_paths = str(path_map[Package.WINDOWS_DEVICE_CONTROL])
         
-        windows_inventory = Inventory(windows_src_paths,None,windows_dest_paths)
-        windows_inventory.load_inventory()
-
-        for windows_policy_file_path in windows_policy_file_paths.keys():
-            windows_policy_file_name = str(windows_policy_file_path).split(os.sep)[-1]
-
-            query = "path.str.contains('"+str(windows_policy_file_name)+"',regex=False)"
-            title = windows_policy_file_name.split(".")[0]
-            outfile = title+".md"
-
-            result = windows_inventory.process_query(query)
-
-            result["description"] = Description(result,self.templateEnv,description_template_name)
-
-            settings_data_for_path = windows_policy_file_paths[windows_policy_file_path]
-
-            try:
-                 windows_inventory.generate_text(result,rule_template,str(path_map[Package.WINDOWS_DEVICE_CONTROL]),outfile,title,settings_data_for_path)
-            except Exception as e:
-                logger.warn("Could not generate documentation for "+windows_policy_file_name+" error="+str(e))
-            
-
+        
         json.dump(package_data,package_file,indent=5)
         package_file.close()
         logger.info("Writing package file to "+str(package_file_path))
