@@ -1,0 +1,29 @@
+{
+     "policies": {
+          "Walkthrough 1": {
+               "os": "windows",
+               "version": "v2",
+               "description": "A policy",
+               "assignments": [],
+               "groups": {
+                    "All Other Devices": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Other Devices.xml",
+                              "sha256": "29301317e7f5ab37adf5943e2f2a66616ff84c6f8a8f43d7de98906432db4ec7"
+                         }
+                    }
+               },
+               "rules": {
+                    "Default Deny": {
+                         "description": "deny, audit and block",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Default Deny.xml",
+                              "sha256": "194a7a4064edeaa1df59a50897adbb514974e6bc120a32775a2b81b606a86fd7"
+                         }
+                    }
+               },
+               "settings": {}
+          }
+     }
+}
