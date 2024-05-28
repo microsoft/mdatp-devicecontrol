@@ -9,21 +9,57 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: build
+  jobs:
+  - job: build_mdedevicecontrol
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.10'
+          addToPath: true
+          architecture: 'x64'
+      - script: |
+          cd python
+          python3 -m pip install --upgrade build
+          python3 -m build
+          pip3 install pytest pytest-azurepipelines pytest-asyncio  
+          pip3 install -e .
+        displayName: 'Build mdedevicecontrol'
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(System.DefaultWorkingDirectory)/python/dist'
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: mdedevicecontrol-0.0.1
 
-- task: UsePythonVersion@0
-  inputs:
-      versionSpec: '3.10'
-      addToPath: true
-      architecture: 'x64'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-    python3 -m pip install --upgrade build
-    python3 -m build
-    pip3 install -e .
-
-  displayName: 'Build mdedevicecontrol'
+- stage: test
+  jobs:
+  - job: test_mdedevicecontrol
+    steps:
+    - script: |
+        mkdir export
+      displayName: "Create export directory"
+    - script: |
+        pwd
+        cd python
+        python3 -m pip install --upgrade build
+        python3 -m pip install --upgrade pip
+        python3 -m build
+        pip3 install pytest pytest-azurepipelines pytest-asyncio  
+        pip3 install -e .  
+        python -m pytest tests/ -W ignore::DeprecationWarning
+      displayName: 'Run pytest'
+      env:
+        TENANT_ID: $(tenantId)
+        CLIENT_ID: $(clientId)
+        CLIENT_SECRET: $(clientSecret)
+      continueOnError: true
+    - script: |
+        cd python
+        cat mdedevicecontrol.log
+      displayName: 'Show Logs'
+    - publish: $(System.DefaultWorkingDirectory)/export
+      displayName: 'Intune Export'

@@ -1,0 +1,20 @@
+	<PolicyRule Id="{ca255e42-66ce-4682-b4d3-8cc0413e7608}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bca255e42-66ce-4682-b4d3-8cc0413e7608%7D/RuleData -->
+		<Name>Deny all expect allowed USBs</Name>
+		<IncludedIdList>
+			<GroupId>{685064a1-5066-48ca-b63c-78f99ee4a721}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{585d3b50-d012-4146-adf6-8ad4544a1e2b}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{95f9a2ad-9cc6-4224-bb52-6754e7f36331}">
+			<Type>Deny</Type>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{955058ed-71da-41df-bb56-17999406dd6b}">
+			<Type>AuditDenied</Type>
+			<AccessMask>7</AccessMask>
+			<Options>1</Options>
+		</Entry>
+	</PolicyRule>

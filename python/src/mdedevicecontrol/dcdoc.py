@@ -9,7 +9,7 @@ import pathlib
 import copy
 import json
 
-from mdedevicecontrol.devicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
+from mdedevicecontrol import Group, PolicyRule, Entry, Settings, Setting, IntuneCustomRow, Support, IntuneUXFeature, WindowsFeature, WindowsEntryType, MacEntryType
 import mdedevicecontrol.convert_dc_policy as mac 
 
 import logging
@@ -281,16 +281,30 @@ class Inventory:
         
 
     def load_inventory(self):
+
+        logger.debug("paths="+str(self.paths))
         for path in self.paths:
+            logger.debug("path="+path)
+            
+            if str(path).endswith(".xml"):
+                self.load_xml_file(path)
+            elif str(path).endswith(".json"):
+                self.load_json_file(path)
+
+
             for dir in os.walk(top=path):
+                logger.debug("dir="+str(dir))
                 files = dir[2]
                 for file in files:
+                    logger.debug("Attempting to load file "+str(file))
                     if str(file).endswith(".xml"):
                         xml_path = dir[0]+os.sep+file
                         self.load_xml_file(xml_path)
-                    if str(file).endswith(".json"):
+                    elif str(file).endswith(".json"):
                         json_path = dir[0]+os.sep+file
                         self.load_json_file(json_path)
+                    else:
+                        logger.warn("Unable to process file "+str(file))
 
     
     
@@ -317,28 +331,34 @@ class Inventory:
             return
     
     def load_xml_file(self,xml_path):
+        logger.debug("xml_path="+xml_path)
         try:
             with open(xml_path) as file:
                 root = ET.fromstring(file.read())
                 match root.tag:
                     case "Group":
+                        logger.debug("Found <Group> in "+xml_path)
                         self.addGroup(Group(root,"oma-uri",xml_path))
                     case "Groups":
                         group_index = 1
                         for group in root.findall(".//Group"):
+                            logger.debug("Found <Groups><Group> in "+xml_path)
                             self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyGroups":
                         #This is what Intune UX looks like on disk
                         group_index = 1
                         for group in root.findall(".//Group"):
+                            logger.debug("Found <PolicyGroups><Group> in "+xml_path)
                             self.addGroup(Group(group,"gpo",xml_path), group_index)
                             group_index=group_index+1
                     case "PolicyRule":
+                        logger.debug("Adding a PolicyRule - format OMA-URI")
                         self.addPolicyRule(PolicyRule(root,"oma-uri",xml_path))
                     case "PolicyRules":
                         rule_index = 1
                         for policyRule in root.findall(".//PolicyRule"):
+                            logger.debug("Adding a policy rule - format GPO")
                             self.addPolicyRule(PolicyRule(policyRule,"gpo",xml_path,rule_index))
                             rule_index= rule_index + 1
 
@@ -351,7 +371,8 @@ class Inventory:
 
     def addGroup(self,group, group_index=0):
 
-        
+        logger.debug("Adding group "+str(group)+" to inventory")
+
         path = group.path
         format = group.format
 
@@ -378,12 +399,18 @@ class Inventory:
 
     def addPolicyRule(self,rule):
 
+        if rule.id is None:
+            logger.debug("rule.id is None")
+            return
+        
+        logger.debug("path="+rule.path+" format="+rule.format+" index="+str(rule.rule_index)+" id="+rule.id)
+        
         path = rule.path
         format = rule.format
         rule_index = rule.rule_index
 
-        if rule.id is None:
-            return
+        
+
 
         new_row = pd.DataFrame([{
             "path":path,
@@ -516,6 +543,7 @@ class Inventory:
             logger.warning("No group found for "+group_id)
             return None
         else:
+            logger.debug("Found "+str(group_frame.size)+" group(s) for "+group_id)
             groups = {
                 "gpo":[],
                 "oma-uri":[],
@@ -529,6 +557,7 @@ class Inventory:
                 if group in groups[format]:
                     continue
                 elif len(groups[format]) == 0:
+                    logger.debug("Adding group "+str(group)+" to format")
                     groups[format].append(group)
                 else:
                     logger.warning("Conflicting groups for "+group_id+" at "+path+"\n"+str(group) +"\n!=\n" +str(groups[format][0]))
@@ -560,11 +589,18 @@ class Inventory:
         }
 
         query = str(query).encode('unicode-escape').decode()
-        
+
+        logger.debug("query="+str(query)+" class="+str(query.__class__))
+        logger.debug("policy_rules="+str(self.policy_rules))
+
         rule_frame = self.policy_rules.query(query, engine='python')
         rule_frame = rule_frame.sort_values("rule_index", ascending=True)
+
+        logger.debug("query returned "+str(rule_frame.index.size)+" results.")
+
         for i in range(0,rule_frame.index.size):
             rule = rule_frame.iloc[i]["object"]
+            logger.debug(">>>"+str(i)+" rule="+str(rule))
             format = rule_frame.iloc[i]["format"]
             rule_index = rule_frame.iloc[i]["rule_index"]
             rule_id = rule.id
@@ -618,8 +654,11 @@ class Inventory:
     
     def process_query(self,query=None):
 
+        
         if query is None:
             query="path.str.contains('(.*)')"
+
+        logger.debug("query="+query)
 
         filtered_rules = self.query_policy_rules(query)
 
@@ -827,6 +866,7 @@ class Inventory:
                 mac_policy["settings"] = settings.get_mac_settings()
                 result["mac_policy"] = mac_policy
 
+
         
         if result["mac_policy"] is not None:
             result["mac_policy"] = json.dumps(result["mac_policy"],indent=4)
@@ -844,8 +884,9 @@ class Inventory:
 
         Helper.set_entry_type(result["entry_type"])
 
-        out = template.render(
-            {"intuneCustomSettings":result["oma_uri"],
+        logger.debug("Rendering results with template "+str(template)+" to "+str(dest)+os.sep+str(file))
+
+        params = {"intuneCustomSettings":result["oma_uri"],
              "paths":result["web_paths"],
              "rules":result["rules"],
              "groups":result["groups"], 
@@ -860,12 +901,19 @@ class Inventory:
              "settings": settings,
              "env":os.environ,
              "Helper":Helper,
-             "title":title})
+             "title":title}
         
-
-        with open(dest+os.sep+file,"w") as out_file:
+        logger.debug("params="+str(params))
+        out = template.render(
+            params)
+        
+        logger.debug("out="+str(out))
+        out_file_name = dest+os.sep+file
+        with open(out_file_name,"w") as out_file:
             out_file.write(out)
             out_file.close()
+
+        logger.info("Generated documentation "+str(pathlib.Path(out_file_name).resolve()))
 
 class Description:
 
@@ -996,8 +1044,13 @@ def generate_readme(results,templateEnv,dest,title,readme_template,readme_file,t
         out_file.write(out)
         out_file.close()
 
-def dcdoc(args):
+    logger.info("Generated README "+str(pathlib.Path(readme_file_path).resolve()))
 
+def process_args(args):
+
+    import logging.config
+    logging.config.fileConfig(args.loggingConf)
+    
     templateLoader = jinja2.FileSystemLoader(searchpath=args.templates_path)
     templateEnv = jinja2.Environment(loader=templateLoader)
 
@@ -1020,10 +1073,19 @@ def dcdoc(args):
             policy_file = rule["file"]
 
             policy_path = pathlib.Path(os.path.join(scenarios_dir,policy_file)).resolve()
-            policy_path = policy_path.relative_to(os.getcwd())
-            policy_file = str(policy_path)
+            policy_file = None
+            for source_path in args.source_path:
+                try:
+                    policy_path = policy_path.relative_to(source_path)
+                    logger.debug(str(policy_path)+" is relative to "+source_path)
+                    policy_file = os.path.join(source_path,policy_path)
+                    break
+                except ValueError as e:
+                    logger.info(str(e))
 
-            
+            if policy_file is None:
+                logger.warning("Policy file in "+rule["file"]+" wasn't found in "+str(args.source_path))
+                continue
             
             title = None
             description = None
@@ -1034,6 +1096,7 @@ def dcdoc(args):
             if "title" in rule.keys():
                 title = rule["title"]
             
+            logger.debug("Generating parameters for "+policy_file)
             query,default_title,default_outfile,default_settings = parse_in_file(policy_file)
             if "settings" in rule.keys():
                 settings = Settings(rule["settings"])
@@ -1094,6 +1157,8 @@ def main():
     input_group.add_argument('-s','--scenarios',dest="scenarios",type=file,help='A JSON file that contains a list of scenarios to process')
     input_group.add_argument('-i','--input',dest="in_file",type=file,help='A policy rule to process')
 
+    arg_parser.add_argument('-l','--loggingConf', type=file,dest="loggingConf",help="path to the logging.conf",default="logging.conf")
+
 
     arg_parser.add_argument('-p', '--path', type=dir_path, dest="source_path", help='The path to search for source files.  Defaults to current working directory.',default=".")
     arg_parser.add_argument('-f','--format',type=format, dest="format",help="The format of the output.  Defaults to text.",default="text")
@@ -1109,7 +1174,9 @@ def main():
     
 
     args = arg_parser.parse_args()
-    dcdoc(args)
+
+    
+    process_args(args)
 
 if __name__ == '__main__':
     main()

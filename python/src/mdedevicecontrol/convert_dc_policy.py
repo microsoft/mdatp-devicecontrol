@@ -219,7 +219,7 @@ def convert_enforcement(entry_type, options, strict):
                     log_warning(f"Unsupported Deny options [{hex(options)}]", strict)
 
                 enforcement['options'] = converted_options
-        case "AuditAllow":
+        case "AuditAllowed":
             enforcement['$type'] = "auditAllow"
 
             if options != 0:
@@ -233,7 +233,7 @@ def convert_enforcement(entry_type, options, strict):
                     log_warning(f"Unsupported AuditAllow options [{hex(options)}]", strict)
 
                 enforcement['options'] = converted_options
-        case "AuditDeny":
+        case "AuditDenied":
             enforcement['$type'] = "auditDeny"
 
             if options != 0:

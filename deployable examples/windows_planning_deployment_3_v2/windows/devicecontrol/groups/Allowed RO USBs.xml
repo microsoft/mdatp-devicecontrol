@@ -1,0 +1,8 @@
+	<Group Id="{1f56a872-ee42-463a-b7dc-7b32d2a99d71}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1f56a872-ee42-463a-b7dc-7b32d2a99d71%7D/GroupData -->
+		<Name>Allowed RO USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>090C_1000</VID_PID>
+		</DescriptorIdList>
+	</Group>

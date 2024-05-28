@@ -1,0 +1,36 @@
+{
+     "policies": {
+          "Walkthrough 2": {
+               "os": "windows",
+               "version": "v2",
+               "description": "A policy",
+               "assignments": [],
+               "groups": {
+                    "All Other Devices": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Other Devices.xml",
+                              "sha256": "36175c0e021e1b01ded0177054cc597037becb4bc70c67b0f50da8982bccda3e"
+                         }
+                    },
+                    "Allowed USBs": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Allowed USBs.xml",
+                              "sha256": "0334825b4f8d3a2cf470f30f4783c2b1ea51b5b9b35c2ae7957b059857db24ee"
+                         }
+                    }
+               },
+               "rules": {
+                    "Deny all expect allowed USBs": {
+                         "description": "deny, audit and block",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Deny all expect allowed USBs.xml",
+                              "sha256": "bb21aea2b8a2097e2e843936cbd313fd1ff981383c0c373561d88751bc8649ee"
+                         }
+                    }
+               },
+               "settings": {}
+          }
+     }
+}

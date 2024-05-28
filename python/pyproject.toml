@@ -26,10 +26,13 @@ dependencies = [
     "jinja2",
     "azure-identity",
     "msgraph-beta-sdk",
+    "argcomplete",
+    "openpyxl",
     "pytest"
 ]
 
 [project.scripts]
+dc = "mdedevicecontrol:main"
 dcdoc = "mdedevicecontrol.dcdoc:main"
 dcupgrade = "mdedevicecontrol.upgrade_dc_policy:main"
 dcconvert = "mdedevicecontrol.convert_dc_policy:main" 

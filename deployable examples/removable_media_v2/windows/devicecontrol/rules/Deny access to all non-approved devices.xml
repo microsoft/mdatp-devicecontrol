@@ -1,0 +1,20 @@
+	<PolicyRule Id="{0632485f-12e0-491a-b9f4-1d8ca7d555a3}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B0632485f-12e0-491a-b9f4-1d8ca7d555a3%7D/RuleData -->
+		<Name>Deny access to all non-approved devices</Name>
+		<IncludedIdList>
+			<GroupId>{b7e99129-3e3c-44aa-b71e-f95e3f65336f}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{5e233630-f613-483a-92d9-290d44b84ca2}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{69f48608-0272-465b-81cc-ed63d56f84fa}">
+			<Type>Deny</Type>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{5612f935-3175-48bb-ab49-cc2c811ad3b9}">
+			<Type>AuditDenied</Type>
+			<AccessMask>7</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>
