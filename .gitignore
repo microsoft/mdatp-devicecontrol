@@ -362,3 +362,4 @@ python/config.cfg
 python/dist
 *.egg-info
 metadata.json
+kql

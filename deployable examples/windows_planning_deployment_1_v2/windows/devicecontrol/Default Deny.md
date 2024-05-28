@@ -1,6 +1,6 @@
 # Device control policy sample: Default Deny
 
-Description: This is a policy.              
+Description: A policy              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -85,8 +85,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{db9a9b9e-aae6-4cfd-8284-c588bedb420f}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bdb9a9b9e-aae6-4cfd-8284-c588bedb420f%7D/GroupData -->
+<Group Id="{1048512e-12fa-4923-87d2-f47b85964c70}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1048512e-12fa-4923-87d2-f47b85964c70%7D/GroupData -->
 	<Name>All Other Devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -234,8 +234,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{db9a9b9e-aae6-4cfd-8284-c588bedb420f}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bdb9a9b9e-aae6-4cfd-8284-c588bedb420f%7D/GroupData -->
+	<Group Id="{1048512e-12fa-4923-87d2-f47b85964c70}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1048512e-12fa-4923-87d2-f47b85964c70%7D/GroupData -->
 		<Name>All Other Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -256,20 +256,20 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{1cb956a9-fc4d-4c5a-9408-d756514e98be}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B1cb956a9-fc4d-4c5a-9408-d756514e98be%7D/RuleData -->
+	<PolicyRule Id="{d191b0ff-6530-4cbb-be87-2ee556bf9d7c}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd191b0ff-6530-4cbb-be87-2ee556bf9d7c%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
-			<GroupId>{db9a9b9e-aae6-4cfd-8284-c588bedb420f}</GroupId>
+			<GroupId>{1048512e-12fa-4923-87d2-f47b85964c70}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{28da4496-0ec5-4d94-a52f-acc24ee31186}">
+		<Entry Id="{6a331c1f-ddd2-41ca-be52-220ace5182d6}">
 			<Type>Deny</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{240ecc7f-78c7-462e-b817-6304f4db37af}">
+		<Entry Id="{445d4017-c85b-4939-8a64-f7b017da5765}">
 			<Type>AuditDenied</Type>
 			<AccessMask>7</AccessMask>
 			<Options>1</Options>
@@ -301,7 +301,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Default Deny*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B1cb956a9-fc4d-4c5a-9408-d756514e98be%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd191b0ff-6530-4cbb-be87-2ee556bf9d7c%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
@@ -316,7 +316,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *All Other Devices*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bdb9a9b9e-aae6-4cfd-8284-c588bedb420f%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1048512e-12fa-4923-87d2-f47b85964c70%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
