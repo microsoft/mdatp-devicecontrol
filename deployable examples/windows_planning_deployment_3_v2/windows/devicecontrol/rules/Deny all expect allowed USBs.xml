@@ -1,19 +1,19 @@
-	<PolicyRule Id="{9bf94b1d-3f0d-4133-adaf-38a0fbadccb2}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B9bf94b1d-3f0d-4133-adaf-38a0fbadccb2%7D/RuleData -->
+	<PolicyRule Id="{fc3ed3bb-939e-4fa1-a81a-19ba76bd8d17}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bfc3ed3bb-939e-4fa1-a81a-19ba76bd8d17%7D/RuleData -->
 		<Name>Deny all expect allowed USBs</Name>
 		<IncludedIdList>
-			<GroupId>{805c79c2-8731-43a7-8128-fa58d830127f}</GroupId>
+			<GroupId>{941954c5-20ca-4d9f-9834-010bd79acc6a}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
-			<GroupId>{7ca89e2d-4f3d-497a-8e06-2b21877f3641}</GroupId>
-			<GroupId>{f9393e5b-199c-4051-94a3-bcf4016658e4}</GroupId>
+			<GroupId>{1f56a872-ee42-463a-b7dc-7b32d2a99d71}</GroupId>
+			<GroupId>{6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{e8a0e636-6d46-4051-8193-2632cbb6865a}">
+		<Entry Id="{93c7c712-a219-4bf6-83b9-750ddccfdc38}">
 			<Type>Deny</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{5498a7cf-16bb-4374-808f-5270e11bc65c}">
+		<Entry Id="{81c6972a-49c3-41a5-96e2-c3ee103ccf29}">
 			<Type>AuditDenied</Type>
 			<AccessMask>7</AccessMask>
 			<Options>1</Options>

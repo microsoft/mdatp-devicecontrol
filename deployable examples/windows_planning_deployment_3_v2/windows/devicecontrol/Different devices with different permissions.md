@@ -28,6 +28,36 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
+            <td rowspan="2" valign="top"><b>Grant RO access to allowed RO access USBs</b></td>
+            <td rowspan="2 valign="top">
+                <ul><li>Group: Allowed RO USBs<a href="#allowed-ro-usbs" title="MatchAny {'VID_PID': '090C_1000'}"> (details)</a>  
+</ul>
+            </td>
+            <td rowspan="2" valign="top">
+                <ul></ul>
+            </td>
+            <td>Deny</td>
+            <td>-</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>None (0)</td> 
+            <td>
+                <center>-</center></td>
+        </tr><tr>
+            <td>Audit Denied</td>
+            <td>-</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Show notification and Send event (3)</td>
+            <td> 
+                <center>-</center></td>
+        </tr><tr>
             <td rowspan="2" valign="top"><b>Deny all expect allowed USBs</b></td>
             <td rowspan="2 valign="top">
                 <ul><li>Group: All Other Devices<a href="#all-other-devices" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
@@ -59,72 +89,11 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
             <td>Show notification (1)</td>
             <td> 
                 <center>-</center></td>
-        </tr><tr>
-            <td rowspan="2" valign="top"><b>Grant RO access to allowed RO access USBs</b></td>
-            <td rowspan="2 valign="top">
-                <ul><li>Group: Allowed RO USBs<a href="#allowed-ro-usbs" title="MatchAny {'VID_PID': '090C_1000'}"> (details)</a>  
-</ul>
-            </td>
-            <td rowspan="2" valign="top">
-                <ul></ul>
-            </td>
-            <td>Deny</td>
-            <td>-</td>
-            <td>:x:</td>
-            <td>:x:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>None (0)</td> 
-            <td>
-                <center>-</center></td>
-        </tr><tr>
-            <td>Audit Denied</td>
-            <td>-</td>
-            <td>:page_facing_up:</td>
-            <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Show notification (1)</td>
-            <td> 
-                <center>-</center></td>
         </tr></table>
 
 
 ## Groups
 
-
-### Allowed Full Access USBs
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| SerialNumberId | 6EA9150055800605 |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{f9393e5b-199c-4051-94a3-bcf4016658e4}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf9393e5b-199c-4051-94a3-bcf4016658e4%7D/GroupData -->
-	<Name>Allowed Full Access USBs</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<SerialNumberId>6EA9150055800605</SerialNumberId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
 
 ### Allowed RO USBs
 
@@ -146,12 +115,43 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{7ca89e2d-4f3d-497a-8e06-2b21877f3641}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7ca89e2d-4f3d-497a-8e06-2b21877f3641%7D/GroupData -->
+<Group Id="{1f56a872-ee42-463a-b7dc-7b32d2a99d71}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1f56a872-ee42-463a-b7dc-7b32d2a99d71%7D/GroupData -->
 	<Name>Allowed RO USBs</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
 		<VID_PID>090C_1000</VID_PID>
+	</DescriptorIdList>
+</Group>
+```
+</details>
+
+### Allowed Full Access USBs
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| SerialNumberId | 6EA9150055800605 |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c%7D/GroupData -->
+	<Name>Allowed Full Access USBs</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<SerialNumberId>6EA9150055800605</SerialNumberId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -179,8 +179,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{805c79c2-8731-43a7-8128-fa58d830127f}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B805c79c2-8731-43a7-8128-fa58d830127f%7D/GroupData -->
+<Group Id="{941954c5-20ca-4d9f-9834-010bd79acc6a}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B941954c5-20ca-4d9f-9834-010bd79acc6a%7D/GroupData -->
 	<Name>All Other Devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -208,9 +208,9 @@ The match type for the group is *MatchAny*.
 This policy is based on information in the following files:
 
 - [groups/All Other Devices.xml](groups/All%20Other%20Devices.xml)
-- [groups/Allowed RO USBs.xml](groups/Allowed%20RO%20USBs.xml)
 - [groups/Allowed Full Access USBs.xml](groups/Allowed%20Full%20Access%20USBs.xml)
 - [rules/Deny all expect allowed USBs.xml](rules/Deny%20all%20expect%20allowed%20USBs.xml)
+- [groups/Allowed RO USBs.xml](groups/Allowed%20RO%20USBs.xml)
 - [rules/Grant RO access to allowed RO access USBs.xml](rules/Grant%20RO%20access%20to%20allowed%20RO%20access%20USBs.xml)
 
 
@@ -231,30 +231,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 ## Intune UX
 
 <details>
-<summary>Create a reusable setting for Allowed Full Access USBs</summary> 
-
-   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
-   2. Click on Reusable Settings
-   3. Click (+) Add
-   4. Enter the *Allowed Full Access USBs* for the name.  
-   5. Optionally, enter a description
-   6. Click on "Next"
-   
-   1. Create an entry for  *SerialNumberId* = *6EA9150055800605* 
-        1. Click (+) Add
-        2. Select "Reusable storage"
-        3. Click on "Configure setting"    
-        4. Enter *SerialNumberId( 6EA9150055800605 )* for Name
-        5. Enter *6EA9150055800605* for SerialNumberId
-        6. Click "Save"
-
-
-   
-   7. Set the match type drop down to MatchAny
-   8. Click "Next"
-   9. Click "Add"
-</details>
-<details>
 <summary>Create a reusable setting for Allowed RO USBs</summary> 
 
    1. Navigate to Home > Endpoint Security > Attack Surface Reduction
@@ -270,6 +246,30 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
         3. Click on "Configure setting"    
         4. Enter *VID_PID( 090C_1000 )* for Name
         5. Enter *090C_1000* for VID_PID
+        6. Click "Save"
+
+
+   
+   7. Set the match type drop down to MatchAny
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a reusable setting for Allowed Full Access USBs</summary> 
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the *Allowed Full Access USBs* for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   
+   1. Create an entry for  *SerialNumberId* = *6EA9150055800605* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *SerialNumberId( 6EA9150055800605 )* for Name
+        5. Enter *6EA9150055800605* for SerialNumberId
         6. Click "Save"
 
 
@@ -343,7 +343,42 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 
 <details>
+<summary>Add a rule for Grant RO access to allowed RO access USBs to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *Allowed RO USBs*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Grant RO access to allowed RO access USBs* for the name
+
+
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Write and Execute* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
+<details>
 <summary>Add a rule for Deny all expect allowed USBs to the policy</summary>
+
+   1. Add another rule.  Click on "+ Add"
 
 
    1. Click on "+ Set reusable settings" under Included Id
@@ -383,41 +418,6 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "OK"
 </details>
 
-<details>
-<summary>Add a rule for Grant RO access to allowed RO access USBs to the policy</summary>
-
-   1. Add another rule.  Click on "+ Add"
-
-
-   1. Click on "+ Set reusable settings" under Included Id
-
-   1. Click on *Allowed RO USBs*
-
-   1. Click on "Select"
-
-
-   1. Click on "+ Edit Entry"
-   1. Enter *Grant RO access to allowed RO access USBs* for the name
-
-
-
-   1. Select *Deny* from "Type"
-   1. Select *None* from "Options"
-   1. Select *Write and Execute* from "Access mask"
-
-
-
-
-   1. Add another entry.  Click on "+ Add"
-
-   1. Select *Audit Denied* from "Type"
-   1. Select *Show notification* from "Options"
-   1. Select *Write and Execute* from "Access mask"
-
-
-   1. Click "OK"
-</details>
-
 
 
 ## Group Policy (GPO)
@@ -428,24 +428,24 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{f9393e5b-199c-4051-94a3-bcf4016658e4}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf9393e5b-199c-4051-94a3-bcf4016658e4%7D/GroupData -->
-		<Name>Allowed Full Access USBs</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<SerialNumberId>6EA9150055800605</SerialNumberId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{7ca89e2d-4f3d-497a-8e06-2b21877f3641}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7ca89e2d-4f3d-497a-8e06-2b21877f3641%7D/GroupData -->
+	<Group Id="{1f56a872-ee42-463a-b7dc-7b32d2a99d71}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1f56a872-ee42-463a-b7dc-7b32d2a99d71%7D/GroupData -->
 		<Name>Allowed RO USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
 			<VID_PID>090C_1000</VID_PID>
 		</DescriptorIdList>
 	</Group>
-	<Group Id="{805c79c2-8731-43a7-8128-fa58d830127f}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B805c79c2-8731-43a7-8128-fa58d830127f%7D/GroupData -->
+	<Group Id="{6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c%7D/GroupData -->
+		<Name>Allowed Full Access USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<SerialNumberId>6EA9150055800605</SerialNumberId>
+		</DescriptorIdList>
+	</Group>
+	<Group Id="{941954c5-20ca-4d9f-9834-010bd79acc6a}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B941954c5-20ca-4d9f-9834-010bd79acc6a%7D/GroupData -->
 		<Name>All Other Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -466,43 +466,43 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{9bf94b1d-3f0d-4133-adaf-38a0fbadccb2}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B9bf94b1d-3f0d-4133-adaf-38a0fbadccb2%7D/RuleData -->
-		<Name>Deny all expect allowed USBs</Name>
-		<IncludedIdList>
-			<GroupId>{805c79c2-8731-43a7-8128-fa58d830127f}</GroupId>
-		</IncludedIdList>
-		<ExcludedIdList>
-			<GroupId>{7ca89e2d-4f3d-497a-8e06-2b21877f3641}</GroupId>
-			<GroupId>{f9393e5b-199c-4051-94a3-bcf4016658e4}</GroupId>
-		</ExcludedIdList>
-		<Entry Id="{e8a0e636-6d46-4051-8193-2632cbb6865a}">
-			<Type>Deny</Type>
-			<AccessMask>7</AccessMask>
-			<Options>0</Options>
-		</Entry>
-		<Entry Id="{5498a7cf-16bb-4374-808f-5270e11bc65c}">
-			<Type>AuditDenied</Type>
-			<AccessMask>7</AccessMask>
-			<Options>1</Options>
-		</Entry>
-	</PolicyRule>
-	<PolicyRule Id="{0fe59e26-908d-45eb-9896-ea420ca8942f}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B0fe59e26-908d-45eb-9896-ea420ca8942f%7D/RuleData -->
+	<PolicyRule Id="{8c9a8bb8-9cb5-48f5-a134-427f5e625752}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B8c9a8bb8-9cb5-48f5-a134-427f5e625752%7D/RuleData -->
 		<Name>Grant RO access to allowed RO access USBs</Name>
 		<IncludedIdList>
-			<GroupId>{7ca89e2d-4f3d-497a-8e06-2b21877f3641}</GroupId>
+			<GroupId>{1f56a872-ee42-463a-b7dc-7b32d2a99d71}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{f236a7c3-dc8d-442c-afb0-49876a93f79c}">
+		<Entry Id="{ab1023b9-b80c-47a8-9f42-537f042fc715}">
 			<Type>Deny</Type>
 			<AccessMask>6</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{c8bbf42a-3173-4487-b2aa-8dca677a2ac0}">
+		<Entry Id="{242166f5-af38-4cba-8f89-91969288b0de}">
 			<Type>AuditDenied</Type>
 			<AccessMask>6</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>
+	<PolicyRule Id="{fc3ed3bb-939e-4fa1-a81a-19ba76bd8d17}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bfc3ed3bb-939e-4fa1-a81a-19ba76bd8d17%7D/RuleData -->
+		<Name>Deny all expect allowed USBs</Name>
+		<IncludedIdList>
+			<GroupId>{941954c5-20ca-4d9f-9834-010bd79acc6a}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{1f56a872-ee42-463a-b7dc-7b32d2a99d71}</GroupId>
+			<GroupId>{6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{93c7c712-a219-4bf6-83b9-750ddccfdc38}">
+			<Type>Deny</Type>
+			<AccessMask>7</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{81c6972a-49c3-41a5-96e2-c3ee103ccf29}">
+			<Type>AuditDenied</Type>
+			<AccessMask>7</AccessMask>
 			<Options>1</Options>
 		</Entry>
 	</PolicyRule>
@@ -532,7 +532,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Deny all expect allowed USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B9bf94b1d-3f0d-4133-adaf-38a0fbadccb2%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bfc3ed3bb-939e-4fa1-a81a-19ba76bd8d17%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
@@ -547,26 +547,11 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Grant RO access to allowed RO access USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B0fe59e26-908d-45eb-9896-ea420ca8942f%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B8c9a8bb8-9cb5-48f5-a134-427f5e625752%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
    6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/windows_planning_deployment_3_v2/windows/devicecontrol/rules/Grant RO access to allowed RO access USBs.xml*
-         
-   
-   7. Click "Save"
-</details>
-<details>
-<summary>Add a row for All Other Devices</summary>  
-   
-   1. Click "Add"
-   2. For Name, enter *All Other Devices*
-   3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B805c79c2-8731-43a7-8128-fa58d830127f%7D/GroupData*
-   5. For Data type, select *String (XML File)*
-   
-        
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/windows_planning_deployment_3_v2/windows/devicecontrol/groups/All Other Devices.xml*
          
    
    7. Click "Save"
@@ -577,11 +562,26 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allowed RO USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7ca89e2d-4f3d-497a-8e06-2b21877f3641%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1f56a872-ee42-463a-b7dc-7b32d2a99d71%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
    6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/windows_planning_deployment_3_v2/windows/devicecontrol/groups/Allowed RO USBs.xml*
+         
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for All Other Devices</summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *All Other Devices*
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B941954c5-20ca-4d9f-9834-010bd79acc6a%7D/GroupData*
+   5. For Data type, select *String (XML File)*
+   
+        
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/windows_planning_deployment_3_v2/windows/devicecontrol/groups/All Other Devices.xml*
          
    
    7. Click "Save"
@@ -592,7 +592,7 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
    1. Click "Add"
    2. For Name, enter *Allowed Full Access USBs*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf9393e5b-199c-4051-94a3-bcf4016658e4%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B6b52fd92-01ff-4fc5-9aa6-7db7222a1c9c%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         

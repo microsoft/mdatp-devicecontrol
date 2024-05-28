@@ -10,21 +10,21 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Other Devices.xml",
-                              "sha256": "82e1d5c07b37ae9f84447e5d6feb8ef9c739115e29f018666241764721cd8911"
+                              "sha256": "6c821fe0e1547b502da3969dbde1c9fe120fd1e60d5f5851657816b844307128"
                          }
                     },
                     "Allowed RO USBs": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed RO USBs.xml",
-                              "sha256": "67f3fa3cd73d0751d23bb970e21f52f83afe7ddf4f9cc8826d5ef7b6603608ba"
+                              "sha256": "9683be4c5b1277ea762e63c898200278303a2f26553819cbac86d58e40f1cbb1"
                          }
                     },
                     "Allowed Full Access USBs": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed Full Access USBs.xml",
-                              "sha256": "998415948ab020ac4d98f000b105725b182d37fa160f09a8eeda6afd3a2dae9b"
+                              "sha256": "28e7bd1eb62619eedc2666e05683dec778c1f9ad7cceaa4488ce520811e18108"
                          }
                     }
                },
@@ -33,14 +33,14 @@
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Deny all expect allowed USBs.xml",
-                              "sha256": "b054468714167b31f89a3eca4645ca5c9c926a9851b0f7177ce3937163c7f29c"
+                              "sha256": "ee5e6e7f13ec77ebab04bed7d0456b2a4974d53da3dd34e3d5cd075b3e14a11f"
                          }
                     },
                     "Grant RO access to allowed RO access USBs": {
                          "description": "allow RO access",
                          "file": {
                               "path": "windows/devicecontrol/rules/Grant RO access to allowed RO access USBs.xml",
-                              "sha256": "fdf2be104bc46dc4761494a3229b7e1ca08d851726e8ae21200e9f8adbde5264"
+                              "sha256": "30049cce4ad89bd269c7eb7926ec01ad25b0015b6d54e2753692f7f15e5d3eef"
                          }
                     }
                },
