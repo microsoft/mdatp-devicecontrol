@@ -1,14 +1,19 @@
-	<PolicyRule Id="{e4d78544-85cd-4b36-8bf4-7eb64a735ffe}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Be4d78544-85cd-4b36-8bf4-7eb64a735ffe%7D/RuleData -->
+	<PolicyRule Id="{0fe59e26-908d-45eb-9896-ea420ca8942f}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B0fe59e26-908d-45eb-9896-ea420ca8942f%7D/RuleData -->
 		<Name>Grant RO access to allowed RO access USBs</Name>
 		<IncludedIdList>
-			<GroupId>{e4eef3ea-2484-455c-8cba-64829148fb75}</GroupId>
+			<GroupId>{7ca89e2d-4f3d-497a-8e06-2b21877f3641}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{9d94b148-b9c6-4071-84dc-0f59205308de}">
-			<Type>Allow</Type>
-			<AccessMask>1</AccessMask>
+		<Entry Id="{f236a7c3-dc8d-442c-afb0-49876a93f79c}">
+			<Type>Deny</Type>
+			<AccessMask>6</AccessMask>
 			<Options>0</Options>
+		</Entry>
+		<Entry Id="{c8bbf42a-3173-4487-b2aa-8dca677a2ac0}">
+			<Type>AuditDenied</Type>
+			<AccessMask>6</AccessMask>
+			<Options>1</Options>
 		</Entry>
 	</PolicyRule>

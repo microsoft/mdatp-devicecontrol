@@ -1,6 +1,6 @@
 {
      "policies": {
-          "Different Devices have Different Permissions": {
+          "Different devices with different permissions": {
                "os": "windows",
                "version": "v2",
                "description": "A policy",
@@ -10,21 +10,21 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Other Devices.xml",
-                              "sha256": "7f99a3d045010f9249430c1dd891dc0ba73d4fa170099380aeae468381bbe763"
+                              "sha256": "82e1d5c07b37ae9f84447e5d6feb8ef9c739115e29f018666241764721cd8911"
                          }
                     },
                     "Allowed RO USBs": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed RO USBs.xml",
-                              "sha256": "7f4bca89d53a82928b641fe54b58952d35a6b7eee48c8ae01343e8cd24ac71a6"
+                              "sha256": "67f3fa3cd73d0751d23bb970e21f52f83afe7ddf4f9cc8826d5ef7b6603608ba"
                          }
                     },
                     "Allowed Full Access USBs": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/Allowed Full Access USBs.xml",
-                              "sha256": "92f966db83dd8686b3b497c291492ad3aa03192344582e4435f884a7805ad5bb"
+                              "sha256": "998415948ab020ac4d98f000b105725b182d37fa160f09a8eeda6afd3a2dae9b"
                          }
                     }
                },
@@ -33,21 +33,14 @@
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Deny all expect allowed USBs.xml",
-                              "sha256": "a8fa42b990c7ae0784a1d69fdf12d1eb829fc105fbc48de92d1bf4e9183c05b6"
-                         }
-                    },
-                    "Grant full access to allowed full access USBs": {
-                         "description": "allow full access",
-                         "file": {
-                              "path": "windows/devicecontrol/rules/Grant full access to allowed full access USBs.xml",
-                              "sha256": "e42e8e7e800b6d1a0a92f71a7d4dbb9e2786a97eb9727038eb0dbc6014b3d224"
+                              "sha256": "b054468714167b31f89a3eca4645ca5c9c926a9851b0f7177ce3937163c7f29c"
                          }
                     },
                     "Grant RO access to allowed RO access USBs": {
                          "description": "allow RO access",
                          "file": {
                               "path": "windows/devicecontrol/rules/Grant RO access to allowed RO access USBs.xml",
-                              "sha256": "6065b3fa7c8617acf2b976f538032583192fc999a620917b32d29cc9bcab8e1b"
+                              "sha256": "fdf2be104bc46dc4761494a3229b7e1ca08d851726e8ae21200e9f8adbde5264"
                          }
                     }
                },

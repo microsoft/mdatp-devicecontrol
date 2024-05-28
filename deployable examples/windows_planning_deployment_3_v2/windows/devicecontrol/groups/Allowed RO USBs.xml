@@ -1,5 +1,5 @@
-	<Group Id="{e4eef3ea-2484-455c-8cba-64829148fb75}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be4eef3ea-2484-455c-8cba-64829148fb75%7D/GroupData -->
+	<Group Id="{7ca89e2d-4f3d-497a-8e06-2b21877f3641}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7ca89e2d-4f3d-497a-8e06-2b21877f3641%7D/GroupData -->
 		<Name>Allowed RO USBs</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
