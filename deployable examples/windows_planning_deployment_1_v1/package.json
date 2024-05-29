@@ -2,7 +2,7 @@
      "policies": {
           "Deny All": {
                "os": "windows",
-               "version": "v2",
+               "version": "v1",
                "description": "A policy",
                "assignments": [],
                "groups": {
@@ -10,7 +10,7 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Other Devices.xml",
-                              "sha256": "066ecc2b2eecbfd26bc09130a3563ded5ddab21cf72a4f43b3b4b602b20e6a87"
+                              "sha256": "a4277f39f58e51a2ae09f9612218e4473e23451097cbbef0bea00adbec0a47e9"
                          }
                     }
                },
@@ -19,7 +19,7 @@
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Default Deny.xml",
-                              "sha256": "cb3ab265cac41c86f3f023bc7cd52f3ef853f88a233ea18dad302c15e832398c"
+                              "sha256": "c2bdbdedf96ce1e3c090896e30c243c69c851ad0f2aed872cfdfcabdd72cfb40"
                          }
                     }
                },

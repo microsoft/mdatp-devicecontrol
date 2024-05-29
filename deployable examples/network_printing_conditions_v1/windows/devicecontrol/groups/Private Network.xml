@@ -1,0 +1,9 @@
+	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
+		<Name>Private Network</Name>
+		<MatchType>MatchAll</MatchType>
+		<DescriptorIdList>
+			<NameId>Network 3</NameId>
+			<NetworkCategoryId>Private</NetworkCategoryId>
+		</DescriptorIdList>
+	</Group>

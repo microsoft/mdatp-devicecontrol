@@ -1,0 +1,50 @@
+{
+     "policies": {
+          "Network Printing": {
+               "os": "windows",
+               "version": "v1",
+               "description": "A policy",
+               "assignments": [],
+               "groups": {
+                    "Any Printer": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Any Printer.xml",
+                              "sha256": "487a76294af6195a2ebfd27d8abbf618c10677b9979ca63474612e312291da71"
+                         }
+                    },
+                    "Private Network": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Private Network.xml",
+                              "sha256": "7d08dca61697cd19df8a42b37327ad8add9b3689d9517d7d1e54d34a127272f4"
+                         }
+                    },
+                    "Network Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Network Printers.xml",
+                              "sha256": "110a1e017b05113f38fc9fd3adad24141581440ef620c11796ffe2af696af67a"
+                         }
+                    }
+               },
+               "rules": {
+                    "Allow printing only on network printers on corporate network": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Allow printing only on network printers on corporate network.xml",
+                              "sha256": "2c04dec64a3c0adcfb4dac90da2fa067fd20e75daf06779eabe9fe2d5bc96297"
+                         }
+                    },
+                    "Deny all other printing": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Deny all other printing.xml",
+                              "sha256": "34d86f9c682bedf81e1d3bb39af5fb9b78f9a27d43059f4983fb5a5b96b2e398"
+                         }
+                    }
+               },
+               "settings": {}
+          }
+     }
+}
