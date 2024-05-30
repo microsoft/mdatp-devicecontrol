@@ -3116,6 +3116,7 @@ class CommandLine:
 
     async def validate_graph(args,config):
 
+        logger.info("Validating connection to graph API")
         cred_type = "user"
         if args.user_authentication:
             cred_type = "user"
@@ -3147,6 +3148,9 @@ class CommandLine:
         else:
             graph = Graph(tenantId=tenantId,clientId=clientId,clientSecret=clientSecret,scopes=scopes)
             token = await graph.get_app_only_token()
+
+        logger.info("Token="+str(token))
+        return token
 
     def init_with_xlsx(args,config):
 
