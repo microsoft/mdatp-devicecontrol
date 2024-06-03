@@ -1,17 +1,17 @@
-	<PolicyRule Id="{d191b0ff-6530-4cbb-be87-2ee556bf9d7c}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bd191b0ff-6530-4cbb-be87-2ee556bf9d7c%7D/RuleData -->
+	<PolicyRule Id="{6058f08e-8682-44a4-b914-79406f63c993}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6058f08e-8682-44a4-b914-79406f63c993%7D/RuleData -->
 		<Name>Default Deny</Name>
 		<IncludedIdList>
-			<GroupId>{1048512e-12fa-4923-87d2-f47b85964c70}</GroupId>
+			<GroupId>{f1a50d64-1f14-470d-96a8-ed24b7ccef7b}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{6a331c1f-ddd2-41ca-be52-220ace5182d6}">
+		<Entry Id="{b6521de0-09a6-4d16-a2d0-2e785fb0616f}">
 			<Type>Deny</Type>
 			<AccessMask>7</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{445d4017-c85b-4939-8a64-f7b017da5765}">
+		<Entry Id="{f97a6941-9a61-4a64-aae1-4ea100348007}">
 			<Type>AuditDenied</Type>
 			<AccessMask>7</AccessMask>
 			<Options>1</Options>

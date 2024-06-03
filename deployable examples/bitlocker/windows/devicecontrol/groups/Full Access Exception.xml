@@ -1,5 +1,5 @@
-	<Group Id="{7c4e7b65-3321-4d3c-8710-13d3ace0eb2f}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B7c4e7b65-3321-4d3c-8710-13d3ace0eb2f%7D/GroupData -->
+	<Group Id="{f1649cbf-717d-465f-9e6a-f75022b84f22}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf1649cbf-717d-465f-9e6a-f75022b84f22%7D/GroupData -->
 		<Name>Full Access Exception</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>

@@ -1,6 +1,6 @@
-# Device control policy sample: Allow BitLocker encrypted removable media devices full access
+# Device control policy sample: Deny All
 
-Description: This is a policy.              
+Description: A policy              
 Device Type: Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -28,33 +28,33 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Read</th>
 		<th>File Write</th>
 		<th>File Execute</th></tr><tr>
-            <td rowspan="2" valign="top"><b>Allow BitLocker encrypted removable media devices full access</b></td>
+            <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Group: BitLocker Encrypted<a href="#bitlocker-encrypted" title="MatchAny {'DeviceEncryptionStateId': 'BitlockerEncrypted'}"> (details)</a>  
+                <ul><li>Group: All Other Devices<a href="#all-other-devices" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="2" valign="top">
                 <ul></ul>
             </td>
-            <td>Allow</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
-            <td>:white_check_mark:</td>
+            <td>Deny</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
+            <td>:x:</td>
             <td>None (0)</td> 
             <td>
                 <center>-</center></td>
         </tr><tr>
-            <td>Audit Allowed</td>
-            <td>-</td>
+            <td>Audit Denied</td>
             <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>-</td>
             <td>:page_facing_up:</td>
-            <td>-</td>
-            <td>Send event (2)</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>Show notification (1)</td>
             <td> 
                 <center>-</center></td>
         </tr></table>
@@ -63,7 +63,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### BitLocker Encrypted
+### All Other Devices
 
 
 
@@ -73,7 +73,9 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| DeviceEncryptionStateId | BitlockerEncrypted |
+| PrimaryId | RemovableMediaDevices |
+| PrimaryId | CdRomDevices |
+| PrimaryId | WpdDevices |
 
 
 
@@ -83,12 +85,14 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{88de708f-9802-4845-ac01-bdfe58371d79}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B88de708f-9802-4845-ac01-bdfe58371d79%7D/GroupData -->
-	<Name>BitLocker Encrypted</Name>
+<Group Id="{ec445d09-1d90-4bd9-96e2-f8208e12f98a}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData -->
+	<Name>All Other Devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<PrimaryId>CdRomDevices</PrimaryId>
+		<PrimaryId>WpdDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -109,8 +113,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [groups/BitLocker Encrypted.xml](groups/BitLocker%20Encrypted.xml)
-- [rules/Allow BitLocker encrypted removable media devices full access.xml](rules/Allow%20BitLocker%20encrypted%20removable%20media%20devices%20full%20access.xml)
+- [groups/All Other Devices.xml](groups/All%20Other%20Devices.xml)
+- [rules/Default Deny.xml](rules/Default%20Deny.xml)
 
 
 # Deployment Instructions
@@ -131,9 +135,8 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 Intune UX is not supported for this policy because:
 - File Execute (32) is an unsupported access mask
-- DeviceEncryptionStateId not supported
-- File Read (8) is an unsupported access mask
 - File Write (16) is an unsupported access mask
+- File Read (8) is an unsupported access mask
 
 Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
 
@@ -146,12 +149,14 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{88de708f-9802-4845-ac01-bdfe58371d79}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B88de708f-9802-4845-ac01-bdfe58371d79%7D/GroupData -->
-		<Name>BitLocker Encrypted</Name>
+	<Group Id="{ec445d09-1d90-4bd9-96e2-f8208e12f98a}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData -->
+		<Name>All Other Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<DeviceEncryptionStateId>BitlockerEncrypted</DeviceEncryptionStateId>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -166,23 +171,23 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{6a5a1462-80c6-4a84-a5b4-1627c34b10ab}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6a5a1462-80c6-4a84-a5b4-1627c34b10ab%7D/RuleData -->
-		<Name>Allow BitLocker encrypted removable media devices full access</Name>
+	<PolicyRule Id="{7c594493-5335-4844-8922-abcb14d2cde4}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7c594493-5335-4844-8922-abcb14d2cde4%7D/RuleData -->
+		<Name>Default Deny</Name>
 		<IncludedIdList>
-			<GroupId>{88de708f-9802-4845-ac01-bdfe58371d79}</GroupId>
+			<GroupId>{ec445d09-1d90-4bd9-96e2-f8208e12f98a}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{b5e1f3ad-ccf1-4fb6-8fa7-b25366241e3b}">
-			<Type>Allow</Type>
+		<Entry Id="{61057d83-921a-444c-948a-26623120c154}">
+			<Type>Deny</Type>
 			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{ee9cef93-ed55-48a3-8431-f5362ca6876e}">
-			<Type>AuditAllowed</Type>
-			<AccessMask>18</AccessMask>
-			<Options>2</Options>
+		<Entry Id="{00e2a047-6107-4e61-90c6-c27234ad70f0}">
+			<Type>AuditDenied</Type>
+			<AccessMask>63</AccessMask>
+			<Options>1</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -206,31 +211,31 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Allow BitLocker encrypted removable media devices full access</summary>  
+<summary>Add a row for Default Deny</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Allow BitLocker encrypted removable media devices full access*
+   2. For Name, enter *Default Deny*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B6a5a1462-80c6-4a84-a5b4-1627c34b10ab%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B7c594493-5335-4844-8922-abcb14d2cde4%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/rules/Allow BitLocker encrypted removable media devices full access.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/windows_planning_deployment_1_v1/windows/devicecontrol/rules/Default Deny.xml*
          
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for BitLocker Encrypted</summary>  
+<summary>Add a row for All Other Devices</summary>  
    
    1. Click "Add"
-   2. For Name, enter *BitLocker Encrypted*
+   2. For Name, enter *All Other Devices*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B88de708f-9802-4845-ac01-bdfe58371d79%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/bitlocker/windows/devicecontrol/groups/BitLocker Encrypted.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/windows_planning_deployment_1_v1/windows/devicecontrol/groups/All Other Devices.xml*
          
    
    7. Click "Save"

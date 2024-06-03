@@ -2234,6 +2234,7 @@ class Condition:
     def __init__(self,condition):
         self.match_type = condition.attrib['MatchType']
         
+
         self.groups = []
         self.properties = []
 
@@ -2241,6 +2242,7 @@ class Condition:
         self.condition_type = condition.tag
         self.read_condition_properties(condition.findall(".//"))
 
+        logger.debug("tag="+self.tag+" match_type="+self.match_type)
 
     def get_group_ids(self):
         return self.groups
@@ -3116,6 +3118,7 @@ class CommandLine:
 
     async def validate_graph(args,config):
 
+        logger.info("Validating connection to graph API")
         cred_type = "user"
         if args.user_authentication:
             cred_type = "user"
@@ -3147,6 +3150,9 @@ class CommandLine:
         else:
             graph = Graph(tenantId=tenantId,clientId=clientId,clientSecret=clientSecret,scopes=scopes)
             token = await graph.get_app_only_token()
+
+        logger.info("Token="+str(token))
+        return token
 
     def init_with_xlsx(args,config):
 

@@ -1,5 +1,5 @@
-	<Group Id="{f1a50d64-1f14-470d-96a8-ed24b7ccef7b}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf1a50d64-1f14-470d-96a8-ed24b7ccef7b%7D/GroupData -->
+	<Group Id="{ec445d09-1d90-4bd9-96e2-f8208e12f98a}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData -->
 		<Name>All Other Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>

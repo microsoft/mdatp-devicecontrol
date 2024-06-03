@@ -1,0 +1,24 @@
+	<PolicyRule Id="{b4bf3ecb-cea9-450d-a3fa-fec9a73edc08}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bb4bf3ecb-cea9-450d-a3fa-fec9a73edc08%7D/RuleData -->
+		<Name>Deny all printing except on network printers on private network</Name>
+		<IncludedIdList>
+			<GroupId>{257e3e1e-790c-4e29-ae2c-45a5f3363201}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{93cdb2fb-9fcd-428e-a2e1-b4b0fab19782}">
+			<Type>Deny</Type>
+			<AccessMask>64</AccessMask>
+			<Options>0</Options>
+			<Parameters MatchType="MatchAll">
+				<Network MatchType="MatchExcludeAll">
+					<GroupId>{83d4b74a-af7c-4399-812c-fb9037e2c2b7}</GroupId>
+				</Network>
+			</Parameters>
+		</Entry>
+		<Entry Id="{f1d1a11d-2b81-495c-b725-b37d473c5594}">
+			<Type>AuditDenied</Type>
+			<AccessMask>64</AccessMask>
+			<Options>2</Options>
+		</Entry>
+	</PolicyRule>

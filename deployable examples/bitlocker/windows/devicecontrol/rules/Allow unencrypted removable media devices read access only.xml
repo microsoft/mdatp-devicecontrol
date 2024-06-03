@@ -1,23 +1,23 @@
-	<PolicyRule Id="{bf00562f-6bbe-4666-9369-da4d190368ce}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bbf00562f-6bbe-4666-9369-da4d190368ce%7D/RuleData -->
+	<PolicyRule Id="{c30e715b-fb8e-4c81-b4c2-bed294421002}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bc30e715b-fb8e-4c81-b4c2-bed294421002%7D/RuleData -->
 		<Name>Allow unencrypted removable media devices read access only</Name>
 		<IncludedIdList>
-			<GroupId>{e6f8010d-01c9-4744-979f-0f544c2826d1}</GroupId>
+			<GroupId>{34e4eaa3-6be5-4a94-8e38-7c8c86df94bf}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
-			<GroupId>{7c4e7b65-3321-4d3c-8710-13d3ace0eb2f}</GroupId>
+			<GroupId>{f1649cbf-717d-465f-9e6a-f75022b84f22}</GroupId>
 		</ExcludedIdList>
-		<Entry Id="{a77445b0-b0dc-472c-a771-f851cb9fd601}">
+		<Entry Id="{271a0529-43ee-459a-921e-b66cd804996b}">
 			<Type>Allow</Type>
 			<AccessMask>9</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{46e1a05f-acae-4542-8d96-877213179379}">
+		<Entry Id="{cf1f4b37-adc4-4b32-a4b1-4d801a979e12}">
 			<Type>Deny</Type>
 			<AccessMask>54</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{d3647cca-068e-4684-85e2-26d21a0882b0}">
+		<Entry Id="{af76762d-3734-43eb-a196-1f1b637a7472}">
 			<Type>AuditDenied</Type>
 			<AccessMask>54</AccessMask>
 			<Options>3</Options>
