@@ -749,9 +749,11 @@ class DeviceControlPolicyTemplate:
 
                     #retrieve the groups from the rule
                     for group in rule.included_groups:
+                        logger.debug("Adding included_group "+str(group))
                         self.groups.append(group)
 
                     for group in rule.excluded_groups:
+                        logger.debug("Adding excluded_group "+str(group))
                         self.groups.append(group)
     
                 else:
@@ -966,6 +968,14 @@ class DeviceControlPolicyTemplate:
                         updated_included_groups.append(group)
 
                     rule.included_groups = updated_included_groups
+
+                    updated_excluded_groups = []
+                    for group_id in rule.excluded_groups:
+                        group_setting = await self.graph.get_group_details(group_id)
+                        group = DeviceControlPolicyTemplate.DeviceControlGroup.createGroupfromSetting(group_setting)
+                        updated_excluded_groups.append(group)
+
+                    rule.excluded_groups = updated_excluded_groups
 
                 return rules
             
