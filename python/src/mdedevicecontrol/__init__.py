@@ -2234,6 +2234,7 @@ class Condition:
     def __init__(self,condition):
         self.match_type = condition.attrib['MatchType']
         
+
         self.groups = []
         self.properties = []
 
@@ -2241,6 +2242,7 @@ class Condition:
         self.condition_type = condition.tag
         self.read_condition_properties(condition.findall(".//"))
 
+        logger.debug("tag="+self.tag+" match_type="+self.match_type)
 
     def get_group_ids(self):
         return self.groups

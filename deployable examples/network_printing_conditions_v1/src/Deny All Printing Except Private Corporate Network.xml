@@ -9,7 +9,7 @@
             <AccessMask>64</AccessMask>
             <Options>0</Options>
             <Parameters MatchType="MatchAll">
-                <Network MatchType="MatchAll">
+                <Network MatchType="MatchExcludeAll">
                     <GroupId>{83d4b74a-af7c-4399-812c-fb9037e2c2b7}</GroupId>
                 </Network>
             </Parameters>

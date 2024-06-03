@@ -1,4 +1,4 @@
-# Device control policy sample: Private Network Printing Only with Default Allow
+# Device control policy sample: Deny All Printing Except Private Corporate Network with Default Allow
 
 Description: A policy              
 Device Type: Windows Printer
@@ -39,7 +39,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
                 <details>
                 <summary>View</summary>
                 MatchAll:
-                <ul><li> Windows Network: MatchAll 
+                <ul><li> Windows Network: MatchExcludeAll 
                         <ul><li>Group: Private Network<a href="#private-network" title="MatchAll {'NameId': 'Network 3', 'NetworkCategoryId': 'Private'}"> (details)</a>  
 </ul>
                 </ul>
@@ -55,6 +55,37 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 ## Groups
 
+
+### Network Printers
+
+
+
+This is a group of type *Device*. 
+The match type for the group is *MatchAny*.
+
+
+|  Property | Value |
+|-----------|-------|
+| PrinterConnectionId | Network |
+
+
+
+
+
+<details>
+<summary>View XML</summary>
+
+```xml
+<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+	<Name>Network Printers</Name>
+	<MatchType>MatchAny</MatchType>
+	<DescriptorIdList>
+		<PrinterConnectionId>Network</PrinterConnectionId>
+	</DescriptorIdList>
+</Group>
+```
+</details>
 
 ### Private Network
 
@@ -89,37 +120,6 @@ The match type for the group is *MatchAll*.
 ```
 </details>
 
-### Network Printers
-
-
-
-This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
-
-
-|  Property | Value |
-|-----------|-------|
-| PrinterConnectionId | Network |
-
-
-
-
-
-<details>
-<summary>View XML</summary>
-
-```xml
-<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
-	<Name>Network Printers</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>Network</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
-```
-</details>
-
 
 ## Settings
 
@@ -135,9 +135,9 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [groups/Network Printers.xml](groups/Network%20Printers.xml)
 - [groups/Private Network.xml](groups/Private%20Network.xml)
 - [rules/Deny all printing except on network printers on private network.xml](rules/Deny%20all%20printing%20except%20on%20network%20printers%20on%20private%20network.xml)
+- [groups/Network Printers.xml](groups/Network%20Printers.xml)
 
 
 # Deployment Instructions
@@ -171,6 +171,14 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
+	<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+		<Name>Network Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>Network</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
 	<Group Id="{83d4b74a-af7c-4399-812c-fb9037e2c2b7}" Type="Network">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B83d4b74a-af7c-4399-812c-fb9037e2c2b7%7D/GroupData -->
 		<Name>Private Network</Name>
@@ -178,14 +186,6 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		<DescriptorIdList>
 			<NameId>Network 3</NameId>
 			<NetworkCategoryId>Private</NetworkCategoryId>
-		</DescriptorIdList>
-	</Group>
-	<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
-		<Name>Network Printers</Name>
-		<MatchType>MatchAny</MatchType>
-		<DescriptorIdList>
-			<PrinterConnectionId>Network</PrinterConnectionId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -213,7 +213,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 			<AccessMask>64</AccessMask>
 			<Options>0</Options>
 			<Parameters MatchType="MatchAll">
-				<Network MatchType="MatchAll">
+				<Network MatchType="MatchExcludeAll">
 					<GroupId>{83d4b74a-af7c-4399-812c-fb9037e2c2b7}</GroupId>
 				</Network>
 			</Parameters>

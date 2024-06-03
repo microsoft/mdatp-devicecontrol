@@ -1,11 +1,18 @@
 {
      "policies": {
-          "Private Network Printing Only with Default Allow": {
+          "Deny All Printing Except Private Corporate Network with Default Allow": {
                "os": "windows",
                "version": "v1",
                "description": "A policy",
                "assignments": [],
                "groups": {
+                    "Network Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Network Printers.xml",
+                              "sha256": "110a1e017b05113f38fc9fd3adad24141581440ef620c11796ffe2af696af67a"
+                         }
+                    },
                     "Private Network": {
                          "description": "",
                          "file": {
@@ -19,7 +26,7 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/rules/Deny all printing except on network printers on private network.xml",
-                              "sha256": "221ade37110ff24662441274da7035bdc0650c0d4237af9a410e6139ba4c7e46"
+                              "sha256": "3c40d63e1d414d9b3d74b108f9d99109f72da8e8370e39d354b1cd79cd510810"
                          }
                     }
                },
