@@ -7,6 +7,7 @@ __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
 import argparse
+import sys
 import argcomplete
 from configparser import SafeConfigParser, ConfigParser
 import asyncio
@@ -2967,7 +2968,7 @@ class api:
 class CommandLine:
 
     async def process_args(args):     
-        print(str(args))
+        logger.info(str(args))
         if not "operation" in args or args.operation is None:
             return
     
@@ -3044,6 +3045,8 @@ class CommandLine:
                 result = CommandLine.update(args,config)
             case "delete":
                 result = await CommandLine.delete(args,config)
+            case "reusable_settings":
+                result = await CommandLine.reusable_settings(args,config)
                     
 
         pass
@@ -3408,7 +3411,70 @@ class CommandLine:
             logger.info("Aborting")
             return
 
+    async def reusable_settings(args,config):
 
+        authentication_type = "user"
+        if args.application_authentication:
+            authentication_type = "application"
+
+        
+        scopes=config["graph"]["scopes"]
+        graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
+        
+        if authentication_type == "user":
+            token = await graph.get_user_token()
+        else:
+            token = await graph.get_app_only_token()
+
+        from mdedevicecontrol.dcintune import DeviceControlPolicyTemplate
+
+        await DeviceControlPolicyTemplate(graph).load_data()
+        
+        logger.info(args.reusable_setting_operation)
+        match args.reusable_setting_operation:
+            case "update":
+                update_contents = args.infile.read()
+                logger.debug(update_contents)
+
+            case "get":
+                include_details = True
+
+                if args.reusable_setting_name is not None:
+                    results = await graph.get_reusable_settings(name=args.reusable_setting_name)
+                elif args.reusable_setting_id is not None:
+                    results = await graph.get_reusable_settings(id=args.reusable_setting_id)
+                else:    
+                    results = await graph.get_reusable_settings()
+
+                groups = []
+                for group in results.value:
+                    if group.setting_definition_id == "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata":
+                        logger.debug(str(group))
+                        
+                        group_obj = {
+                            "name": group.display_name,
+                            "description": group.description,
+                            "id": group.id
+                        }
+
+                        groups.append(group_obj)
+
+                        if include_details:
+
+                            result = await graph.get_group_details(group.id)
+                           
+                            group_details = DeviceControlPolicyTemplate.DeviceControlGroup.createGroupfromSetting(result)
+                            group_json = group_details.toJSON()
+
+                            group_obj["descriptors"] = group_json["descriptors"]
+                            group_obj["match_type"] = group_json["match_type"]
+
+
+                logger.info(str(groups))
+
+                #this should go to stdout
+                print(json.dumps(groups, indent=4))
+                pass
 
         
 
@@ -3487,8 +3553,22 @@ def main():
     delete_arg_parser.add_argument("-s","--silent",dest="silent_delete",action="store_true",help="don't prompt the user to confirm delete",default=False)
     
     #update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
+    reusable_settings_parser = subparsers.add_parser('reusable_settings',help='Perform operations on Intune reusable settings') 
+    reusable_settings_auth_type_choice_group = reusable_settings_parser.add_mutually_exclusive_group(required=True)
+    reusable_settings_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    reusable_settings_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
     
-   
+    reusable_settings_commands_parser = reusable_settings_parser.add_subparsers(title="operation",dest="reusable_setting_operation",description="The operation to perform on the reusable setting")
+    get_reusable_settings_parser = reusable_settings_commands_parser.add_parser("get",description="Get the reusable settings")
+    get_reusable_settings_search_options = get_reusable_settings_parser.add_mutually_exclusive_group(required=False)
+    get_reusable_settings_search_options.add_argument("-n","--name",dest="reusable_setting_name")
+    get_reusable_settings_search_options.add_argument("-i","--id",dest="reusable_setting_id")
+                                                       
+    update_reusable_settings_parser = reusable_settings_commands_parser.add_parser("update",description="Update the reusable settings")
+    update_reusable_settings_parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),default=sys.stdin)
+
+
+
     
     
 

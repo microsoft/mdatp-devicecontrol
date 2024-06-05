@@ -91,6 +91,50 @@ class DeviceControlPolicyTemplate:
             self.descriptors = []
 
 
+        def toJSON(self):
+
+            group_json = {
+                "id": self.id,
+                "name": self.name,
+                "descriptors":{}
+            }
+            match self.match_type:
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ANY_SETTING_ID:
+                    group_json["match_type"] = "MatchAny"
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ALL_SETTING_ID:
+                    group_json["match_type"] = "MatchAll"
+                case _:
+                    logger.warn("Unknown MatchType "+self.match_type)
+        
+            for descriptor in self.descriptors:
+                comment = None
+                tag_name = None
+                tag_text = None
+                
+
+                logger.debug("descriptor="+str(descriptor))
+
+                for key in descriptor:
+                    logger.debug("key="+key)
+                    match key:
+                        case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_DESCRIPTOR_LIST_NAME_SETTING_ID:
+                            comment = descriptor[key]
+                        case _:
+                            setting_details = DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[key]
+                            descriptor_id = setting_details.display_name
+                            descriptor_value = descriptor[key]
+
+                
+                group_json["descriptors"][comment] = {
+                    descriptor_id: descriptor_value
+                }
+
+                    
+
+            return group_json
+
+
+
         def __str__(self):
 
             '''
