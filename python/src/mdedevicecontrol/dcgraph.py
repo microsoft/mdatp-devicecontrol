@@ -399,11 +399,15 @@ class Graph:
     
     
     
-    async def update_group_v2(self,group,name,group_id):
+    async def update_group_v2(self,group,name,group_id,description=None):
 
         setting = DeviceManagementReusablePolicySetting()
         setting.setting_instance = group
         setting.display_name = name
+
+        if description is not None:
+            setting.description = description
+
         setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
         
         logger.debug("Update Group v2 "+str(group))

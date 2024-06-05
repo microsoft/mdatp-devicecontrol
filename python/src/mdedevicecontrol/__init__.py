@@ -3435,6 +3435,13 @@ class CommandLine:
             case "update":
                 update_contents = args.infile.read()
                 logger.debug(update_contents)
+                groups_json = json.loads(update_contents)
+
+                for group_json in groups_json:
+                    group = DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromJSON(group_json)
+                    result = await graph.update_group_v2(group, group_json["name"], group_json["id"], group_json["description"])
+
+
 
             case "get":
                 include_details = True
