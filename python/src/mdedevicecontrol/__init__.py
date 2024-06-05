@@ -750,6 +750,11 @@ class MatchType:
 
     All = "MatchAll"
     Any = "MatchAny"
+    ExcludeAll = "MatchExcludeAll"
+    ExcludeAny = "MatchExcludeAny"
+
+    
+   
 
 class Group:
 
@@ -1113,7 +1118,9 @@ class Group:
 
     supported_match_types = [
         MatchType.Any,
-        MatchType.All
+        MatchType.All,
+        MatchType.ExcludeAll,
+        MatchType.ExcludeAny
     ]
 
     AllGroupTypes = [
@@ -2139,6 +2146,11 @@ class Entry:
 
         logger.debug("Set options text to "+options_xml.text)
 
+        if self.parameters is not None:
+            parameters_xml = self.parameters.toXML("")
+            parameters_element = ET.fromstring(parameters_xml)
+            entry_xml.append(parameters_element)
+
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
      
         return entry_xml
@@ -2193,9 +2205,15 @@ class Entry:
         
 class Parameters:
 
-    def __init__(self,parameters):
-        self.match_type = parameters.attrib['MatchType']
+    def __init__(self,parameters=None):
+
         self.conditions = []
+        if parameters is None:
+            self.match_type = MatchType.All
+            return
+        else:
+            self.match_type = parameters.attrib['MatchType']
+        
         for condition in parameters.findall("./"):
             match condition.tag:
                 case "Network":
@@ -2232,13 +2250,19 @@ class Parameters:
 class Condition:
         
     
-    def __init__(self,condition):
-        self.match_type = condition.attrib['MatchType']
-        
+    def __init__(self,condition=None):
 
         self.groups = []
         self.properties = []
 
+        if condition is None:
+            self.match_type = MatchType.All
+            return
+        else:
+            self.match_type = condition.attrib['MatchType']
+        
+
+        
         self.tag = condition.tag
         self.condition_type = condition.tag
         self.read_condition_properties(condition.findall(".//"))
@@ -2640,7 +2664,7 @@ class api:
             id = api.newGUID()
             logger.debug("Generating UUID="+id+" for group")
 
-        logger.debug("Creating a group name="+name+" match_type="+match_type+" id="+id)
+        logger.debug("Creating a group name="+str(name)+" match_type="+match_type+" id="+id)
         
         '''
             <Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
@@ -2698,6 +2722,9 @@ class api:
         return self.createGroupOfWindowsDevices(name,property=Group.WindowsDeviceSerialNumberProperty, values=values,id=id)
 
 
+    
+
+    
     def createGroupOfWindowsDevices(self,name, 
                     property = Group.WindowsDeviceVendorProductProperty,
                     values = [],
@@ -2738,6 +2765,7 @@ class api:
                         WindowsEntryType.FileReadMask: True
                     },
                     notifications=Notifications(0,Format.OMA_URI),
+                    parameters=None,
                     id=None):
         '''
         <Entry Id="{467726b6-a548-4f09-80d0-e8a0efc90bce}">
@@ -2769,6 +2797,13 @@ class api:
 
         logger.debug("Set options text to "+options_xml.text)
 
+        if parameters is not None:
+            logger.debug("Adding parameters")
+            parameters_xml = parameters.toXML("")
+            parameters_element = ET.fromstring(parameters_xml)
+            ET.tostring(parameters_element,method="xml").decode("utf-8")
+            entry_xml.append(parameters_element)
+        
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
         
         return Entry(entry_xml)
@@ -3167,6 +3202,55 @@ class CommandLine:
             return
         
         import pandas as pd
+        dc = api()
+
+        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
+        logger.debug(str(xslx_groups))
+
+        groups = {}
+        for index, row in xslx_groups.iterrows():
+            group_name = row['Name']
+            group_type_string = row['Type']
+            group_match_string = row['Match']
+
+
+            group_type = Group.Types[group_type_string]
+
+            logger.debug("group_type="+str(group_type))
+
+            if group_match_string not in Group.supported_match_types:
+                raise Exception("Unknown match_type "+str(group_match_string))
+
+
+            xslx_group = pd.read_excel(xlsx_file_path,sheet_name=group_name)
+            logger.debug(str(xslx_group))
+
+            num_columns = len(list(xslx_group.columns))
+            logger.debug("num_columns="+str(num_columns))
+
+            column=0
+
+            properties = []
+            while column < num_columns:
+                property_name = list(xslx_group.columns)[column]
+                logger.debug("Property="+property_name)
+
+                group_property = GroupProperty.properties_by_name[property_name]
+                property_values = list(xslx_group[property_name])
+                logger.debug("Property_Values="+str(property_values))
+                
+                for property_value in property_values:
+                    property = Property(group_property,property_value)
+                    properties.append(property)
+
+                column = column + 1
+
+           
+            group = dc.createGroup(group_name,group_type,group_match_string,properties)
+            
+            groups[group_name] = group
+
+
 
         xslx_entries =pd.read_excel(xlsx_file_path,sheet_name="Entries")
 
@@ -3174,7 +3258,7 @@ class CommandLine:
 
         entries = {}
 
-        dc = api()
+        
 
         for index,row in xslx_entries.iterrows():
 
@@ -3194,6 +3278,39 @@ class CommandLine:
             permissions[WindowsEntryType.FileExecuteMask] = (row["File Execute"] == "X")
             permissions[WindowsEntryType.PrintMask] = (row["Print"] == "X")
 
+            parameters = None
+            if "Parameters Match Type" in row:
+                if row["Parameters Match Type"] is not None and str(row["Parameters Match Type"]).lower() != "nan":
+
+                    parameters_match_type = row["Parameters Match Type"]
+                    logger.debug("Parameters Match Type="+parameters_match_type)
+
+                    parameters = Parameters()
+                    parameters.match_type = row["Parameters Match Type"]
+                    
+ 
+            if "Network Match Type" in row:
+                if row["Network Match Type"] is not None and str(row["Network Match Type"]).lower() != "nan":
+
+                    logger.debug("network_match_type="+str(row["Network Match Type"]))
+                    network_condition = Condition()
+                    network_condition.tag = "Network"
+                    network_condition.match_type = row["Network Match Type"]
+
+                    network_group_names = row["Network Groups"]
+                    logger.debug("network_group_names="+str(network_group_names))
+                    network_group_names_list = str(network_group_names).split(",")
+
+                    for network_group_name in network_group_names_list:
+                        network_group = groups[network_group_name]
+                        network_condition.groups.append(network_group.id)
+
+                    parameters.conditions.append(network_condition)
+                        
+
+
+
+
             enforcement = None
 
             match type:
@@ -3210,37 +3327,9 @@ class CommandLine:
                 Entry.WindowsDevice,
                 enforcement=enforcement,
                 permissions=permissions,
-                notifications=Notifications(notification,Format.OMA_URI)
+                notifications=Notifications(notification,Format.OMA_URI),
+                parameters=parameters
             )
-
-        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
-        logger.debug(str(xslx_groups))
-
-        
-
-        groups = {}
-        for index, row in xslx_groups.iterrows():
-            group_name = row['Name']
-            group_type = row['Type']
-            group_match = row['Match']
-
-            xslx_group = pd.read_excel(xlsx_file_path,sheet_name=group_name)
-            logger.debug(str(xslx_group))
-
-            property_name = list(xslx_group.columns)[0]
-            logger.debug("Property="+property_name)
-
-            group_property = GroupProperty.properties_by_name[property_name]
-
-            property_values = list(xslx_group[property_name])
-            logger.debug("Property_Values="+str(property_values))
-            
-            group = dc.createGroupOfWindowsDevices(
-                name=group_name,
-                property=group_property,
-                values=property_values)
-            
-            groups[group_name] = group
 
 
         xslx_rules =pd.read_excel(xlsx_file_path,sheet_name="Rules")
@@ -3262,7 +3351,7 @@ class CommandLine:
             for included_group_name in included_group_names:
                 if included_group_name in groups:
                     included_groups.append(groups[included_group_name])
-                else:
+                elif included_group_name != "nan":
                     raise RuntimeError(included_group_name+" not found.")
                 
             excluded_groups = []
@@ -3292,13 +3381,42 @@ class CommandLine:
 
             rules[rule_name] = rule
 
+        xslx_settings =pd.read_excel(xlsx_file_path,sheet_name="Settings")
+        logger.debug(str(xslx_settings))
+        settings = []
+        for index,row in xslx_settings.iterrows():
+
+            logger.debug("index="+str(index))
+
+            setting_name = None
+            setting_value = None
+
+            if "Setting" in row:
+                setting_name = row["Setting"]
+            if "Value" in row:
+                setting_value = row["Value"]
+
+            if setting_value is not None and setting_name is not None:
+                logger.debug("Adding setting "+str(setting_name)+" value="+str(setting_value))
+                setting = Setting(setting_name,setting_value)
+
+                from mdedevicecontrol.dcintune import Package
+
+                intune_setting = Package.IntuneSetting(setting)
+
+                settings.append(intune_setting)
+        
+
         policy = dc.createPolicy(
             os=args.os,
+            description=args.description,
             name=args.name,
             version=args.version,
             rules=list(rules.values()),
-            groups=list(groups.values())
+            groups=list(groups.values()),
         )
+
+        policy.settings = settings
          
         from mdedevicecontrol.dcintune import Package
 
