@@ -5,11 +5,20 @@ Here's some helpful prompts to use with co-pilot
 ## Create a Powershell Utility to Access Device Properties
 
 ```
-Create a powershell program that uses System.Windows.Forms to show the currently connected PnP devices.  The form should have a tab for each USB and WPD. On that tab should be a Devices table that contains a row for each devices of that class that are present only.  The columns should be the Class, FriendlyName, InstanceId, Caption property.  Below the devices table should be a Device Properties table.  When a user selects a row in the Devices table, all of the properties of the device are shown in Device Properties table.  The Device Properties table should have one row per property.  When a user selects a row in the Device Properties table, the value of the property is copied to the user's clipboard and the user receives a notification in a dialog box that includes the value that was copied.  The two tables should have a bolded label followed by instructions for the user to follow above the data.  There should be a OK button at the bottom of the form.  
-
-When generating the porewshell, use only approved powershell verbs, make sure that the [void]$form.ShowDialog() is the last line of the program, and in the add_CellClick methods, reference the $selectedRow from $args[0].CurrentRow.  Don't use padding.
-
+Create a powershell program that uses System.Windows.Forms to show the currently connected PnP devices.
+The form should have a tab for each USB and WPD.
+On that tab should be a Devices table that contains a row for each devices of that class that are present only.
+The columns should be the Class, FriendlyName, InstanceId, Caption property.
+Below the devices table should be a Device Properties table.
+When a user selects a row in the Devices table, all of the properties of the device are shown in Device Properties table.
+The Device Properties table should have one row per property.
+When a user selects a row in the Device Properties table, the value of the property is copied to the user's clipboard and the user receives a notification in a dialog box that includes the value that was copied.
+The two tables should have a bolded label followed by instructions for the user to follow above the data.
+There should be a OK button at the bottom of the form.
+When generating the porewshell, use only approved powershell verbs, make sure that the [void]$form.ShowDialog() is the last line of the program, and in the add_CellClick methods, reference the $selectedRow from $args[0].CurrentRow.
+Don't use padding.
 ```
+
 
 ### Result
 ```powershell
