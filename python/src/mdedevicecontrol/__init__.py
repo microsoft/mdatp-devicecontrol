@@ -8,7 +8,7 @@ __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 import argparse
 import argcomplete
-from configparser import SafeConfigParser, ConfigParser
+from configparser import ConfigParser
 import asyncio
 import json
 import copy
