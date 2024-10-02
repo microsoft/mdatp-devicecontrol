@@ -65,6 +65,16 @@ Set the following environment variables
 | DC_TENANT_ID         | The ```tenant_id``` of the tenant |
 | DC_CLIENT_SECRET     | The ```client_secret_id ``` used by the application to authenticate to the Graph API|
 
+Here's an example on Linux/Mac
+
+```
+export DC_CONFIG_PATH=/workspaces/mdatp-devicecontrol/python/mdedevicecontrol.conf
+export DC_LOG_PATH=/workspaces/mdatp-devicecontrol/Examples/dc.log
+export DC_CLIENT_ID=09df2e26-5097-4912-95f5-XXXXXXXXXXXX
+export DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
+export DC_CLIENT_SECRET=
+```
+
 Note:
 - ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
 - ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)

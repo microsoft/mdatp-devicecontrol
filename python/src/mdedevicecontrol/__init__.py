@@ -3427,12 +3427,10 @@ def main():
 
     init_sources_parser = init_arg_parser.add_subparsers(help='source',required=True, dest="init_source")
     intune_source_parser = init_sources_parser.add_parser('intune')
-    intune_source_parser.add_argument("-p","--policies",dest="policies",help="comma separated list of policies")
-
+   
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
     xlsx_source_parser.add_argument("-f","--file",dest="file",help="xlsx file to import",required=True)
    
-    intune_source_parser = init_sources_parser.add_parser('intune')
     intune_source_parser.add_argument("-p","--policies",dest="policies",default="",required=False,help="command separated list of policy names to export")
     intune_source_auth_type_choice_group = intune_source_parser.add_mutually_exclusive_group(required=True)
     intune_source_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
