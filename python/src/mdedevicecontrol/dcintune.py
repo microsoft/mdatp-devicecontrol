@@ -9,6 +9,8 @@ from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 
 from msgraph_beta.generated.models.windows10_custom_configuration import Windows10CustomConfiguration
 from msgraph_beta.generated.models.oma_setting_string_xml import OmaSettingStringXml
+from msgraph_beta.generated.models.oma_setting_integer import OmaSettingInteger
+from msgraph_beta.generated.models.oma_setting_string import OmaSettingString
 
 from msgraph_beta.generated.models.device_management_configuration_group_setting_collection_instance import DeviceManagementConfigurationGroupSettingCollectionInstance
 from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
@@ -23,6 +25,8 @@ from msgraph_beta.generated.models.device_management_configuration_simple_settin
 from msgraph_beta.generated.models.device_management_configuration_setting_instance import DeviceManagementConfigurationSettingInstance
 
 from mdedevicecontrol.dcgraph import Graph
+from mdedevicecontrol import Setting
+
 import plistlib
 import argparse
 import json
@@ -1733,6 +1737,14 @@ class Package:
             policy_version = policy_json["version"]
             policy_description = policy_json["description"]
 
+
+            settings = []
+            for setting_name in policy_json["settings"]:
+                logger.info("Loading setting "+setting_name)
+                setting_value = policy_json["settings"][setting_name]["value"]
+                setting = Setting(setting_name,setting_value)
+                settings.append(setting)
+
             groups = []
             for group_name in policy_json["groups"]:
                 group_json = policy_json["groups"][group_name]
@@ -1792,7 +1804,8 @@ class Package:
                 version=policy_version,
                 description=policy_description,
                 rules=rules,
-                groups=groups)
+                groups=groups,
+                settings=settings)
             
             policies_metadata_json = p.metadata.getMetadataForPolicy(policy)
             policy_id = policies_metadata_json["id"]
@@ -2410,7 +2423,30 @@ class Package:
             win10config.description = ""
 
 
-        settings = []
+        oma_settings = []
+        
+        for setting in policy.settings:
+            
+            setting_value = setting.get_value()
+            setting_oma_uri = setting.get_oma_uri()
+            setting_type = setting.get_data_type()
+            
+            if setting_type == Setting.OMA_URI_Integer_DataType:
+                oma_uri_setting = OmaSettingInteger()
+                
+            elif setting_type == Setting.OMA_URI_String_DataType:
+                oma_uri_setting = OmaSettingString()
+                
+            oma_uri_setting.oma_uri = setting_oma_uri
+            oma_uri_setting.value = setting_value
+            oma_uri_setting.display_name = setting.name
+            
+            
+            oma_settings.append(oma_uri_setting)
+            logger.debug("Deploying setting "+str(setting.name))
+            
+            
+            
         for group in policy.groups:
 
             setting = OmaSettingStringXml()
@@ -2425,7 +2461,7 @@ class Package:
             setting.description = description
             setting.oma_uri = group.get_oma_uri()
 
-            settings.append(setting)
+            oma_settings.append(setting)
 
         for rule in policy.rules:
 
@@ -2441,11 +2477,11 @@ class Package:
             setting.description = description
             setting.oma_uri = rule.get_oma_uri()
 
-            settings.append(setting)
+            oma_settings.append(setting)
 
 
             
-        win10config.oma_settings = settings
+        win10config.oma_settings = oma_settings
 
         results = Package.IntuneResults(operation,metadata_policy_policy)
         

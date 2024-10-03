@@ -186,11 +186,9 @@ class Setting:
 
     DeviceControlEnabled = "DeviceControlEnabled"
     DefaultEnforcement = "DefaultEnforcement"
-    DataDuplicationDirectory = "DataDuplicationDirectory"
     SecuredDevicesConfiguration = "SecuredDevicesConfiguration"
-    DataDuplicationMaximumQuota = "DataDuplicationMaximumQuota"
-    DataDuplicationRemoteLocation = "DataDuplicationRemoteLocation"
     UXNavigationTarget = "UXNavigationTarget"
+    DeduplicateAccessEvents = "DeduplicateAccessEvents"
 
     data = {
         DeviceControlEnabled:{
@@ -199,6 +197,28 @@ class Setting:
             "oma-uri": {
                 "supported": True,
                 "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled",
+                "type": OMA_URI_Integer_DataType,
+                "value_map": {
+                    True: 1,
+                    False: 0
+                }
+            },
+            "gpo":{
+                "supported":True
+
+            },
+            "mac":{
+                "supported":False
+
+            }
+        },
+        DeduplicateAccessEvents:{
+            "description":"Deduplicates access events to only a single event when a device in first added.",
+            "name": "Deduplicate Access Events",
+            "oma-uri": {
+                "supported": True,
+                "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControl/DeduplicateAccessEvents",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled",
                 "type": OMA_URI_Integer_DataType,
                 "value_map": {
@@ -245,19 +265,7 @@ class Setting:
                 
             }
         },
-        DataDuplicationDirectory:{
-            "name": "File Evidence Directory",
-            "description": "Define data duplication directory for device control.",
-            "oma-uri": {
-                "supported":True,
-                "oma-uri":"./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory",
-                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationdirectory",
-                "type": OMA_URI_String_DataType
-            },
-            "mac":{
-                "supported":False
-            }
-        },
+        
         SecuredDevicesConfiguration: {
             "name": "Secured Devices",
             "description":"Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured.",
@@ -277,32 +285,6 @@ class Setting:
                 
             }
 
-        },
-        DataDuplicationMaximumQuota:{
-            "name": "File Evidence Quota",
-            "description":"Defines the maximum data duplication quota in MB that can be collected. When the quota is reached the filter will stop duplicating any data until the service manages to dispatch the existing collected data, thus decreasing the quota again below the maximum. The valid interval is [5-5000] MB. By default, the maximum quota will be 500 MB.",
-            "oma-uri":{
-                "supported":True,
-                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationmaximumquota",
-                "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationMaximumQuota",
-                "type": OMA_URI_Integer_DataType
-            },
-            "mac":{
-                "supported":False
-            }
-        },
-        DataDuplicationRemoteLocation:{
-            "name": "File Evidence Remote Location",
-            "description":"Define data duplication remote location for Device Control. When configuring this setting, ensure that Device Control is Enabled and that the provided path is a remote path the user can access.",
-            "oma-uri":{
-                "supported": True,
-                "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
-                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationremotelocation",
-                "type": OMA_URI_String_DataType
-            },
-            "mac":{
-                "supported": False
-            }
         },
         UXNavigationTarget: {
             "name":"UX Navigation Target",
@@ -2883,6 +2865,7 @@ class api:
                      description = None,
                      rules = [],
                      groups = [],
+                     settings = [],
                      id = None):
 
         import mdedevicecontrol.dcintune as intune
@@ -2902,6 +2885,9 @@ class api:
 
         for group in groups:
             policy.addGroup(group)
+            
+        for setting in settings:
+            policy.addSetting(setting)
 
         self.policies[policy.name] = policy
         return policy
