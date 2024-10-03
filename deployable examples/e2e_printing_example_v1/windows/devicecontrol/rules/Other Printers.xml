@@ -1,0 +1,22 @@
+	<PolicyRule Id="{9b318360-2d2b-4fde-8e97-a9f6ff5576cd}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B9b318360-2d2b-4fde-8e97-a9f6ff5576cd%7D/RuleData -->
+		<Name>Other Printers</Name>
+		<IncludedIdList>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{7de3417e-4b6f-4601-8e13-c41bffa6c04c}</GroupId>
+			<GroupId>{edf98528-02e2-434c-b121-191f18a80a95}</GroupId>
+			<GroupId>{3bb1fc07-98c1-4d9f-8be4-04717ccd6357}</GroupId>
+			<GroupId>{42e9ee1b-adc5-46fb-a51b-8ca3a7928f0d}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{ec1a8f07-ac98-4551-b24f-c706203695e2}">
+			<Type>Deny</Type>
+			<AccessMask>64</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{9e567372-35f9-47a7-8f56-73956c0d76f6}">
+			<Type>AuditDenied</Type>
+			<AccessMask>64</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>

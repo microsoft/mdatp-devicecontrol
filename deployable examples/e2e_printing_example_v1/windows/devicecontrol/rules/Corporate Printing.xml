@@ -1,0 +1,24 @@
+	<PolicyRule Id="{da7170af-134b-40f7-ab45-269720509566}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bda7170af-134b-40f7-ab45-269720509566%7D/RuleData -->
+		<Name>Corporate Printing</Name>
+		<IncludedIdList>
+			<GroupId>{3bb1fc07-98c1-4d9f-8be4-04717ccd6357}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{9e696ad1-b9a2-42be-8850-972da1e53514}">
+			<Type>Deny</Type>
+			<AccessMask>64</AccessMask>
+			<Options>0</Options>
+			<Parameters MatchType="MatchAny">
+				<Network MatchType="MatchExcludeAll">
+					<GroupId>{45a8d131-ed6a-4cdb-a1d5-2dbf329dd2d4}</GroupId>
+				</Network>
+			</Parameters>
+		</Entry>
+		<Entry Id="{e84db75a-ee6f-4228-ad39-fc3de783284d}">
+			<Type>AuditDenied</Type>
+			<AccessMask>64</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>

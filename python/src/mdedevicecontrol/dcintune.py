@@ -91,6 +91,50 @@ class DeviceControlPolicyTemplate:
             self.descriptors = []
 
 
+        def toJSON(self):
+
+            group_json = {
+                "id": self.id,
+                "name": self.name,
+                "descriptors":{}
+            }
+            match self.match_type:
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ANY_SETTING_ID:
+                    group_json["match_type"] = "MatchAny"
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ALL_SETTING_ID:
+                    group_json["match_type"] = "MatchAll"
+                case _:
+                    logger.warn("Unknown MatchType "+self.match_type)
+        
+            for descriptor in self.descriptors:
+                comment = None
+                tag_name = None
+                tag_text = None
+                
+
+                logger.debug("descriptor="+str(descriptor))
+
+                for key in descriptor:
+                    logger.debug("key="+key)
+                    match key:
+                        case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_DESCRIPTOR_LIST_NAME_SETTING_ID:
+                            comment = descriptor[key]
+                        case _:
+                            setting_details = DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[key]
+                            descriptor_id = setting_details.display_name
+                            descriptor_value = descriptor[key]
+
+                
+                group_json["descriptors"][comment] = {
+                    descriptor_id: descriptor_value
+                }
+
+                    
+
+            return group_json
+
+
+
         def __str__(self):
 
             '''
@@ -148,6 +192,103 @@ class DeviceControlPolicyTemplate:
             ET.indent(group, space="\t", level=0)
             return ET.tostring(group,method="xml").decode("utf-8")
 
+
+        def createSettingFromJSON(group_json):
+
+            logger.debug(str(group_json))
+            groupdata = DeviceManagementConfigurationGroupSettingCollectionInstance()
+            groupdata.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+            groupdata.group_setting_collection_value = []
+
+            groupdata_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
+            groupdata.group_setting_collection_value.append(groupdata_group_setting_value)
+
+            groupdata_group_setting_value.children = []
+
+            #group id"settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+            #groupdata_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
+            #groupdata_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_id"
+
+            #groupdata_id_value = DeviceManagementConfigurationStringSettingValue()
+            #groupdata_id_value.value = group_json["id"]
+
+            #groupdata_id_setting.simple_setting_value = groupdata_id_value
+            #groupdata_group_setting_value.children.append(groupdata_id_setting)
+
+            '''
+            For each element in the list 
+                    {
+                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance",
+                        "groupSettingCollectionValue": [
+                            {
+                                "children": [
+                                    {
+                                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingInstance",
+                                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name",
+                                        "simpleSettingValue": {
+                                            "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
+                                            "value": "Serial Number 1"
+                                        }
+                                    },
+                                    {
+                                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingInstance",
+                                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_serialnumberid",
+                                        "simpleSettingValue": {
+                                            "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
+                                            "value": "11111111"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist"
+                    }
+            '''
+            
+
+            
+            for descriptor in group_json["descriptors"].keys():
+
+                descriptorIdList = DeviceManagementConfigurationGroupSettingCollectionInstance()
+                descriptorIdList.setting_definition_id = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist'
+                descriptor_id_value = DeviceManagementConfigurationGroupSettingValue()
+                descriptorIdList.group_setting_collection_value = [descriptor_id_value]
+                descriptor_id_value.children = []
+           
+                logger.debug("descriptor="+descriptor)
+
+                #One item for the name
+                name = DeviceManagementConfigurationSimpleSettingInstance()
+                name.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name"
+                name.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
+                name.simple_setting_value.value = descriptor
+                descriptor_id_value.children.append(name)
+
+                descriptor_ids = group_json["descriptors"][descriptor]
+
+                logger.debug("descriptor_ids="+str(descriptor_ids))
+
+                for descriptor_id_name in descriptor_ids:
+
+                    #One item for the value
+                    value = DeviceManagementConfigurationSimpleSettingInstance()
+                    value.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_"+str(descriptor_id_name).lower()
+                    value.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
+                    value.simple_setting_value.value = descriptor_ids[descriptor_id_name]
+                    descriptor_id_value.children.append(value)
+
+                groupdata_group_setting_value.children.append(descriptorIdList)
+
+            
+            #match type
+            match_type_setting = DeviceManagementConfigurationChoiceSettingInstance()
+            match_type_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype"
+            match_type_setting.choice_setting_value = DeviceManagementConfigurationChoiceSettingValue()
+            match_type_setting.choice_setting_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype_matchany"
+
+            groupdata_group_setting_value.children.append(match_type_setting)
+
+            return groupdata
 
 
         def createSettingFromGroup(group):

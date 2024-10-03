@@ -1,0 +1,8 @@
+	<Group Id="{edf98528-02e2-434c-b121-191f18a80a95}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bedf98528-02e2-434c-b121-191f18a80a95%7D/GroupData -->
+		<Name>All File Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>File</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>

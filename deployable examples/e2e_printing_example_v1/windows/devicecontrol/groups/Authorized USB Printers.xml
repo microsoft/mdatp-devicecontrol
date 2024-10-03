@@ -1,0 +1,9 @@
+	<Group Id="{005999fd-2973-44a6-b0c7-2ce4be43c451}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B005999fd-2973-44a6-b0c7-2ce4be43c451%7D/GroupData -->
+		<Name>Authorized USB Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>03F0_</VID_PID>
+			<VID_PID>035E_0872</VID_PID>
+		</DescriptorIdList>
+	</Group>
