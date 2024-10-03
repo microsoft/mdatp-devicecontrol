@@ -5,7 +5,26 @@ Utilities for Device Control
 ## Getting Started
 
 - Fork the repo
-- [Install and Configure](#installation-and-configuration) ```dc``` including configuring the connection to the graph API.
+
+### Install the tools
+
+1. Install [python 3.12](https://www.python.org/downloads/release/python-3120/) or greater
+2. Install the package locally
+
+```
+python3 -m pip install --upgrade build
+python3 -m build
+pip3 install -e .
+```
+The follow shortcuts should be created:
+
+   - ```dc``` - [Creating and deploying device control policies](#dc)
+   - ```dcconvert``` - [Converting Windows XML to macOS JSON formats](#dcconvert)
+   - ```dcupgrade``` - [Upgrade macOS v1 policies to v2](#dcupgrade)
+   - ```dcdoc``` - [Generate documentation for device control policies](#dcdoc)
+
+### Deploy a sample using dc
+- [Configure the environment for dc](#setting-up-the-environment-for-dc)
 - To deploy an example, go to one of the directories in the [deployable examples](../deployable%20examples/), and type ```dc apply```
 - To import a configuration from an Excel file *<xlsx-file>* and deploy it to Intune:
     -   Create a directory for the project called *<package-dir>*
@@ -13,32 +32,6 @@ Utilities for Device Control
     -   ```dc init xlsx --file <xlsx-file> --name <name of the project> --description <description for the project> --os [windows|macOs] --version [v1|v2]```
     -  ```dc apply --user```
 
-## Installation and Configuration
-
-1. Install [python 3.10](https://www.python.org/downloads/release/python-3100/) or greater
-2. Install the package locally
-
-```
-python3 -m pip install --upgrade build
-python3 -m build
-pip3 install -e
-```
-
-3. Set-up the environment
-
-| Environment Variable | Description |
-|---                   |---
-| DC_CONFIG_PATH       | Path to the ```mdedevicecontrol.conf```
-| DC_LOG_PATH          | Path to for the ```dc.log```
-| DC_CLIENT_ID         | The ```client_id``` used to connect to the Graph API |
-| DC_TENANT_ID         | The ```tenant_id``` of the tenant |
-| DC_CLIENT_SECRET     | The ```client_secret_id ``` used by the application to authenticate to the Graph API|
-
-Note:
-- ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
-- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
-- ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.
-- ```dc``` reads the credentials information from the environment variables.
 
 
 
@@ -59,6 +52,34 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
 ```
+
+### Setting up the environment for dc
+
+Set the following environment variables
+
+| Environment Variable | Description |
+|---                   |---
+| DC_CONFIG_PATH       | Path to the ```mdedevicecontrol.conf```
+| DC_LOG_PATH          | Path to for the ```dc.log```
+| DC_CLIENT_ID         | The ```client_id``` used to connect to the Graph API |
+| DC_TENANT_ID         | The ```tenant_id``` of the tenant |
+| DC_CLIENT_SECRET     | The ```client_secret_id ``` used by the application to authenticate to the Graph API|
+
+Here's an example on Linux/Mac
+
+```
+export DC_CONFIG_PATH=/workspaces/mdatp-devicecontrol/python/mdedevicecontrol.conf
+export DC_LOG_PATH=/workspaces/mdatp-devicecontrol/Examples/dc.log
+export DC_CLIENT_ID=09df2e26-5097-4912-95f5-XXXXXXXXXXXX
+export DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
+export DC_CLIENT_SECRET=
+```
+
+Note:
+- ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
+- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
+- ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.
+- ```dc``` reads the credentials information from the environment variables.
 
 
 ### dc init
@@ -283,22 +304,96 @@ usage: dcupgrade [-h] [-o OUTPUT_FILE]
                             v1_policy
 ```
 
+for example:
+
+```
+dcupgrade /workspaces/mdatp-devicecontrol/macOS/mobileconfig/v1/deny_all_mount.mobileconfig
+```
+Gerenates the following in ``dc_policy.json``
+
+```json
+{
+  "groups": [
+    {
+      "$type": "device",
+      "id": "9eb96f56-a517-4ab0-9615-d0f0b0bf51be",
+      "name": "Removable Storage Devices: All",
+      "query": {
+        "$type": "and",
+        "clauses": [
+          {
+            "$type": "primaryId",
+            "value": "removable_media_devices"
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "38075d0a-77f7-4f61-880b-5014ec900c19",
+      "name": "Removable Storage Devices: All",
+      "includeGroups": [
+        "9eb96f56-a517-4ab0-9615-d0f0b0bf51be"
+      ],
+      "entries": [
+        {
+          "$type": "removableMedia",
+          "id": "b604eccd-5bd6-4232-ba63-81ecd7801d23",
+          "enforcement": {
+            "$type": "deny"
+          },
+          "access": [
+            "read",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "$type": "removableMedia",
+          "id": "435b62a4-adf4-4578-abdb-ffecc2b0e4d9",
+          "enforcement": {
+            "$type": "auditDeny",
+            "options": [
+              "send_event",
+              "show_notification"
+            ]
+          },
+          "access": [
+            "read",
+            "write",
+            "execute"
+          ]
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "features": {
+      "removableMedia": {
+        "disable": false
+      }
+    },
+    "ux": {
+      "navigationTarget": "https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/mac-device-control-overview?view=o365-worldwide"
+    }
+  }
+```
 <details>
 <summary>Visual Studio Code configuration</summary>
 
 ```json
- {
-     "name": "Python: Upgrade device control Policy",
-     "type": "python",
-     "request": "launch",
-     "program": "${workspaceFolder}\\python\\upgrade_dc_policy.py",
-     "console": "integratedTerminal",
-     "justMyCode": true,
-     "args":[
-         "${file}",
-         "-o${workspaceFolder}\\Examples\\upgrade.json"
-     ]
- }
+
+        {
+            "name": "Convert the v1 file to v2",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/python/src/mdedevicecontrol/upgrade_dc_policy.py",
+            "console": "integratedTerminal",
+            "args": [
+                "${file}"
+            ]
+        }
 ```
 </details>
 

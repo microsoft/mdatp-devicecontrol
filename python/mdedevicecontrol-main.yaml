@@ -16,7 +16,7 @@ stages:
     steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: '3.10'
+          versionSpec: '3.12'
           addToPath: true
           architecture: 'x64'
       - script: |
@@ -42,6 +42,11 @@ stages:
     - script: |
         mkdir export
       displayName: "Create export directory"
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.12'
+        addToPath: true
+        architecture: 'x64'
     - script: |
         pwd
         cd python
