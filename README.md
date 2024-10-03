@@ -2,9 +2,7 @@
 
 This repository contains samples and resources for [Microsoft Defender for Endpoint Device Control for Windows](windows/README.md) and [Microsoft Defender for Endpoint Device Control for Mac](macOS/README.md)
 
-Check the [groups inventory](/dc_groups.csv) and [rules inventory](/dc_rules.csv) for a complete list.
-
-The repository also contains [tools](python/README.md) for [converting](python/README.md#convert_dc_policypy), [upgrading](python/README.md#upgrade_dc_policypy) and [documenting](python/README.md#dcdocpy) device control policies.
+The repository also contains [tools](python/README.md) for [converting Windows XML policies to macOS JSON policies](python/README.md#convert_dc_policypy), [upgrading macOS v1 policies to macOS v2 policies](python/README.md#upgrade_dc_policypy) and [generating documentation](python/README.md#dcdocpy) for device control policies.
 
 ## Contributing
 
