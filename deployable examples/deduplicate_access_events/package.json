@@ -1,0 +1,40 @@
+{
+     "policies": {
+          "Deduplicate access events example": {
+               "os": "windows",
+               "version": "v1",
+               "description": "Basic policy demonstrating the deduplicate access events setting",
+               "assignments": [],
+               "groups": {
+                    "All Devices": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Devices.xml",
+                              "sha256": "f71ed7b584b70e8dfac1e759322320fc234285f7f1bb172a98621907036963f0"
+                         }
+                    }
+               },
+               "rules": {
+                    "Audit Allowed Example": {
+                         "description": "Audit all access on all devices",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Audit Allowed Example.xml",
+                              "sha256": "9487f79d76d11d37fb0211e4aed3c504f0bdc8939ecf97b8b1cd6bfa9cc6229e"
+                         }
+                    }
+               },
+               "settings": {
+                    "DefaultEnforcement": {
+                         "value": "Allow",
+                         "name": "",
+                         "description": ""
+                    },
+                    "DeduplicateAccessEvents": {
+                         "value": true,
+                         "name": "",
+                         "description": ""
+                    }
+               }
+          }
+     }
+}
