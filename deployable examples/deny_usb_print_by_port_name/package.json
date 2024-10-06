@@ -1,0 +1,40 @@
+{
+     "policies": {
+          "Deny USB printers by port name": {
+               "os": "windows",
+               "version": "v1",
+               "description": "An example of using PrinterPortNameId to define groups of printers by port name",
+               "assignments": [],
+               "groups": {
+                    "USB Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/USB Printers.xml",
+                              "sha256": "725126c1f80586d326bfbd80e7fc2c2583ab5a70d49daceee66bb44b74abebc5"
+                         }
+                    }
+               },
+               "rules": {
+                    "Deny USB Printing": {
+                         "description": "Deny printing for USB printers",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Deny USB Printing.xml",
+                              "sha256": "e1e6f942c12d02429af9a6ca03e5b0939ab985ba5b8b2d2cd8ecf75d2529ecf8"
+                         }
+                    }
+               },
+               "settings": {
+                    "DefaultEnforcement": {
+                         "value": "Allow",
+                         "name": "",
+                         "description": ""
+                    },
+                    "DeduplicateAccessEvents": {
+                         "value": true,
+                         "name": "",
+                         "description": ""
+                    }
+               }
+          }
+     }
+}

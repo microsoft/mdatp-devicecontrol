@@ -618,6 +618,9 @@ class GroupProperty:
     WindowsDeviceEncryptedState = "DeviceEncryptionStateId"
     WindowsDeviceBitlockerEncrypted = "BitlockerEncrypted"
     WindowsDeviceNotEncrypted = "Plain"
+    
+    #PrinterPortNameId
+    WindowsPrinterPortName = "PrinterPortNameId"
 
 
     #Network
@@ -891,7 +894,7 @@ class Group:
         ]
     )
 
-    WinodwsPrinterConnectionProperty = GroupProperty(
+    WindowsPrinterConnectionProperty = GroupProperty(
         GroupProperty.WindowsPrinterConnection,
         "Windows Printer Connection",
         [
@@ -906,12 +909,18 @@ class Group:
 
     )
 
+    WindowsPrinterPortNameIdProperty = GroupProperty(
+        GroupProperty.WindowsPrinterPortName,
+        "Windows Printer Port Name",
+        "The name of the port being used to print.  Supports wildcards."
+    )
 
     WindowsPrinterGroupProperties = [
         WindowsDeviceFamilyProperty,
         WindowsDeviceFriendlyNameProperty,
         WindowsDeviceVendorProductProperty,   
-        WinodwsPrinterConnectionProperty,
+        WindowsPrinterConnectionProperty,
+        WindowsPrinterPortNameIdProperty,
         WindowsGroupProperty
     ]
 
@@ -1168,12 +1177,12 @@ class Group:
                 if group_property is None:
                     #This is the special case where they have the same group type (device),
                     #but different properties
-                    if self.group_type.name == GroupType.WindowsDeviceGroupType and descriptor.tag == GroupProperty.WindowsPrinterConnection:
+                    if self.group_type.name == GroupType.WindowsDeviceGroupType and (descriptor.tag == GroupProperty.WindowsPrinterConnection or descriptor.tag == GroupProperty.WindowsPrinterPortName):
                         self.group_type = Group.WindowsPrinterGroupType
                         group_property = self.group_type.get_property_by_name(descriptor.tag)
                 
                     else:
-                        raise Exception("Unknown group property"+str(descriptor.tag)+" for "+self.group_type.label)
+                        raise Exception("Unknown group property "+str(descriptor.tag)+" for "+self.group_type.label)
                 
 
                 self._properties.append(Property(group_property, descriptor.text))
@@ -2445,11 +2454,14 @@ IntuneUXFeature = Feature(
             "unsupported_descriptors": {
                 Group.WindowsDeviceGroupType: [
                     Group.WindowsDeviceEncryptionStateProperty
+                ],
+                Group.WindowsPrinterGroupType: [
+                    Group.WindowsPrinterPortNameIdProperty
                 ]
             }
         },
         "entry":{
-            "access_masks":[1,2,4,64],
+            "access_masks":[1,2,4,8,16,32,64],
              "supported_notifications":{
                     PolicyRule.Allow:{
                         "notifications":[
@@ -3366,30 +3378,37 @@ class CommandLine:
 
             rules[rule_name] = rule
 
-        xslx_settings =pd.read_excel(xlsx_file_path,sheet_name="Settings")
-        logger.debug(str(xslx_settings))
+        xslx_settings = None
+        try:
+            xslx_settings = pd.read_excel(xlsx_file_path,sheet_name="Settings")
+            
+        except (ValueError):
+            logger.info("No settings sheet")
+            logger.debug(str(xslx_settings))
+        
         settings = []
-        for index,row in xslx_settings.iterrows():
+        if xslx_settings is not None:
+            for index,row in xslx_settings.iterrows():
 
-            logger.debug("index="+str(index))
+                logger.debug("index="+str(index))
 
-            setting_name = None
-            setting_value = None
+                setting_name = None
+                setting_value = None
 
-            if "Setting" in row:
-                setting_name = row["Setting"]
-            if "Value" in row:
-                setting_value = row["Value"]
+                if "Setting" in row:
+                    setting_name = row["Setting"]
+                if "Value" in row:
+                    setting_value = row["Value"]
 
-            if setting_value is not None and setting_name is not None:
-                logger.debug("Adding setting "+str(setting_name)+" value="+str(setting_value))
-                setting = Setting(setting_name,setting_value)
+                if setting_value is not None and setting_name is not None:
+                    logger.debug("Adding setting "+str(setting_name)+" value="+str(setting_value))
+                    setting = Setting(setting_name,setting_value)
 
-                from mdedevicecontrol.dcintune import Package
+                    from mdedevicecontrol.dcintune import Package
 
-                intune_setting = Package.IntuneSetting(setting)
+                    intune_setting = Package.IntuneSetting(setting)
 
-                settings.append(intune_setting)
+                    settings.append(intune_setting)
         
 
         policy = dc.createPolicy(
