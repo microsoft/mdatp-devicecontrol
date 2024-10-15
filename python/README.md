@@ -153,7 +153,8 @@ The xlsx import uses the following sheets:
 | Entries | Rows of entries to be used in rules |
 | Groups  | Rows of groups to be used in rules.  |
 | Rules   | Rows of the information used by rules |
-| *<group name>*| A sheet that contains the group data for a group |
+| *group name*| A sheet that contains the group data for a group |
+| Settings | Rows on settings and their values
 
 #### Example Group Data sheet
 
@@ -174,7 +175,7 @@ Note
 | Allowed USBs | Allow full access,Audit write access |All Removable Media Devices|Allowed USBs|Deny all access, Audit deny  all access and block|
 
 Note:  
-- The name of the groups are comman delimited and **must** match the name of the sheet containing the group data
+- The name of the groups are comma delimited and **must** match the name of the sheet containing the group data
 - The values in the entries are comma delimited and **must** match the name inf the Entries sheet
 
 
@@ -194,7 +195,14 @@ Audit write access| AuditAllowed| | X| | | | |2|
 
  Note:  the name of the group **must** match the name of the sheet containing the group data
 
-A example spreadsheet is [here](../examples/bitlocker/src/bitllocker_dc_example.xlsx/)
+ ### Example Settings sheet
+
+ | Setting | Value |
+ |---      |---
+ | DefaultEnforcement | Allow |
+ | DeduplicateAccessEvents | TRUE |
+
+A example spreadsheet is [here](../deployable%20examples/deduplicate_access_events/src/deduplicate_audit_example.xlsx)
 
 ### dc init intune
 
