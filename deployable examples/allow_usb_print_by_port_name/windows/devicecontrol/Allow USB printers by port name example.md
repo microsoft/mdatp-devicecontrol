@@ -1,6 +1,6 @@
-# Device control policy sample: Deny USB printers by port name
+# Device control policy sample: Allow USB printers by port name example
 
-**Description:** An example of using PrinterPortNameId to define groups of printers by port name              
+**Description:** Allows printers in the Authorized Printers group to print.  The Authorized Printers groupmatches based on PrinterPortNameId              
 **Device Type:** Windows Printer
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -24,24 +24,18 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
         <th>Excluded</th>
         <th>Print</th>
         </tr><tr>
-            <td rowspan="2" valign="top"><b>Deny USB Printing</b></td>
-            <td rowspan="2 valign="top">
-                <ul><li>Group: USB Printers<a href="#usb-printers" title="MatchAny {'PrinterPortNameId': 'USB*'}"> (details)</a>  
+            <td rowspan="1" valign="top"><b>Allow Print for Authorized Printers</b></td>
+            <td rowspan="1 valign="top">
+                <ul><li>Group: Authorized Printers<a href="#authorized-printers" title="MatchAny {'PrinterPortNameId': 'WSD*'}"> (details)</a>  
 </ul>
             </td>
-            <td rowspan="2" valign="top">
+            <td rowspan="1" valign="top">
                 <ul></ul>
             </td>
-            <td>Deny</td>
-            <td>:x:</td>
+            <td>Allow</td>
+            <td>:white_check_mark:</td>
             <td>None (0)</td> 
             <td>
-                <center>-</center></td>
-        </tr><tr>
-            <td>Audit Denied</td>
-            <td>:page_facing_up:</td>
-            <td>Show notification and Send event (3)</td>
-            <td> 
                 <center>-</center></td>
         </tr></table>
 
@@ -49,7 +43,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 ## Groups
 
 
-### USB Printers
+### Authorized Printers
 
 
 
@@ -59,7 +53,7 @@ The match type for the group is *MatchAny*.
 
 |  Property | Value |
 |-----------|-------|
-| PrinterPortNameId | USB* |
+| PrinterPortNameId | WSD* |
 
 
 
@@ -69,12 +63,12 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{1a598b22-c309-4b33-8016-bc1372186caa}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1a598b22-c309-4b33-8016-bc1372186caa%7D/GroupData -->
-	<Name>USB Printers</Name>
+<Group Id="{3f782150-39c2-47c0-8061-486759099de8}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B3f782150-39c2-47c0-8061-486759099de8%7D/GroupData -->
+	<Name>Authorized Printers</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
-		<PrinterPortNameId>USB*</PrinterPortNameId>
+		<PrinterPortNameId>WSD*</PrinterPortNameId>
 	</DescriptorIdList>
 </Group>
 ```
@@ -90,15 +84,15 @@ The match type for the group is *MatchAny*.
 
 | Setting Name |  Setting Value | Description |Documentation |
 |--------------|----------------|-------------|---------------|
-DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
 DeduplicateAccessEvents | True | Deduplicates access events to only a single event when a device in first added. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
-- [groups/USB Printers.xml](groups/USB%20Printers.xml)
-- [rules/Deny USB Printing.xml](rules/Deny%20USB%20Printing.xml)
+- [rules/Allow Print for Authorized Printers.xml](rules/Allow%20Print%20for%20Authorized%20Printers.xml)
+- [groups/Authorized Printers.xml](groups/Authorized%20Printers.xml)
 
 
 # Deployment Instructions
@@ -131,12 +125,12 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{1a598b22-c309-4b33-8016-bc1372186caa}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1a598b22-c309-4b33-8016-bc1372186caa%7D/GroupData -->
-		<Name>USB Printers</Name>
+	<Group Id="{3f782150-39c2-47c0-8061-486759099de8}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B3f782150-39c2-47c0-8061-486759099de8%7D/GroupData -->
+		<Name>Authorized Printers</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
-			<PrinterPortNameId>USB*</PrinterPortNameId>
+			<PrinterPortNameId>WSD*</PrinterPortNameId>
 		</DescriptorIdList>
 	</Group>
 </Groups>
@@ -151,23 +145,18 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{f428ee00-232f-42e7-badd-fc6173d292da}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf428ee00-232f-42e7-badd-fc6173d292da%7D/RuleData -->
-		<Name>Deny USB Printing</Name>
+	<PolicyRule Id="{f91786e9-a531-4663-82d0-d97dbc4ee602}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf91786e9-a531-4663-82d0-d97dbc4ee602%7D/RuleData -->
+		<Name>Allow Print for Authorized Printers</Name>
 		<IncludedIdList>
-			<GroupId>{1a598b22-c309-4b33-8016-bc1372186caa}</GroupId>
+			<GroupId>{3f782150-39c2-47c0-8061-486759099de8}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{42a1c5d8-b033-4d0a-ba06-77a1d00745fe}">
-			<Type>Deny</Type>
+		<Entry Id="{aceec5d3-3c95-4bfc-b481-5091cc104460}">
+			<Type>Allow</Type>
 			<AccessMask>64</AccessMask>
 			<Options>0</Options>
-		</Entry>
-		<Entry Id="{070ad1af-18ab-44a6-9bf4-4bfb716095e9}">
-			<Type>AuditDenied</Type>
-			<AccessMask>64</AccessMask>
-			<Options>3</Options>
 		</Entry>
 	</PolicyRule>
 </PolicyRules>
@@ -191,31 +180,31 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Deny USB Printing</summary>  
+<summary>Add a row for Allow Print for Authorized Printers</summary>  
    
    1. Click "Add"
-   2. For Name, enter *Deny USB Printing*
+   2. For Name, enter *Allow Print for Authorized Printers*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf428ee00-232f-42e7-badd-fc6173d292da%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf91786e9-a531-4663-82d0-d97dbc4ee602%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/deny_usb_print_by_port_name/windows/devicecontrol/rules/Deny USB Printing.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/allow_usb_print_by_port_name/windows/devicecontrol/rules/Allow Print for Authorized Printers.xml*
          
    
    7. Click "Save"
 </details>
 <details>
-<summary>Add a row for USB Printers</summary>  
+<summary>Add a row for Authorized Printers</summary>  
    
    1. Click "Add"
-   2. For Name, enter *USB Printers*
+   2. For Name, enter *Authorized Printers*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1a598b22-c309-4b33-8016-bc1372186caa%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B3f782150-39c2-47c0-8061-486759099de8%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/deny_usb_print_by_port_name/windows/devicecontrol/groups/USB Printers.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/allow_usb_print_by_port_name/windows/devicecontrol/groups/Authorized Printers.xml*
          
    
    7. Click "Save"
@@ -229,7 +218,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
    5. For Data type, select *Integer*
    
-   7. For Value, enter *1*
+   7. For Value, enter *2*
    
    7. Click "Save"
 </details>

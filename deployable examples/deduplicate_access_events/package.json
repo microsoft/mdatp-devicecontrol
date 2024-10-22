@@ -3,29 +3,36 @@
           "Deduplicate access events example": {
                "os": "windows",
                "version": "v1",
-               "description": "Basic policy demonstrating the deduplicate access events setting",
+               "description": "All devices access is audited",
                "assignments": [],
                "groups": {
                     "All Devices": {
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Devices.xml",
-                              "sha256": "f71ed7b584b70e8dfac1e759322320fc234285f7f1bb172a98621907036963f0"
+                              "sha256": "ed1a6c9ee23bcf103381ce3b44ac2e4c8360eefbe914ba36feff9519ddcf2f6e"
                          }
                     }
                },
                "rules": {
-                    "Audit Allowed Example": {
-                         "description": "Audit all access on all devices",
+                    "All Devices Audit Allows ": {
+                         "description": "Send an event for all allowed operations",
                          "file": {
-                              "path": "windows/devicecontrol/rules/Audit Allowed Example.xml",
-                              "sha256": "9487f79d76d11d37fb0211e4aed3c504f0bdc8939ecf97b8b1cd6bfa9cc6229e"
+                              "path": "windows/devicecontrol/rules/All Devices Audit Allows .xml",
+                              "sha256": "079081f25f3ba36ed9549f674831962f90b2a456d2e59a2b9a413536a53b1594"
+                         }
+                    },
+                    "All Devices Audit and Notify Denies ": {
+                         "description": "Send an event and notify the user for all denied operations",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/All Devices Audit and Notify Denies .xml",
+                              "sha256": "1ad28a3ff6b65edde57c3ad30e23fcae1a4910992d9957d75b5d8b07dbbc8db3"
                          }
                     }
                },
                "settings": {
                     "DefaultEnforcement": {
-                         "value": "Allow",
+                         "value": "Deny",
                          "name": "",
                          "description": ""
                     },

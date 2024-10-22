@@ -1,6 +1,6 @@
 # Device control policy sample: Deduplicate access events example
 
-**Description:** Basic policy demonstrating the deduplicate access events setting              
+**Description:** All devices access is audited              
 **Device Type:** Windows Generic Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
@@ -28,7 +28,27 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Write</th>
 		<th>File Execute</th><th>Print</th>
         </tr><tr>
-            <td rowspan="1" valign="top"><b>Audit Allowed Example</b></td>
+            <td rowspan="1" valign="top"><b>All Devices Audit and Notify Denies </b></td>
+            <td rowspan="1 valign="top">
+                <ul><li>Group: All Devices<a href="#all-devices" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
+</ul>
+            </td>
+            <td rowspan="1" valign="top">
+                <ul></ul>
+            </td>
+            <td>Audit Denied</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>:page_facing_up:</td>
+            <td>Show notification and Send event (3)</td> 
+            <td>
+                <center>-</center></td>
+        </tr><tr>
+            <td rowspan="1" valign="top"><b>All Devices Audit Allows </b></td>
             <td rowspan="1 valign="top">
                 <ul><li>Group: All Devices<a href="#all-devices" title="MatchAny {'PrimaryId': 'PrinterDevices'}"> (details)</a>  
 </ul>
@@ -76,8 +96,8 @@ The match type for the group is *MatchAny*.
 <summary>View XML</summary>
 
 ```xml
-<Group Id="{e00dae45-b54a-4223-bbb2-62e1613f2062}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be00dae45-b54a-4223-bbb2-62e1613f2062%7D/GroupData -->
+<Group Id="{f16d624f-16fc-4ddc-a960-9f0d8dc82e1c}" Type="Device">
+	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf16d624f-16fc-4ddc-a960-9f0d8dc82e1c%7D/GroupData -->
 	<Name>All Devices</Name>
 	<MatchType>MatchAny</MatchType>
 	<DescriptorIdList>
@@ -100,15 +120,16 @@ The match type for the group is *MatchAny*.
 
 | Setting Name |  Setting Value | Description |Documentation |
 |--------------|----------------|-------------|---------------|
-DefaultEnforcement | Allow | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
+DefaultEnforcement | Deny | Control Device Control default enforcement. This is the enforcement applied if there are no policy rules present or at the end of the policy rules evaluation none were matched. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdefaultenforcement) |
 DeduplicateAccessEvents | True | Deduplicates access events to only a single event when a device in first added. |[documentation](https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled) |
 
 
 ## Files
 This policy is based on information in the following files:
 
+- [rules/All Devices Audit Allows .xml](rules/All%20Devices%20Audit%20Allows%20.xml)
+- [rules/All Devices Audit and Notify Denies .xml](rules/All%20Devices%20Audit%20and%20Notify%20Denies%20.xml)
 - [groups/All Devices.xml](groups/All%20Devices.xml)
-- [rules/Audit Allowed Example.xml](rules/Audit%20Allowed%20Example.xml)
 
 
 # Deployment Instructions
@@ -127,12 +148,130 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- File Write (16) is an unsupported access mask
-- File Read (8) is an unsupported access mask
-- File Execute (32) is an unsupported access mask
+<details>
+<summary>Create a reusable setting for All Devices</summary> 
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the *All Devices* for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   
+   1. Create an entry for  *PrimaryId* = *RemovableMediaDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( RemovableMediaDevices )* for Name
+        5. Enter *RemovableMediaDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   1. Create an entry for  *PrimaryId* = *CdRomDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( CdRomDevices )* for Name
+        5. Enter *CdRomDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   1. Create an entry for  *PrimaryId* = *WpdDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( WpdDevices )* for Name
+        5. Enter *WpdDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   1. Create an entry for  *PrimaryId* = *PrinterDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( PrinterDevices )* for Name
+        5. Enter *PrinterDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   7. Set the match type drop down to MatchAny
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+> [!IMPORTANT]
+> This policy has more than 1 rule.  
+> Policy ordering is not guaranteed by Intune.
+> Make sure that policy is not dependent on order to achieve desired result.
+> Consider using ```default deny```.   
+
+
+<details>
+<summary>Add a rule for All Devices Audit and Notify Denies  to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *All Devices*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *All Devices Audit and Notify Denies * for the name
+
+
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification and Send event* from "Options"
+   1. Select *Read, Write, Execute and Print* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
+<details>
+<summary>Add a rule for All Devices Audit Allows  to the policy</summary>
+
+   1. Add another rule.  Click on "+ Add"
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *All Devices*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *All Devices Audit Allows * for the name
+
+
+
+   1. Select *Audit Allowed* from "Type"
+   1. Select *Send event* from "Options"
+   1. Select *Read, Write, Execute and Print* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)
@@ -143,8 +282,8 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    2. Save the XML below to a network share.
 ```xml
 <Groups>
-	<Group Id="{e00dae45-b54a-4223-bbb2-62e1613f2062}" Type="Device">
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be00dae45-b54a-4223-bbb2-62e1613f2062%7D/GroupData -->
+	<Group Id="{f16d624f-16fc-4ddc-a960-9f0d8dc82e1c}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf16d624f-16fc-4ddc-a960-9f0d8dc82e1c%7D/GroupData -->
 		<Name>All Devices</Name>
 		<MatchType>MatchAny</MatchType>
 		<DescriptorIdList>
@@ -166,15 +305,29 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
   2. Save the XML below to a network share.
 ```xml
 <PolicyRules>
-	<PolicyRule Id="{214d63fb-23d8-426c-924e-e1e7ff94c45c}" >
-		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B214d63fb-23d8-426c-924e-e1e7ff94c45c%7D/RuleData -->
-		<Name>Audit Allowed Example</Name>
+	<PolicyRule Id="{4cb130b9-67e9-432a-92d4-de4fcb65dda7}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4cb130b9-67e9-432a-92d4-de4fcb65dda7%7D/RuleData -->
+		<Name>All Devices Audit and Notify Denies </Name>
 		<IncludedIdList>
-			<GroupId>{e00dae45-b54a-4223-bbb2-62e1613f2062}</GroupId>
+			<GroupId>{f16d624f-16fc-4ddc-a960-9f0d8dc82e1c}</GroupId>
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{ef52ad96-f013-4524-bef4-c93e2d0836c3}">
+		<Entry Id="{87512fe1-3811-4a6f-8dab-7484bb1284c4}">
+			<Type>AuditDenied</Type>
+			<AccessMask>127</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>
+	<PolicyRule Id="{69f62ac4-5a31-478c-8cbb-376964777722}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B69f62ac4-5a31-478c-8cbb-376964777722%7D/RuleData -->
+		<Name>All Devices Audit Allows </Name>
+		<IncludedIdList>
+			<GroupId>{f16d624f-16fc-4ddc-a960-9f0d8dc82e1c}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{14af8d13-13b7-46b0-bd43-4e5abe8fdeea}">
 			<Type>AuditAllowed</Type>
 			<AccessMask>127</AccessMask>
 			<Options>2</Options>
@@ -201,16 +354,31 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    9. Click "Next" 
 </details>
 <details>
-<summary>Add a row for Audit Allowed Example</summary>  
+<summary>Add a row for All Devices Audit Allows </summary>  
    
    1. Click "Add"
-   2. For Name, enter *Audit Allowed Example*
+   2. For Name, enter *All Devices Audit Allows *
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B214d63fb-23d8-426c-924e-e1e7ff94c45c%7D/RuleData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B69f62ac4-5a31-478c-8cbb-376964777722%7D/RuleData*
    5. For Data type, select *String (XML File)*
    
         
-   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/deduplicate_access_events/windows/devicecontrol/rules/Audit Allowed Example.xml*
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/deduplicate_access_events/windows/devicecontrol/rules/All Devices Audit Allows .xml*
+         
+   
+   7. Click "Save"
+</details>
+<details>
+<summary>Add a row for All Devices Audit and Notify Denies </summary>  
+   
+   1. Click "Add"
+   2. For Name, enter *All Devices Audit and Notify Denies *
+   3. For Description, enter **
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4cb130b9-67e9-432a-92d4-de4fcb65dda7%7D/RuleData*
+   5. For Data type, select *String (XML File)*
+   
+        
+   6. For Custom XML, select  */workspaces/mdatp-devicecontrol/deployable examples/deduplicate_access_events/windows/devicecontrol/rules/All Devices Audit and Notify Denies .xml*
          
    
    7. Click "Save"
@@ -221,7 +389,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    1. Click "Add"
    2. For Name, enter *All Devices*
    3. For Description, enter **
-   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Be00dae45-b54a-4223-bbb2-62e1613f2062%7D/GroupData*
+   4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bf16d624f-16fc-4ddc-a960-9f0d8dc82e1c%7D/GroupData*
    5. For Data type, select *String (XML File)*
    
         
@@ -239,7 +407,7 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
    4. For OMA-URI, enter  *./Vendor/MSFT/Defender/Configuration/DefaultEnforcement*
    5. For Data type, select *Integer*
    
-   7. For Value, enter *1*
+   7. For Value, enter *2*
    
    7. Click "Save"
 </details>
