@@ -48,6 +48,8 @@ positional arguments:
     validate            Validate the configuration
     apply               Apply the package to Intune
     delete              Delete the package from Intune
+    patch-graph         Patches the graph SDK to work with dc
+
 
 options:
   -h, --help            show this help message and exit
@@ -158,13 +160,14 @@ The xlsx import uses the following sheets:
 
 #### Example Group Data sheet
 
-| VID_PID |
-|---
-| 0000_1111
-| 1111_2222
+| Descriptor Value Name| VID_PID |
+|--- |---
+| Device A | 0000_1111
+| Device B | 1111_2222
 
-Note
-- The column names are **exactly** the descriptorIds for the groups XML
+>[!NOTE]
+> - The column names are **exactly** the descriptorIds for the groups XML
+> - The **Descriptor Value Name** is used to provide a more descriptive name for the entry in reusable settings
 
 #### Example Rules sheet
 
@@ -271,6 +274,17 @@ options:
   -a, --application  authenticate as the application to the graph API
   -s, --silent       don't prompt the user to confirm delete
 ```
+
+## dc patch-graph
+
+Patches issues with the generated graph sdk to work with dc 
+
+```
+usage:  dc patch-graph
+```
+
+### Known Issues
+- The *device_management_reusable_policy_setting_item_request_builder_patch.py* fixes the issue that there is no PUT function on [msgraph_beta/generated/device_management/reusable_settings/item/device_management_configuration_setting_definition_item_request_builder.py](https://github.com/microsoftgraph/msgraph-beta-sdk-python/blob/main/msgraph_beta/generated/device_management/reusable_settings/item/device_management_configuration_setting_definition_item_request_builder.py)
 
 ## dcconvert
 

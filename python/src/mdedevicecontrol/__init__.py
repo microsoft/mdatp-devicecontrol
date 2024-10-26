@@ -15,7 +15,7 @@ import copy
 import os
 import urllib.parse
 import pathlib
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 from json import JSONEncoder
 import uuid
 import pandas
@@ -550,7 +550,7 @@ class IntuneCustomRow:
 
 class Property:
 
-    def __init__(self, group_property, property_value):
+    def __init__(self, group_property, property_value, dcv2_name = None):
         self.name = group_property.name
 
         self.allowed_values = group_property.allowed_values
@@ -558,6 +558,7 @@ class Property:
             raise Exception("Invalid value "+property_value+" for group property "+group_property.name)
         self.value = property_value
         self.label = group_property.label
+        self.dcv2_name = dcv2_name
 
 class Clause:
 
@@ -1165,11 +1166,16 @@ class Group:
             else:
                 self.match_type = match_node.text
             
-            descriptors = root.findall("./DescriptorIdList//")
+            descriptors = root.xpath('./DescriptorIdList//comment()|./DescriptorIdList//node()')
+            lastComment = None
             for descriptor in descriptors:
 
+                if isinstance(descriptor,str):
+                    continue
+
                 if descriptor.tag == ET.Comment:
-                    logger.debug("Skipping comment "+str(descriptor.text))
+                    lastComment = str(descriptor.text)
+                    logger.debug("Saving last comment "+str(descriptor.text))
                     continue
 
                 logger.debug("Getting group property for "+str(descriptor.tag))
@@ -1185,7 +1191,8 @@ class Group:
                         raise Exception("Unknown group property "+str(descriptor.tag)+" for "+self.group_type.label)
                 
 
-                self._properties.append(Property(group_property, descriptor.text))
+                self._properties.append(Property(group_property, descriptor.text, lastComment))
+                lastComment = None
                 self.conditions[descriptor.tag] = descriptor.text
 
 
@@ -1240,6 +1247,9 @@ class Group:
         for property in self._properties:
             tag = property.name
             text = property.value
+            
+            if property.dcv2_name is not None:
+                out += indent +"\t\t<!--"+Util.xml_safe_text(property.dcv2_name)+"-->\n"    
 
             out += indent +"\t\t<"+tag+">"+Util.xml_safe_text(text)+"</"+tag+">\n"
 
@@ -2691,7 +2701,12 @@ class api:
         
         descriptorId_list = ET.SubElement(group_xml,"DescriptorIdList")
         for property in properties:
-            comment = property.label
+            
+            if property.dcv2_name is None:
+                comment = property.label
+            else:
+                comment = property.dcv2_name
+                
             tag_name = property.name
             tag_text = property.value
 
@@ -3079,6 +3094,8 @@ class CommandLine:
                 result = await CommandLine.delete(args,config)
             case "reusable_settings":
                 result = await CommandLine.reusable_settings(args,config)
+            case "patch-graph":
+                result = CommandLine.patch_graph(args,config)
                     
 
         pass
@@ -3228,17 +3245,37 @@ class CommandLine:
             column=0
 
             properties = []
+            dcv2_names = []
             while column < num_columns:
                 property_name = list(xslx_group.columns)[column]
                 logger.debug("Property="+property_name)
-
-                group_property = GroupProperty.properties_by_name[property_name]
-                property_values = list(xslx_group[property_name])
-                logger.debug("Property_Values="+str(property_values))
                 
-                for property_value in property_values:
-                    property = Property(group_property,property_value)
-                    properties.append(property)
+                if property_name == "Descriptor Value Name":
+                    dcv2_names = list(xslx_group[property_name])
+
+                else:
+                    group_property = GroupProperty.properties_by_name[property_name]
+                    property_values = list(xslx_group[property_name])
+                
+                    #make sure that everything from the XLSX is a str
+                    property_values = [str(item) for item in property_values]
+                    logger.debug("Property_Values="+str(property_values))
+                
+                    property_value_index = 0
+                    for property_value in property_values:
+                    
+                        if len(dcv2_names) > 0:
+                            dcv2_name = dcv2_names [property_value_index]
+                            logger.debug("Using dcv2_name="+dcv2_name)
+                            property = Property(group_property,property_value,dcv2_name)
+                            property_value_index = property_value_index + 1    
+                        else:
+                    
+                            property = Property(group_property,property_value)
+                        
+                        properties.append(property)
+                    
+                    
 
                 column = column + 1
 
@@ -3606,7 +3643,47 @@ class CommandLine:
                 pass
 
         
+    def patch_graph(args,config):
+        
+        import shutil
 
+        file_path = os.path.abspath(__file__)
+        
+        src_path = os.path.dirname(file_path)
+        logger.info("Patching from "+src_path)
+        
+        import msgraph_beta
+        module_path = os.path.dirname(msgraph_beta.__file__)
+        module_version = msgraph_beta.VERSION
+        
+        logger.info("Patching to "+module_path)
+        logger.info("Version="+module_version)
+        
+        patches = [ 
+        
+                {
+                    
+                    "src": "device_management_reusable_policy_setting_item_request_builder_patch.py",
+                    "dest": "generated/device_management/reusable_policy_settings/item/device_management_reusable_policy_setting_item_request_builder.py",
+                    "versions": ["1.11.0"]
+                    
+                }
+                
+        ]
+        
+        for patch in patches:
+            
+            patch_src = os.path.join(src_path,patch["src"])
+            patch_dest = os.path.join(module_path,patch["dest"])
+            
+            
+            if module_version in patch["versions"]:
+                logger.info("copying "+patch_src+" to "+patch_dest)
+                shutil.copyfile(patch_src,patch_dest)
+            
+        
+        
+        
 def main():
     
    
@@ -3679,20 +3756,24 @@ def main():
     delete_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
     delete_arg_parser.add_argument("-s","--silent",dest="silent_delete",action="store_true",help="don't prompt the user to confirm delete",default=False)
     
-    #update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
-    reusable_settings_parser = subparsers.add_parser('reusable_settings',help='Perform operations on Intune reusable settings') 
-    reusable_settings_auth_type_choice_group = reusable_settings_parser.add_mutually_exclusive_group(required=True)
-    reusable_settings_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
-    reusable_settings_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
     
-    reusable_settings_commands_parser = reusable_settings_parser.add_subparsers(title="operation",dest="reusable_setting_operation",description="The operation to perform on the reusable setting")
-    get_reusable_settings_parser = reusable_settings_commands_parser.add_parser("get",description="Get the reusable settings")
-    get_reusable_settings_search_options = get_reusable_settings_parser.add_mutually_exclusive_group(required=False)
-    get_reusable_settings_search_options.add_argument("-n","--name",dest="reusable_setting_name")
-    get_reusable_settings_search_options.add_argument("-i","--id",dest="reusable_setting_id")
+    patch_arg_parser = subparsers.add_parser('patch-graph',help="Patches the graph SDK to work with dc")
+    
+    
+    #update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
+    #reusable_settings_parser = subparsers.add_parser('reusable_settings',help='Perform operations on Intune reusable settings') 
+    #reusable_settings_auth_type_choice_group = reusable_settings_parser.add_mutually_exclusive_group(required=True)
+    #reusable_settings_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    #reusable_settings_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+    
+    #reusable_settings_commands_parser = reusable_settings_parser.add_subparsers(title="operation",dest="reusable_setting_operation",description="The operation to perform on the reusable setting")
+    #get_reusable_settings_parser = reusable_settings_commands_parser.add_parser("get",description="Get the reusable settings")
+    #get_reusable_settings_search_options = get_reusable_settings_parser.add_mutually_exclusive_group(required=False)
+    #get_reusable_settings_search_options.add_argument("-n","--name",dest="reusable_setting_name")
+    #get_reusable_settings_search_options.add_argument("-i","--id",dest="reusable_setting_id")
                                                        
-    update_reusable_settings_parser = reusable_settings_commands_parser.add_parser("update",description="Update the reusable settings")
-    update_reusable_settings_parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),default=sys.stdin)
+    #update_reusable_settings_parser = reusable_settings_commands_parser.add_parser("update",description="Update the reusable settings")
+    #update_reusable_settings_parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),default=sys.stdin)
 
 
 

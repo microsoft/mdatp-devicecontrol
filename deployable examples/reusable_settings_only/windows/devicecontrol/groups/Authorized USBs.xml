@@ -1,0 +1,17 @@
+	<Group Id="{cccd89b2-4d88-4507-917c-646fd9daa733}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bcccd89b2-4d88-4507-917c-646fd9daa733%7D/GroupData -->
+		<Name>Authorized USBs</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<!--Device A-->
+			<VID_PID>0781_5567</VID_PID>
+			<!--Device B-->
+			<VID_PID>046d_a120</VID_PID>
+			<!--Device C-->
+			<VID_PID>046d_a0b1</VID_PID>
+			<!--Device D-->
+			<VID_PID>046d_0825</VID_PID>
+			<!--Device E-->
+			<VID_PID>05ac_12a0</VID_PID>
+		</DescriptorIdList>
+	</Group>

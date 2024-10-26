@@ -34,7 +34,7 @@ import pathlib
 import urllib.parse
 import hashlib
 
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 
 import mdedevicecontrol as dc
 from mdedevicecontrol.dcdoc import Inventory, Description
@@ -328,7 +328,11 @@ class DeviceControlPolicyTemplate:
                 name = DeviceManagementConfigurationSimpleSettingInstance()
                 name.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name"
                 name.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
-                name.simple_setting_value.value = property.name+"("+property.value+")"
+                
+                if property.dcv2_name is not None:
+                    name.simple_setting_value.value = property.dcv2_name
+                else:
+                    name.simple_setting_value.value = property.name+"("+property.value+")"
                 descriptor_id_value.children.append(name)
 
                 #One item for the value
@@ -1759,8 +1763,11 @@ class Package:
                 group_xml = group_file.read()
 
                 logger.debug("group_xml="+group_xml)
+                
+                parser = ET.XMLParser(remove_comments=False)
+                
                 group = dc.Group(
-                    ET.fromstring(group_xml),dc.Format.OMA_URI,
+                    ET.fromstring(group_xml,parser),dc.Format.OMA_URI,
                     str(pathlib.Path(path).resolve()))
 
                 groups.append(group)
@@ -2181,18 +2188,24 @@ class Package:
 
             
             logger.debug("policy @odata.context="+metadata_for_policy["@odata.context"])
+            
+            
+            
 
-            if metadata_for_policy["@odata.context"] == "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity":
-                graph_result = await graph.delete_device_control_policy(metadata_for_policy["id"])
+            if metadata_for_policy["id"] is None:
+                logger.debug("No policy in metadata")
+                result.setResultForPolicy(Package.IntuneResults.NoChangesNeeded)
             else:
-                graph_result = await graph.delete_device_configuration(metadata_for_policy["id"])
                 
-
-
-            if not isinstance(graph_result,RuntimeError) and not isinstance(graph_result,ODataError):
-                result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
-            else:
-                result.setResultForPolicy(graph_result)
+                if metadata_for_policy["@odata.context"] == "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity":
+                    graph_result = await graph.delete_device_control_policy(metadata_for_policy["id"])
+                else:
+                    graph_result = await graph.delete_device_configuration(metadata_for_policy["id"])
+            
+                if not isinstance(graph_result,RuntimeError) and not isinstance(graph_result,ODataError):
+                    result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
+                else:
+                    result.setResultForPolicy(graph_result)
 
             if "groups" in metadata_for_policy:
                 for group_name in metadata_for_policy["groups"]:
@@ -2521,7 +2534,8 @@ class Package:
                 group_operation = "new"
             else:
                 logger.debug("Found metadata for group "+group.name+" metadata="+str(metadata_for_group))
-                if "id" in metadata_for_group:
+                
+                if "id" in metadata_for_group and metadata_for_group["id"] is not None:
                     last_update_str = metadata_for_group["last_update"]
                     #2024-05-14 10:55:06.943441
                     last_update = datetime.fromisoformat(last_update_str)
@@ -2558,7 +2572,7 @@ class Package:
                     logger.debug("Adding result for "+group.name)
                     results.addResultForGroup(result,group)
                 elif result is None:
-                    if operation == "update":
+                    if group_operation == "update":
                         results.addResultForGroup(Package.IntuneResults.UpdateApplied(metadata_for_group["id"]),group)
                     else:
                         logger.debug("No results for "+group.name)
@@ -2583,7 +2597,8 @@ class Package:
 
         result = Package.IntuneResults.NoChangesNeeded(policy.id)
 
-        if any_rule_changes or operation == "new":
+        #Handle the case where the package has no rules
+        if (any_rule_changes or operation == "new") and len(rule_settings) > 0:
             result = await graph.create_policy_v2(policy.name, policy.description,rule_settings)
             logger.debug("Result="+str(result))
 
