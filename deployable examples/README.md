@@ -1,13 +1,37 @@
 # Deployable Examples
 
-The examples in this directory can be deployed to Intune using `dc`
+Each sub-folder contains a single deployable example.
 
-To deploy an example using the logged in user's identity:
+
+These examples can be deployed to Intune using `dc`
+
+To deploy an example as-is using the logged in user's identity:
 
 ```
 cd <examples dir>
 dc apply -u
 ```
+
+The examples can me modified and then changes are applied to Intune.  This creates a configuration-as-code workflow.
+
+After modifying the xlsx, run
+```
+dc init
+```
+
+This regenerates the `XML` while preserving the GUIDs of the groups and rules.
+
+To apply the changes to Intune, run
+```
+dc apply -u
+```
+
+To delete the policies from Intune, first unassign the policies.
+
+
+
+
+
 ## Working with deployable examples
 
 The examples are initialized from a source Excel spreadsheet located in each examples `src` folder.
