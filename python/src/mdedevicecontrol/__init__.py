@@ -565,6 +565,10 @@ class Property:
             raise Exception("Invalid value "+property_value+" for group property "+group_property.name)
         self.value = property_value
         self.label = group_property.label
+        
+        if dcv2_name is None:
+            dcv2_name = self.label+"("+self.value+")"
+            
         self.dcv2_name = dcv2_name
 
 class Clause:
@@ -1257,6 +1261,8 @@ class Group:
             
             if property.dcv2_name is not None:
                 out += indent +"\t\t<!--"+Util.xml_safe_text(property.dcv2_name)+"-->\n"    
+            else:
+                out += indent +"\t\t<!--"+Util.xml_safe_text(property.dcv2_name)+"-->\n"
 
             out += indent +"\t\t<"+tag+">"+Util.xml_safe_text(text)+"</"+tag+">\n"
 
@@ -2664,6 +2670,18 @@ class api:
         logger.debug("Creating property for "+str(groupProperty.name)+" value="+value)
         return Property(groupProperty,value)
 
+    
+    def createGroupFromFile(self,xml_path):
+        
+        
+        with open(xml_path) as file:
+            root = ET.fromstring(file.read())
+            group = Group(root,"oma-uri")
+            return group
+            
+     
+        
+    
     def createGroup(self,name, 
                     group_type = Group.WindowsDeviceGroupType, 
                     match_type = MatchType.Any,
@@ -3134,12 +3152,39 @@ class CommandLine:
         version = ""
         osName = ""
         
+        existing_ids = {
+            "groups": {
+                
+            },
+            "rules":{
+                
+            }
+        }
+        
         for policy_name in package_data["policies"]:
                 name = policy_name
                 policy_dict = package_data["policies"][name]
                 osName = policy_dict["os"]
                 description = policy_dict["description"]
                 version = policy_dict["version"]
+                
+                for group_name in policy_dict["groups"]:
+                    group_data = policy_dict["groups"][group_name]
+                    group_file_path = group_data["file"]["path"]
+                    
+                    group = CommandLine.api.createGroupFromFile(group_file_path)    
+                    existing_ids["groups"][group.name] = group.id
+                    
+                    
+                for rule_name in policy_dict["rules"]:
+                    rule_data = policy_dict["rules"][rule_name]
+                    rule_file_path = rule_data["file"]["path"]
+                    
+                    with open(rule_file_path) as file:
+                        rule_xml = ET.fromstring(file.read())
+                        rule_id = rule_xml.get("Id")
+                        existing_ids["rules"][rule_name] = rule_id
+                    
                 
         
         logger.debug("name="+name)
@@ -3157,7 +3202,7 @@ class CommandLine:
         
         if len(xlsx_files) > 0:
             logger.info("Found xlsx source: "+xlsx_files[0])
-            return CommandLine._init_with_xlsx(xlsx_files[0],name,description,osName,version)
+            return CommandLine._init_with_xlsx(xlsx_files[0],name,description,osName,version,existing_ids)
         
         #from mdedevicecontrol.dcintune import Package
 
@@ -3286,7 +3331,14 @@ class CommandLine:
     
     
     
-    def _init_with_xlsx(xlsx_file_path, args_name, args_description, args_os,args_version):
+    def _init_with_xlsx(xlsx_file_path, args_name, args_description, args_os,args_version, existing_ids = None):
+        
+        
+        if existing_ids is None:
+            existing_ids = {
+                "groups":{},
+                "rules":{}
+            }
         
         import pandas as pd
         dc = api()
@@ -3353,7 +3405,11 @@ class CommandLine:
                 column = column + 1
 
            
-            group = dc.createGroup(group_name,group_type,group_match_string,properties)
+            #check its this group already exists
+            if group_name in existing_ids["groups"]:
+                group = dc.createGroup(group_name,group_type,group_match_string,properties,existing_ids["groups"][group_name])
+            else:
+                group = dc.createGroup(group_name,group_type,group_match_string,properties)
             
             groups[group_name] = group
 
@@ -3478,11 +3534,17 @@ class CommandLine:
                 
                 entry_with_new_id = dc.copy(object=entries[entry_name])
                 entries_for_rule.append(entry_with_new_id)
+                
+                
+            if rule_name in existing_ids["rules"]:
+                rule_id = existing_ids["rules"][rule_name]
+            else:
+                rule_id = None
 
             rule = dc.createRule(rule_name=rule_name,
                           included_groups=included_groups,
                           excluded_groups=excluded_groups,
-                          entries=entries_for_rule)
+                          entries=entries_for_rule,id = rule_id)
 
             rule.description = rule_description
 

@@ -1,7 +1,7 @@
 # Device control policy sample: Deny All
 
-Description: A policy              
-Device Type: Windows Removable Device
+**Description:** A policy              
+**Device Type:** Windows Removable Device
 
 A device control policy is a combination of [policy rules](#policy-rules), [groups](#groups) and [settings](#settings).  
 This sample is based on the [sample files](#files).  
@@ -30,7 +30,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 		<th>File Execute</th></tr><tr>
             <td rowspan="2" valign="top"><b>Default Deny</b></td>
             <td rowspan="2 valign="top">
-                <ul><li>Group: All Other Devices<a href="#all-other-devices" title="MatchAny {'PrimaryId': 'WpdDevices'}"> (details)</a>  
+                <ul><li>Group: All Other Devices<a href="#all-other-devices" title="MatchAll {'PrimaryId': 'WpdDevices'}"> (details)</a>  
 </ul>
             </td>
             <td rowspan="2" valign="top">
@@ -68,7 +68,7 @@ To configure the sample, follow the [deployment instructions](#deployment-instru
 
 
 This is a group of type *Device*. 
-The match type for the group is *MatchAny*.
+The match type for the group is *MatchAll*.
 
 
 |  Property | Value |
@@ -88,10 +88,13 @@ The match type for the group is *MatchAny*.
 <Group Id="{ec445d09-1d90-4bd9-96e2-f8208e12f98a}" Type="Device">
 	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData -->
 	<Name>All Other Devices</Name>
-	<MatchType>MatchAny</MatchType>
+	<MatchType>MatchAll</MatchType>
 	<DescriptorIdList>
+		<!--Windows Device Family(RemovableMediaDevices)-->
 		<PrimaryId>RemovableMediaDevices</PrimaryId>
+		<!--Windows Device Family(CdRomDevices)-->
 		<PrimaryId>CdRomDevices</PrimaryId>
+		<!--Windows Device Family(WpdDevices)-->
 		<PrimaryId>WpdDevices</PrimaryId>
 	</DescriptorIdList>
 </Group>
@@ -113,8 +116,8 @@ The match type for the group is *MatchAny*.
 ## Files
 This policy is based on information in the following files:
 
-- [groups/All Other Devices.xml](groups/All%20Other%20Devices.xml)
 - [rules/Default Deny.xml](rules/Default%20Deny.xml)
+- [groups/All Other Devices.xml](groups/All%20Other%20Devices.xml)
 
 
 # Deployment Instructions
@@ -133,12 +136,97 @@ Device control [policy rules](#policy-rules) and [groups](#groups) can be deploy
 
 ## Intune UX
 
-Intune UX is not supported for this policy because:
-- File Execute (32) is an unsupported access mask
-- File Write (16) is an unsupported access mask
-- File Read (8) is an unsupported access mask
+<details>
+<summary>Create a reusable setting for All Other Devices</summary> 
 
-Use [Intune custom settings](#intune-custom-settings) to deploy the policy instead.
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on Reusable Settings
+   3. Click (+) Add
+   4. Enter the *All Other Devices* for the name.  
+   5. Optionally, enter a description
+   6. Click on "Next"
+   
+   1. Create an entry for  *PrimaryId* = *RemovableMediaDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( RemovableMediaDevices )* for Name
+        5. Enter *RemovableMediaDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   1. Create an entry for  *PrimaryId* = *CdRomDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( CdRomDevices )* for Name
+        5. Enter *CdRomDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   1. Create an entry for  *PrimaryId* = *WpdDevices* 
+        1. Click (+) Add
+        2. Select "Reusable storage"
+        3. Click on "Configure setting"    
+        4. Enter *PrimaryId( WpdDevices )* for Name
+        5. Enter *WpdDevices* for PrimaryId
+        6. Click "Save"
+
+
+   
+   7. Set the match type drop down to MatchAll
+   8. Click "Next"
+   9. Click "Add"
+</details>
+<details>
+<summary>Create a Device Control Rules configuration profile</summary>  
+
+   1. Navigate to Home > Endpoint Security > Attack Surface Reduction
+   2. Click on "Create Policy"
+   3. Under Platform, select "Windows 10 and later"
+   4. Under Profile, select "Device Control Rules"
+   5. Click "Create"
+   6. Under Name, enter **
+   7. Optionally, enter a description
+   8. Click "Next"
+</details>
+
+
+<details>
+<summary>Add a rule for Default Deny to the policy</summary>
+
+
+   1. Click on "+ Set reusable settings" under Included Id
+
+   1. Click on *All Other Devices*
+
+   1. Click on "Select"
+
+
+   1. Click on "+ Edit Entry"
+   1. Enter *Default Deny* for the name
+
+
+
+   1. Select *Deny* from "Type"
+   1. Select *None* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+
+
+   1. Add another entry.  Click on "+ Add"
+
+   1. Select *Audit Denied* from "Type"
+   1. Select *Show notification* from "Options"
+   1. Select *Read, Write and Execute* from "Access mask"
+
+
+   1. Click "OK"
+</details>
+
 
 
 ## Group Policy (GPO)
@@ -152,10 +240,13 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 	<Group Id="{ec445d09-1d90-4bd9-96e2-f8208e12f98a}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData -->
 		<Name>All Other Devices</Name>
-		<MatchType>MatchAny</MatchType>
+		<MatchType>MatchAll</MatchType>
 		<DescriptorIdList>
+			<!--Windows Device Family(RemovableMediaDevices)-->
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<!--Windows Device Family(CdRomDevices)-->
 			<PrimaryId>CdRomDevices</PrimaryId>
+			<!--Windows Device Family(WpdDevices)-->
 			<PrimaryId>WpdDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>
@@ -179,12 +270,12 @@ Use [Intune custom settings](#intune-custom-settings) to deploy the policy inste
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{61057d83-921a-444c-948a-26623120c154}">
+		<Entry Id="{7056e3b4-082c-4b5b-bd3d-ee441e4e4d9c}">
 			<Type>Deny</Type>
 			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{00e2a047-6107-4e61-90c6-c27234ad70f0}">
+		<Entry Id="{1a08b9e1-9efb-446b-b594-e3e0eef285a7}">
 			<Type>AuditDenied</Type>
 			<AccessMask>63</AccessMask>
 			<Options>1</Options>
