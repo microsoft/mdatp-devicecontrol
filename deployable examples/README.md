@@ -12,7 +12,10 @@ cd <examples dir>
 dc apply -u
 ```
 
-The examples can me modified and then changes are applied to Intune.  This creates a configuration-as-code workflow.
+The examples can be modified and then changes are applied to Intune.  This creates a configuration-as-code workflow.
+
+>[!NOTE]
+> Use `dc apply -a` to run `dc` as an application in devops automation scenarios
 
 After modifying the xlsx, run
 ```
@@ -26,13 +29,15 @@ To apply the changes to Intune, run
 dc apply -u
 ```
 
-To delete the policies from Intune, first unassign the policies.
+To delete the policies from Intune
+1.  Unassign the policies.
+2.  Run `dc delete -u`
+
+This will delete all of objects created in Intun associated with the example.
 
 
 
-
-
-## Working with deployable examples
+## Creating a deployable examples
 
 The examples are initialized from a source Excel spreadsheet located in each examples `src` folder.
 When the example is initialized by running `dc init xlsx`, the following occurs:
