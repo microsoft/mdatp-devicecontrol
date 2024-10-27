@@ -45,6 +45,13 @@ class Util:
     def rreplace(s, old, new, occurrence):
         li = s.rsplit(old, occurrence)
         return new.join(li)
+    
+    def file_exists(file_path):
+        if os.path.isfile(file_path):
+            return file_path
+        else:
+            raise argparse.ArgumentTypeError(f"{file_path} is not a valid file")
+
 
 class DCJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -3075,8 +3082,8 @@ class CommandLine:
 
         match args.operation:
             case "init":
-                if args.init_source is None:
-                    CommandLine.init(args)
+                if args.init_source is None or args.init_source == "package":
+                    CommandLine.init_from_package(args,config)
                 elif args.init_source == "file":
                     CommandLine.init_from_file(args,config)
                 elif args.init_source == "xlsx":
@@ -3100,20 +3107,76 @@ class CommandLine:
 
         pass
 
-    def init(args):
+    def init_from_package(args,config):
         
-        from mdedevicecontrol.dcintune import Package
-
-        cwd = pathlib.Path(os.getcwd())
+        if "package_file" in args:
+            package_file = args.package_file
+        else:
+            package_file = "package.json"
         
-        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+        package_file = os.path.abspath(package_file)
+        
+        if os.path.exists(package_file):
+            logger.info("Initializing from "+package_file)
+            
+        
+        package_data = {}
+        with open(package_file, 'r') as file:
+            try:
+                package_data = json.load(file)
+            except Exception as e:
+                logger.error("Invalid JSON in "+package_file)
+                return
+            
+        
+        name = ""
+        description = ""
+        version = ""
+        osName = ""
+        
+        for policy_name in package_data["policies"]:
+                name = policy_name
+                policy_dict = package_data["policies"][name]
+                osName = policy_dict["os"]
+                description = policy_dict["description"]
+                version = policy_dict["version"]
+                
+        
+        logger.debug("name="+name)
+        logger.debug("os="+osName)
+        logger.debug("description="+description)
+        logger.debug("version="+version)
+            
+        
+        src_dir = os.path.join(os.path.dirname(package_file),"src")
+        logger.info("Source directory for package is "+src_dir)
+        
+        import glob
+        
+        xlsx_files = glob.glob(src_dir + os.path.sep + '*.xlsx')
+        
+        if len(xlsx_files) > 0:
+            logger.info("Found xlsx source: "+xlsx_files[0])
+            return CommandLine._init_with_xlsx(xlsx_files[0],name,description,osName,version)
+        
+        #from mdedevicecontrol.dcintune import Package
+
+        #cwd = pathlib.Path(os.getcwd())
+        
+        
+        
+        #package_file = os.path.join(cwd,package_file)
+        
+        
+        
+        #p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
 
         
 
-        p.save(str(cwd.parent),
-               CommandLine.rule_template_name,
-               CommandLine.readme_template_name,
-               CommandLine.description_template_name)
+        #p.save(str(cwd.parent),
+        #       CommandLine.rule_template_name,
+        #       CommandLine.readme_template_name,
+        #       CommandLine.description_template_name)
 
 
 
@@ -3206,6 +3269,8 @@ class CommandLine:
         logger.info("Token="+str(token))
         return token
 
+        
+        
     def init_with_xlsx(args,config):
 
         xlsx_file_path = str(pathlib.Path(args.file).resolve())
@@ -3214,6 +3279,14 @@ class CommandLine:
         else:
             logger.error(xlsx_file_path+" not found")
             return
+        
+        
+        return CommandLine._init_with_xlsx(xlsx_file_path,args.name,args.description,args.os,args.version)
+ 
+    
+    
+    
+    def _init_with_xlsx(xlsx_file_path, args_name, args_description, args_os,args_version):
         
         import pandas as pd
         dc = api()
@@ -3449,10 +3522,10 @@ class CommandLine:
         
 
         policy = dc.createPolicy(
-            os=args.os,
-            description=args.description,
-            name=args.name,
-            version=args.version,
+            os=args_os,
+            description=args_description,
+            name=args_name,
+            version=args_version,
             rules=list(rules.values()),
             groups=list(groups.values()),
         )
@@ -3473,6 +3546,9 @@ class CommandLine:
                CommandLine.readme_template_name,
                CommandLine.description_template_name)
 
+    
+    
+    
     async def init_with_intune(args,config):
 
         from mdedevicecontrol import dcintune as intune
@@ -3691,13 +3767,18 @@ def main():
     description='Utility for device control')
     subparsers = arg_parser.add_subparsers(help='The operation to perform on the package',dest="operation")
     init_arg_parser = subparsers.add_parser('init',help="Initialize the package")
-    init_arg_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
+    init_arg_parser.add_argument("-n","--name",dest="name",help="name of the package",required=False)
     init_arg_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
     init_arg_parser.add_argument("-o","--os",dest="os",default="windows")
     init_arg_parser.add_argument("-v","--version",dest="version",default="v1")
 
 
-    init_sources_parser = init_arg_parser.add_subparsers(help='source',required=True, dest="init_source")
+    init_sources_parser = init_arg_parser.add_subparsers(help='source to use to initialize the package',required=False, dest="init_source")
+    package_source_parser = init_sources_parser.add_parser('package')
+    package_source_parser.add_argument("-p","--package",help="package file",default="package.json",required=False,type=Util.file_exists,dest="package_file")
+    
+    
+    
     intune_source_parser = init_sources_parser.add_parser('intune')
    
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
