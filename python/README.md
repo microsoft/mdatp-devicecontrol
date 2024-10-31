@@ -66,6 +66,12 @@ options:
 
 ### Setting up the environment for dc
 
+
+> [!IMPORTANT]
+> ```dc``` can use either a user `-u` or application `-a` identity to connect to the Graph API. The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)<BR>
+> ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.<BR>
+> ```dc``` reads the credentials information from the environment variables.
+
 Set the following environment variables
 
 | Environment Variable | Description |
@@ -83,7 +89,7 @@ export DC_CONFIG_PATH=/workspaces/mdatp-devicecontrol/python/mdedevicecontrol.co
 export DC_LOG_PATH=/workspaces/mdatp-devicecontrol/Examples/dc.log
 export DC_CLIENT_ID=09df2e26-5097-4912-95f5-XXXXXXXXXXXX
 export DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
-export DC_CLIENT_SECRET=
+export DC_CLIENT_SECRET=xxxxxx
 ```
 
 On Windows
@@ -92,19 +98,15 @@ setx DC_CONFIG_PATH c:\Users\xxxxx\OneDrive\Documents\GitHub\mdatp-devicecontrol
 setx DC_LOG_PATH c:\\Users\\xxxxx\\OneDrive\\Documents\\dc.log
 setx DC_CLIENT_ID 09df2e26-5097-4912-95f5-XXXXXXXXXXXX
 setx DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
-setx DC_CLIENT_SECRET=
+setx DC_CLIENT_SECRET=xxxxxx
 ```
 
 > [!NOTE]
-> On Windows, opening a new command shell is required for settings to take effect
-> `\\` are required in the value of `DC_LOG_PATH`
+> On Windows, opening a new command shell is required for settings to take effect<BR>
+> On Windows, Double shlashes - `\\` are required in the value of `DC_LOG_PATH`<BR>
+> If `dc` is connecting as a user, then set `DC_CLIENT_SECRET` to an empty value
 
 
-Note:
-- ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
-- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
-- ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.
-- ```dc``` reads the credentials information from the environment variables.
 
 
 ### dc init
