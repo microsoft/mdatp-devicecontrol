@@ -11,11 +11,20 @@ Utilities for Device Control
 1. Install [python 3.12](https://www.python.org/downloads/release/python-3120/) or greater
 2. Install the package locally
 
+On macOS on Linux
 ```
 python3 -m pip install --upgrade build
 python3 -m build
 pip3 install -e .
 ```
+
+On Windows
+```
+py -m pip install --upgrade build
+py -m build
+pip install -e
+```
+
 The follow shortcuts should be created:
 
    - ```dc``` - [Creating and deploying device control policies](#dc)
@@ -76,6 +85,20 @@ export DC_CLIENT_ID=09df2e26-5097-4912-95f5-XXXXXXXXXXXX
 export DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
 export DC_CLIENT_SECRET=
 ```
+
+On Windows
+```
+setx DC_CONFIG_PATH c:\Users\xxxxx\OneDrive\Documents\GitHub\mdatp-devicecontrol\python\mdedevicecontrol.conf
+setx DC_LOG_PATH c:\\Users\\xxxxx\\OneDrive\\Documents\\dc.log
+setx DC_CLIENT_ID 09df2e26-5097-4912-95f5-XXXXXXXXXXXX
+setx DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
+setx DC_CLIENT_SECRET=
+```
+
+> [!NOTE]
+> On Windows, opening a new command shell is required for settings to take effect
+> `\\` are required in the value of `DC_LOG_PATH`
+
 
 Note:
 - ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
