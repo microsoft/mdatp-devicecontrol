@@ -22,8 +22,16 @@ On Windows
 ```
 py -m pip install --upgrade build
 py -m build
-pip install -e
+pip install -e .
 ```
+
+> [!NOTE]
+> On Windows, long paths need to be enabled 
+>  1.  Open the Registry Editor: Press Win + R, type regedit, and press Enter.
+>  2.  Navigate to the Key: Go to:
+>            `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`
+>  3. Modify the Value: Find the `LongPathsEnabled` DWORD in the right pane. Double-click on it and change the value from 0 to 1.
+>  4. Restart Your Computer: For the changes to take effect, restart your computer.
 
 The follow shortcuts should be created:
 
@@ -34,7 +42,7 @@ The follow shortcuts should be created:
 
 ### Deploy a sample using dc
 - [Configure the environment for dc](#setting-up-the-environment-for-dc)
-- To deploy an example, go to one of the directories in the [deployable examples](../deployable%20examples/), and type ```dc apply```
+- To deploy an example, go to one of the directories in the [deployable examples](../deployable%20examples/), and type ```dc apply -a``` if you're using an application identity or ```dc apply -u``` if you're using a user identity
 - To import a configuration from an Excel file *<xlsx-file>* and deploy it to Intune:
     -   Create a directory for the project called *<package-dir>*
     -   ```cd package-dir```
