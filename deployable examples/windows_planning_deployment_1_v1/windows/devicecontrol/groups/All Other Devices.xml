@@ -1,10 +1,13 @@
 	<Group Id="{ec445d09-1d90-4bd9-96e2-f8208e12f98a}" Type="Device">
 		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bec445d09-1d90-4bd9-96e2-f8208e12f98a%7D/GroupData -->
 		<Name>All Other Devices</Name>
-		<MatchType>MatchAny</MatchType>
+		<MatchType>MatchAll</MatchType>
 		<DescriptorIdList>
+			<!--Windows Device Family(RemovableMediaDevices)-->
 			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<!--Windows Device Family(CdRomDevices)-->
 			<PrimaryId>CdRomDevices</PrimaryId>
+			<!--Windows Device Family(WpdDevices)-->
 			<PrimaryId>WpdDevices</PrimaryId>
 		</DescriptorIdList>
 	</Group>

@@ -1,0 +1,40 @@
+{
+     "policies": {
+          "Allow USB printers by port name example": {
+               "os": "windows",
+               "version": "v1",
+               "description": "Allows printers in the Authorized Printers group to print.  The Authorized Printers groupmatches based on PrinterPortNameId",
+               "assignments": [],
+               "groups": {
+                    "Authorized Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Authorized Printers.xml",
+                              "sha256": "d894485ae7c65bd9dd16124fbb013a858019b77556eea6c385b610095fddaba3"
+                         }
+                    }
+               },
+               "rules": {
+                    "Allow Print for Authorized Printers": {
+                         "description": "If the port name of the printer is in the Authorized Printers group, then allow, otherwise deny",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Allow Print for Authorized Printers.xml",
+                              "sha256": "808600b8210e2aeb407fa2a9a29525083eb64ff366b55d0a4bb6ad56133f1b22"
+                         }
+                    }
+               },
+               "settings": {
+                    "DefaultEnforcement": {
+                         "value": "Deny",
+                         "name": "",
+                         "description": ""
+                    },
+                    "DeduplicateAccessEvents": {
+                         "value": true,
+                         "name": "",
+                         "description": ""
+                    }
+               }
+          }
+     }
+}

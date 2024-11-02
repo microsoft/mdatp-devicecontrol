@@ -1,0 +1,20 @@
+	<PolicyRule Id="{9c09ea0f-c2de-4cf9-9b30-92588aad0fd8}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B9c09ea0f-c2de-4cf9-9b30-92588aad0fd8%7D/RuleData -->
+		<Name>USB Printing</Name>
+		<IncludedIdList>
+			<GroupId>{42e9ee1b-adc5-46fb-a51b-8ca3a7928f0d}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+			<GroupId>{005999fd-2973-44a6-b0c7-2ce4be43c451}</GroupId>
+		</ExcludedIdList>
+		<Entry Id="{f752b1ab-44d5-41a7-9d31-9b647942a575}">
+			<Type>Deny</Type>
+			<AccessMask>64</AccessMask>
+			<Options>0</Options>
+		</Entry>
+		<Entry Id="{8a6ca048-a441-44cf-9a3c-aa495d47546b}">
+			<Type>AuditDenied</Type>
+			<AccessMask>64</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>

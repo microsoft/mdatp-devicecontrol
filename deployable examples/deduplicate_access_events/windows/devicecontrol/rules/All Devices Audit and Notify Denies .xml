@@ -1,0 +1,14 @@
+	<PolicyRule Id="{4cb130b9-67e9-432a-92d4-de4fcb65dda7}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7B4cb130b9-67e9-432a-92d4-de4fcb65dda7%7D/RuleData -->
+		<Name>All Devices Audit and Notify Denies </Name>
+		<IncludedIdList>
+			<GroupId>{f16d624f-16fc-4ddc-a960-9f0d8dc82e1c}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{87512fe1-3811-4a6f-8dab-7484bb1284c4}">
+			<Type>AuditDenied</Type>
+			<AccessMask>127</AccessMask>
+			<Options>3</Options>
+		</Entry>
+	</PolicyRule>

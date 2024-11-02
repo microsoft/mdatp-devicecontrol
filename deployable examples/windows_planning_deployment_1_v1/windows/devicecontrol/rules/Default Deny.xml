@@ -6,12 +6,12 @@
 		</IncludedIdList>
 		<ExcludedIdList>
 		</ExcludedIdList>
-		<Entry Id="{61057d83-921a-444c-948a-26623120c154}">
+		<Entry Id="{7056e3b4-082c-4b5b-bd3d-ee441e4e4d9c}">
 			<Type>Deny</Type>
 			<AccessMask>63</AccessMask>
 			<Options>0</Options>
 		</Entry>
-		<Entry Id="{00e2a047-6107-4e61-90c6-c27234ad70f0}">
+		<Entry Id="{1a08b9e1-9efb-446b-b594-e3e0eef285a7}">
 			<Type>AuditDenied</Type>
 			<AccessMask>63</AccessMask>
 			<Options>1</Options>

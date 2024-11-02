@@ -9,6 +9,8 @@ from msgraph_beta.generated.models.o_data_errors.o_data_error import ODataError
 
 from msgraph_beta.generated.models.windows10_custom_configuration import Windows10CustomConfiguration
 from msgraph_beta.generated.models.oma_setting_string_xml import OmaSettingStringXml
+from msgraph_beta.generated.models.oma_setting_integer import OmaSettingInteger
+from msgraph_beta.generated.models.oma_setting_string import OmaSettingString
 
 from msgraph_beta.generated.models.device_management_configuration_group_setting_collection_instance import DeviceManagementConfigurationGroupSettingCollectionInstance
 from msgraph_beta.generated.models.device_management_configuration_group_setting_value import DeviceManagementConfigurationGroupSettingValue
@@ -23,6 +25,8 @@ from msgraph_beta.generated.models.device_management_configuration_simple_settin
 from msgraph_beta.generated.models.device_management_configuration_setting_instance import DeviceManagementConfigurationSettingInstance
 
 from mdedevicecontrol.dcgraph import Graph
+from mdedevicecontrol import Setting
+
 import plistlib
 import argparse
 import json
@@ -30,7 +34,7 @@ import pathlib
 import urllib.parse
 import hashlib
 
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 
 import mdedevicecontrol as dc
 from mdedevicecontrol.dcdoc import Inventory, Description
@@ -91,6 +95,50 @@ class DeviceControlPolicyTemplate:
             self.descriptors = []
 
 
+        def toJSON(self):
+
+            group_json = {
+                "id": self.id,
+                "name": self.name,
+                "descriptors":{}
+            }
+            match self.match_type:
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ANY_SETTING_ID:
+                    group_json["match_type"] = "MatchAny"
+                case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_MATCH_ALL_SETTING_ID:
+                    group_json["match_type"] = "MatchAll"
+                case _:
+                    logger.warn("Unknown MatchType "+self.match_type)
+        
+            for descriptor in self.descriptors:
+                comment = None
+                tag_name = None
+                tag_text = None
+                
+
+                logger.debug("descriptor="+str(descriptor))
+
+                for key in descriptor:
+                    logger.debug("key="+key)
+                    match key:
+                        case DeviceControlPolicyTemplate.DeviceControlGroup.GROUP_DATA_DESCRIPTOR_LIST_NAME_SETTING_ID:
+                            comment = descriptor[key]
+                        case _:
+                            setting_details = DeviceControlPolicyTemplate.DeviceControlGroup.group_settings[key]
+                            descriptor_id = setting_details.display_name
+                            descriptor_value = descriptor[key]
+
+                
+                group_json["descriptors"][comment] = {
+                    descriptor_id: descriptor_value
+                }
+
+                    
+
+            return group_json
+
+
+
         def __str__(self):
 
             '''
@@ -149,6 +197,103 @@ class DeviceControlPolicyTemplate:
             return ET.tostring(group,method="xml").decode("utf-8")
 
 
+        def createSettingFromJSON(group_json):
+
+            logger.debug(str(group_json))
+            groupdata = DeviceManagementConfigurationGroupSettingCollectionInstance()
+            groupdata.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+            groupdata.group_setting_collection_value = []
+
+            groupdata_group_setting_value = DeviceManagementConfigurationGroupSettingValue()
+            groupdata.group_setting_collection_value.append(groupdata_group_setting_value)
+
+            groupdata_group_setting_value.children = []
+
+            #group id"settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
+            #groupdata_id_setting = DeviceManagementConfigurationSimpleSettingInstance()
+            #groupdata_id_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_id"
+
+            #groupdata_id_value = DeviceManagementConfigurationStringSettingValue()
+            #groupdata_id_value.value = group_json["id"]
+
+            #groupdata_id_setting.simple_setting_value = groupdata_id_value
+            #groupdata_group_setting_value.children.append(groupdata_id_setting)
+
+            '''
+            For each element in the list 
+                    {
+                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationGroupSettingCollectionInstance",
+                        "groupSettingCollectionValue": [
+                            {
+                                "children": [
+                                    {
+                                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingInstance",
+                                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name",
+                                        "simpleSettingValue": {
+                                            "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
+                                            "value": "Serial Number 1"
+                                        }
+                                    },
+                                    {
+                                        "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingInstance",
+                                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_serialnumberid",
+                                        "simpleSettingValue": {
+                                            "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
+                                            "value": "11111111"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "settingDefinitionId": "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist"
+                    }
+            '''
+            
+
+            
+            for descriptor in group_json["descriptors"].keys():
+
+                descriptorIdList = DeviceManagementConfigurationGroupSettingCollectionInstance()
+                descriptorIdList.setting_definition_id = 'device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist'
+                descriptor_id_value = DeviceManagementConfigurationGroupSettingValue()
+                descriptorIdList.group_setting_collection_value = [descriptor_id_value]
+                descriptor_id_value.children = []
+           
+                logger.debug("descriptor="+descriptor)
+
+                #One item for the name
+                name = DeviceManagementConfigurationSimpleSettingInstance()
+                name.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name"
+                name.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
+                name.simple_setting_value.value = descriptor
+                descriptor_id_value.children.append(name)
+
+                descriptor_ids = group_json["descriptors"][descriptor]
+
+                logger.debug("descriptor_ids="+str(descriptor_ids))
+
+                for descriptor_id_name in descriptor_ids:
+
+                    #One item for the value
+                    value = DeviceManagementConfigurationSimpleSettingInstance()
+                    value.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_"+str(descriptor_id_name).lower()
+                    value.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
+                    value.simple_setting_value.value = descriptor_ids[descriptor_id_name]
+                    descriptor_id_value.children.append(value)
+
+                groupdata_group_setting_value.children.append(descriptorIdList)
+
+            
+            #match type
+            match_type_setting = DeviceManagementConfigurationChoiceSettingInstance()
+            match_type_setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype"
+            match_type_setting.choice_setting_value = DeviceManagementConfigurationChoiceSettingValue()
+            match_type_setting.choice_setting_value.value = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_matchtype_matchany"
+
+            groupdata_group_setting_value.children.append(match_type_setting)
+
+            return groupdata
+
 
         def createSettingFromGroup(group):
 
@@ -183,7 +328,11 @@ class DeviceControlPolicyTemplate:
                 name = DeviceManagementConfigurationSimpleSettingInstance()
                 name.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata_descriptoridlist_name"
                 name.simple_setting_value = DeviceManagementConfigurationStringSettingValue()
-                name.simple_setting_value.value = property.name+"("+property.value+")"
+                
+                if property.dcv2_name is not None:
+                    name.simple_setting_value.value = property.dcv2_name
+                else:
+                    name.simple_setting_value.value = property.name+"("+property.value+")"
                 descriptor_id_value.children.append(name)
 
                 #One item for the value
@@ -1380,8 +1529,9 @@ class Package:
             logger.debug("policy_name="+policy_name+" group_name="+group_name)
 
             if policy_name in self.metadata["policies"]:
-                if group_name in self.metadata["policies"][policy_name]["groups"]:
-                    return self.metadata["policies"][policy_name]["groups"][group_name]
+                if "groups" in self.metadata["policies"][policy_name]:
+                    if group_name in self.metadata["policies"][policy_name]["groups"]:
+                        return self.metadata["policies"][policy_name]["groups"][group_name]
                 
             logger.debug("No metadata for policy_name="+policy_name+" group_name="+group_name)
             return None
@@ -1424,10 +1574,15 @@ class Package:
             logger.debug(">>>>>Package.Metadata.Policy "+str(policy)+" now="+now)
 
             if hasattr(policy,"id"):
-                self.metadata["policies"][policy.name] = {
-                    "id": policy.id,
-                    "last_update": now
-                }
+
+                if policy.name in self.metadata["policies"]:
+                    logger.debug("Updating last_update on current metadata.")
+                    self.metadata["policies"][policy.name]["last_update"] = now
+                else: 
+                    self.metadata["policies"][policy.name] = {
+                        "id": policy.id,
+                        "last_update": now
+                    }
 
             if policy.version == "v2":
                 self.metadata["policies"][policy.name]["@odata.context"] = "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity"
@@ -1458,10 +1613,16 @@ class Package:
                         logger.debug("group="+group+" for policy="+policy.name+".  No metadata")
                         continue
 
-                    groups_metadata[group.name] = {
-                        "groupdata_id":group.id,
-                        "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"
-                    }
+
+                    if self.getMetadataForGroup(policy.name,group.name) is None:
+                        groups_metadata[group.name] = {
+                            "groupdata_id":group.id,
+                            "@odata.context": "https://graph.microsoft.com/beta/$metadata#deviceManagement/reusablePolicySettings(settingInstance,id,displayName,description)/$entity"
+                        }
+                    else:
+                        logger.debug("Using existing metadata for group "+group.name)
+                        groups_metadata[group.name] = self.getMetadataForGroup(policy.name,group.name)
+                        groups_metadata[group.name]["last_update"] = now
 
                     if hasattr(group,"metadata_id"):
                         logger.debug("Setting id="+str(group.metadata_id)+" from metadata for group="+(group.name))
@@ -1592,6 +1753,14 @@ class Package:
             policy_version = policy_json["version"]
             policy_description = policy_json["description"]
 
+
+            settings = []
+            for setting_name in policy_json["settings"]:
+                logger.info("Loading setting "+setting_name)
+                setting_value = policy_json["settings"][setting_name]["value"]
+                setting = Setting(setting_name,setting_value)
+                settings.append(setting)
+
             groups = []
             for group_name in policy_json["groups"]:
                 group_json = policy_json["groups"][group_name]
@@ -1606,8 +1775,11 @@ class Package:
                 group_xml = group_file.read()
 
                 logger.debug("group_xml="+group_xml)
+                
+                parser = ET.XMLParser(remove_comments=False)
+                
                 group = dc.Group(
-                    ET.fromstring(group_xml),dc.Format.OMA_URI,
+                    ET.fromstring(group_xml,parser),dc.Format.OMA_URI,
                     str(pathlib.Path(path).resolve()))
 
                 groups.append(group)
@@ -1651,7 +1823,8 @@ class Package:
                 version=policy_version,
                 description=policy_description,
                 rules=rules,
-                groups=groups)
+                groups=groups,
+                settings=settings)
             
             policies_metadata_json = p.metadata.getMetadataForPolicy(policy)
             policy_id = policies_metadata_json["id"]
@@ -2027,18 +2200,24 @@ class Package:
 
             
             logger.debug("policy @odata.context="+metadata_for_policy["@odata.context"])
+            
+            
+            
 
-            if metadata_for_policy["@odata.context"] == "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity":
-                graph_result = await graph.delete_device_control_policy(metadata_for_policy["id"])
+            if metadata_for_policy["id"] is None:
+                logger.debug("No policy in metadata")
+                result.setResultForPolicy(Package.IntuneResults.NoChangesNeeded)
             else:
-                graph_result = await graph.delete_device_configuration(metadata_for_policy["id"])
                 
-
-
-            if not isinstance(graph_result,RuntimeError) and not isinstance(graph_result,ODataError):
-                result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
-            else:
-                result.setResultForPolicy(graph_result)
+                if metadata_for_policy["@odata.context"] == "https://graph.microsoft.com/beta/$metadata#deviceManagement/configurationPolicies/$entity":
+                    graph_result = await graph.delete_device_control_policy(metadata_for_policy["id"])
+                else:
+                    graph_result = await graph.delete_device_configuration(metadata_for_policy["id"])
+            
+                if not isinstance(graph_result,RuntimeError) and not isinstance(graph_result,ODataError):
+                    result.setResultForPolicy(Package.IntuneResults.ObjectDeleted(metadata_for_policy["id"]))
+                else:
+                    result.setResultForPolicy(graph_result)
 
             if "groups" in metadata_for_policy:
                 for group_name in metadata_for_policy["groups"]:
@@ -2163,9 +2342,18 @@ class Package:
                 logger.debug(str(metadata_for_policy))
                 if "id" in metadata_for_policy and metadata_for_policy["id"] is not None:
                     operation = "update"
-                    logger.debug("Updating existing policy")
                 else:
-                    logger.debug("Creating new policy")
+                    if "groups" in metadata_for_policy:
+                        for group in metadata_for_policy["groups"]:
+                            if "id" in metadata_for_policy["groups"][group] and metadata_for_policy["groups"][group]["id"] is not None:
+                                operation = "update_groups_only"
+                                logger.debug("Updating existing groups")
+                                break
+
+
+            logger.debug("operation is "+operation)
+
+
 
             if os == Package.MAC_OS:
                 result = await self.deployMacPolicy(graph,policy,operation,metadata_for_policy)
@@ -2269,7 +2457,30 @@ class Package:
             win10config.description = ""
 
 
-        settings = []
+        oma_settings = []
+        
+        for setting in policy.settings:
+            
+            setting_value = setting.get_value()
+            setting_oma_uri = setting.get_oma_uri()
+            setting_type = setting.get_data_type()
+            
+            if setting_type == Setting.OMA_URI_Integer_DataType:
+                oma_uri_setting = OmaSettingInteger()
+                
+            elif setting_type == Setting.OMA_URI_String_DataType:
+                oma_uri_setting = OmaSettingString()
+                
+            oma_uri_setting.oma_uri = setting_oma_uri
+            oma_uri_setting.value = setting_value
+            oma_uri_setting.display_name = setting.name
+            
+            
+            oma_settings.append(oma_uri_setting)
+            logger.debug("Deploying setting "+str(setting.name))
+            
+            
+            
         for group in policy.groups:
 
             setting = OmaSettingStringXml()
@@ -2284,7 +2495,7 @@ class Package:
             setting.description = description
             setting.oma_uri = group.get_oma_uri()
 
-            settings.append(setting)
+            oma_settings.append(setting)
 
         for rule in policy.rules:
 
@@ -2300,11 +2511,11 @@ class Package:
             setting.description = description
             setting.oma_uri = rule.get_oma_uri()
 
-            settings.append(setting)
+            oma_settings.append(setting)
 
 
             
-        win10config.oma_settings = settings
+        win10config.oma_settings = oma_settings
 
         results = Package.IntuneResults(operation,metadata_policy_policy)
         
@@ -2333,7 +2544,7 @@ class Package:
         for group in groups:
 
             metadata_for_group = self.metadata.getMetadataForGroup(policy.name,group.name)
-            if id in metadata_for_group:
+            if "id" in metadata_for_group:
                 logger.debug("Setting metadata_id to "+str(metadata_for_group["id"]))
                 group.__dict__["metadata_id"] = metadata_for_group["id"]
 
@@ -2344,17 +2555,20 @@ class Package:
                 group_operation = "new"
             else:
                 logger.debug("Found metadata for group "+group.name+" metadata="+str(metadata_for_group))
-                if "id" in metadata_for_group:
+                
+                if "id" in metadata_for_group and metadata_for_group["id"] is not None:
                     last_update_str = metadata_for_group["last_update"]
                     #2024-05-14 10:55:06.943441
                     last_update = datetime.fromisoformat(last_update_str)
+                    last_update = last_update.replace(microsecond=0)
+        
 
                     group_file_name = self.getFileForGroup(policy,group)
                     #Tue May 14 10:54:58 2024
                     file_last_update=datetime.strptime(time.ctime(os.path.getmtime(group_file_name)),"%c")
                     logger.debug("package last update="+str(last_update)+" file_last_update="+str(file_last_update))
 
-                    if file_last_update > last_update:
+                    if file_last_update >= last_update:
                         logger.info(group_file_name+" has been updated")
                         group_operation = "update"
                     
@@ -2381,7 +2595,7 @@ class Package:
                     logger.debug("Adding result for "+group.name)
                     results.addResultForGroup(result,group)
                 elif result is None:
-                    if operation == "update":
+                    if group_operation == "update":
                         results.addResultForGroup(Package.IntuneResults.UpdateApplied(metadata_for_group["id"]),group)
                     else:
                         logger.debug("No results for "+group.name)
@@ -2406,7 +2620,8 @@ class Package:
 
         result = Package.IntuneResults.NoChangesNeeded(policy.id)
 
-        if any_rule_changes or operation == "new":
+        #Handle the case where the package has no rules
+        if (any_rule_changes or operation == "new") and len(rule_settings) > 0:
             result = await graph.create_policy_v2(policy.name, policy.description,rule_settings)
             logger.debug("Result="+str(result))
 

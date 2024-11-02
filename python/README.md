@@ -11,11 +11,20 @@ Utilities for Device Control
 1. Install [python 3.12](https://www.python.org/downloads/release/python-3120/) or greater
 2. Install the package locally
 
+On macOS on Linux
 ```
 python3 -m pip install --upgrade build
 python3 -m build
 pip3 install -e .
 ```
+
+On Windows
+```
+py -m pip install --upgrade build
+py -m build
+pip install -e
+```
+
 The follow shortcuts should be created:
 
    - ```dc``` - [Creating and deploying device control policies](#dc)
@@ -48,12 +57,20 @@ positional arguments:
     validate            Validate the configuration
     apply               Apply the package to Intune
     delete              Delete the package from Intune
+    patch-graph         Patches the graph SDK to work with dc
+
 
 options:
   -h, --help            show this help message and exit
 ```
 
 ### Setting up the environment for dc
+
+
+> [!IMPORTANT]
+> ```dc``` can use either a user `-u` or application `-a` identity to connect to the Graph API. The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)<BR>
+> ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.<BR>
+> ```dc``` reads the credentials information from the environment variables.
 
 Set the following environment variables
 
@@ -72,14 +89,24 @@ export DC_CONFIG_PATH=/workspaces/mdatp-devicecontrol/python/mdedevicecontrol.co
 export DC_LOG_PATH=/workspaces/mdatp-devicecontrol/Examples/dc.log
 export DC_CLIENT_ID=09df2e26-5097-4912-95f5-XXXXXXXXXXXX
 export DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
-export DC_CLIENT_SECRET=
+export DC_CLIENT_SECRET=xxxxxx
 ```
 
-Note:
-- ```dc``` The logging settings are in the ```DC_CONFIG_PATH```
-- ```dc``` can use either a user or application identity to connect to the Graph API.  In order to connect to the graph API, ```dc``` needs credentials to connect.  The instructions for authenticating as the logged in user (user credentials) are found [here](https://learn.microsoft.com/en-us/graph/tutorials/python?tabs=aad&tutorial-step=1).  The instructions for authenticating as an application are found here [here](https://learn.microsoft.com/en-us/graph/tutorials/python-app-only?tabs=aad&tutorial-step=1)
-- ```dc``` uses the ```DeviceManagementConfiguration.ReadWrite.All Directory.Read.All``` scopes to read information from Entra Id, and read/write information to Intune.
-- ```dc``` reads the credentials information from the environment variables.
+On Windows
+```
+setx DC_CONFIG_PATH c:\Users\xxxxx\OneDrive\Documents\GitHub\mdatp-devicecontrol\python\mdedevicecontrol.conf
+setx DC_LOG_PATH c:\\Users\\xxxxx\\OneDrive\\Documents\\dc.log
+setx DC_CLIENT_ID 09df2e26-5097-4912-95f5-XXXXXXXXXXXX
+setx DC_TENANT_ID=5abce36e-7d75-4ce7-a04d-XXXXXXXXXXXX
+setx DC_CLIENT_SECRET=xxxxxx
+```
+
+> [!NOTE]
+> On Windows, opening a new command shell is required for settings to take effect<BR>
+> On Windows, Double shlashes - `\\` are required in the value of `DC_LOG_PATH`<BR>
+> If `dc` is connecting as a user, then set `DC_CLIENT_SECRET` to an empty value
+
+
 
 
 ### dc init
@@ -153,17 +180,19 @@ The xlsx import uses the following sheets:
 | Entries | Rows of entries to be used in rules |
 | Groups  | Rows of groups to be used in rules.  |
 | Rules   | Rows of the information used by rules |
-| *<group name>*| A sheet that contains the group data for a group |
+| *group name*| A sheet that contains the group data for a group |
+| Settings | Rows on settings and their values
 
 #### Example Group Data sheet
 
-| VID_PID |
-|---
-| 0000_1111
-| 1111_2222
+| Descriptor Value Name| VID_PID |
+|--- |---
+| Device A | 0000_1111
+| Device B | 1111_2222
 
-Note
-- The column names are **exactly** the descriptorIds for the groups XML
+>[!NOTE]
+> - The column names are **exactly** the descriptorIds for the groups XML
+> - The **Descriptor Value Name** is used to provide a more descriptive name for the entry in reusable settings
 
 #### Example Rules sheet
 
@@ -174,7 +203,7 @@ Note
 | Allowed USBs | Allow full access,Audit write access |All Removable Media Devices|Allowed USBs|Deny all access, Audit deny  all access and block|
 
 Note:  
-- The name of the groups are comman delimited and **must** match the name of the sheet containing the group data
+- The name of the groups are comma delimited and **must** match the name of the sheet containing the group data
 - The values in the entries are comma delimited and **must** match the name inf the Entries sheet
 
 
@@ -194,7 +223,14 @@ Audit write access| AuditAllowed| | X| | | | |2|
 
  Note:  the name of the group **must** match the name of the sheet containing the group data
 
-A example spreadsheet is [here](../examples/bitlocker/src/bitllocker_dc_example.xlsx/)
+ ### Example Settings sheet
+
+ | Setting | Value |
+ |---      |---
+ | DefaultEnforcement | Allow |
+ | DeduplicateAccessEvents | TRUE |
+
+A example spreadsheet is [here](../deployable%20examples/deduplicate_access_events/src/deduplicate_audit_example.xlsx)
 
 ### dc init intune
 
@@ -263,6 +299,17 @@ options:
   -a, --application  authenticate as the application to the graph API
   -s, --silent       don't prompt the user to confirm delete
 ```
+
+## dc patch-graph
+
+Patches issues with the generated graph sdk to work with dc 
+
+```
+usage:  dc patch-graph
+```
+
+### Known Issues
+- The *device_management_reusable_policy_setting_item_request_builder_patch.py* fixes the issue that there is no PUT function on [msgraph_beta/generated/device_management/reusable_settings/item/device_management_configuration_setting_definition_item_request_builder.py](https://github.com/microsoftgraph/msgraph-beta-sdk-python/blob/main/msgraph_beta/generated/device_management/reusable_settings/item/device_management_configuration_setting_definition_item_request_builder.py)
 
 ## dcconvert
 

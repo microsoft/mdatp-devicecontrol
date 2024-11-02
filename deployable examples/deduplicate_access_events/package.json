@@ -1,0 +1,47 @@
+{
+     "policies": {
+          "Deduplicate access events example": {
+               "os": "windows",
+               "version": "v1",
+               "description": "All devices access is audited",
+               "assignments": [],
+               "groups": {
+                    "All Devices": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Devices.xml",
+                              "sha256": "ed1a6c9ee23bcf103381ce3b44ac2e4c8360eefbe914ba36feff9519ddcf2f6e"
+                         }
+                    }
+               },
+               "rules": {
+                    "All Devices Audit Allows ": {
+                         "description": "Send an event for all allowed operations",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/All Devices Audit Allows .xml",
+                              "sha256": "079081f25f3ba36ed9549f674831962f90b2a456d2e59a2b9a413536a53b1594"
+                         }
+                    },
+                    "All Devices Audit and Notify Denies ": {
+                         "description": "Send an event and notify the user for all denied operations",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/All Devices Audit and Notify Denies .xml",
+                              "sha256": "1ad28a3ff6b65edde57c3ad30e23fcae1a4910992d9957d75b5d8b07dbbc8db3"
+                         }
+                    }
+               },
+               "settings": {
+                    "DefaultEnforcement": {
+                         "value": "Deny",
+                         "name": "",
+                         "description": ""
+                    },
+                    "DeduplicateAccessEvents": {
+                         "value": true,
+                         "name": "",
+                         "description": ""
+                    }
+               }
+          }
+     }
+}

@@ -1,0 +1,91 @@
+{
+     "policies": {
+          "E2E Printer Example": {
+               "os": "windows",
+               "version": "v1",
+               "description": "This is an end to end example of printer policies.  Printing to Network and Corporate printers are denied unless on the Private Network.  USB printing is only allowed on approved printers by VID PID.  Local priniting is never denied.  Other printers are always denied.",
+               "assignments": [],
+               "groups": {
+                    "All Network Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Network Printers.xml",
+                              "sha256": "95043d5370ebed2aa5a32acf694d32880c3902e0d54c5d4f2ac7f7c3dd79d3c9"
+                         }
+                    },
+                    "All Corporate Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All Corporate Printers.xml",
+                              "sha256": "c3a67e2accf644968f31a633f20c8686bac9d9dd55b6983728115f6947e37b86"
+                         }
+                    },
+                    "All USB Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All USB Printers.xml",
+                              "sha256": "6ccefa126a659599d7c1d894ec111ed11c723abac870ef14b2068cd0834a8c23"
+                         }
+                    },
+                    "Authorized USB Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Authorized USB Printers.xml",
+                              "sha256": "0f3f628895ca2d60ced43f6b332931138e55ee6f87bd34eefbb51adabb1f128b"
+                         }
+                    },
+                    "All File Printers": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/All File Printers.xml",
+                              "sha256": "7700725e3260e7029bd6d9b34fe0329d8d75e77842f6398021f59280124563f8"
+                         }
+                    },
+                    "Private Network": {
+                         "description": "",
+                         "file": {
+                              "path": "windows/devicecontrol/groups/Private Network.xml",
+                              "sha256": "103d570386d9ef673cfebf40db6cd406fa3f2b81b7682db404bd038ad784e53e"
+                         }
+                    }
+               },
+               "rules": {
+                    "Network Printing": {
+                         "description": "Deny when not on an approved network",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Network Printing.xml",
+                              "sha256": "b9724984842d2af3f673a5f63004ad53c0c8a1e05c346372d49ded6398f9844b"
+                         }
+                    },
+                    "Corporate Printing": {
+                         "description": "Deny when not on an approved network",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Corporate Printing.xml",
+                              "sha256": "735f064b0c9a3a6e98dd2984e2256e1e03f4df3f3e97ba9d68914bd115cfcc56"
+                         }
+                    },
+                    "USB Printing": {
+                         "description": "Deny unless using Approved USBs",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/USB Printing.xml",
+                              "sha256": "515134cd157cdda0bf92b04138ddf2be9d45048f3b6f6f0d0b31d7d1df3118b3"
+                         }
+                    },
+                    "Other Printers": {
+                         "description": "Deny printers other than Network, File, Corporate or USB Printers",
+                         "file": {
+                              "path": "windows/devicecontrol/rules/Other Printers.xml",
+                              "sha256": "d25ed8c29e72cb4ba71a945d8db8bffae1ebfcbff02f156f7da626332ff3f537"
+                         }
+                    }
+               },
+               "settings": {
+                    "DefaultEnforcement": {
+                         "value": "Allow",
+                         "name": "",
+                         "description": ""
+                    }
+               }
+          }
+     }
+}

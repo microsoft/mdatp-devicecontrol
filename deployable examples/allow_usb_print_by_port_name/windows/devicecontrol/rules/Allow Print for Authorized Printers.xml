@@ -1,0 +1,14 @@
+	<PolicyRule Id="{f91786e9-a531-4663-82d0-d97dbc4ee602}" >
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyRules/%7Bf91786e9-a531-4663-82d0-d97dbc4ee602%7D/RuleData -->
+		<Name>Allow Print for Authorized Printers</Name>
+		<IncludedIdList>
+			<GroupId>{3f782150-39c2-47c0-8061-486759099de8}</GroupId>
+		</IncludedIdList>
+		<ExcludedIdList>
+		</ExcludedIdList>
+		<Entry Id="{aceec5d3-3c95-4bfc-b481-5091cc104460}">
+			<Type>Allow</Type>
+			<AccessMask>64</AccessMask>
+			<Options>0</Options>
+		</Entry>
+	</PolicyRule>

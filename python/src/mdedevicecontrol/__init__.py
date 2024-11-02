@@ -7,7 +7,7 @@ __all__ = ['convert_dc_policy','dcdoc','dcgraph','dcintune']
 
 
 import argparse
-import argcomplete
+import sys
 from configparser import ConfigParser
 import asyncio
 import json
@@ -15,7 +15,7 @@ import copy
 import os
 import urllib.parse
 import pathlib
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 from json import JSONEncoder
 import uuid
 import pandas
@@ -45,6 +45,13 @@ class Util:
     def rreplace(s, old, new, occurrence):
         li = s.rsplit(old, occurrence)
         return new.join(li)
+    
+    def file_exists(file_path):
+        if os.path.isfile(file_path):
+            return file_path
+        else:
+            raise argparse.ArgumentTypeError(f"{file_path} is not a valid file")
+
 
 class DCJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -186,11 +193,9 @@ class Setting:
 
     DeviceControlEnabled = "DeviceControlEnabled"
     DefaultEnforcement = "DefaultEnforcement"
-    DataDuplicationDirectory = "DataDuplicationDirectory"
     SecuredDevicesConfiguration = "SecuredDevicesConfiguration"
-    DataDuplicationMaximumQuota = "DataDuplicationMaximumQuota"
-    DataDuplicationRemoteLocation = "DataDuplicationRemoteLocation"
     UXNavigationTarget = "UXNavigationTarget"
+    DeduplicateAccessEvents = "DeduplicateAccessEvents"
 
     data = {
         DeviceControlEnabled:{
@@ -199,6 +204,28 @@ class Setting:
             "oma-uri": {
                 "supported": True,
                 "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControlEnabled",
+                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled",
+                "type": OMA_URI_Integer_DataType,
+                "value_map": {
+                    True: 1,
+                    False: 0
+                }
+            },
+            "gpo":{
+                "supported":True
+
+            },
+            "mac":{
+                "supported":False
+
+            }
+        },
+        DeduplicateAccessEvents:{
+            "description":"Deduplicates access events to only a single event when a device in first added.",
+            "name": "Deduplicate Access Events",
+            "oma-uri": {
+                "supported": True,
+                "oma-uri": "./Vendor/MSFT/Defender/Configuration/DeviceControl/DeduplicateAccessEvents",
                 "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdevicecontrolenabled",
                 "type": OMA_URI_Integer_DataType,
                 "value_map": {
@@ -245,19 +272,7 @@ class Setting:
                 
             }
         },
-        DataDuplicationDirectory:{
-            "name": "File Evidence Directory",
-            "description": "Define data duplication directory for device control.",
-            "oma-uri": {
-                "supported":True,
-                "oma-uri":"./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationDirectory",
-                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationdirectory",
-                "type": OMA_URI_String_DataType
-            },
-            "mac":{
-                "supported":False
-            }
-        },
+        
         SecuredDevicesConfiguration: {
             "name": "Secured Devices",
             "description":"Defines which device's primary ids should be secured by Defender Device Control. If this configuration isn't set the default value will be applied, meaning all supported devices will be secured.",
@@ -277,32 +292,6 @@ class Setting:
                 
             }
 
-        },
-        DataDuplicationMaximumQuota:{
-            "name": "File Evidence Quota",
-            "description":"Defines the maximum data duplication quota in MB that can be collected. When the quota is reached the filter will stop duplicating any data until the service manages to dispatch the existing collected data, thus decreasing the quota again below the maximum. The valid interval is [5-5000] MB. By default, the maximum quota will be 500 MB.",
-            "oma-uri":{
-                "supported":True,
-                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationmaximumquota",
-                "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationMaximumQuota",
-                "type": OMA_URI_Integer_DataType
-            },
-            "mac":{
-                "supported":False
-            }
-        },
-        DataDuplicationRemoteLocation:{
-            "name": "File Evidence Remote Location",
-            "description":"Define data duplication remote location for Device Control. When configuring this setting, ensure that Device Control is Enabled and that the provided path is a remote path the user can access.",
-            "oma-uri":{
-                "supported": True,
-                "oma-uri": "./Device/Vendor/MSFT/Defender/Configuration/DataDuplicationRemoteLocation",
-                "documentation": "https://learn.microsoft.com/en-us/windows/client-management/mdm/defender-csp#configurationdataduplicationremotelocation",
-                "type": OMA_URI_String_DataType
-            },
-            "mac":{
-                "supported": False
-            }
         },
         UXNavigationTarget: {
             "name":"UX Navigation Target",
@@ -568,7 +557,7 @@ class IntuneCustomRow:
 
 class Property:
 
-    def __init__(self, group_property, property_value):
+    def __init__(self, group_property, property_value, dcv2_name = None):
         self.name = group_property.name
 
         self.allowed_values = group_property.allowed_values
@@ -576,6 +565,11 @@ class Property:
             raise Exception("Invalid value "+property_value+" for group property "+group_property.name)
         self.value = property_value
         self.label = group_property.label
+        
+        if dcv2_name is None:
+            dcv2_name = self.label+"("+self.value+")"
+            
+        self.dcv2_name = dcv2_name
 
 class Clause:
 
@@ -636,6 +630,9 @@ class GroupProperty:
     WindowsDeviceEncryptedState = "DeviceEncryptionStateId"
     WindowsDeviceBitlockerEncrypted = "BitlockerEncrypted"
     WindowsDeviceNotEncrypted = "Plain"
+    
+    #PrinterPortNameId
+    WindowsPrinterPortName = "PrinterPortNameId"
 
 
     #Network
@@ -749,6 +746,11 @@ class MatchType:
 
     All = "MatchAll"
     Any = "MatchAny"
+    ExcludeAll = "MatchExcludeAll"
+    ExcludeAny = "MatchExcludeAny"
+
+    
+   
 
 class Group:
 
@@ -904,7 +906,7 @@ class Group:
         ]
     )
 
-    WinodwsPrinterConnectionProperty = GroupProperty(
+    WindowsPrinterConnectionProperty = GroupProperty(
         GroupProperty.WindowsPrinterConnection,
         "Windows Printer Connection",
         [
@@ -919,12 +921,18 @@ class Group:
 
     )
 
+    WindowsPrinterPortNameIdProperty = GroupProperty(
+        GroupProperty.WindowsPrinterPortName,
+        "Windows Printer Port Name",
+        "The name of the port being used to print.  Supports wildcards."
+    )
 
     WindowsPrinterGroupProperties = [
         WindowsDeviceFamilyProperty,
         WindowsDeviceFriendlyNameProperty,
         WindowsDeviceVendorProductProperty,   
-        WinodwsPrinterConnectionProperty,
+        WindowsPrinterConnectionProperty,
+        WindowsPrinterPortNameIdProperty,
         WindowsGroupProperty
     ]
 
@@ -1112,7 +1120,9 @@ class Group:
 
     supported_match_types = [
         MatchType.Any,
-        MatchType.All
+        MatchType.All,
+        MatchType.ExcludeAll,
+        MatchType.ExcludeAny
     ]
 
     AllGroupTypes = [
@@ -1167,11 +1177,16 @@ class Group:
             else:
                 self.match_type = match_node.text
             
-            descriptors = root.findall("./DescriptorIdList//")
+            descriptors = root.xpath('./DescriptorIdList//comment()|./DescriptorIdList//node()')
+            lastComment = None
             for descriptor in descriptors:
 
+                if isinstance(descriptor,str):
+                    continue
+
                 if descriptor.tag == ET.Comment:
-                    logger.debug("Skipping comment "+str(descriptor.text))
+                    lastComment = str(descriptor.text)
+                    logger.debug("Saving last comment "+str(descriptor.text))
                     continue
 
                 logger.debug("Getting group property for "+str(descriptor.tag))
@@ -1179,15 +1194,16 @@ class Group:
                 if group_property is None:
                     #This is the special case where they have the same group type (device),
                     #but different properties
-                    if self.group_type.name == GroupType.WindowsDeviceGroupType and descriptor.tag == GroupProperty.WindowsPrinterConnection:
+                    if self.group_type.name == GroupType.WindowsDeviceGroupType and (descriptor.tag == GroupProperty.WindowsPrinterConnection or descriptor.tag == GroupProperty.WindowsPrinterPortName):
                         self.group_type = Group.WindowsPrinterGroupType
                         group_property = self.group_type.get_property_by_name(descriptor.tag)
                 
                     else:
-                        raise Exception("Unknown group property"+str(descriptor.tag)+" for "+self.group_type.label)
+                        raise Exception("Unknown group property "+str(descriptor.tag)+" for "+self.group_type.label)
                 
 
-                self._properties.append(Property(group_property, descriptor.text))
+                self._properties.append(Property(group_property, descriptor.text, lastComment))
+                lastComment = None
                 self.conditions[descriptor.tag] = descriptor.text
 
 
@@ -1242,6 +1258,11 @@ class Group:
         for property in self._properties:
             tag = property.name
             text = property.value
+            
+            if property.dcv2_name is not None:
+                out += indent +"\t\t<!--"+Util.xml_safe_text(property.dcv2_name)+"-->\n"    
+            else:
+                out += indent +"\t\t<!--"+Util.xml_safe_text(property.dcv2_name)+"-->\n"
 
             out += indent +"\t\t<"+tag+">"+Util.xml_safe_text(text)+"</"+tag+">\n"
 
@@ -2138,6 +2159,11 @@ class Entry:
 
         logger.debug("Set options text to "+options_xml.text)
 
+        if self.parameters is not None:
+            parameters_xml = self.parameters.toXML("")
+            parameters_element = ET.fromstring(parameters_xml)
+            entry_xml.append(parameters_element)
+
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
      
         return entry_xml
@@ -2192,9 +2218,15 @@ class Entry:
         
 class Parameters:
 
-    def __init__(self,parameters):
-        self.match_type = parameters.attrib['MatchType']
+    def __init__(self,parameters=None):
+
         self.conditions = []
+        if parameters is None:
+            self.match_type = MatchType.All
+            return
+        else:
+            self.match_type = parameters.attrib['MatchType']
+        
         for condition in parameters.findall("./"):
             match condition.tag:
                 case "Network":
@@ -2231,13 +2263,19 @@ class Parameters:
 class Condition:
         
     
-    def __init__(self,condition):
-        self.match_type = condition.attrib['MatchType']
-        
+    def __init__(self,condition=None):
 
         self.groups = []
         self.properties = []
 
+        if condition is None:
+            self.match_type = MatchType.All
+            return
+        else:
+            self.match_type = condition.attrib['MatchType']
+        
+
+        
         self.tag = condition.tag
         self.condition_type = condition.tag
         self.read_condition_properties(condition.findall(".//"))
@@ -2439,11 +2477,14 @@ IntuneUXFeature = Feature(
             "unsupported_descriptors": {
                 Group.WindowsDeviceGroupType: [
                     Group.WindowsDeviceEncryptionStateProperty
+                ],
+                Group.WindowsPrinterGroupType: [
+                    Group.WindowsPrinterPortNameIdProperty
                 ]
             }
         },
         "entry":{
-            "access_masks":[1,2,4,64],
+            "access_masks":[1,2,4,8,16,32,64],
              "supported_notifications":{
                     PolicyRule.Allow:{
                         "notifications":[
@@ -2629,6 +2670,18 @@ class api:
         logger.debug("Creating property for "+str(groupProperty.name)+" value="+value)
         return Property(groupProperty,value)
 
+    
+    def createGroupFromFile(self,xml_path):
+        
+        
+        with open(xml_path) as file:
+            root = ET.fromstring(file.read())
+            group = Group(root,"oma-uri")
+            return group
+            
+     
+        
+    
     def createGroup(self,name, 
                     group_type = Group.WindowsDeviceGroupType, 
                     match_type = MatchType.Any,
@@ -2639,7 +2692,7 @@ class api:
             id = api.newGUID()
             logger.debug("Generating UUID="+id+" for group")
 
-        logger.debug("Creating a group name="+name+" match_type="+match_type+" id="+id)
+        logger.debug("Creating a group name="+str(name)+" match_type="+match_type+" id="+id)
         
         '''
             <Group Id="{33e06f08-8787-4219-9dca-5872854f9d79}" Type="Device">
@@ -2673,7 +2726,12 @@ class api:
         
         descriptorId_list = ET.SubElement(group_xml,"DescriptorIdList")
         for property in properties:
-            comment = property.label
+            
+            if property.dcv2_name is None:
+                comment = property.label
+            else:
+                comment = property.dcv2_name
+                
             tag_name = property.name
             tag_text = property.value
 
@@ -2697,6 +2755,9 @@ class api:
         return self.createGroupOfWindowsDevices(name,property=Group.WindowsDeviceSerialNumberProperty, values=values,id=id)
 
 
+    
+
+    
     def createGroupOfWindowsDevices(self,name, 
                     property = Group.WindowsDeviceVendorProductProperty,
                     values = [],
@@ -2737,6 +2798,7 @@ class api:
                         WindowsEntryType.FileReadMask: True
                     },
                     notifications=Notifications(0,Format.OMA_URI),
+                    parameters=None,
                     id=None):
         '''
         <Entry Id="{467726b6-a548-4f09-80d0-e8a0efc90bce}">
@@ -2768,6 +2830,13 @@ class api:
 
         logger.debug("Set options text to "+options_xml.text)
 
+        if parameters is not None:
+            logger.debug("Adding parameters")
+            parameters_xml = parameters.toXML("")
+            parameters_element = ET.fromstring(parameters_xml)
+            ET.tostring(parameters_element,method="xml").decode("utf-8")
+            entry_xml.append(parameters_element)
+        
         logger.debug("Creating an entry with xml="+ET.tostring(entry_xml,method="xml").decode("utf-8"))        
         
         return Entry(entry_xml)
@@ -2848,6 +2917,7 @@ class api:
                      description = None,
                      rules = [],
                      groups = [],
+                     settings = [],
                      id = None):
 
         import mdedevicecontrol.dcintune as intune
@@ -2867,6 +2937,9 @@ class api:
 
         for group in groups:
             policy.addGroup(group)
+            
+        for setting in settings:
+            policy.addSetting(setting)
 
         self.policies[policy.name] = policy
         return policy
@@ -2967,7 +3040,7 @@ class api:
 class CommandLine:
 
     async def process_args(args):     
-        print(str(args))
+        logger.info(str(args))
         if not "operation" in args or args.operation is None:
             return
     
@@ -2988,6 +3061,13 @@ class CommandLine:
         
         config = ConfigParser()
         config.read(dc_config_path)
+
+        
+        import platform
+
+        if platform.system() == 'Windows':
+            #dc_log_path = repr(dc_log_path)
+            pass
 
         import logging.config
         logging.config.fileConfig(dc_config_path,defaults={
@@ -3027,8 +3107,8 @@ class CommandLine:
 
         match args.operation:
             case "init":
-                if args.init_source is None:
-                    CommandLine.init(args)
+                if args.init_source is None or args.init_source == "package":
+                    CommandLine.init_from_package(args,config)
                 elif args.init_source == "file":
                     CommandLine.init_from_file(args,config)
                 elif args.init_source == "xlsx":
@@ -3044,24 +3124,124 @@ class CommandLine:
                 result = CommandLine.update(args,config)
             case "delete":
                 result = await CommandLine.delete(args,config)
+            case "reusable_settings":
+                result = await CommandLine.reusable_settings(args,config)
+            case "patch-graph":
+                result = CommandLine.patch_graph(args,config)
                     
 
         pass
 
-    def init(args):
+    def init_from_package(args,config):
         
-        from mdedevicecontrol.dcintune import Package
+        if "package_file" in args:
+            package_file = args.package_file
+        else:
+            package_file = "package.json"
 
-        cwd = pathlib.Path(os.getcwd())
+
         
-        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+        package_file = os.path.abspath(package_file)
+        
+        if os.path.exists(package_file):
+            logger.info("Initializing from "+package_file)
+            metadata_file = os.path.abspath("metadata.json")
+
+          
+
+        
+        package_data = {}
+        metadata = None
+        with open(package_file, 'r') as file:
+            try:
+                package_data = json.load(file)
+            except Exception as e:
+                logger.error("Invalid JSON in "+package_file)
+                return
+            
+        if os.path.exists(metadata_file):
+            logger.info("Using existing metadata.json") 
+            with open(metadata_file, 'r') as md_file:
+                try:
+                    metadata = json.load(md_file)
+                except Exception as e:
+                    logger.error("Invalid metadata.json")
+        
+        name = ""
+        description = ""
+        version = ""
+        osName = ""
+        
+        existing_ids = {
+            "groups": {
+                
+            },
+            "rules":{
+                
+            }
+        }
+        
+        for policy_name in package_data["policies"]:
+                name = policy_name
+                policy_dict = package_data["policies"][name]
+                osName = policy_dict["os"]
+                description = policy_dict["description"]
+                version = policy_dict["version"]
+                
+                for group_name in policy_dict["groups"]:
+                    group_data = policy_dict["groups"][group_name]
+                    group_file_path = group_data["file"]["path"]
+                    
+                    group = CommandLine.api.createGroupFromFile(group_file_path)    
+                    existing_ids["groups"][group.name] = group.id
+                    
+                    
+                for rule_name in policy_dict["rules"]:
+                    rule_data = policy_dict["rules"][rule_name]
+                    rule_file_path = rule_data["file"]["path"]
+                    
+                    with open(rule_file_path) as file:
+                        rule_xml = ET.fromstring(file.read())
+                        rule_id = rule_xml.get("Id")
+                        existing_ids["rules"][rule_name] = rule_id
+                    
+                
+        
+        logger.debug("name="+name)
+        logger.debug("os="+osName)
+        logger.debug("description="+description)
+        logger.debug("version="+version)
+            
+        
+        src_dir = os.path.join(os.path.dirname(package_file),"src")
+        logger.info("Source directory for package is "+src_dir)
+        
+        import glob
+        
+        xlsx_files = glob.glob(src_dir + os.path.sep + '*.xlsx')
+        
+        if len(xlsx_files) > 0:
+            logger.info("Found xlsx source: "+xlsx_files[0])
+            return CommandLine._init_with_xlsx(xlsx_files[0],name,description,osName,version,existing_ids,metadata)
+        
+        #from mdedevicecontrol.dcintune import Package
+
+        #cwd = pathlib.Path(os.getcwd())
+        
+        
+        
+        #package_file = os.path.join(cwd,package_file)
+        
+        
+        
+        #p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
 
         
 
-        p.save(str(cwd.parent),
-               CommandLine.rule_template_name,
-               CommandLine.readme_template_name,
-               CommandLine.description_template_name)
+        #p.save(str(cwd.parent),
+        #       CommandLine.rule_template_name,
+        #       CommandLine.readme_template_name,
+        #       CommandLine.description_template_name)
 
 
 
@@ -3154,6 +3334,8 @@ class CommandLine:
         logger.info("Token="+str(token))
         return token
 
+        
+        
     def init_with_xlsx(args,config):
 
         xlsx_file_path = str(pathlib.Path(args.file).resolve())
@@ -3163,7 +3345,106 @@ class CommandLine:
             logger.error(xlsx_file_path+" not found")
             return
         
+        
+        return CommandLine._init_with_xlsx(xlsx_file_path,args.name,args.description,args.os,args.version)
+ 
+    
+    
+    
+    def _init_with_xlsx(xlsx_file_path, args_name, args_description, args_os,args_version, existing_ids = None, existing_meta_data = None):
+        
+        
+        from mdedevicecontrol.dcintune import Package
+
+        cwd = pathlib.Path(os.getcwd())
+        
+        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+
+        if existing_meta_data is not None:
+            logger.debug("Setting existing metadata")
+            logger.debug("Existing metadata="+str(existing_meta_data))
+            p.metadata.metadata = existing_meta_data
+
+        if existing_ids is None:
+            existing_ids = {
+                "groups":{},
+                "rules":{}
+            }
+        
         import pandas as pd
+        dc = api()
+
+        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
+        logger.debug(str(xslx_groups))
+
+        groups = {}
+        for index, row in xslx_groups.iterrows():
+            group_name = row['Name']
+            group_type_string = row['Type']
+            group_match_string = row['Match']
+
+
+            group_type = Group.Types[group_type_string]
+
+            logger.debug("group_type="+str(group_type))
+
+            if group_match_string not in Group.supported_match_types:
+                raise Exception("Unknown match_type "+str(group_match_string))
+
+
+            xslx_group = pd.read_excel(xlsx_file_path,sheet_name=group_name)
+            logger.debug(str(xslx_group))
+
+            num_columns = len(list(xslx_group.columns))
+            logger.debug("num_columns="+str(num_columns))
+
+            column=0
+
+            properties = []
+            dcv2_names = []
+            while column < num_columns:
+                property_name = list(xslx_group.columns)[column]
+                logger.debug("Property="+property_name)
+                
+                if property_name == "Descriptor Value Name":
+                    dcv2_names = list(xslx_group[property_name])
+
+                else:
+                    group_property = GroupProperty.properties_by_name[property_name]
+                    property_values = list(xslx_group[property_name])
+                
+                    #make sure that everything from the XLSX is a str
+                    property_values = [str(item) for item in property_values]
+                    logger.debug("Property_Values="+str(property_values))
+                
+                    property_value_index = 0
+                    for property_value in property_values:
+                    
+                        if len(dcv2_names) > 0:
+                            dcv2_name = dcv2_names [property_value_index]
+                            logger.debug("Using dcv2_name="+dcv2_name)
+                            property = Property(group_property,property_value,dcv2_name)
+                            property_value_index = property_value_index + 1    
+                        else:
+                    
+                            property = Property(group_property,property_value)
+                        
+                        properties.append(property)
+                    
+                    
+
+                column = column + 1
+
+           
+            #check its this group already exists
+            if group_name in existing_ids["groups"]:
+                group = dc.createGroup(group_name,group_type,group_match_string,properties,existing_ids["groups"][group_name])
+            else:
+                group = dc.createGroup(group_name,group_type,group_match_string,properties)
+            
+            groups[group_name] = group
+
+
 
         xslx_entries =pd.read_excel(xlsx_file_path,sheet_name="Entries")
 
@@ -3171,7 +3452,7 @@ class CommandLine:
 
         entries = {}
 
-        dc = api()
+        
 
         for index,row in xslx_entries.iterrows():
 
@@ -3191,6 +3472,39 @@ class CommandLine:
             permissions[WindowsEntryType.FileExecuteMask] = (row["File Execute"] == "X")
             permissions[WindowsEntryType.PrintMask] = (row["Print"] == "X")
 
+            parameters = None
+            if "Parameters Match Type" in row:
+                if row["Parameters Match Type"] is not None and str(row["Parameters Match Type"]).lower() != "nan":
+
+                    parameters_match_type = row["Parameters Match Type"]
+                    logger.debug("Parameters Match Type="+parameters_match_type)
+
+                    parameters = Parameters()
+                    parameters.match_type = row["Parameters Match Type"]
+                    
+ 
+            if "Network Match Type" in row:
+                if row["Network Match Type"] is not None and str(row["Network Match Type"]).lower() != "nan":
+
+                    logger.debug("network_match_type="+str(row["Network Match Type"]))
+                    network_condition = Condition()
+                    network_condition.tag = "Network"
+                    network_condition.match_type = row["Network Match Type"]
+
+                    network_group_names = row["Network Groups"]
+                    logger.debug("network_group_names="+str(network_group_names))
+                    network_group_names_list = str(network_group_names).split(",")
+
+                    for network_group_name in network_group_names_list:
+                        network_group = groups[network_group_name]
+                        network_condition.groups.append(network_group.id)
+
+                    parameters.conditions.append(network_condition)
+                        
+
+
+
+
             enforcement = None
 
             match type:
@@ -3207,37 +3521,9 @@ class CommandLine:
                 Entry.WindowsDevice,
                 enforcement=enforcement,
                 permissions=permissions,
-                notifications=Notifications(notification,Format.OMA_URI)
+                notifications=Notifications(notification,Format.OMA_URI),
+                parameters=parameters
             )
-
-        xslx_groups = pd.read_excel(xlsx_file_path,sheet_name="Groups")
-        logger.debug(str(xslx_groups))
-
-        
-
-        groups = {}
-        for index, row in xslx_groups.iterrows():
-            group_name = row['Name']
-            group_type = row['Type']
-            group_match = row['Match']
-
-            xslx_group = pd.read_excel(xlsx_file_path,sheet_name=group_name)
-            logger.debug(str(xslx_group))
-
-            property_name = list(xslx_group.columns)[0]
-            logger.debug("Property="+property_name)
-
-            group_property = GroupProperty.properties_by_name[property_name]
-
-            property_values = list(xslx_group[property_name])
-            logger.debug("Property_Values="+str(property_values))
-            
-            group = dc.createGroupOfWindowsDevices(
-                name=group_name,
-                property=group_property,
-                values=property_values)
-            
-            groups[group_name] = group
 
 
         xslx_rules =pd.read_excel(xlsx_file_path,sheet_name="Rules")
@@ -3259,7 +3545,7 @@ class CommandLine:
             for included_group_name in included_group_names:
                 if included_group_name in groups:
                     included_groups.append(groups[included_group_name])
-                else:
+                elif included_group_name != "nan":
                     raise RuntimeError(included_group_name+" not found.")
                 
             excluded_groups = []
@@ -3279,29 +3565,67 @@ class CommandLine:
                 
                 entry_with_new_id = dc.copy(object=entries[entry_name])
                 entries_for_rule.append(entry_with_new_id)
+                
+                
+            if rule_name in existing_ids["rules"]:
+                rule_id = existing_ids["rules"][rule_name]
+            else:
+                rule_id = None
 
             rule = dc.createRule(rule_name=rule_name,
                           included_groups=included_groups,
                           excluded_groups=excluded_groups,
-                          entries=entries_for_rule)
+                          entries=entries_for_rule,id = rule_id)
 
             rule.description = rule_description
 
             rules[rule_name] = rule
 
-        policy = dc.createPolicy(
-            os=args.os,
-            name=args.name,
-            version=args.version,
-            rules=list(rules.values()),
-            groups=list(groups.values())
-        )
-         
-        from mdedevicecontrol.dcintune import Package
-
-        cwd = pathlib.Path(os.getcwd())
+        xslx_settings = None
+        try:
+            xslx_settings = pd.read_excel(xlsx_file_path,sheet_name="Settings")
+            
+        except (ValueError):
+            logger.info("No settings sheet")
+            logger.debug(str(xslx_settings))
         
-        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+        settings = []
+        if xslx_settings is not None:
+            for index,row in xslx_settings.iterrows():
+
+                logger.debug("index="+str(index))
+
+                setting_name = None
+                setting_value = None
+
+                if "Setting" in row:
+                    setting_name = row["Setting"]
+                if "Value" in row:
+                    setting_value = row["Value"]
+
+                if setting_value is not None and setting_name is not None:
+                    logger.debug("Adding setting "+str(setting_name)+" value="+str(setting_value))
+                    setting = Setting(setting_name,setting_value)
+
+                    from mdedevicecontrol.dcintune import Package
+
+                    intune_setting = Package.IntuneSetting(setting)
+
+                    settings.append(intune_setting)
+        
+
+        policy = dc.createPolicy(
+            os=args_os,
+            description=args_description,
+            name=args_name,
+            version=args_version,
+            rules=list(rules.values()),
+            groups=list(groups.values()),
+        )
+
+        policy.settings = settings
+         
+        
         p.addPolicy(policy)
 
         p.setSource(xlsx_file_path)
@@ -3311,6 +3635,9 @@ class CommandLine:
                CommandLine.readme_template_name,
                CommandLine.description_template_name)
 
+    
+    
+    
     async def init_with_intune(args,config):
 
         from mdedevicecontrol import dcintune as intune
@@ -3408,10 +3735,120 @@ class CommandLine:
             logger.info("Aborting")
             return
 
+    async def reusable_settings(args,config):
 
+        authentication_type = "user"
+        if args.application_authentication:
+            authentication_type = "application"
 
         
+        scopes=config["graph"]["scopes"]
+        graph = await CommandLine.api.connectToGraph(authentication_type,scopes)
+        
+        if authentication_type == "user":
+            token = await graph.get_user_token()
+        else:
+            token = await graph.get_app_only_token()
 
+        from mdedevicecontrol.dcintune import DeviceControlPolicyTemplate
+
+        await DeviceControlPolicyTemplate(graph).load_data()
+        
+        logger.info(args.reusable_setting_operation)
+        match args.reusable_setting_operation:
+            case "update":
+                update_contents = args.infile.read()
+                logger.debug(update_contents)
+                groups_json = json.loads(update_contents)
+
+                for group_json in groups_json:
+                    group = DeviceControlPolicyTemplate.DeviceControlGroup.createSettingFromJSON(group_json)
+                    result = await graph.update_group_v2(group, group_json["name"], group_json["id"], group_json["description"])
+
+
+
+            case "get":
+                include_details = True
+
+                if args.reusable_setting_name is not None:
+                    results = await graph.get_reusable_settings(name=args.reusable_setting_name)
+                elif args.reusable_setting_id is not None:
+                    results = await graph.get_reusable_settings(id=args.reusable_setting_id)
+                else:    
+                    results = await graph.get_reusable_settings()
+
+                groups = []
+                for group in results.value:
+                    if group.setting_definition_id == "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata":
+                        logger.debug(str(group))
+                        
+                        group_obj = {
+                            "name": group.display_name,
+                            "description": group.description,
+                            "id": group.id
+                        }
+
+                        groups.append(group_obj)
+
+                        if include_details:
+
+                            result = await graph.get_group_details(group.id)
+                           
+                            group_details = DeviceControlPolicyTemplate.DeviceControlGroup.createGroupfromSetting(result)
+                            group_json = group_details.toJSON()
+
+                            group_obj["descriptors"] = group_json["descriptors"]
+                            group_obj["match_type"] = group_json["match_type"]
+
+
+                logger.info(str(groups))
+
+                #this should go to stdout
+                print(json.dumps(groups, indent=4))
+                pass
+
+        
+    def patch_graph(args,config):
+        
+        import shutil
+
+        file_path = os.path.abspath(__file__)
+        
+        src_path = os.path.dirname(file_path)
+        logger.info("Patching from "+src_path)
+        
+        import msgraph_beta
+        module_path = os.path.dirname(msgraph_beta.__file__)
+        module_version = msgraph_beta.VERSION
+        
+        logger.info("Patching to "+module_path)
+        logger.info("Version="+module_version)
+        
+        patches = [ 
+        
+                {
+                    
+                    "src": "device_management_reusable_policy_setting_item_request_builder_patch.py",
+                    "dest": "generated/device_management/reusable_policy_settings/item/device_management_reusable_policy_setting_item_request_builder.py",
+                    "versions": ["1.11.0"]
+                    
+                }
+                
+        ]
+        
+        for patch in patches:
+            
+            patch_src = os.path.join(src_path,patch["src"])
+            patch_dest = os.path.join(module_path,patch["dest"])
+            
+            
+            if module_version in patch["versions"]:
+                logger.info("copying "+patch_src+" to "+patch_dest)
+                shutil.copyfile(patch_src,patch_dest)
+            
+        
+        
+        
 def main():
     
    
@@ -3419,13 +3856,18 @@ def main():
     description='Utility for device control')
     subparsers = arg_parser.add_subparsers(help='The operation to perform on the package',dest="operation")
     init_arg_parser = subparsers.add_parser('init',help="Initialize the package")
-    init_arg_parser.add_argument("-n","--name",dest="name",help="name of the package",required=True)
+    init_arg_parser.add_argument("-n","--name",dest="name",help="name of the package",required=False)
     init_arg_parser.add_argument("-d","--description",dest="description",help="description of the package",required=False)
     init_arg_parser.add_argument("-o","--os",dest="os",default="windows")
     init_arg_parser.add_argument("-v","--version",dest="version",default="v1")
 
 
-    init_sources_parser = init_arg_parser.add_subparsers(help='source',required=True, dest="init_source")
+    init_sources_parser = init_arg_parser.add_subparsers(help='source to use to initialize the package',required=False, dest="init_source")
+    package_source_parser = init_sources_parser.add_parser('package')
+    package_source_parser.add_argument("-p","--package",help="package file",default="package.json",required=False,type=Util.file_exists,dest="package_file")
+    
+    
+    
     intune_source_parser = init_sources_parser.add_parser('intune')
    
     xlsx_source_parser = init_sources_parser.add_parser('xlsx')
@@ -3484,9 +3926,27 @@ def main():
     delete_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
     delete_arg_parser.add_argument("-s","--silent",dest="silent_delete",action="store_true",help="don't prompt the user to confirm delete",default=False)
     
-    #update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
     
-   
+    patch_arg_parser = subparsers.add_parser('patch-graph',help="Patches the graph SDK to work with dc")
+    
+    
+    #update_arg_parser = subparsers.add_parser('update', help='Update the configuration from the source')
+    #reusable_settings_parser = subparsers.add_parser('reusable_settings',help='Perform operations on Intune reusable settings') 
+    #reusable_settings_auth_type_choice_group = reusable_settings_parser.add_mutually_exclusive_group(required=True)
+    #reusable_settings_auth_type_choice_group.add_argument("-u","--user",dest="user_authentication", action="store_true",help="authenticate as the logged in user to the graph API")
+    #reusable_settings_auth_type_choice_group.add_argument("-a","--application",dest="application_authentication", action="store_true",help="authenticate as the application to the graph API")
+    
+    #reusable_settings_commands_parser = reusable_settings_parser.add_subparsers(title="operation",dest="reusable_setting_operation",description="The operation to perform on the reusable setting")
+    #get_reusable_settings_parser = reusable_settings_commands_parser.add_parser("get",description="Get the reusable settings")
+    #get_reusable_settings_search_options = get_reusable_settings_parser.add_mutually_exclusive_group(required=False)
+    #get_reusable_settings_search_options.add_argument("-n","--name",dest="reusable_setting_name")
+    #get_reusable_settings_search_options.add_argument("-i","--id",dest="reusable_setting_id")
+                                                       
+    #update_reusable_settings_parser = reusable_settings_commands_parser.add_parser("update",description="Update the reusable settings")
+    #update_reusable_settings_parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),default=sys.stdin)
+
+
+
     
     
 

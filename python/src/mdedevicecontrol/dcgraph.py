@@ -28,6 +28,7 @@ from msgraph_beta.generated.device_management.configuration_policies.configurati
 from msgraph_beta.generated.device_management.configuration_settings.item.device_management_configuration_setting_definition_item_request_builder import DeviceManagementConfigurationSettingDefinitionItemRequestBuilder 
 from msgraph_beta.generated.device_management.reusable_policy_settings.item.device_management_reusable_policy_setting_item_request_builder import DeviceManagementReusablePolicySettingItemRequestBuilder
 from msgraph_beta.generated.device_management.reusable_settings.reusable_settings_request_builder import ReusableSettingsRequestBuilder
+from msgraph_beta.generated.device_management.reusable_policy_settings.reusable_policy_settings_request_builder import ReusablePolicySettingsRequestBuilder
 
 from msgraph_beta.generated.models.device_management_configuration_policy import DeviceManagementConfigurationPolicy
 from msgraph_beta.generated.models.device_management_configuration_setting import DeviceManagementConfigurationSetting
@@ -145,6 +146,7 @@ class Graph:
 
     async def get_app_only_token(self):
         logger.debug("get_app_only_token")
+        logger.debug("client_credential="+str(self.client_credential.__class__))
         graph_scope = 'https://graph.microsoft.com/.default'
         access_token = await self.client_credential.get_token(graph_scope)
         logger.debug("access token "+str(access_token.token))
@@ -152,6 +154,7 @@ class Graph:
     
 
     async def get_user_token(self):
+        logger.debug("client_credential="+str(self.client_credential.__class__))
         access_token = self.client_credential.get_token(' '.join(self.graph_scopes))
         return access_token.token
     
@@ -231,6 +234,9 @@ class Graph:
 
     async def delete_device_configuration(self,policy_id):
 
+        if policy_id is None:
+            logger.error("policy_id is None")
+            return RuntimeError()
         logger.debug("policy id="+policy_id)
         try:
             result = await self.graph_client.device_management.device_configurations.by_device_configuration_id(policy_id).delete()
@@ -374,15 +380,41 @@ class Graph:
         result = await self.graph_client.device_management.reusable_settings.get(request_configuration = request_configuration)
         return result
     
-    async def update_group_v2(self,group,name,group_id):
+    async def get_reusable_settings(self,name=None,id=None):
+
+        filter = "displayName eq displayName"
+
+        if name is not None:
+            filter = "displayName eq '"+name+"'"
+        elif id is not None:
+            filter = "id eq '"+id+"'"
+
+        query_params = ReusablePolicySettingsRequestBuilder.ReusablePolicySettingsRequestBuilderGetQueryParameters(
+		    filter = filter,
+        )
+
+        request_configuration = ReusablePolicySettingsRequestBuilder.ReusablePolicySettingsRequestBuilderGetRequestConfiguration(
+            query_parameters = query_params,
+        )
+
+        result = await self.graph_client.device_management.reusable_policy_settings.get(request_configuration=request_configuration)
+        return result
+    
+    
+    
+    async def update_group_v2(self,group,name,group_id,description=None):
 
         setting = DeviceManagementReusablePolicySetting()
         setting.setting_instance = group
         setting.display_name = name
+
+        if description is not None:
+            setting.description = description
+
         setting.setting_definition_id = "device_vendor_msft_defender_configuration_devicecontrol_policygroups_{groupid}_groupdata"
         
         logger.debug("Update Group v2 "+str(group))
-        result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).put(setting)
+        result = await self.graph_client.device_management.reusable_policy_settings.by_device_management_reusable_policy_setting_id(group_id).put(setting) 
         logger.debug(str(result))
         return result
 
