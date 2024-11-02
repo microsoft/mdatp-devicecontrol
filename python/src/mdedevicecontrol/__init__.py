@@ -3062,6 +3062,13 @@ class CommandLine:
         config = ConfigParser()
         config.read(dc_config_path)
 
+        
+        import platform
+
+        if platform.system() == 'Windows':
+            #dc_log_path = repr(dc_log_path)
+            pass
+
         import logging.config
         logging.config.fileConfig(dc_config_path,defaults={
             "args":"('"+dc_log_path+"',)"
@@ -3131,14 +3138,20 @@ class CommandLine:
             package_file = args.package_file
         else:
             package_file = "package.json"
+
+
         
         package_file = os.path.abspath(package_file)
         
         if os.path.exists(package_file):
             logger.info("Initializing from "+package_file)
-            
+            metadata_file = os.path.abspath("metadata.json")
+
+          
+
         
         package_data = {}
+        metadata = None
         with open(package_file, 'r') as file:
             try:
                 package_data = json.load(file)
@@ -3146,6 +3159,13 @@ class CommandLine:
                 logger.error("Invalid JSON in "+package_file)
                 return
             
+        if os.path.exists(metadata_file):
+            logger.info("Using existing metadata.json") 
+            with open(metadata_file, 'r') as md_file:
+                try:
+                    metadata = json.load(md_file)
+                except Exception as e:
+                    logger.error("Invalid metadata.json")
         
         name = ""
         description = ""
@@ -3202,7 +3222,7 @@ class CommandLine:
         
         if len(xlsx_files) > 0:
             logger.info("Found xlsx source: "+xlsx_files[0])
-            return CommandLine._init_with_xlsx(xlsx_files[0],name,description,osName,version,existing_ids)
+            return CommandLine._init_with_xlsx(xlsx_files[0],name,description,osName,version,existing_ids,metadata)
         
         #from mdedevicecontrol.dcintune import Package
 
@@ -3331,9 +3351,20 @@ class CommandLine:
     
     
     
-    def _init_with_xlsx(xlsx_file_path, args_name, args_description, args_os,args_version, existing_ids = None):
+    def _init_with_xlsx(xlsx_file_path, args_name, args_description, args_os,args_version, existing_ids = None, existing_meta_data = None):
         
         
+        from mdedevicecontrol.dcintune import Package
+
+        cwd = pathlib.Path(os.getcwd())
+        
+        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
+
+        if existing_meta_data is not None:
+            logger.debug("Setting existing metadata")
+            logger.debug("Existing metadata="+str(existing_meta_data))
+            p.metadata.metadata = existing_meta_data
+
         if existing_ids is None:
             existing_ids = {
                 "groups":{},
@@ -3594,11 +3625,7 @@ class CommandLine:
 
         policy.settings = settings
          
-        from mdedevicecontrol.dcintune import Package
-
-        cwd = pathlib.Path(os.getcwd())
         
-        p = Package(cwd.name,templateEnv=CommandLine.templateEnv)
         p.addPolicy(policy)
 
         p.setSource(xlsx_file_path)

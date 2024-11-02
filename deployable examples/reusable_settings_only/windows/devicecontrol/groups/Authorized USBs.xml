@@ -12,6 +12,8 @@
 			<!--Device D-->
 			<VID_PID>046d_0825</VID_PID>
 			<!--Device E-->
-			<VID_PID>05ac_12a0</VID_PID>
+			<VID_PID>AAAA_BBBB</VID_PID>
+			<!--Device F-->
+			<VID_PID>FFFF_2222</VID_PID>
 		</DescriptorIdList>
 	</Group>
