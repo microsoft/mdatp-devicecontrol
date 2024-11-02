@@ -43,10 +43,12 @@ The follow shortcuts should be created:
 ### Deploy a sample using dc
 - [Configure the environment for dc](#setting-up-the-environment-for-dc)
 - To deploy an example, go to one of the directories in the [deployable examples](../deployable%20examples/), and type ```dc apply -a``` if you're using an application identity or ```dc apply -u``` if you're using a user identity
+
+### Create a new example using dc
 - To import a configuration from an Excel file *<xlsx-file>* and deploy it to Intune:
     -   Create a directory for the project called *<package-dir>*
     -   ```cd package-dir```
-    -   ```dc init xlsx --file <xlsx-file> --name <name of the project> --description <description for the project> --os [windows|macOs] --version [v1|v2]```
+    -   ```dc init xlsx --name <name of the project> --description <description for the project> --os [windows|macOs] --version [v1|v2] xlsx --file <xlsx file>```
     -  ```dc apply --user```
 
 
