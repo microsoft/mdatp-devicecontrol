@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import xml.etree.ElementTree as ET
+from  lxml import etree as ET
 import argparse
 import os, sys
 import pandas as pd
@@ -592,6 +592,10 @@ class Inventory:
 
         logger.debug("query="+str(query)+" class="+str(query.__class__))
         logger.debug("policy_rules="+str(self.policy_rules))
+
+        #convert the path to string
+        
+        self.policy_rules['path'] = self.policy_rules['path'].astype(str)
 
         rule_frame = self.policy_rules.query(query, engine='python')
         rule_frame = rule_frame.sort_values("rule_index", ascending=True)

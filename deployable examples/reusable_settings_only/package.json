@@ -1,0 +1,21 @@
+{
+     "policies": {
+          "Reusable settings only example": {
+               "os": "windows",
+               "version": "v2",
+               "description": "An example of using xlsx to import reusable settings",
+               "assignments": [],
+               "groups": {
+                    "Authorized USBs": {
+                         "description": "",
+                         "file": {
+                              "path": "windows\\devicecontrol\\groups\\Authorized USBs.xml",
+                              "sha256": "c4cad8ad21ef4e2cb997b0b4d357b5af4634f1f4a3ae62c45434f1d5d0c61547"
+                         }
+                    }
+               },
+               "rules": {},
+               "settings": {}
+          }
+     }
+}

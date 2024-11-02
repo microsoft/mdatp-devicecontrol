@@ -10,7 +10,7 @@
                          "description": "",
                          "file": {
                               "path": "windows/devicecontrol/groups/All Other Devices.xml",
-                              "sha256": "a4277f39f58e51a2ae09f9612218e4473e23451097cbbef0bea00adbec0a47e9"
+                              "sha256": "c6100a5f6fa2bf8781c32937617617cf480b1e8552424f43e2f145e5fd46b7ab"
                          }
                     }
                },
@@ -19,7 +19,7 @@
                          "description": "deny, audit and block",
                          "file": {
                               "path": "windows/devicecontrol/rules/Default Deny.xml",
-                              "sha256": "c2bdbdedf96ce1e3c090896e30c243c69c851ad0f2aed872cfdfcabdd72cfb40"
+                              "sha256": "66de1b8d365684d3665a61171b0760d8e1ca7fbc9cfc3a26ffebea430ee3856d"
                          }
                     }
                },

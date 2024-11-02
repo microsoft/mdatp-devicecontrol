@@ -1,0 +1,8 @@
+	<Group Id="{3f782150-39c2-47c0-8061-486759099de8}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B3f782150-39c2-47c0-8061-486759099de8%7D/GroupData -->
+		<Name>Authorized Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterPortNameId>WSD*</PrinterPortNameId>
+		</DescriptorIdList>
+	</Group>

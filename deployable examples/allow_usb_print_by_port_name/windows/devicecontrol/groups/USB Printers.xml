@@ -1,0 +1,8 @@
+	<Group Id="{1a598b22-c309-4b33-8016-bc1372186caa}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1a598b22-c309-4b33-8016-bc1372186caa%7D/GroupData -->
+		<Name>USB Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterPortNameId>USB*</PrinterPortNameId>
+		</DescriptorIdList>
+	</Group>
