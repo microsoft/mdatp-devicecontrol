@@ -3095,7 +3095,7 @@ class CommandLine:
         if "DC_CLIENT_SECRET" in os.environ:
             CommandLine.clientSecret = os.environ["DC_CLIENT_SECRET"]
         else:
-            CommandLine.clientId = None
+            CommandLine.clientSecret = None
 
         CommandLine.api = api(os.getcwd(),
                               clientId=CommandLine.clientId,

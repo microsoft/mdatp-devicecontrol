@@ -1,5 +1,8 @@
 pandas
 jinja2
 azure-identity
-msgraph-beta-sdk
+msgraph-beta-sdk==1.11.0
 pytest
+argcomplete
+lxml
+openpyxl
