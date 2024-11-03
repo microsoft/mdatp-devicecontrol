@@ -136,6 +136,7 @@ options:
   -n NAME, --name NAME  The name of the package
 ```
 
+#### dc package format
 ```dc``` uses a standard directory structure for organizing a device control deployment
 
 ```
