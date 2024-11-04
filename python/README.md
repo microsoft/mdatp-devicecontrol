@@ -9,7 +9,9 @@ Utilities for Device Control
 ### Install the tools
 
 1. Install [python 3.12](https://www.python.org/downloads/release/python-3120/) or greater
-2. Install the package locally
+2. Create a [virtual environment](https://docs.python.org/3.12/library/venv.html)
+3. Install the package locally
+
 
 On macOS on Linux
 ```
@@ -134,6 +136,7 @@ options:
   -n NAME, --name NAME  The name of the package
 ```
 
+#### dc package format
 ```dc``` uses a standard directory structure for organizing a device control deployment
 
 ```
