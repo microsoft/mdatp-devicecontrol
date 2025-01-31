@@ -20,12 +20,6 @@
                 "oneOf": [
                     {
                         "$ref": "#/$defs/deviceGroup"
-                    },
-                    {
-                        "$ref": "#/$defs/fileGroup"
-                    },
-                    {
-                        "$ref": "#/$defs/userGroup"
                     }
                 ]
             }
@@ -947,9 +941,6 @@
                 "id": {
                     "title": "UUID of the entry",
                     "$ref": "#/$defs/uuid"
-                },
-                "conditions": {
-                    "$ref": "#/$defs/conditions/removableMedia"
                 },
                 "__comments": {
                     "type": "string"
