@@ -1,4 +1,4 @@
-<Groups>	
+<PolicyGroups>	
 	<Group Id="{e5170dfb-19a9-4466-8109-d36c9c912b4e}" Type="Device">
 		<Name>PDF_XPS Printer</Name>
 		<MatchType>MatchAny</MatchType>
@@ -54,4 +54,4 @@
 	</Group>
 
 		
-</Groups>
+</PolicyGroups>

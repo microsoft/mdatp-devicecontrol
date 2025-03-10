@@ -1,16 +1,18 @@
-<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_1</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrimaryId>RemovableMediaDevices</PrimaryId>
-		<PrimaryId>CdRomDevices</PrimaryId>
-		<PrimaryId>WpdDevices</PrimaryId>
-		<FriendlyNameId>SDHC*</FriendlyNameId>
-		<FriendlyNameId>SDXC*</FriendlyNameId>
-		<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
-		<VID_PID>0951_169D</VID_PID>
-		<VID_PID>2009_16AF</VID_PID>
-		<VID_PID>1908_0226</VID_PID>
-	</DescriptorIdList>
-</Group>
+<PolicyGroups>
+	<Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7Bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_1</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrimaryId>RemovableMediaDevices</PrimaryId>
+			<PrimaryId>CdRomDevices</PrimaryId>
+			<PrimaryId>WpdDevices</PrimaryId>
+			<FriendlyNameId>SDHC*</FriendlyNameId>
+			<FriendlyNameId>SDXC*</FriendlyNameId>
+			<DeviceId>USBSTOR\CDROM&amp;VEN_KINGSTON&amp;PROD_DTLOCKER+G3</DeviceId>
+			<VID_PID>0951_169D</VID_PID>
+			<VID_PID>2009_16AF</VID_PID>
+			<VID_PID>1908_0226</VID_PID>
+		</DescriptorIdList>
+	</Group>
+</PolicyGroups>	
