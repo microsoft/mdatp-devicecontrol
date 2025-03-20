@@ -213,10 +213,10 @@ DeviceControlEnabled | True | [documentation](https://learn.microsoft.com/en-us/
 ## Files
 This policy is based on information in the following files:
 
-- [windows/Getting Started/Step 3/allow_different_access_to_different_groups.xml](/windows/Getting%20Started/Step%203/allow_different_access_to_different_groups.xml)
-- [windows/Getting Started/Step 2/allow_authorized_usbs_groups.xml](/windows/Getting%20Started/Step%202/allow_authorized_usbs_groups.xml)
-- [windows/Getting Started/Step 4/allow_different_access_to_different_users_rules.xml](/windows/Getting%20Started/Step%204/allow_different_access_to_different_users_rules.xml)
-- [windows/Getting Started/Intune OMA-URI/all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
+- [windows\Getting Started\Intune OMA-URI\step_4_-_deny_all_other_usbs{7beca8fe-313a-46f2-a090-399eb3d74318}.xml](/windows/Getting%20Started/Intune%20OMA-URI/step_4_-_deny_all_other_usbs%7B7beca8fe-313a-46f2-a090-399eb3d74318%7D.xml)
+- [windows\Getting Started\Intune OMA-URI\step_4_-_allow_access_to_writeable_usbs_for_some_users{a054bbcf-3454-4b95-9058-f7ed00deeee9}.xml](/windows/Getting%20Started/Intune%20OMA-URI/step_4_-_allow_access_to_writeable_usbs_for_some_users%7Ba054bbcf-3454-4b95-9058-f7ed00deeee9%7D.xml)
+- [windows\Getting Started\Intune OMA-URI\step_4_-_allow_read_only_access_to_read_only_usbs_for_some_users{b2b9cfc0-799d-457c-babc-da617d9a8b83}.xml](/windows/Getting%20Started/Intune%20OMA-URI/step_4_-_allow_read_only_access_to_read_only_usbs_for_some_users%7Bb2b9cfc0-799d-457c-babc-da617d9a8b83%7D.xml)
+- [windows\Getting Started\Intune OMA-URI\all_removable_media_devices{d8819053-24f4-444a-a0fb-9ce5a9e97862}.xml](/windows/Getting%20Started/Intune%20OMA-URI/all_removable_media_devices%7Bd8819053-24f4-444a-a0fb-9ce5a9e97862%7D.xml)
 
 
 # Deployment Instructions
