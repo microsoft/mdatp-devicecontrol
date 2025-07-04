@@ -363,3 +363,5 @@ python/dist
 *.egg-info
 metadata.json
 kql
+.DS_Store
+Misc/.DS_Store
