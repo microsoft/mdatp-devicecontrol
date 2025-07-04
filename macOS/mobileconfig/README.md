@@ -57,8 +57,6 @@ The v2 Device Control policy is now set via the `deviceControl/policy` key.  The
         </string>
     </dict>
 ```
- 
-----
 
 ## schema.json
 
