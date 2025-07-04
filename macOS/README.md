@@ -2,6 +2,10 @@
 
 Resources for Device Control for macOS.
 
+## Img
+
+Screenshots and images, that have been added to "README.md" -files.
+
 ## Policy
 
 Information about device control [policies](policy/README.md) including samples and schemas.
