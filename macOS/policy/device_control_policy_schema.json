@@ -188,6 +188,25 @@
                                 }
                             }
                         },
+                        "genericDevice": {
+                            "type": "object",
+                            "default": {},
+                            "title": "Settings for Generic Devices",
+                            "additionalProperties": false,
+                            "properties": {
+                                "disable": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "title": "Disable the Generic Devices feature?",
+                                    "examples": [
+                                        true
+                                    ]
+                                },
+                                "__comments": {
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "__comments": {
                             "type": "string"
                         }
@@ -393,6 +412,93 @@
                     {
                         "$type": "serialNumber",
                         "value": "ABCDEFGHIJKLMNOP"
+                    }
+                ]
+            },
+            "mediaSerialNumber": {
+                "title": "Media Serial Number Clause",
+                "description": "Match an inserted media with a specific serial number",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "mediaSerialNumber"
+                        ]
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Media Serial Number"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "mediaSerialNumber",
+                        "value": 1234567890
+                    }
+                ]
+            },
+            "mediaProductName": {
+                "title": "Media Product Name Clause",
+                "description": "Match an inserted media with a specific product name",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "mediaProductName"
+                        ]
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Media Product Name"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "mediaProductName",
+                        "value": "SD4ME"
+                    }
+                ]
+            },
+            "mediaApplicationId": {
+                "title": "Media Application ID Clause",
+                "description": "Match an inserted media with a specific application ID",
+                "required": [
+                    "$type",
+                    "value"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "$type": {
+                        "enum": [
+                            "mediaApplicationId"
+                        ]
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Media Application ID"
+                    },
+                    "__comments": {
+                        "type": "string"
+                    }
+                },
+                "examples": [
+                    {
+                        "$type": "mediaApplicationId",
+                        "value": "AC"
                     }
                 ]
             },
