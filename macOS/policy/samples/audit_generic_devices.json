@@ -1,0 +1,88 @@
+{
+    "groups" : [
+        {
+            "$type": "device",
+            "id": "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4",
+            "name": "All Apple Devices",
+            "query": {
+                "$type": "and",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "apple_devices"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules" : [
+        {
+            "id": "D861EEB3-9201-45F4-AC63-F823D4957D59",
+            "name": "Block All Apple Devices",
+            "includeGroups": [
+                "3D2A9EF0-E587-4B90-A60F-C9BD6F9D2BB4"
+            ],
+            "entries": [
+                {
+                    "$type": "appleDevice",
+                    "id": "03420B37-4F71-4AF3-AAE8-82D16817A194",
+                    "enforcement": {
+                        "$type": "deny"
+                    },
+                    "__comments": "Customize Access Below",
+                    "access": [
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
+                    ]
+                },
+                {
+                    "$type": "appleDevice",
+                    "id": "8C66DF38-A4A2-4C98-B69C-BF5D13F32044",
+                    "enforcement": {
+                        "$type": "auditDeny",
+                        "options": [
+                            "send_event",
+                            "show_notification"
+                        ]
+                    },
+                    "__comments": "Customize Access Below",
+                    "access": [
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "appleDevice": {
+                "disable": true 
+            },
+            "removableMedia": {
+                "disable": true 
+            },
+            "portableDevice": {
+                "disable": true 
+            },
+            "bluetoothDevice": {
+                "disable": true
+            },
+	    "genericDevice": {
+		"disable": false 
+	    }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
