@@ -1,0 +1,84 @@
+{
+    "groups": [
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e217",
+            "name": "All Apple Devices",
+            "query": {
+                "$type": "all",
+                "clauses": [
+                    {
+                        "$type": "primaryId",
+                        "value": "apple_devices"
+                    }
+                ]
+            }
+        },
+        {
+            "$type": "device",
+            "id": "3f082cd3-f701-4c21-9a6a-ed115c28e218",
+            "name": "Allowed Serial Numbers",
+            "query": {
+                "$type": "or",
+                "clauses": [
+                    {
+                        "$type": "serialNumber",
+                        "value": "ABCDEFGHIJKLMNOP"
+                    },
+                    {
+                        "$type": "serialNumber",
+                        "value": "QRSTUVWXYZ012345"
+                    },
+                    {
+                        "$type": "serialNumber",
+                        "value": "6789ABCDEFGHJKLMN"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": [
+        {
+            "id": "772cef80-229f-48b4-bd17-a6913009298e",
+            "name": "Audit all Apple Devices",
+            "includeGroups": [
+                "3f082cd3-f701-4c21-9a6a-ed115c28e217"
+            ],
+            "excludeGroups": [
+                "3f082cd3-f701-4c21-9a6a-ed115c28e218"
+            ],
+            "entries": [
+                {
+                    "$type": "appleDevice",
+                    "id": "2E75C9DE-5C96-40C1-8333-A52A9409DEB1",
+                    "enforcement": {
+                        "$type": "auditAllow",
+                        "options": [
+                            "send_event"
+                        ]
+                    },
+                    "access": [
+                        "download_files_from_device",
+                        "sync_content_to_device",
+                        "backup_device",
+                        "update_device",
+                        "download_photos_from_device"
+                    ]
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "features": {
+            "appleDevice": {
+                "disable": false
+            }
+        },
+        "global": {
+            "defaultEnforcement": "allow"
+        },
+        "ux": {
+            "navigationTarget": "http://www.microsoft.com"
+        }
+    }
+}
