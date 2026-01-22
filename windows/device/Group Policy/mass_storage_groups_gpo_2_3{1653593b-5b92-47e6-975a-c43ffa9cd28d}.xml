@@ -1,22 +1,24 @@
-<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
-	<Name>Mass_storage_groups_GPO_2_3</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<VID_PID>046D_0837</VID_PID>
-		<VID_PID>046D_085B</VID_PID>
-		<VID_PID>046D_0825</VID_PID>
-		<VID_PID>03F0_5705</VID_PID>
-		<VID_PID>03F0_5D05</VID_PID>
-		<VID_PID>040A_6030</VID_PID>
-		<VID_PID>040A_601D</VID_PID>
-		<VID_PID>1083_1646</VID_PID>
-		<VID_PID>1083_1647</VID_PID>
-		<VID_PID>04CA_7053</VID_PID>
-		<VID_PID>04CA_7054</VID_PID>
-		<VID_PID>04F2_B51C</VID_PID>
-		<VID_PID>05C8_0383</VID_PID>
-		<VID_PID>05C8_034B</VID_PID>
-		<VID_PID>0461_4DFE</VID_PID>
-	</DescriptorIdList>
-</Group>
+<PolicyGroups>
+	<Group Id="{1653593b-5b92-47e6-975a-c43ffa9cd28d}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B1653593b-5b92-47e6-975a-c43ffa9cd28d%7D/GroupData -->
+		<Name>Mass_storage_groups_GPO_2_3</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<VID_PID>046D_0837</VID_PID>
+			<VID_PID>046D_085B</VID_PID>
+			<VID_PID>046D_0825</VID_PID>
+			<VID_PID>03F0_5705</VID_PID>
+			<VID_PID>03F0_5D05</VID_PID>
+			<VID_PID>040A_6030</VID_PID>
+			<VID_PID>040A_601D</VID_PID>
+			<VID_PID>1083_1646</VID_PID>
+			<VID_PID>1083_1647</VID_PID>
+			<VID_PID>04CA_7053</VID_PID>
+			<VID_PID>04CA_7054</VID_PID>
+			<VID_PID>04F2_B51C</VID_PID>
+			<VID_PID>05C8_0383</VID_PID>
+			<VID_PID>05C8_034B</VID_PID>
+			<VID_PID>0461_4DFE</VID_PID>
+		</DescriptorIdList>
+	</Group>
+</PolicyGroups>

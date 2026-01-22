@@ -1,8 +1,10 @@
-<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
-	<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
-	<Name>Network Printers</Name>
-	<MatchType>MatchAny</MatchType>
-	<DescriptorIdList>
-		<PrinterConnectionId>Network</PrinterConnectionId>
-	</DescriptorIdList>
-</Group>
+<PolicyGroups>
+	<Group Id="{257e3e1e-790c-4e29-ae2c-45a5f3363201}" Type="Device">
+		<!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7B257e3e1e-790c-4e29-ae2c-45a5f3363201%7D/GroupData -->
+		<Name>Network Printers</Name>
+		<MatchType>MatchAny</MatchType>
+		<DescriptorIdList>
+			<PrinterConnectionId>Network</PrinterConnectionId>
+		</DescriptorIdList>
+	</Group>
+</PolicyGroups>

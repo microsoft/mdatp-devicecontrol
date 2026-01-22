@@ -1,4 +1,4 @@
-<Groups>
+<PolicyGroups>
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}">
 		<!-- any removable storage group -->
 		<MatchType>MatchAny</MatchType>
@@ -24,4 +24,4 @@
 			<PathId>*.dll</PathId>
 		</DescriptorIdList>
 	</Group>
-</Groups>
+</PolicyGroups>

@@ -1,4 +1,4 @@
-<Groups>
+<PolicyGroups>
 
 	<Group Id="{9b28fae8-72f7-4267-a1a5-685f747a7146}">
 		<MatchType>MatchAny</MatchType>
@@ -18,4 +18,4 @@
 	</Group>
 
 
-</Groups>
+</PolicyGroups>
