@@ -12,9 +12,9 @@ Step-by-step examples on how to configure device control to restrict access to [
 
 Step-by-step examples on how configure device control to restrict access to [printers](printer/readme.md)
 
-## Group Policy (GPO) adminisrative templates
+## Group Policy (GPO) administrative templates
 
-If you don't see some settings in the device control, group policy, you need to insatll the templates to the central store for Group Policy.
+If you don't see some settings in the device control, group policy, you need to install the templates to the central store for Group Policy.
 
 - Administrative template: [WindowsDefender.admx](WindowsDefender.admx)
 - Settings localization en-us for WindowsDefender.admx: [WindowsDefender.adml](WindowsDefender.adml)
