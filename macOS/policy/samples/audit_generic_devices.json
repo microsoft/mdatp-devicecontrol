@@ -63,20 +63,20 @@
     "settings": {
         "features": {
             "appleDevice": {
-                "disable": true 
+                "disable": true
             },
             "removableMedia": {
-                "disable": true 
+                "disable": true
             },
             "portableDevice": {
-                "disable": true 
+                "disable": true
             },
             "bluetoothDevice": {
                 "disable": true
             },
-	    "genericDevice": {
-		"disable": false 
-	    }
+            "genericDevice": {
+                "disable": false
+            }
         },
         "global": {
             "defaultEnforcement": "allow"
