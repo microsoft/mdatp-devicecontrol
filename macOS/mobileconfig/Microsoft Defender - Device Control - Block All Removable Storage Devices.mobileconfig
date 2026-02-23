@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+    <dict>
+        <key>PayloadUUID</key>
+        <string>F8E3933F-A0AC-4412-B724-C35A4A624820</string>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadOrganization</key>
+        <string>Microsoft Corporation</string>
+        <key>PayloadIdentifier</key>
+        <string>com.microsoft.wdav</string>
+        <key>PayloadDisplayName</key>
+        <string>Microsoft Defender - Device Control: Block All Removable Storage Devices</string>
+        <key>PayloadDescription</key>
+        <string>Blocks all removable storage devices using Device Control from Microsoft Defender</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true/>
+        <key>PayloadRemovalDisallowed</key>
+        <true/>
+        <key>PayloadScope</key>
+        <string>System</string>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadUUID</key>
+                <string>FE0AD77D-5C66-43F9-AFF2-12B18453A81B</string>
+                <key>PayloadType</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadOrganization</key>
+                <string>Microsoft Corporation</string>
+                <key>PayloadIdentifier</key>
+                <string>com.microsoft.wdav</string>
+                <key>PayloadDisplayName</key>
+                <string>Microsoft Defender - Device Control: Block All Removable Storage Devices</string>
+                <key>PayloadDescription</key>
+                <string>Blocks all removable storage devices using Device Control from Microsoft Defender</string>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadEnabled</key>
+                <true/>
+                <key>dlp</key>
+                <dict>
+                  <key>features</key>
+                    <array>
+                        <dict>
+                            <key>name</key>
+                            <string>DC_in_dlp</string>
+                            <key>state</key>
+                            <string>enabled</string>
+                        </dict>
+                    </array>
+                </dict>
+                <key>deviceControl</key>
+                <dict>
+                    <key>policy</key>
+                    <string>
+{
+  "groups": [
+    {
+      "$type": "device",
+      "id": "cf4769ca-4553-4771-8cf7-f32063af02ed",
+      "name": "Block All Removable Storage Devices",
+      "query": {
+        "$type": "and",
+        "clauses": [
+          {
+            "$type": "primaryId",
+            "value": "removable_media_devices"
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "f34eb107-a01d-46a1-9c9b-3dcb6d3fcd14",
+      "name": "Block All Removable Storage Devices",
+      "includeGroups": [
+        "cf4769ca-4553-4771-8cf7-f32063af02ed"
+      ],
+      "entries": [
+        {
+          "$type": "removableMedia",
+          "id": "773215a8-3409-475d-862a-07f2b7df4042",
+          "enforcement": {
+            "$type": "deny"
+          },
+          "access": [
+            "read",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "$type": "removableMedia",
+          "id": "d6fdb6d6-b147-4f35-826a-849a2d69326f",
+          "enforcement": {
+            "$type": "auditDeny",
+            "options": [
+              "send_event",
+              "show_notification"
+            ]
+          },
+          "access": [
+            "read",
+            "write",
+            "execute"
+          ]
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "features": {
+      "removableMedia": {
+        "disable": false
+      }
+    },
+    "ux": {
+      "navigationTarget": "https://helpdesk.example.com/"
+    }
+  }
+}
+                    </string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>
