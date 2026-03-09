@@ -1,4 +1,4 @@
-<Groups>
+<PolicyGroups>
     <Group Id="{fb4ad01e-f41a-46c6-9ac1-268efa0ea083}">
         <!-- ./Vendor/MSFT/Defender/Configuration/DeviceControl/PolicyGroups/%7bfb4ad01e-f41a-46c6-9ac1-268efa0ea083%7d/GroupData -->
         <!-- Group for all mass storage devices groups -->
@@ -65,6 +65,6 @@
             <VID_PID>0F7E_900C</VID_PID>
         </DescriptorIdList> 
     </Group>
-</Groups>
+</PolicyGroups>
 
 
